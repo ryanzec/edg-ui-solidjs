@@ -53,10 +53,6 @@
 }
 
 .input-container input::placeholder {
-  cursor: var(--color-input-placeholder);
-}
-
-.textarea::placeholder {
   color: var(--color-input-placeholder);
 }
 

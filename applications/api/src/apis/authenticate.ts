@@ -15,6 +15,7 @@ import type {
 } from '$api/types/authentication';
 import { apiUtils } from '$api/utils/api';
 import { applicationConfiguration } from '$api/utils/application-configuration';
+import { globalLogger } from '$api/utils/logger';
 import { stytchClient } from '$api/utils/stytch';
 import type { FastifyInstance, FastifyRequest } from 'fastify';
 import type * as stytch from 'stytch';
@@ -108,6 +109,8 @@ const processAuthenticationResponse = async (
   originalRequest.session.organizationId = organization.organization_id;
   originalRequest.session.userId = memberResponse.member.member_id;
 
+  globalLogger?.warn(memberResponse.member);
+
   return {
     member: memberResponse.member,
     organization: exchangeResponse.organization,
@@ -163,6 +166,7 @@ export const registerAuthenticateApi = (api: FastifyInstance) => {
       const tokenType = request.body.tokenType;
       const password = request.body.password;
 
+      // this handle resetting the password while the user is already logged in
       if (!token || !tokenType) {
         const resetPasswordResponse = await stytchClient.passwords.sessions.reset({
           organization_id: request.session.organizationId,
@@ -181,6 +185,7 @@ export const registerAuthenticateApi = (api: FastifyInstance) => {
         });
       }
 
+      // this handles resetting the password as part of the email reset password flow
       const resetPasswordResponse = await stytchClient.passwords.discovery.email.reset({
         password_reset_token: token,
         password,
@@ -217,6 +222,7 @@ export const registerAuthenticateApi = (api: FastifyInstance) => {
         | stytch.B2BPasswordsDiscoveryAuthenticateResponse;
       let organization: stytch.Organization | undefined;
 
+      // a password of 6 characters is a one time password
       if (password.length === 6) {
         const organizationsResponse = await stytchClient.organizations.search({
           query: {

@@ -49,24 +49,17 @@ const loggerConfiguration: LoggerOptions = {
   },
 };
 
-let globalLogger: FastifyBaseLogger | undefined = undefined;
+export let globalLogger: FastifyBaseLogger | undefined = undefined;
 
 export const loggerUtils = {
   loggerConfiguration,
   setLogger: (logger: FastifyBaseLogger) => {
     globalLogger = logger;
   },
-  getLogger: () => {
-    if (!globalLogger) {
-      throw new Error('attempt to log something before fastify logger is ready which should not happen');
-    }
-
-    return globalLogger;
-  },
   // biome-ignore lint/suspicious/noExplicitAny: since this is a generic system, we need to allow any
   logObjectFormatted: (message: string, object: Record<string, any>) => {
     return {
-      // the msg ket is a specific key used by pino for better output in the logs
+      // the msg key is a specific key used by pino for better output in the logs
       msg: `${message}:`,
       ...object,
     };

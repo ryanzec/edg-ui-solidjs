@@ -1,7 +1,7 @@
 import { stringUtils } from '$/utils/string';
 import type { PostgresColumnValue } from '$api/types/postgres';
 import { applicationConfiguration } from '$api/utils/application-configuration';
-import { loggerUtils } from '$api/utils/logger';
+import { globalLogger } from '$api/utils/logger';
 import type { PoolConfig, QueryResult, QueryResultRow } from 'pg';
 import pg from 'pg';
 
@@ -118,7 +118,7 @@ const buildSetQuery = async (
   updateOnColumn = 'id',
 ): Promise<BuildSetQueryDataReturn> => {
   if (!pool) {
-    loggerUtils.getLogger().error('pool must being configure before building queries');
+    globalLogger?.error('pool must being configure before building queries');
 
     return {
       query: '',

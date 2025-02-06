@@ -11,9 +11,13 @@
   background-color: var(--color-surface-pure);
 }
 
-.textarea:focus:not([disabled]):not([readonly]),
-.textarea:hover:not([disabled]):not([readonly]) {
+.textarea:focus:not([disabled]):not([readonly]):not(.invalid),
+.textarea:hover:not([disabled]):not([readonly]):not(.invalid) {
   border-color: var(--color-outline-active);
+}
+
+.invalid {
+  border-color: var(--color-danger);
 }
 
 .textarea::placeholder {

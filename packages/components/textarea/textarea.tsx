@@ -1,8 +1,10 @@
 import classnames from 'classnames';
-import { type Accessor, type JSX, createSignal, mergeProps, onMount, splitProps } from 'solid-js';
+import { type Accessor, type JSX, createSignal, mergeProps, onMount, splitProps, useContext } from 'solid-js';
 
+import { FormFieldContext } from '$/components/form-field';
 import styles from '$/components/textarea/textarea.module.css';
-import type { DefaultFormData } from '$/stores/form.store';
+import { type DefaultFormData, FormInputValidationState } from '$/stores/form.store';
+import { loggerUtils } from '$/utils/logger';
 
 export type TextareaProps<TFormData = DefaultFormData> = Omit<
   JSX.TextareaHTMLAttributes<HTMLTextAreaElement>,
@@ -26,6 +28,14 @@ const Textarea = <TFormData = DefaultFormData>(passedProps: TextareaProps<TFormD
     // autofocus does not seem to work by default is some contexts (like is dialogs) so manually dealing with it
     'autofocus',
   ]);
+
+  const formFieldContext = useContext(FormFieldContext);
+
+  if (!formFieldContext) {
+    loggerUtils.error('Textarea must be contained in a FormField component');
+
+    return;
+  }
 
   const [textareaElement, setTextareaElement] = createSignal<HTMLTextAreaElement>();
 
@@ -60,7 +70,9 @@ const Textarea = <TFormData = DefaultFormData>(passedProps: TextareaProps<TFormD
       {...restOfProps}
       onFocus={handleFocus}
       name={props.name as string}
-      class={classnames(styles.textarea, props.class)}
+      class={classnames(styles.textarea, props.class, {
+        [styles.invalid]: formFieldContext.validationState() === FormInputValidationState.INVALID,
+      })}
     />
   );
 };

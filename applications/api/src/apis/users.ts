@@ -153,7 +153,7 @@ export const registerUsersApi = (api: FastifyInstance) => {
         },
       };
 
-      await stytchClient.organizations.members.delete(
+      const deleteResponse = await stytchClient.organizations.members.delete(
         {
           organization_id: request.session.organizationId,
           member_id: request.params.id,

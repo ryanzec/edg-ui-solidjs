@@ -2,7 +2,7 @@ import Button, { ButtonColor } from '$/components/button';
 import { CalloutColor } from '$/components/callout';
 import Table, { TableShape } from '$/components/table';
 import { globalNotificationsStore } from '$/stores/global-notifications.store';
-import type { User } from '$api/types/user';
+import { type User, type UserRole, userRoleNameToDisplayMap } from '$api/types/user';
 import { usersApi } from '$web/apis/users';
 import styles from '$web/components/users-list/users-list.module.css';
 import { authenticationStore } from '$web/stores/authentication.store';
@@ -56,11 +56,15 @@ const UsersList = (props: UsersListProps) => {
             });
           };
 
+          const mapRoleToDisplay = (role: UserRole) => {
+            return userRoleNameToDisplayMap[role.id];
+          };
+
           return (
             <Table.Row>
               <Table.Data class={styles.nameCell}>{row.name}</Table.Data>
               <Table.Data class={styles.emailCell}>{row.email}</Table.Data>
-              <Table.Data>{row.roles.map((role) => role.id).join(', ')}</Table.Data>
+              <Table.Data>{row.roles.map(mapRoleToDisplay).join(', ')}</Table.Data>
               <Table.Data>
                 <Show when={!!props.onSelect}>
                   <Button onClick={handleSelectUser}>S</Button>

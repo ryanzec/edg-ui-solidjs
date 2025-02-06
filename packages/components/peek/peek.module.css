@@ -28,6 +28,7 @@
   padding: var(--space-base);
   min-height: 1px;
   overflow: hidden;
+  height: 100%;
 }
 
 .peek-footer {

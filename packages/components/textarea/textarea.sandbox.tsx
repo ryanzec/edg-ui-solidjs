@@ -3,7 +3,6 @@ import FormField from '$/components/form-field';
 import FormFields from '$/components/form-fields/form-fields';
 import Label from '$/components/label';
 import Peek, { peekComponentUtils } from '$/components/peek';
-import SupportingText, { SupportingTextColor } from '$/components/supporting-text';
 import Textarea from '$/components/textarea';
 import { formStoreUtils } from '$/stores/form.store';
 
@@ -22,10 +21,9 @@ export const Default = () => {
         <Label for="test2">Value</Label>
         <Textarea id="test2">Some value</Textarea>
       </FormField>
-      <FormField>
+      <FormField errors={['supporting text']}>
         <Label for="test3">Error</Label>
         <Textarea id="test3" placeholder="Placeholder value" />
-        <SupportingText supportingText={['supporting text']} color={SupportingTextColor.DANGER} />
       </FormField>
       <FormField>
         <Label for="test4">Disabled</Label>

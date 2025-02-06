@@ -27,16 +27,17 @@ const UsersView = () => {
   };
 
   return (
-    <Page>
-      <Page.Header>
-        Users <Button onClick={handleAddUser}>New User</Button>
-      </Page.Header>
-      <Suspense fallback={<Skeleton />}>
-        <UsersList users={userQuery.users()} onSelect={handleSelectUser} />
-        <h1>User Form</h1>
-        <UserFormPeek peekStore={peekStore} editingUser={activeUser()} />
-      </Suspense>
-    </Page>
+    <>
+      <Page>
+        <Page.Header>
+          Users <Button onClick={handleAddUser}>New User</Button>
+        </Page.Header>
+        <Suspense fallback={<Skeleton />}>
+          <UsersList users={userQuery.data()} onSelect={handleSelectUser} />
+        </Suspense>
+      </Page>
+      <UserFormPeek peekStore={peekStore} editingUser={activeUser()} />
+    </>
   );
 };
 

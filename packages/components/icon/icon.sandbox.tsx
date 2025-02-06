@@ -191,3 +191,7 @@ export const Group = () => {
     </Icon.Group>
   );
 };
+
+export const Clickable = () => {
+  return <Icon icon="x" onClick={() => console.log('clicked')} />;
+};

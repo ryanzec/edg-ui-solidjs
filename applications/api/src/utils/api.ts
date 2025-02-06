@@ -1,6 +1,6 @@
 import type { ResponseStructure } from '$/apis/utils';
 import { ErrorMessage } from '$api/utils/error';
-import { loggerUtils } from '$api/utils/logger';
+import { globalLogger } from '$api/utils/logger';
 import type { FastifyReply } from 'fastify';
 
 const buildDataResponse = <TResponseData>(data: TResponseData): ResponseStructure<TResponseData> => {
@@ -47,7 +47,7 @@ const respondWithError = (response: FastifyReply, overrideOptions: RespondWithEr
   const options = structuredClone(Object.assign({}, defaultRespondWithErrorOptions, overrideOptions));
   const finalError = options.error instanceof Error ? options.error : new Error(options.errorMessage);
 
-  loggerUtils.getLogger().error(finalError);
+  globalLogger?.error(finalError);
 
   return response.code(options.statusCode).send(apiUtils.buildErrorResponse(finalError));
 };

@@ -10,7 +10,7 @@
 import { produce } from 'immer';
 import * as lodash from 'lodash';
 import { type Accessor, type Setter, createSignal, onCleanup, untrack } from 'solid-js';
-import type * as zod from 'zod';
+import * as zod from 'zod';
 
 import { InputType, domUtils } from '$/utils/dom';
 import { zodUtils } from '$/utils/zod';
@@ -260,7 +260,11 @@ const createStore = <TFormData extends object>(
       }
 
       const value = lodash.get(data(), fieldName);
-      const fieldValidationResults = zodUtils.getNestedSchema(fieldName, activeSchema.shape).safeParse(value);
+      // in the edge case that a fields for a form has one validator assigned to it (can happen with highly
+      // dynamic forms) we use an optional string validator that should basic pass anything (which effectively is
+      // no validation)
+      const fieldValidator = zodUtils.getNestedSchema(fieldName, activeSchema.shape) || zod.string().optional();
+      const fieldValidationResults = fieldValidator.safeParse(value);
       let currentErrors = options.currentErrors ?? errors();
 
       if (fieldValidationResults.success === false) {

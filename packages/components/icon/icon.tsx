@@ -43,6 +43,7 @@ const Icon = (passedProps: IconProps) => {
         [styles.warning]: props.color === IconColor.WARNING,
         [styles.danger]: props.color === IconColor.DANGER,
         [styles.inherit]: props.color === IconColor.INHERIT,
+        [styles.clickable]: !!restOfProps.onClick,
       })}
     />
   );
