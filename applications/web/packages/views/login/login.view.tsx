@@ -66,8 +66,8 @@ const LoginView = () => {
 
   return (
     <Page layout={PageLayout.CENTERED}>
-      <FormError errorMessage={authenticationStore.loginError()} />
       <form use:formDirective>
+        <FormError errorMessage={authenticationStore.loginError()} />
         <FormFields>
           <FormField errors={formStore.errors().email?.errors}>
             <Label>Email</Label>

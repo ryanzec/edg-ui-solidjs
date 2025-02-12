@@ -58,6 +58,7 @@ export type ApplicationStore = {
   ) => Promise<void>;
   initialize: () => Promise<void>;
   authenticateInvite: (token: string) => Promise<void>;
+  resetPasswordError: Accessor<string[]>;
 };
 
 const createApplicationStore = (): ApplicationStore => {
@@ -66,6 +67,7 @@ const createApplicationStore = (): ApplicationStore => {
   const [isAuthenticated, setIsAuthenticated] = createSignal<boolean>(false);
   const [currentLoginAction, setCurrentLoginAction] = createSignal<LoginAction>(LoginAction.NONE);
   const [loginError, setLoginError] = createSignal<string[]>([]);
+  const [resetPasswordError, setResetPasswordError] = createSignal<string[]>([]);
 
   const handleAuthenticated = (member?: StytchMember, organization?: StytchOrganization) => {
     let sessionUser: SessionUser | undefined = localStorageCacheUtils.get<SessionUser>(LocalStorageKey.SESSION_USER);
@@ -128,7 +130,7 @@ const createApplicationStore = (): ApplicationStore => {
       });
 
       if (!authenticateResponse.data) {
-        loggerUtils.error(ErrorMessage.UNAUTENTICATED);
+        loggerUtils.error(ErrorMessage.UNAUTHENTICATED);
         handleNotAuthenticated();
 
         return;
@@ -149,7 +151,7 @@ const createApplicationStore = (): ApplicationStore => {
         return;
       }
 
-      setLoginError([ErrorMessage.UNAUTENTICATED]);
+      setLoginError([ErrorMessage.UNAUTHENTICATED]);
     } finally {
       setCurrentLoginAction(LoginAction.NONE);
     }
@@ -201,34 +203,48 @@ const createApplicationStore = (): ApplicationStore => {
   };
 
   const resetPassword = async (formData: AuthenticationResetPasswordRequest, redirectOverride?: RoutePath) => {
-    try {
-      const sendResetPassword = authenticationApi.resetPassword({
-        onSuccess: async (mutateResponse) => {
-          if (!mutateResponse.data) {
-            loggerUtils.error(ErrorMessage.UNAUTENTICATED);
-            handleNotAuthenticated();
+    const sendResetPassword = authenticationApi.resetPassword({
+      onSuccess: async (mutateResponse) => {
+        if (!mutateResponse.data) {
+          loggerUtils.error(ErrorMessage.UNAUTHENTICATED);
+          handleNotAuthenticated();
 
-            globalsStore.getNavigate()(RoutePath.LOGIN);
+          globalsStore.getNavigate()(RoutePath.LOGIN);
 
-            return;
-          }
+          return;
+        }
 
-          const { member, organization } = mutateResponse.data;
+        const { member, organization } = mutateResponse.data;
 
-          // while resetting the password might be done while the user is already authenticated, we want to process
-          // the authentication response to make sure the user is properly updated
-          handleAuthenticated(member, organization);
+        // while resetting the password might be done while the user is already authenticated, we want to process
+        // the authentication response to make sure the user is properly updated
+        handleAuthenticated(member, organization);
 
-          globalsStore.getNavigate()(redirectOverride ?? RoutePath.HOME);
-        },
-      });
+        globalsStore.getNavigate()(redirectOverride ?? RoutePath.HOME);
+      },
+      onError: (_mutateInput, error) => {
+        if (error instanceof Error) {
+          const errorMessage = loggerUtils.getErrorInstanceMessage(error);
 
-      setCurrentLoginAction(LoginAction.RESET_PASSWORD);
+          loggerUtils.error(`error resetting password: ${errorMessage}`);
 
-      await sendResetPassword.mutate(formData);
-    } finally {
-      setCurrentLoginAction(LoginAction.NONE);
-    }
+          setResetPasswordError([errorMessage]);
+          setCurrentLoginAction(LoginAction.NONE);
+
+          return;
+        }
+
+        setResetPasswordError(['unknown error resetting password, try again']);
+        setCurrentLoginAction(LoginAction.NONE);
+      },
+    });
+
+    setResetPasswordError([]);
+    setCurrentLoginAction(LoginAction.RESET_PASSWORD);
+
+    await sendResetPassword.mutate(formData);
+
+    setCurrentLoginAction(LoginAction.NONE);
   };
 
   const authenticateInvite = async (token: string) => {
@@ -274,6 +290,7 @@ const createApplicationStore = (): ApplicationStore => {
     sendResetPassword,
     loginError,
     authenticateInvite,
+    resetPasswordError,
   };
 };
 

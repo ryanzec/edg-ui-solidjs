@@ -1,4 +1,5 @@
 import Button from '$/components/button';
+import FormError from '$/components/form-error';
 import FormField from '$/components/form-field';
 import FormFields from '$/components/form-fields';
 import Input from '$/components/input';
@@ -85,6 +86,7 @@ const ResetPasswordView = () => {
   return (
     <Page layout={PageLayout.CENTERED}>
       <form use:formDirective>
+        <FormError errorMessage={authenticationStore.resetPasswordError()} />
         <FormFields>
           <FormField>
             <Input formData={formStore.data} name="token" type="hidden" />

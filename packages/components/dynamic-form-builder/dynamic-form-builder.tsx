@@ -1,4 +1,5 @@
 import Checkbox from '$/components/checkbox';
+import Combobox, { type ComboboxValueStore, comboboxComponentUtils, type ComboboxOption } from '$/components/combobox';
 import { DynamicFormBuilderFieldType, type DynamicFormBuilderFields } from '$/components/dynamic-form-builder/utils';
 import FormField from '$/components/form-field';
 import Input from '$/components/input';
@@ -6,15 +7,14 @@ import Label from '$/components/label';
 import Radio from '$/components/radio';
 import Textarea from '$/components/textarea';
 import type { CreateFormStoreReturn } from '$/stores/form.store';
-import { loggerUtils } from '$/utils/logger';
 import { ValidationMessageType } from '$/utils/validation';
 import { zodUtils } from '$/utils/zod';
-import { For, Show, createEffect } from 'solid-js';
+import { For, Show, createEffect, createReaction, createSignal } from 'solid-js';
 import type { ZodType } from 'zod';
 import * as zod from 'zod';
 
 export type DynamicFormBuilderProps<TFormData extends object> = {
-  fields: DynamicFormBuilderFields<TFormData>;
+  fields: DynamicFormBuilderFields;
   formStore: CreateFormStoreReturn<TFormData>;
   staticFormSchema?: Record<string, ZodType>;
 };
@@ -36,11 +36,19 @@ const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderP
     DynamicFormBuilderFieldType.PASSWORD,
     DynamicFormBuilderFieldType.NUMBER,
   ];
+  const checkboxTypes: DynamicFormBuilderFieldType[] = [
+    DynamicFormBuilderFieldType.CHECKBOX,
+    DynamicFormBuilderFieldType.CHECKBOX_MULTIPLE,
+  ];
+  const comboboxTypes: DynamicFormBuilderFieldType[] = [DynamicFormBuilderFieldType.SELECT];
+
+  const [comboboxValueStores, setComboboxValueStores] = createSignal<Record<string, ComboboxValueStore>>({});
 
   createEffect(function buildFormSchema() {
     const schema: Record<string, ZodType> = {
       ...props.staticFormSchema,
     };
+    const newComboboxValueStores: Record<string, ComboboxValueStore> = {};
 
     for (const input of props.fields) {
       if (stringTypes.includes(input.type)) {
@@ -64,55 +72,80 @@ const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderP
 
         schema[input.name as string] = zod.string().array().optional();
       }
+
+      if (comboboxTypes.includes(input.type)) {
+        newComboboxValueStores[input.name as string] = comboboxComponentUtils.createValueStore();
+      }
     }
+
+    setComboboxValueStores(newComboboxValueStores);
 
     // @ts-expect-error don't know how of even if it is possible for typescript to understand this code so f-it
     props.formStore.setSchema(zodUtils.schemaForType<TFormData>()(zod.object(schema)));
   });
 
+  const initializeComboboxValues = createReaction(() => {
+    const comboboxFieldNames = Object.keys(comboboxValueStores());
+
+    if (!props.formStore || props.fields.length === 0 || comboboxFieldNames.length === 0) {
+      initializeComboboxValues(() => comboboxValueStores());
+    }
+
+    const formData = props.formStore.data();
+
+    for (const fieldName of comboboxFieldNames) {
+      const fieldStructure = props.fields.find((field) => field.name === fieldName);
+
+      // @ts-expect-error don't know how of even if it is possible for typescript to understand this code so f-it
+      const selectedValue = formData[fieldName];
+
+      if (!selectedValue) {
+        return;
+      }
+
+      const selectedLabel =
+        fieldStructure?.options?.find((option) => option.value === selectedValue)?.label || selectedValue;
+
+      comboboxValueStores()[fieldName].setSelected([
+        {
+          label: selectedLabel,
+          value: selectedValue,
+        },
+      ]);
+    }
+  });
+
+  initializeComboboxValues(() => comboboxValueStores());
+
   return (
     <For each={props.fields}>
       {(field) => {
-        if (inputTypes.includes(field.type)) {
-          return (
-            <FormField errors={props.formStore.errors()[field.name]?.errors}>
-              <Show when={field.label}>
-                <Label>{field.label}</Label>
-              </Show>
+        const fieldName = field.name as keyof TFormData;
+
+        return (
+          <FormField errors={props.formStore.errors()[fieldName]?.errors}>
+            <Show when={field.label}>
+              <Label>{field.label}</Label>
+            </Show>
+            <Show when={inputTypes.includes(field.type)}>
               <Input
                 type={field.type}
-                name={field.name}
+                name={fieldName}
                 formData={props.formStore.data}
                 placeholder={field.placeholder}
               />
-            </FormField>
-          );
-        }
-
-        if (field.type === DynamicFormBuilderFieldType.TEXTAREA) {
-          return (
-            <FormField errors={props.formStore.errors()[field.name]?.errors}>
-              <Show when={field.label}>
-                <Label>{field.label}</Label>
-              </Show>
-              <Textarea name={field.name} formData={props.formStore.data} placeholder={field.placeholder} />
-            </FormField>
-          );
-        }
-
-        if (field.type === DynamicFormBuilderFieldType.RADIO) {
-          return (
-            <FormField errors={props.formStore.errors()[field.name]?.errors}>
-              <Show when={field.label}>
-                <Label>{field.label}</Label>
-              </Show>
+            </Show>
+            <Show when={field.type === DynamicFormBuilderFieldType.TEXTAREA}>
+              <Textarea name={fieldName} formData={props.formStore.data} placeholder={field.placeholder} />
+            </Show>
+            <Show when={field.type === DynamicFormBuilderFieldType.RADIO}>
               <Radio.Group>
                 <For each={field.options}>
                   {(option) => {
                     return (
                       <Radio
                         labelElement={option.label}
-                        name={field.name}
+                        name={fieldName}
                         value={option.value}
                         formData={props.formStore.data}
                       />
@@ -120,26 +153,15 @@ const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderP
                   }}
                 </For>
               </Radio.Group>
-            </FormField>
-          );
-        }
-
-        if (
-          field.type === DynamicFormBuilderFieldType.CHECKBOX ||
-          field.type === DynamicFormBuilderFieldType.CHECKBOX_MULTIPLE
-        ) {
-          return (
-            <FormField errors={props.formStore.errors()[field.name]?.errors}>
-              <Show when={field.label}>
-                <Label>{field.label}</Label>
-              </Show>
+            </Show>
+            <Show when={checkboxTypes.includes(field.type)}>
               <Checkbox.Group>
                 <For each={field.options}>
                   {(option) => {
                     return (
                       <Checkbox
                         labelElement={option.label}
-                        name={field.name}
+                        name={fieldName}
                         value={option.value}
                         formData={props.formStore.data}
                       />
@@ -147,13 +169,26 @@ const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderP
                   }}
                 </For>
               </Checkbox.Group>
-            </FormField>
-          );
-        }
-
-        loggerUtils.error(`attempted to build unsupported input type of '${field.type}' that is not supported`);
-
-        return null;
+            </Show>
+            <Show when={comboboxTypes.includes(field.type) && comboboxValueStores()[field.name]}>
+              <Combobox
+                forceSelection
+                autoShowOptions
+                options={field.options || []}
+                filterOptions={comboboxComponentUtils.excludeSelectedFilter}
+                setSelected={(options: ComboboxOption[]) => {
+                  props.formStore.setValue(fieldName, options[0]?.value ?? '');
+                  comboboxValueStores()[field.name].setSelected(options);
+                }}
+                selected={comboboxValueStores()[field.name].selected()}
+                placeholder={field.placeholder}
+                name={fieldName}
+                selectableComponent={Combobox.SelectableOption}
+                formData={props.formStore.data}
+              />
+            </Show>
+          </FormField>
+        );
       }}
     </For>
   );

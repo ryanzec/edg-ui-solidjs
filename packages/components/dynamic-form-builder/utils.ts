@@ -12,13 +12,14 @@ export const DynamicFormBuilderFieldType = {
   CHECKBOX: 'checkbox',
   CHECKBOX_MULTIPLE: 'checkbox-multiple',
   TEXTAREA: 'textarea',
+  SELECT: 'select',
 } as const;
 
 export type DynamicFormBuilderFieldType =
   (typeof DynamicFormBuilderFieldType)[keyof typeof DynamicFormBuilderFieldType];
 
-export type DynamicFormBuilderField<TFormData> = {
-  name: keyof TFormData;
+export type DynamicFormBuilderField = {
+  name: string;
   label?: string;
   type: DynamicFormBuilderFieldType;
   required?: boolean;
@@ -29,12 +30,19 @@ export type DynamicFormBuilderField<TFormData> = {
   }[];
 };
 
-export type DynamicFormBuilderFields<TFormData> = DynamicFormBuilderField<TFormData>[];
+export type DynamicFormBuilderFields = DynamicFormBuilderField[];
 
-const convertData = <TFormData extends object>(
-  data: TFormData,
-  structure: DynamicFormBuilderFields<TFormData>,
-): TFormData => {
+type ConvertDataOptions = {
+  onlyIncludeStandardStructure?: boolean;
+};
+
+const convertData = (
+  // biome-ignore lint/suspicious/noExplicitAny: generic code needs any
+  data: Record<string, any>,
+  structure: DynamicFormBuilderFields,
+  options: ConvertDataOptions = {},
+  // biome-ignore lint/suspicious/noExplicitAny: generic code needs any
+): Record<string, any> => {
   // biome-ignore lint/suspicious/noExplicitAny: generic code needs any
   const newData: Record<string, any> = {};
 
@@ -47,10 +55,14 @@ const convertData = <TFormData extends object>(
       continue;
     }
 
+    if (options.onlyIncludeStandardStructure && !fieldStructure) {
+      continue;
+    }
+
     newData[key] = data[key];
   }
 
-  return newData as TFormData;
+  return newData;
 };
 
 export const dynamicFormBuilderComponentUtils = {

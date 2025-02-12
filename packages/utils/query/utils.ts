@@ -65,10 +65,10 @@ export const MutationState = {
 
 export type MutationState = (typeof MutationState)[keyof typeof MutationState];
 
-export type MutatorFunction<TMutateInput, TMutateReturn> = (info: TMutateInput) => Promise<TMutateReturn>;
+export type MutatorFunction<TMutateInput, TMutateReturn> = (input: TMutateInput) => Promise<TMutateReturn>;
 
 export type CreateMutationReturns<TMutateInput, TMutateResult> = {
-  mutate: (input: TMutateInput) => Promise<void>;
+  mutate: (input: TMutateInput) => Promise<TMutateResult>;
   state: Accessor<MutationState>;
   result: Accessor<TMutateResult | undefined>;
 };
@@ -107,30 +107,23 @@ export const createMutation = <TMutateInput, TMutateResult>(
       const response = await mutator(input);
 
       batch(() => {
-        // biome-ignore lint/complexity/noBannedTypes: not sure why but need this case to make sure typescript does not complain
+        // not sure why but need this case to make sure typescript does not complain
+        // biome-ignore lint/complexity/noBannedTypes: see above
         setResult(response as Exclude<TMutateResult, Function>);
         setState(MutationState.SUCCESS);
       });
 
       await options.onSuccess?.(response);
 
-      setState(MutationState.IDLE);
+      return response;
     } catch (error) {
       setState(MutationState.ERROR);
 
-      let rethrowError = true;
-
       if (options.onError) {
-        const onErrorResult = await options.onError(input, error);
-
-        rethrowError = onErrorResult !== false;
+        await options.onError(input, error);
       }
 
-      if (rethrowError) {
-        throw error;
-      }
-
-      setState(MutationState.IDLE);
+      throw error;
     }
   };
 

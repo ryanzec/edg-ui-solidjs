@@ -18,6 +18,7 @@ export const RoutePath = {
   RESET_PASSWORD: '/reset-password',
   USERS: '/users',
   ONBOARDING: '/onboarding',
+  INVITE_AUTHENTICATE: '/invite-authenticate',
 } as const;
 
 export type RoutePath = (typeof RoutePath)[keyof typeof RoutePath];

@@ -121,7 +121,10 @@ const processResponseInterceptors = async <TResponse>(
   return modifiedResponse;
 };
 
-const http = async <TResponse>(url: string, requestOptions: HttpRequest<TResponse> = {}): Promise<TResponse> => {
+const http = async <TResponse extends object>(
+  url: string,
+  requestOptions: HttpRequest<TResponse> = {},
+): Promise<TResponse> => {
   const finalRequestOptions = await processRequestInterceptors(requestOptions);
   const { withCredentials, payload, headers, onError, ...defaultOptions } = finalRequestOptions;
 

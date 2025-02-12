@@ -13,7 +13,7 @@ export const registerHealthApi = (api: FastifyInstance) => {
     try {
       return response.status(200).send(apiUtils.buildDataResponse({ status: 'ok' }));
     } catch (error: unknown) {
-      return apiUtils.respondWithError(response, { error });
+      return response.status(apiUtils.getErrorStatusCode(error)).send(apiUtils.buildErrorResponse(error));
     }
   });
 };

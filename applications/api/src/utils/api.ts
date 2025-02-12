@@ -1,7 +1,7 @@
 import type { ResponseStructure } from '$/apis/utils';
-import { ErrorMessage } from '$api/utils/error';
+import { HttpError } from '$/utils/error';
 import { globalLogger } from '$api/utils/logger';
-import type { FastifyReply } from 'fastify';
+import { StytchError } from 'stytch';
 
 const buildDataResponse = <TResponseData>(data: TResponseData): ResponseStructure<TResponseData> => {
   const response: ResponseStructure<TResponseData> = {};
@@ -17,6 +17,26 @@ const buildErrorResponse = <TResponseData>(
   error: unknown,
   errorMessage = 'unknown error',
 ): ResponseStructure<TResponseData> => {
+  globalLogger?.error(error);
+
+  if (error instanceof StytchError) {
+    return {
+      error: {
+        message: error.error_message,
+      },
+    };
+  }
+
+  if (error instanceof HttpError) {
+    const errorMessage = error.context.jsonResponse?.error?.message ?? error.message;
+
+    return {
+      error: {
+        message: errorMessage,
+      },
+    };
+  }
+
   if (error instanceof Error) {
     return {
       error: {
@@ -32,28 +52,20 @@ const buildErrorResponse = <TResponseData>(
   };
 };
 
-type RespondWithErrorOptions = {
-  error?: unknown;
-  errorMessage?: string;
-  statusCode?: number;
-};
+const getErrorStatusCode = (error: unknown): number => {
+  if (error instanceof StytchError) {
+    return error.status_code || 500;
+  }
 
-const defaultRespondWithErrorOptions: Required<Omit<RespondWithErrorOptions, 'error'>> = {
-  errorMessage: ErrorMessage.UNKNOWN,
-  statusCode: 500,
-};
+  if (error instanceof HttpError) {
+    return error.statusCode || 500;
+  }
 
-const respondWithError = (response: FastifyReply, overrideOptions: RespondWithErrorOptions = {}): FastifyReply => {
-  const options = structuredClone(Object.assign({}, defaultRespondWithErrorOptions, overrideOptions));
-  const finalError = options.error instanceof Error ? options.error : new Error(options.errorMessage);
-
-  globalLogger?.error(finalError);
-
-  return response.code(options.statusCode).send(apiUtils.buildErrorResponse(finalError));
+  return 500;
 };
 
 export const apiUtils = {
   buildDataResponse,
   buildErrorResponse,
-  respondWithError,
+  getErrorStatusCode,
 };

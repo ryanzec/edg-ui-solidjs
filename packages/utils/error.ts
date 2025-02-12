@@ -16,8 +16,13 @@ export const httpStatusCodeMessage: Record<HttpStatusCode, string> = {
   [HttpStatusCode.FORBIDDEN]: 'Forbidden',
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: this can be able data so it needs to support any
-export type HttpErrorContext = Record<string, any>;
+export type HttpErrorContext = {
+  // biome-ignore lint/suspicious/noExplicitAny: this can be able data so it needs to support any
+  jsonResponse?: Record<string, any>;
+
+  // biome-ignore lint/suspicious/noExplicitAny: this can be able data so it needs to support any
+  [key: string]: any;
+};
 
 export type HttpErrorOptions = {
   message?: string;
@@ -39,7 +44,7 @@ export class HttpError extends Error {
 }
 
 export const ErrorMessage = {
-  UNAUTENTICATED: 'unable to authenticate',
+  UNAUTHENTICATED: 'unable to authenticate',
 };
 
 export type ErrorMessage = (typeof ErrorMessage)[keyof typeof ErrorMessage];

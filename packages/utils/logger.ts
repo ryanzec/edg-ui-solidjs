@@ -1,4 +1,4 @@
-// proxy methods for some console.* so need to allow any here
+import { HttpError } from '$/utils/error';
 
 // biome-ignore lint/suspicious/noExplicitAny: match native api
 const log = (...args: any) => {
@@ -27,8 +27,17 @@ const error = (...args: any) => {
   console.error(...args);
 };
 
+const getErrorInstanceMessage = (err: Error): string => {
+  if (err instanceof HttpError && err.context.jsonResponse?.error?.message) {
+    return err.context.jsonResponse.error.message;
+  }
+
+  return err.message;
+};
+
 export const loggerUtils = {
   log,
   warn,
   error,
+  getErrorInstanceMessage,
 };

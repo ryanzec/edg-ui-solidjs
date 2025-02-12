@@ -89,7 +89,7 @@ const baseGroupedOptions: ComboboxOption<CustomExtraData>[] = [
 const BasicExample = (props: ExampleProps) => {
   const defaultOptions = props.options ?? baseOptions;
   const [options] = createSignal<ComboboxOption<CustomExtraData>[]>(props.useAsync ? [] : defaultOptions);
-  const comboboxStore = comboboxComponentUtils.createValueStore({
+  const comboboxValueStore = comboboxComponentUtils.createValueStore({
     defaultValue:
       props.selectedOptionIndex !== undefined && props.selectedOptionIndex >= 0
         ? [options()[props.selectedOptionIndex]]
@@ -97,7 +97,7 @@ const BasicExample = (props: ExampleProps) => {
   });
 
   const setSelected = (options: ComboboxOption<CustomExtraData>[]) => {
-    comboboxStore.setSelected(options);
+    comboboxValueStore.setSelected(options);
 
     if (props.onSelected) {
       props.onSelected(options);
@@ -122,7 +122,7 @@ const BasicExample = (props: ExampleProps) => {
           options={options()}
           filterOptions={props.filterOptions ?? comboboxComponentUtils.excludeSelectedFilter}
           setSelected={setSelected}
-          selected={comboboxStore.selected()}
+          selected={comboboxValueStore.selected()}
           placeholder={props.disabled ? 'disabled' : props.placeholder}
           getOptionsAsync={props.useAsync ? getOptionsAsync : undefined}
           name="combobox"
@@ -139,8 +139,8 @@ const BasicExample = (props: ExampleProps) => {
       <Button data-id="set-selected-button" onClick={onSetSelected}>
         manually set selected
       </Button>
-      <Show when={comboboxStore.selected().length > 0}>
-        <div data-id="check-selected-combobox-value">selected item value: {comboboxStore.selected()[0].label}</div>
+      <Show when={comboboxValueStore.selected().length > 0}>
+        <div data-id="check-selected-combobox-value">selected item value: {comboboxValueStore.selected()[0].label}</div>
       </Show>
     </>
   );
@@ -149,7 +149,7 @@ const BasicExample = (props: ExampleProps) => {
 const MultiSelectExample = (props: ExampleProps) => {
   const defaultOptions = props.options ?? baseOptions;
   const [options] = createSignal<ComboboxOption<CustomExtraData>[]>(props.useAsync ? [] : defaultOptions);
-  const comboboxStore = comboboxComponentUtils.createValueStore({
+  const comboboxValueStore = comboboxComponentUtils.createValueStore({
     defaultValue:
       props.selectedOptionIndex !== undefined && props.selectedOptionIndex >= 0
         ? [options()[props.selectedOptionIndex]]
@@ -162,7 +162,7 @@ const MultiSelectExample = (props: ExampleProps) => {
 
   const setSelected = (options: ComboboxOption<CustomExtraData>[]) => {
     console.log(options);
-    comboboxStore.setSelected(options);
+    comboboxValueStore.setSelected(options);
 
     if (props.onSelected) {
       props.onSelected(options);
@@ -187,7 +187,7 @@ const MultiSelectExample = (props: ExampleProps) => {
           options={options()}
           filterOptions={props.filterOptions ?? comboboxComponentUtils.excludeSelectedFilter}
           setSelected={setSelected}
-          selected={comboboxStore.selected()}
+          selected={comboboxValueStore.selected()}
           onDeleteOption={onDeleteOption}
           placeholder={props.disabled ? 'disabled' : props.placeholder}
           getOptionsAsync={props.useAsync ? getOptionsAsync : undefined}
@@ -206,9 +206,9 @@ const MultiSelectExample = (props: ExampleProps) => {
       <Button data-id="set-selected-button" onClick={onSetSelected}>
         manually set selected
       </Button>
-      <Show when={comboboxStore.selected().length > 0}>
+      <Show when={comboboxValueStore.selected().length > 0}>
         <hr />
-        <For each={comboboxStore.selected()}>
+        <For each={comboboxValueStore.selected()}>
           {(selected) => {
             return (
               <div data-id="manual-selected-options">
@@ -538,7 +538,7 @@ export const SingleLarge = () => {
 
 export const SingleChangeLocalOptions = () => {
   const [options, setOptions] = createSignal<ComboboxOption<CustomExtraData>[]>(baseOptions);
-  const comboboxStore = comboboxComponentUtils.createValueStore();
+  const comboboxValueStore = comboboxComponentUtils.createValueStore();
 
   const handleChangeOptions = () => {
     setOptions(options().length > 5 ? baseOptions : baseLargeOptions);
@@ -552,8 +552,8 @@ export const SingleChangeLocalOptions = () => {
           autoShowOptions
           options={options()}
           filterOptions={comboboxComponentUtils.excludeSelectedFilter}
-          setSelected={comboboxStore.setSelected}
-          selected={comboboxStore.selected()}
+          setSelected={comboboxValueStore.setSelected}
+          selected={comboboxValueStore.selected()}
           name="combobox"
           selectedComponent={Combobox.SelectedOption}
           selectableComponent={Combobox.SelectableOption}
@@ -574,15 +574,15 @@ const NameTypingTest = () => {
     },
   });
   const [options] = createSignal<ComboboxOption<CustomExtraData>[]>(baseOptions);
-  const comboboxStore = comboboxComponentUtils.createValueStore();
+  const comboboxValueStore = comboboxComponentUtils.createValueStore();
 
   return (
     <FormField>
       <Label>Label</Label>
       <Combobox
         options={options()}
-        setSelected={comboboxStore.setSelected}
-        selected={comboboxStore.selected()}
+        setSelected={comboboxValueStore.setSelected}
+        selected={comboboxValueStore.selected()}
         // @ts-expect-error should error since it is not part of the form data, intended to test this functionality
         name="combobo"
         formData={formStore.data}
@@ -593,11 +593,15 @@ const NameTypingTest = () => {
 
 export const NoFiltering = () => {
   const [options] = createSignal<ComboboxOption<CustomExtraData>[]>(baseOptions);
-  const comboboxStore = comboboxComponentUtils.createValueStore();
+  const comboboxValueStore = comboboxComponentUtils.createValueStore();
 
   return (
     <FormField>
-      <Combobox options={options()} setSelected={comboboxStore.setSelected} selected={comboboxStore.selected()} />
+      <Combobox
+        options={options()}
+        setSelected={comboboxValueStore.setSelected}
+        selected={comboboxValueStore.selected()}
+      />
     </FormField>
   );
 };

@@ -3,6 +3,7 @@ import { lazy } from 'solid-js';
 
 import AuthenticatedRoute from '$web/components/routing/authenticated-route';
 import UnauthenticatedRoute from '$web/components/routing/unauthenticated-route';
+import { RoutePath } from '$web/utils/application';
 
 const HomeView = lazy(() => import('$web/views/home'));
 const LoginView = lazy(() => import('$web/views/login'));
@@ -16,7 +17,7 @@ const Routes = () => {
   return (
     <>
       <Route
-        path="/login"
+        path={RoutePath.LOGIN}
         component={() => (
           <UnauthenticatedRoute>
             <LoginView />
@@ -24,7 +25,7 @@ const Routes = () => {
         )}
       />
       <Route
-        path="/invite-authenticate"
+        path={RoutePath.INVITE_AUTHENTICATE}
         component={() => (
           <UnauthenticatedRoute>
             <InviteAuthenticateView />
@@ -32,7 +33,7 @@ const Routes = () => {
         )}
       />
       <Route
-        path="/forgot-password"
+        path={RoutePath.FORGOT_PASSWORD}
         component={() => (
           <UnauthenticatedRoute>
             <ForgotPasswordView />
@@ -40,7 +41,7 @@ const Routes = () => {
         )}
       />
       <Route
-        path="/reset-password"
+        path={RoutePath.RESET_PASSWORD}
         component={() => (
           <UnauthenticatedRoute>
             <ResetPasswordView />
@@ -48,7 +49,7 @@ const Routes = () => {
         )}
       />
       <Route
-        path="/home"
+        path={RoutePath.HOME}
         component={() => (
           <AuthenticatedRoute>
             <HomeView />
@@ -56,7 +57,7 @@ const Routes = () => {
         )}
       />
       <Route
-        path="/users"
+        path={RoutePath.USERS}
         component={() => (
           <AuthenticatedRoute>
             <UsersView />
@@ -64,7 +65,7 @@ const Routes = () => {
         )}
       />
       <Route
-        path="/onboarding"
+        path={RoutePath.ONBOARDING}
         component={() => (
           <AuthenticatedRoute>
             <OnboardingView />

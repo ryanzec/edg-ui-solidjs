@@ -94,15 +94,15 @@ const DatePickerMonthYearSelection = (passedProps: DatePickerMonthYearSelectionP
   const defaultMonth = months.find((month) => month.value === props.defaultMonth);
   const defaultYear = years().find((year) => year.value === props.defaultYear);
 
-  const monthComboboxStore = comboboxComponentUtils.createValueStore<ComboboxExtraData>({
+  const monthComboboxValueStore = comboboxComponentUtils.createValueStore<ComboboxExtraData>({
     defaultValue: defaultMonth ? [defaultMonth] : [],
   });
-  const yearComboboxStore = comboboxComponentUtils.createValueStore<ComboboxExtraData>({
+  const yearComboboxValueStore = comboboxComponentUtils.createValueStore<ComboboxExtraData>({
     defaultValue: defaultYear ? [defaultYear] : [],
   });
 
   const setMonth = (options: ComboboxOption[]) => {
-    monthComboboxStore.setSelected(options);
+    monthComboboxValueStore.setSelected(options);
 
     if (props.onSelectMonth) {
       props.onSelectMonth(options[0].value as number);
@@ -110,7 +110,7 @@ const DatePickerMonthYearSelection = (passedProps: DatePickerMonthYearSelectionP
   };
 
   const setYear = (options: ComboboxOption[]) => {
-    yearComboboxStore.setSelected(options);
+    yearComboboxValueStore.setSelected(options);
 
     if (props.onSelectYear) {
       props.onSelectYear(options[0].value as number);
@@ -126,7 +126,7 @@ const DatePickerMonthYearSelection = (passedProps: DatePickerMonthYearSelectionP
           autoShowOptions
           options={months}
           setSelected={setMonth}
-          selected={monthComboboxStore.selected()}
+          selected={monthComboboxValueStore.selected()}
           placeholder="Month"
           name="datePickerMonth"
           selectedComponent={Combobox.SelectedOption}
@@ -139,7 +139,7 @@ const DatePickerMonthYearSelection = (passedProps: DatePickerMonthYearSelectionP
             autoShowOptions
             options={years()}
             setSelected={setYear}
-            selected={yearComboboxStore.selected()}
+            selected={yearComboboxValueStore.selected()}
             placeholder="Year"
             name="datePickerYear"
             selectedComponent={Combobox.SelectedOption}

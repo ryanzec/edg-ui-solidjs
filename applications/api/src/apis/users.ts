@@ -39,7 +39,7 @@ export const registerUsersApi = (api: FastifyInstance) => {
 
       return response.code(200).send(apiUtils.buildDataResponse(users));
     } catch (error: unknown) {
-      return apiUtils.respondWithError(response, { error });
+      return response.status(apiUtils.getErrorStatusCode(error)).send(apiUtils.buildErrorResponse(error));
     }
   });
 
@@ -58,7 +58,7 @@ export const registerUsersApi = (api: FastifyInstance) => {
 
       return response.code(200).send(apiUtils.buildDataResponse(user));
     } catch (error: unknown) {
-      return apiUtils.respondWithError(response, { error });
+      return response.status(apiUtils.getErrorStatusCode(error)).send(apiUtils.buildErrorResponse(error));
     }
   });
 
@@ -96,7 +96,7 @@ export const registerUsersApi = (api: FastifyInstance) => {
 
       return response.code(200).send(apiUtils.buildDataResponse(user));
     } catch (error: unknown) {
-      return apiUtils.respondWithError(response, { error });
+      return response.status(apiUtils.getErrorStatusCode(error)).send(apiUtils.buildErrorResponse(error));
     }
   });
 
@@ -130,7 +130,7 @@ export const registerUsersApi = (api: FastifyInstance) => {
         .code(200)
         .send(apiUtils.buildDataResponse(userUtils.fromStytchMember(updateMemberResponse.member)));
     } catch (error: unknown) {
-      return apiUtils.respondWithError(response, { error });
+      return response.status(apiUtils.getErrorStatusCode(error)).send(apiUtils.buildErrorResponse(error));
     }
   });
 
@@ -163,7 +163,7 @@ export const registerUsersApi = (api: FastifyInstance) => {
 
       return response.code(200).send(apiUtils.buildDataResponse(user));
     } catch (error: unknown) {
-      return apiUtils.respondWithError(response, { error });
+      return response.status(apiUtils.getErrorStatusCode(error)).send(apiUtils.buildErrorResponse(error));
     }
   });
 };
