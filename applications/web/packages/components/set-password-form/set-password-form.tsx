@@ -76,11 +76,11 @@ const SetPasswordForm = () => {
         <FormFields>
           <FormField errors={formStore.errors().password?.errors}>
             <Label>Password</Label>
-            <Input type="text" formData={formStore.data} name="password" autofocus />
+            <Input type="password" formData={formStore.data} name="password" autofocus />
           </FormField>
           <FormField errors={formStore.errors().confirmPassword?.errors}>
             <Label>Confirm Password</Label>
-            <Input type="text" formData={formStore.data} name="confirmPassword" />
+            <Input type="password" formData={formStore.data} name="confirmPassword" />
           </FormField>
           <Button type="submit">Set Password</Button>
         </FormFields>

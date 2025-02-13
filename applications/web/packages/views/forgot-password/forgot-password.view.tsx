@@ -1,9 +1,11 @@
 import Button from '$/components/button';
+import { CalloutColor } from '$/components/callout';
 import FormField from '$/components/form-field';
 import FormFields from '$/components/form-fields';
 import Input from '$/components/input';
 import Label from '$/components/label';
 import { formStoreUtils } from '$/stores/form.store';
+import { globalNotificationsStore } from '$/stores/global-notifications.store';
 import { ValidationMessageType, validationUtils } from '$/utils/validation';
 import { zodUtils } from '$/utils/zod';
 import Page from '$web/components/page';
@@ -30,6 +32,11 @@ const ForgotPasswordView = () => {
 
       // we need to cast since the form system can't know if the data is complete or partial dynamically
       await authenticationStore.sendResetPassword(data as ForgotPasswordFormData);
+
+      globalNotificationsStore.addNotification({
+        message: () => 'Reset password email sent if provided email is valid',
+        color: CalloutColor.SUCCESS,
+      });
 
       return;
     },

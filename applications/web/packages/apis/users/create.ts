@@ -18,7 +18,7 @@ const mutate = async (request: PostUserRequest): Promise<PostUserResponse> => {
 
 const onSuccess = (mutationResponse: PostUserResponse) => {
   queryUtils.triggerMutator<GetUsersResponse>(
-    () => [QueryKey.GET_USERS_LIST],
+    () => [QueryKey.USERS_GET_LIST],
     (oldValue) => {
       return produce<typeof oldValue>(oldValue, (draft) => {
         if (!mutationResponse.data) {

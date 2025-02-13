@@ -14,7 +14,7 @@ const mutate = async (request: DeleteUserRequest): Promise<DeleteUserResponse> =
 
 const onSuccess = (mutationResponse: DeleteUserResponse) => {
   queryUtils.triggerMutator<GetUsersResponse>(
-    () => [QueryKey.GET_USERS_LIST],
+    () => [QueryKey.USERS_GET_LIST],
     (oldValue) => {
       return produce<typeof oldValue>(oldValue, (draft) => {
         if (!draft.data) {

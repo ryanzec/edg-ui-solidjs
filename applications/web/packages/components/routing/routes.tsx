@@ -9,7 +9,7 @@ const HomeView = lazy(() => import('$web/views/home'));
 const LoginView = lazy(() => import('$web/views/login'));
 const ForgotPasswordView = lazy(() => import('$web/views/forgot-password'));
 const ResetPasswordView = lazy(() => import('$web/views/reset-password'));
-const InviteAuthenticateView = lazy(() => import('$web/views/authenticate-invite/authenticate-invite'));
+const InviteAuthenticateView = lazy(() => import('$web/views/authenticate-invite/authenticate-invite.view'));
 const UsersView = lazy(() => import('$web/views/users'));
 const OnboardingView = lazy(() => import('$web/views/onboarding'));
 

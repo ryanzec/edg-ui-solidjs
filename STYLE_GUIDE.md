@@ -268,7 +268,7 @@ There are a number of patterns that are not listed here however are enforced by 
 It is generally consider bad to use enum as they can lead to large build size and unpredictable behavior at runtime so instead of enums, you should do something like this:
 ```tsx
 export const QueryKey = {
-  GET_USERS_LIST: 'get-users-list',
+    USERS_GET_LIST: 'users-get-list',
 } as const;
 
 export type QueryKey = (typeof queryKey)[keyof typeof queryKey];

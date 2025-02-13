@@ -1,6 +1,6 @@
 import { userUtils } from '$api/data-models/user';
 import { ApiRoute } from '$api/types/api';
-import type { User } from '$api/types/user';
+import type { DeleteUserRequest } from '$api/types/user';
 import type {
   DeleteUserResponse,
   GetUserRequest,
@@ -135,7 +135,7 @@ export const registerUsersApi = (api: FastifyInstance) => {
   });
 
   type DeleteUser = {
-    Params: Pick<User, 'id'>;
+    Params: DeleteUserRequest;
     Reply: DeleteUserResponse;
   };
 

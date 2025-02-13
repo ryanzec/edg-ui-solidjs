@@ -18,7 +18,7 @@ const mutate = async ({ id, ...payload }: PatchUserRequest): Promise<PatchUserRe
 
 const onSuccess = (mutationResponse: PatchUserResponse) => {
   queryUtils.triggerMutator<GetUsersResponse>(
-    () => [QueryKey.GET_USERS_LIST],
+    () => [QueryKey.USERS_GET_LIST],
     (oldValue) => {
       return produce<typeof oldValue>(oldValue, (draft) => {
         if (!mutationResponse.data) {

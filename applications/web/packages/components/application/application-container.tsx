@@ -22,7 +22,7 @@ const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
     return sessionUser?.user && userUtils.hasRole(sessionUser.user, roleName);
   };
 
-  useBeforeLeave((event: BeforeLeaveEventArgs) => {
+  useBeforeLeave(function checkNeedsOnboarding(event: BeforeLeaveEventArgs) {
     const sessionUser = authenticationStore.sessionUser();
 
     if (event.to === RoutePath.ONBOARDING || !sessionUser || sessionUser.user.hasPassword) {

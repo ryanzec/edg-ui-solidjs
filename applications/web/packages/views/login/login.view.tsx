@@ -75,7 +75,7 @@ const LoginView = () => {
           </FormField>
           <FormField errors={formStore.errors().password?.errors}>
             <Label>Password</Label>
-            <Input type="text" formData={formStore.data} name="password" selectAllOnFocus />
+            <Input type="password" formData={formStore.data} name="password" selectAllOnFocus />
           </FormField>
           <Button.Group>
             <Button type="submit">Login</Button>

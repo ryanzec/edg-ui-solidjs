@@ -1,5 +1,5 @@
 import Page from '$web/components/page';
-import SetPasswordForm from '$web/components/set-password-form/set-password-form';
+import SetPasswordForm from '$web/components/set-password-form';
 import { authenticationStore } from '$web/stores/authentication.store';
 import { RoutePath } from '$web/utils/application';
 import { useNavigate } from '@solidjs/router';

@@ -1,5 +1,5 @@
 export const QueryKey = {
-  GET_USERS_LIST: 'get-users-list',
+  USERS_GET_LIST: 'user-get-list',
 } as const;
 
 export type QueryKey = (typeof QueryKey)[keyof typeof QueryKey];

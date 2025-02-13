@@ -3,14 +3,14 @@ import { peekComponentUtils } from '$/components/peek';
 import Skeleton from '$/components/skeleton';
 import { usersApi } from '$web/apis/users';
 import Page from '$web/components/page';
-import UserFormPeek from '$web/components/user-form-peek/user-form-peek';
+import UserFormPeek from '$web/components/user-form-peek';
 import UsersList, { type UsersListProps } from '$web/components/users-list';
 import { Suspense, createSignal } from 'solid-js';
 
 type UsersListUser = UsersListProps['users'][0];
 
 const UsersView = () => {
-  const userQuery = usersApi.getUsers();
+  const userQuery = usersApi.getList();
 
   const peekStore = peekComponentUtils.createStore();
 
