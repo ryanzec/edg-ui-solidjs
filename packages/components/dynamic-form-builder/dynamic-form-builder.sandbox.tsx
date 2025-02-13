@@ -141,7 +141,7 @@ export const AllSupportedFieldTypes = () => {
     <div data-id="container">
       <form use:formDirective>
         <FormFields>
-          <FormField>
+          <FormField errors={formStore.errors().dynamicFieldsSelection?.errors}>
             <Combobox
               autoShowOptions
               options={[
@@ -177,6 +177,10 @@ export const AllSupportedFieldTypes = () => {
           </Button>
         </div>
       </form>
+      <div>touched fields</div>
+      <pre>{JSON.stringify(formStore.touchedFields(), null, 2)}</pre>
+      <div>errors</div>
+      <pre>{JSON.stringify(formStore.errors(), null, 2)}</pre>
     </div>
   );
 };
@@ -244,6 +248,10 @@ export const PrePopulated = () => {
           </Button>
         </div>
       </form>
+      <div>touched fields</div>
+      <pre>{JSON.stringify(formStore.touchedFields(), null, 2)}</pre>
+      <div>errors</div>
+      <pre>{JSON.stringify(formStore.errors(), null, 2)}</pre>
     </div>
   );
 };

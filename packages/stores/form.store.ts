@@ -9,7 +9,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 import { produce } from 'immer';
 import * as lodash from 'lodash';
-import { type Accessor, type Setter, createSignal, onCleanup, untrack } from 'solid-js';
+import { type Accessor, createSignal, onCleanup, untrack } from 'solid-js';
 import * as zod from 'zod';
 
 import { InputType, domUtils } from '$/utils/dom';
@@ -127,9 +127,7 @@ export type CreateFormStoreReturn<TFormData extends object> = {
   updateValidationErrors: (fieldName?: string) => boolean;
   isValid: () => boolean;
   watch: (watcher: FormWatcher<TFormData>) => FormWatchReturns;
-
-  // since this is a generic system, we need to allow any
-  setSchema: Setter<zod.ZodObject<{ [key in keyof TFormData]: zod.ZodTypeAny }> | undefined>;
+  setSchema: (newSchema: zod.ZodObject<{ [key in keyof TFormData]: zod.ZodTypeAny }> | undefined) => void;
 
   // make it easier to submit the form when the button can't be in the <form> element
   submitForm: () => void;
@@ -161,9 +159,9 @@ const createStore = <TFormData extends object>(
   const defaultSchema = formOptions.buildSchema ? formOptions.buildSchema(data) : formOptions.schema;
 
   // seems like any is needed to support the zod schema type
-  const [schema, setSchema] = createSignal<zod.ZodObject<{ [key in keyof TFormData]: zod.ZodTypeAny }> | undefined>(
-    defaultSchema,
-  );
+  const [schema, internalSetSchema] = createSignal<
+    zod.ZodObject<{ [key in keyof TFormData]: zod.ZodTypeAny }> | undefined
+  >(defaultSchema);
 
   const isTouched = (name: keyof TFormData) => {
     return touchedFields().includes(name);
@@ -187,6 +185,17 @@ const createStore = <TFormData extends object>(
 
   const removeAsDirty = (name: keyof TFormData) => {
     setDirtyFields((previousTouchedFields) => previousTouchedFields.filter((fieldName) => fieldName !== name));
+  };
+
+  const setSchema = (newSchema: zod.ZodObject<{ [key in keyof TFormData]: zod.ZodTypeAny }> | undefined) => {
+    // since updating error requires using touchedFields, we need to use untrack to avoid infinite loop
+    untrack(() => {
+      internalSetSchema(newSchema);
+
+      for (const touchedField of touchedFields()) {
+        updateValidationErrors(touchedField as string);
+      }
+    });
   };
 
   type TriggerValueChangeOptions = {
