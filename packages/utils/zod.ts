@@ -44,8 +44,9 @@ const getNestedSchema = (path: string, shape: any): zod.ZodType => {
       continue;
     }
 
-    // arrays need the additional
-    currentSchema = currentSchema[currentPathPart].element.shape;
+    // we need to have this check as array of a complex type (like an object) vs a simple type (like a string)
+    // have different structures that need to be accounted for
+    currentSchema = currentSchema[currentPathPart].element?.shape || currentSchema[currentPathPart];
 
     // we bump up the next path part since we have already dealt with the array portion
     i++;

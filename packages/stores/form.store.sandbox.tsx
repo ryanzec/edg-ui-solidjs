@@ -666,7 +666,7 @@ export const NestedArrayFields = () => {
                         type="button"
                         onclick={() => {
                           for (let i = 0; i < 50; i++) {
-                            formStore.addArrayField(`array.${index}.nested`, {});
+                            formStore.addArrayField(`array.${index}.nested` as keyof NestedArrayFormData, {});
                           }
                         }}
                       >
@@ -721,7 +721,12 @@ export const NestedArrayFields = () => {
                               <Button
                                 // @todo(!!!) make danger when implemented
                                 data-id="remove-array-field-button"
-                                onclick={() => formStore.removeArrayField(`array.${index}.nested`, index2)}
+                                onclick={() =>
+                                  formStore.removeArrayField(
+                                    `array.${index}.nested` as keyof NestedArrayFormData,
+                                    index2,
+                                  )
+                                }
                               >
                                 REMOVE
                               </Button>

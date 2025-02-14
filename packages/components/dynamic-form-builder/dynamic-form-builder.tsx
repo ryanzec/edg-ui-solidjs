@@ -30,6 +30,7 @@ const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderP
   const arrayStringTypes: DynamicFormBuilderFieldType[] = [
     DynamicFormBuilderFieldType.CHECKBOX,
     DynamicFormBuilderFieldType.CHECKBOX_MULTIPLE,
+    DynamicFormBuilderFieldType.TEXT_MULTIPLE,
   ];
   const inputTypes: DynamicFormBuilderFieldType[] = [
     DynamicFormBuilderFieldType.TEXT,
@@ -65,12 +66,14 @@ const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderP
 
       if (arrayStringTypes.includes(input.type)) {
         if (input.required) {
-          schema[input.name as string] = zod.string().array().min(1, ValidationMessageType.REQUIRED);
+          schema[input.name as string] = zod
+            .array(zod.string().min(1, ValidationMessageType.REQUIRED))
+            .min(1, ValidationMessageType.REQUIRED);
 
           continue;
         }
 
-        schema[input.name as string] = zod.string().array().optional();
+        schema[input.name as string] = zod.array(zod.string().min(1, ValidationMessageType.REQUIRED)).optional();
       }
 
       if (comboboxTypes.includes(input.type)) {
@@ -186,6 +189,9 @@ const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderP
                 selectableComponent={Combobox.SelectableOption}
                 formData={props.formStore.data}
               />
+            </Show>
+            <Show when={field.type === DynamicFormBuilderFieldType.TEXT_MULTIPLE}>
+              <Input.Multiple formStore={props.formStore} fieldName={fieldName} />
             </Show>
           </FormField>
         );

@@ -40,8 +40,11 @@ export type FormTouchedMode = (typeof FormTouchedMode)[keyof typeof FormTouchedM
 
 export type FormDirective = (element: HTMLFormElement) => void;
 
-// this split allows for recursive typing since arrays and have array which can have arrays and so on
 type FormArrayFieldErrors = {
+  // this is to support array of simple types
+  errors?: string[];
+} & {
+  // this split allows for recursive typing since arrays and have array which can have arrays and so on
   [key: string]: {
     errors: string[];
     [key: number]: FormArrayFieldErrors;
@@ -109,12 +112,8 @@ type SetValueOption = {
 export type CreateFormStoreReturn<TFormData extends object> = {
   formDirective: FormDirective;
   data: Accessor<Partial<TFormData>>;
-  // @todo(refactor) would prefer a type that matched the string to what is can be based on the TFormData but not
-  // @todo(refactor) sure if that is possible
-  addArrayField: (name: string, value?: Record<string, unknown>) => void;
-  // @todo(refactor) would prefer a type that matched the string to what is can be based on the TFormData but not
-  // @todo(refactor) sure if that is possible
-  removeArrayField: (name: string, removeIndex: number) => void;
+  addArrayField: (name: keyof TFormData, value?: unknown) => void;
+  removeArrayField: (name: keyof TFormData, removeIndex: number) => void;
   setValue: FormSetValue<TFormData>;
   setValues: FormSetValues<TFormData>;
   errors: Accessor<FormErrorsData<TFormData>>;
@@ -276,15 +275,15 @@ const createStore = <TFormData extends object>(
       const fieldValidationResults = fieldValidator.safeParse(value);
       let currentErrors = options.currentErrors ?? errors();
 
+      // we need to be explicit with the field we change so that if this field is an array field, we don't modify
+      // the array item validations if there are any
       if (fieldValidationResults.success === false) {
         currentErrors = produce(currentErrors, (draft) => {
-          lodash.set(draft, fieldName, {
-            errors: fieldValidationResults.error.format()._errors,
-          });
+          lodash.set(draft, `${fieldName}.errors`, fieldValidationResults.error.format()._errors);
         });
       } else {
         currentErrors = produce(currentErrors, (draft) => {
-          lodash.unset(draft, fieldName);
+          lodash.unset(draft, `${fieldName}.errors`);
         });
       }
 
@@ -676,7 +675,8 @@ const createStore = <TFormData extends object>(
     });
   };
 
-  const addArrayField = (name: string, value: unknown) => {
+  //
+  const addArrayField = (name: keyof TFormData, value: unknown) => {
     const previousValue = lodash.get(data(), name);
 
     setData((oldValue) =>
@@ -690,11 +690,12 @@ const createStore = <TFormData extends object>(
       }),
     );
 
-    triggerValueChanged(name, lodash.get(data(), name), previousValue);
+    triggerValueChanged(name as string, lodash.get(data(), name), previousValue);
   };
 
-  const removeArrayField = (name: string, removeIndex: number) => {
+  const removeArrayField = (name: keyof TFormData, removeIndex: number) => {
     const previousValue = lodash.get(data(), name);
+    const nameAsString = name as string;
 
     setData((oldValue) =>
       produce(oldValue, (draft) => {
@@ -702,7 +703,7 @@ const createStore = <TFormData extends object>(
         // not properly work ith arrays
         // reference: https://github.com/lodash/lodash/issues/5630
         // biome-ignore lint/suspicious/noExplicitAny: to avoid typescript issues
-        const arrayValue = lodash.get(draft, `${name}`) as any[];
+        const arrayValue = lodash.get(draft, `${nameAsString}`) as any[];
 
         arrayValue.splice(removeIndex, 1);
 
@@ -711,7 +712,9 @@ const createStore = <TFormData extends object>(
     );
 
     setTouchedFields((touchedValues) => {
-      return touchedValues.filter((touchedValue) => (touchedValue as string).indexOf(`${name}.${removeIndex}`) !== 0);
+      return touchedValues.filter(
+        (touchedValue) => (touchedValue as string).indexOf(`${nameAsString}.${removeIndex}`) !== 0,
+      );
     });
 
     // biome-ignore lint/suspicious/noExplicitAny: to avoid typescript issues
@@ -720,13 +723,13 @@ const createStore = <TFormData extends object>(
     let touchedAsString = JSON.stringify(touchedFields());
 
     for (let i = removeIndex + 1; i <= currentValue.length; i++) {
-      touchedAsString = touchedAsString.replaceAll(`${name}.${i}`, `${name}.${i - 1}`);
+      touchedAsString = touchedAsString.replaceAll(`${nameAsString}.${i}`, `${nameAsString}.${i - 1}`);
     }
 
     setTouchedFields(JSON.parse(touchedAsString));
 
-    updateElementsFromStore(`[name^="${name}"]`);
-    triggerValueChanged(name, currentValue, previousValue, { isTouched: true });
+    updateElementsFromStore(`[name^="${nameAsString}"]`);
+    triggerValueChanged(nameAsString, currentValue, previousValue, { isTouched: true });
   };
 
   const setValue: FormSetValue<TFormData> = (name: keyof TFormData, value: unknown, options: SetValueOption = {}) => {

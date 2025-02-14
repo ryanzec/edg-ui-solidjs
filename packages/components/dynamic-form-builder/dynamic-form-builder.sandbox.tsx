@@ -107,6 +107,12 @@ const formFields: DynamicFormBuilderFields = [
       },
     ],
   },
+  {
+    name: 'multipleText',
+    label: 'Multiple Text',
+    type: DynamicFormBuilderFieldType.TEXT_MULTIPLE,
+    required: true,
+  },
 ];
 const formFieldsNoRequired: DynamicFormBuilderFields = formFields.map((field) => {
   return {

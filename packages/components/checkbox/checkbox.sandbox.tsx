@@ -1,7 +1,7 @@
 import { onMount } from 'solid-js';
 import * as zod from 'zod';
 
-import Checkbox from '$/components/checkbox/index';
+import Checkbox from '$/components/checkbox';
 import FormField from '$/components/form-field';
 import { formStoreUtils } from '$/stores/form.store';
 import { ValidationMessageType, validationUtils } from '$/utils/validation';

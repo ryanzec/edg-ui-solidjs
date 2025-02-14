@@ -6,6 +6,7 @@
 // - array of type
 export const DynamicFormBuilderFieldType = {
   TEXT: 'text',
+  TEXT_MULTIPLE: 'text-multiple',
   PASSWORD: 'password',
   NUMBER: 'number',
   RADIO: 'radio',
