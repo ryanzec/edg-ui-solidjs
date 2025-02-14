@@ -4,14 +4,13 @@ import { Portal } from 'solid-js/web';
 
 import Button, { ButtonColor, ButtonShape, ButtonVariant } from '$/components/button';
 import styles from '$/components/dialog/dialog.module.css';
-import { DialogFooterAlignment } from '$/components/dialog/utils';
+import { DialogFooterAlignment, type DialogStore } from '$/components/dialog/utils';
 import Icon from '$/components/icon';
 import Overlay from '$/components/overlay';
 import { Key } from '$/types/generic';
 
 export type DialogProps = JSX.HTMLAttributes<HTMLDivElement> & {
-  isOpen: boolean;
-  closeDialog: () => void;
+  dialogStore: DialogStore;
   headerElement?: JSX.Element;
   footerElement?: JSX.Element;
   footerAlignment?: DialogFooterAlignment;
@@ -31,8 +30,7 @@ const Dialog = (passedProps: DialogProps) => {
   const [props, restOfProps] = splitProps(mergeProps(defaultDialogProps, passedProps), [
     'children',
     'class',
-    'isOpen',
-    'closeDialog',
+    'dialogStore',
     'headerElement',
     'footerElement',
     'footerAlignment',
@@ -46,7 +44,7 @@ const Dialog = (passedProps: DialogProps) => {
         return;
       }
 
-      props.closeDialog();
+      props.dialogStore.close();
     };
 
     document.addEventListener('keydown', keyDownListener);
@@ -61,7 +59,7 @@ const Dialog = (passedProps: DialogProps) => {
       return;
     }
 
-    props.closeDialog();
+    props.dialogStore.close();
   };
 
   const handleCloseDialog = () => {
@@ -69,11 +67,11 @@ const Dialog = (passedProps: DialogProps) => {
       return;
     }
 
-    props.closeDialog();
+    props.dialogStore.close();
   };
 
   return (
-    <Show when={props.isOpen}>
+    <Show when={props.dialogStore.isOpened()}>
       <Portal>
         <div ref={dialogRef} data-id="dialog" {...restOfProps} class={classnames(styles.dialog, props.class)}>
           <div class={styles.dialogHeader}>

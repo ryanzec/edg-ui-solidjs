@@ -6,7 +6,7 @@ import { type JSX, mergeProps, splitProps } from 'solid-js';
 
 export type DialogDeleteConfirmationProps<TItem> = Omit<
   DialogProps,
-  'isOpen' | 'closeDialog' | 'footerElement' | 'closeOnEscape' | 'closeOnClickOverlay'
+  'isOpened' | 'closeDialog' | 'footerElement' | 'closeOnEscape' | 'closeOnClickOverlay'
 > & {
   selectedItem: TItem;
   dialogStore: DialogStore;
@@ -31,14 +31,13 @@ const DialogDeleteConfirmation = <TItem,>(passedProp: DialogDeleteConfirmationPr
   return (
     <Dialog
       {...restOfProps}
-      isOpen={props.dialogStore.isOpen()}
-      closeDialog={props.dialogStore.closeDialog}
+      dialogStore={props.dialogStore}
       closeEnabled={props.isProcessing ? false : defaultDialogProps.closeEnabled}
       footerElement={
         <Button.Group>
           <Button
             disabled={props.isProcessing}
-            onClick={props.dialogStore.closeDialog}
+            onClick={props.dialogStore.close}
             color={ButtonColor.NEUTRAL}
             variant={ButtonVariant.GHOST}
           >

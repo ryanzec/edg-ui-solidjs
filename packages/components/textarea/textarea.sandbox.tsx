@@ -49,7 +49,7 @@ export const AutoFocus = () => {
       <FormField>
         <Textarea autofocus />
       </FormField>
-      <Button onClick={() => peekStore.setIsOpened(true)}>open peek</Button>
+      <Button onClick={() => peekStore.open()}>open peek</Button>
       <Peek peekStore={peekStore}>
         <Peek.Header title="Peek Header" />
         <Peek.Content>

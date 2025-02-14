@@ -17,27 +17,33 @@ type CreateStoreParams = {
 export type TooltipStore = {
   id: Accessor<string>;
   isEnabled: Accessor<boolean>;
-  toggle: (overrideIsEnabled?: boolean) => void;
+  toggle: () => void;
+  show: () => void;
+  hide: () => void;
 };
 
 const createStore = (params: CreateStoreParams = {}): TooltipStore => {
   const [isEnabled, setIsEnabled] = createSignal(params.defaultIsEnabled ?? false);
   const [id] = createSignal<string>(params.id || uuid.v4());
 
-  const toggle = (overrideIsEnabled?: boolean) => {
-    if (overrideIsEnabled === true || overrideIsEnabled === false) {
-      setIsEnabled(overrideIsEnabled);
-
-      return;
-    }
-
+  const toggle = () => {
     setIsEnabled(!isEnabled());
+  };
+
+  const show = () => {
+    setIsEnabled(true);
+  };
+
+  const hide = () => {
+    setIsEnabled(false);
   };
 
   return {
     isEnabled,
     toggle,
     id,
+    show,
+    hide,
   };
 };
 

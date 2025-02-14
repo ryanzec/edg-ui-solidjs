@@ -21,17 +21,17 @@ const UsersView = () => {
 
   const handleAddUser = () => {
     setActiveUser(undefined);
-    editPeekStore.setIsOpened(true);
+    editPeekStore.open();
   };
 
   const handleEditUser = (user: UsersListUser) => {
     setActiveUser(user);
-    editPeekStore.setIsOpened(true);
+    editPeekStore.open();
   };
 
   const handleRemoveUser = (user: UsersListUser) => {
     setActiveUser(user);
-    deleteDialogStore.openDialog();
+    deleteDialogStore.open();
   };
 
   return (

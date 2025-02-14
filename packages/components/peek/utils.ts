@@ -6,26 +6,31 @@ type CreateStoreParams = {
 
 export type PeekStore = {
   isOpened: Accessor<boolean>;
-  toggle: (overrideIsEnabled?: boolean) => void;
-  setIsOpened: (isOpened: boolean) => void;
+  toggle: () => void;
+  open: () => void;
+  close: () => void;
 };
 
 const createStore = (params: CreateStoreParams = {}): PeekStore => {
   const [isOpened, setIsOpened] = createSignal(params.defaultIsOpened ?? false);
 
-  const toggle = (overrideIsEnabled?: boolean) => {
-    if (overrideIsEnabled === true || overrideIsEnabled === false) {
-      setIsOpened(overrideIsEnabled);
-      return;
-    }
-
+  const toggle = () => {
     setIsOpened(!isOpened());
+  };
+
+  const open = () => {
+    setIsOpened(true);
+  };
+
+  const close = () => {
+    setIsOpened(false);
   };
 
   return {
     isOpened,
     toggle,
-    setIsOpened,
+    open,
+    close,
   };
 };
 

@@ -25,14 +25,14 @@ const UserDeleteConfirmationDialog = (props: UserDeleteConfirmationDialogProps) 
 
   const processDelete = async () => {
     if (!props.selectedUser) {
-      props.dialogStore.closeDialog();
+      props.dialogStore.close();
 
       return;
     }
 
     await deleteUserMutation.mutate({ id: props.selectedUser.id });
     props.onDeleted?.(props.selectedUser);
-    props.dialogStore.closeDialog();
+    props.dialogStore.close();
   };
 
   return (

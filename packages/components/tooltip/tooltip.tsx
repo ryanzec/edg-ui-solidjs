@@ -37,11 +37,11 @@ const Tooltip = (passedProps: TooltipProps) => {
   const [containerElement, setContainerElement] = createSignal<HTMLDivElement>();
 
   const enabledTooltip = () => {
-    props.store.toggle(true);
+    props.store.show();
   };
 
   const disableToolTip = () => {
-    props.store.toggle(false);
+    props.store.hide();
   };
 
   const toggleTooltip = () => {

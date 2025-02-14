@@ -144,7 +144,7 @@ const Combobox = <TData extends ComboboxExtraData, TFormData = DefaultFormData>(
   };
 
   createEffect(function updateDisplayOptionsInGroupFormat() {
-    if (comboboxStore.store.isOpen === false) {
+    if (comboboxStore.store.isOpened === false) {
       batch(() => {
         clearFinalGroupedOptionsStore();
         setGroupedOptionKeys([]);
@@ -214,7 +214,7 @@ const Combobox = <TData extends ComboboxExtraData, TFormData = DefaultFormData>(
           {...comboboxStore.getInputProps()}
           readonly={!props.filterOptions}
           includeReadonlyStyles={false}
-          inputContainerClass={classnames({ [styles.inputContainer]: comboboxStore.store.isOpen })}
+          inputContainerClass={classnames({ [styles.inputContainer]: comboboxStore.store.isOpened })}
           class={styles.input}
           type="text"
           data-uncontrolled-value="true"
@@ -240,7 +240,7 @@ const Combobox = <TData extends ComboboxExtraData, TFormData = DefaultFormData>(
             props.disabled ? null : (
               <div class={styles.inputActions}>
                 <Show
-                  when={props.showClearIcon && !comboboxStore.store.isOpen && comboboxStore.inputHasClearableValue()}
+                  when={props.showClearIcon && !comboboxStore.store.isOpened && comboboxStore.inputHasClearableValue()}
                 >
                   <Icon data-id="clear-icon-trigger" icon="x" onClick={handleClearValue} />
                 </Show>
@@ -251,13 +251,13 @@ const Combobox = <TData extends ComboboxExtraData, TFormData = DefaultFormData>(
           postItemIsClickable
         />
       </button>
-      <Show when={comboboxStore.store.isOpen}>
+      <Show when={comboboxStore.store.isOpened}>
         <button type="button">
           <List
             data-id="selectable-options"
             ref={comboboxStore.optionsContainerRef}
             class={classnames(styles.list, {
-              [styles.openedList]: comboboxStore.store.isOpen,
+              [styles.openedList]: comboboxStore.store.isOpened,
             })}
           >
             <ScrollArea>

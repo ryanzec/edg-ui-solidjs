@@ -12,14 +12,13 @@ export const Default = () => {
 
   return (
     <div>
-      <Button onclick={dialogStore.openDialog}>Toggle Dialog</Button>
+      <Button onclick={dialogStore.open}>Toggle Dialog</Button>
       <Dialog
-        isOpen={dialogStore.isOpen()}
-        closeDialog={dialogStore.closeDialog}
+        dialogStore={dialogStore}
         headerElement="Header"
         footerElement={
           <Button.Group>
-            <Button variant={ButtonVariant.GHOST} onClick={() => dialogStore.closeDialog()}>
+            <Button variant={ButtonVariant.GHOST} onClick={() => dialogStore.close()}>
               Close
             </Button>
             <Button color={ButtonColor.BRAND} onClick={() => alert('test')}>
@@ -39,15 +38,14 @@ export const CloseOnClickOverlay = () => {
 
   return (
     <div>
-      <Button onclick={dialogStore.openDialog}>Toggle Dialog</Button>
+      <Button onclick={dialogStore.open}>Toggle Dialog</Button>
       <Dialog
-        isOpen={dialogStore.isOpen()}
-        closeDialog={dialogStore.closeDialog}
+        dialogStore={dialogStore}
         headerElement="Header"
         closeOnClickOverlay
         footerElement={
           <Button.Group>
-            <Button variant={ButtonVariant.GHOST} onClick={() => dialogStore.closeDialog()}>
+            <Button variant={ButtonVariant.GHOST} onClick={() => dialogStore.close()}>
               Close
             </Button>
             <Button color={ButtonColor.BRAND} onClick={() => alert('test')}>
@@ -82,12 +80,12 @@ export const DeleteConfirmation = () => {
 
   const processDelete = (item: Item) => {
     console.log('delete', item);
-    dialogStore.closeDialog();
+    dialogStore.close();
   };
 
   return (
     <div>
-      <Button onclick={dialogStore.openDialog}>Toggle Dialog</Button>
+      <Button onclick={dialogStore.open}>Toggle Dialog</Button>
       <Dialog.DeleteConfirmation
         dialogStore={dialogStore}
         selectedItem={item}

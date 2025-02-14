@@ -132,7 +132,7 @@ export type GetOptionsContainerPropsReturns = {
 export type ComboboxStore<TData extends ComboboxExtraData> = {
   disabled: boolean;
   inputValue: string;
-  isOpen: boolean;
+  isOpened: boolean;
   displayOptions: ComboboxOption<TData>[];
   focusedOptionIndex?: number;
   inputRef?: HTMLInputElement;
@@ -154,7 +154,7 @@ const getComboboxStoreDefaults = <TData extends ComboboxExtraData>() => {
   return {
     disabled: false,
     inputValue: '',
-    isOpen: false,
+    isOpened: false,
     displayOptions: [],
     keepFocusOnBlur: false,
     isLoadingAsyncOptions: false,
@@ -238,7 +238,7 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
     return props.selected.map((option) => option.value);
   };
 
-  const getDefaultIsOpen = () => {
+  const getDefaultIsOpened = () => {
     return !!props.autoShowOptions || !!props.getOptionsAsync;
   };
 
@@ -250,7 +250,7 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
     }
 
     if (options.openOptions) {
-      setComboboxStore('isOpen', true);
+      setComboboxStore('isOpened', true);
     }
   };
 
@@ -263,7 +263,7 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
           store.inputValue = !props.isMulti && props.selected.length > 0 ? props.selected[0].label : '';
         }
 
-        store.isOpen = false;
+        store.isOpened = false;
         store.focusedOptionIndex = undefined;
       }),
     );
@@ -372,7 +372,7 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
 
     setComboboxStore(
       produce((store) => {
-        store.isOpen = optionAfterClear !== undefined ? optionAfterClear : getDefaultIsOpen();
+        store.isOpened = optionAfterClear !== undefined ? optionAfterClear : getDefaultIsOpened();
         store.inputValue = '';
         store.focusedOptionIndex = undefined;
       }),
@@ -398,7 +398,7 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
 
     // we split this update out because the change to is opened will cause the options to update in the dom which is
     // required for the update to the focused option to work properly
-    setComboboxStore('isOpen', true);
+    setComboboxStore('isOpened', true);
     setComboboxStore('focusedOptionIndex', newOptionIndex);
   };
 
@@ -414,14 +414,14 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
     if (!props.isMulti) {
       const foundOptionIndex = getDisplayOptionIndex(props.selected[0]);
 
-      if (getDefaultIsOpen() && foundOptionIndex !== -1) {
+      if (getDefaultIsOpened() && foundOptionIndex !== -1) {
         setFocusedOption(foundOptionIndex);
       }
     }
 
     setComboboxStore(
       produce((store) => {
-        store.isOpen = getDefaultIsOpen();
+        store.isOpened = getDefaultIsOpened();
 
         // if we are getting the options from an async source then we don't need to so this since that process
         // happens own its own and ignores the statically passed in options
@@ -528,7 +528,7 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
         if (props.isMulti) {
           setComboboxStore(
             produce((store) => {
-              store.isOpen = getDefaultIsOpen();
+              store.isOpened = getDefaultIsOpened();
             }),
           );
 
@@ -549,8 +549,8 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
 
     setComboboxStore(
       produce((store) => {
-        const shouldBeOpened = event.currentTarget.value !== '' || getDefaultIsOpen();
-        store.isOpen = shouldBeOpened;
+        const shouldBeOpened = event.currentTarget.value !== '' || getDefaultIsOpened();
+        store.isOpened = shouldBeOpened;
         store.inputValue = event.currentTarget.value;
 
         if (!shouldBeOpened) {
@@ -714,7 +714,7 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
   };
 
   createEffect(function scrollToSelectedValue() {
-    if (!comboboxStore.isOpen || !comboboxStore.optionsContainerRef || props.isMulti) {
+    if (!comboboxStore.isOpened || !comboboxStore.optionsContainerRef || props.isMulti) {
       return;
     }
 
@@ -803,7 +803,7 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
     getDisplayOptionIndex,
     getSelectedOptionIndex,
     getSelectedValues,
-    getDefaultIsOpen,
+    getDefaultIsOpened,
     triggerCombobox,
     closeCombobox,
     getHighlightedValue,

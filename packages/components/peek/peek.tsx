@@ -46,7 +46,7 @@ const Peek = (passedProps: PeekProps) => {
       return;
     }
 
-    props.peekStore.setIsOpened(false);
+    props.peekStore.close();
   };
 
   const handleKeyUp = (event: KeyboardEvent) => {
@@ -54,7 +54,7 @@ const Peek = (passedProps: PeekProps) => {
       return;
     }
 
-    props.peekStore.setIsOpened(false);
+    props.peekStore.close();
   };
 
   const handleWindowMouseMove = (event: MouseEvent) => {
@@ -122,7 +122,7 @@ const Peek = (passedProps: PeekProps) => {
       return;
     }
 
-    props.peekStore.setIsOpened(false);
+    props.peekStore.close();
   };
 
   const setupCloseEvents = (element: HTMLElement) => {

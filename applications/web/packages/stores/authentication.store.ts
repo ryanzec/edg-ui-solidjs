@@ -60,6 +60,7 @@ export type ApplicationStore = {
   authenticateInvite: (token: string) => Promise<void>;
   resetPasswordError: Accessor<string[]>;
   hasRoles: (roles: UserRoleName[]) => boolean;
+  clearErrors: () => void;
 };
 
 const createApplicationStore = (): ApplicationStore => {
@@ -292,6 +293,11 @@ const createApplicationStore = (): ApplicationStore => {
     return userUtils.hasRoles(currentSessionUser.user, roleNames);
   };
 
+  const clearErrors = () => {
+    setLoginError([]);
+    setResetPasswordError([]);
+  };
+
   return {
     sessionUser,
     isInitializing,
@@ -307,6 +313,7 @@ const createApplicationStore = (): ApplicationStore => {
     authenticateInvite,
     resetPasswordError,
     hasRoles,
+    clearErrors,
   };
 };
 

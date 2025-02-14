@@ -22,7 +22,7 @@ const UserFormPeek = (passedProps: UserFormPeekProps) => {
   };
 
   const handleFormSubmitted = () => {
-    props.peekStore.setIsOpened(false);
+    props.peekStore.close();
   };
 
   return (

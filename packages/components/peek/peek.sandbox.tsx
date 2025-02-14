@@ -10,7 +10,7 @@ export const Default = () => {
 
   return (
     <>
-      <Button onClick={() => peekStore.setIsOpened(true)}>open peek</Button>
+      <Button onClick={() => peekStore.open()}>open peek</Button>
       <Peek peekStore={peekStore}>
         <Peek.Header title="Peek Header" />
         <Peek.Content>Content</Peek.Content>
@@ -30,7 +30,7 @@ export const Resizeable = () => {
 
   return (
     <>
-      <Button onClick={() => peekStore.setIsOpened(true)}>open peek</Button>
+      <Button onClick={() => peekStore.open()}>open peek</Button>
       <Peek peekStore={peekStore} isResizable>
         <Peek.Header title="Peek Header" />
         <Peek.Content>Content</Peek.Content>
@@ -50,7 +50,7 @@ export const Scrollable = () => {
 
   return (
     <>
-      <Button onClick={() => peekStore.setIsOpened(true)}>open peek</Button>
+      <Button onClick={() => peekStore.open()}>open peek</Button>
       <Peek peekStore={peekStore} isResizable>
         <Peek.Header title="Peek Header" />
         <Peek.Content>
