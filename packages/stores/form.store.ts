@@ -269,10 +269,10 @@ const createStore = <TFormData extends object>(
       }
 
       const value = lodash.get(data(), fieldName);
-      // in the edge case that a fields for a form has one validator assigned to it (can happen with highly
-      // dynamic forms) we use an optional string validator that should basic pass anything (which effectively is
+      // in the edge case that a fields for a form has no validator assigned to it (can happen with highly
+      // dynamic forms) we use an optional any validator that should basic pass anything (which effectively is
       // no validation)
-      const fieldValidator = zodUtils.getNestedSchema(fieldName, activeSchema.shape) || zod.string().optional();
+      const fieldValidator = zodUtils.getNestedSchema(fieldName, activeSchema.shape) || zod.any().optional();
       const fieldValidationResults = fieldValidator.safeParse(value);
       let currentErrors = options.currentErrors ?? errors();
 

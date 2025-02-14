@@ -8,7 +8,7 @@ import type {
   AuthenticationResetPasswordRequest,
   AuthenticationSendResetPasswordRequest,
 } from '$api/types/authentication';
-import type { User } from '$api/types/user';
+import type { User, UserRoleName } from '$api/types/user';
 import { authenticationApi } from '$web/apis/authentication';
 import { globalsStore } from '$web/stores/globals.store';
 import { LocalStorageKey, RoutePath } from '$web/utils/application';
@@ -59,6 +59,7 @@ export type ApplicationStore = {
   initialize: () => Promise<void>;
   authenticateInvite: (token: string) => Promise<void>;
   resetPasswordError: Accessor<string[]>;
+  hasRoles: (roles: UserRoleName[]) => boolean;
 };
 
 const createApplicationStore = (): ApplicationStore => {
@@ -146,7 +147,11 @@ const createApplicationStore = (): ApplicationStore => {
       handleNotAuthenticated();
 
       if (error instanceof Error) {
-        setLoginError([error.message]);
+        const errorMessage = loggerUtils.getErrorInstanceMessage(error);
+
+        loggerUtils.error(`error resetting password: ${errorMessage}`);
+
+        setLoginError([errorMessage]);
 
         return;
       }
@@ -277,6 +282,16 @@ const createApplicationStore = (): ApplicationStore => {
     return currentLoginAction() !== LoginAction.NONE;
   };
 
+  const hasRoles = (roleNames: UserRoleName[]) => {
+    const currentSessionUser = sessionUser();
+
+    if (!currentSessionUser?.user) {
+      return false;
+    }
+
+    return userUtils.hasRoles(currentSessionUser.user, roleNames);
+  };
+
   return {
     sessionUser,
     isInitializing,
@@ -291,6 +306,7 @@ const createApplicationStore = (): ApplicationStore => {
     loginError,
     authenticateInvite,
     resetPasswordError,
+    hasRoles,
   };
 };
 

@@ -19,11 +19,15 @@ const rolesToStringArray = (roles: RolesToStringArrayRoles[]): string[] => {
 };
 
 const fromStytchMember = (member: stytch.Member): User => {
+  const roles = userRolesFromStytchMemberRoles(member.roles);
+  const roleNames = roles.map((role) => role.id);
+
   return {
     id: member.member_id,
     name: member.name,
     email: member.email_address,
-    roles: userRolesFromStytchMemberRoles(member.roles),
+    roles,
+    roleNames,
     hasPassword: !!member.member_password_id,
     createdAt: member.created_at,
     updatedAt: member.updated_at,
@@ -47,16 +51,14 @@ const toStytchMemberUpdateData = (user: User): ToStytchMemberUpdateDataReturn =>
   };
 };
 
-const hasRole = (user: Pick<User, 'roles'>, checkRoleName: UserRoleName): boolean => {
-  for (const role of user.roles) {
-    if (role.id !== checkRoleName) {
-      continue;
+const hasRoles = (user: Pick<User, 'roleNames'>, checkRoleNames: UserRoleName[]): boolean => {
+  for (const checkRoleName of checkRoleNames) {
+    if (user.roleNames.includes(checkRoleName) === false) {
+      return false;
     }
-
-    return true;
   }
 
-  return false;
+  return true;
 };
 
 export const userUtils = {
@@ -64,5 +66,5 @@ export const userUtils = {
   fromStytchMembers,
   toStytchMemberUpdateData,
   rolesToStringArray,
-  hasRole,
+  hasRoles,
 };

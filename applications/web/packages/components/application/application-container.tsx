@@ -19,7 +19,7 @@ const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
   const hasRole = (roleName: UserRoleName) => {
     const sessionUser = authenticationStore.sessionUser();
 
-    return sessionUser?.user && userUtils.hasRole(sessionUser.user, roleName);
+    return sessionUser?.user && userUtils.hasRoles(sessionUser.user, [roleName]);
   };
 
   useBeforeLeave(function checkNeedsOnboarding(event: BeforeLeaveEventArgs) {

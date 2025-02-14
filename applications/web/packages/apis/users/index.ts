@@ -6,6 +6,6 @@ import { update } from '$web/apis/users/update';
 export const usersApi = {
   getList,
   create,
-  remove,
+  delete: remove,
   update,
 };

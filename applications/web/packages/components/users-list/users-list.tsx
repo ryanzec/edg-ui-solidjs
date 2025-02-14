@@ -3,7 +3,6 @@ import { CalloutColor } from '$/components/callout';
 import Table, { TableShape } from '$/components/table';
 import { globalNotificationsStore } from '$/stores/global-notifications.store';
 import { type User, type UserRole, userRoleNameToDisplayMap } from '$api/types/user';
-import { usersApi } from '$web/apis/users';
 import styles from '$web/components/users-list/users-list.module.css';
 import { authenticationStore } from '$web/stores/authentication.store';
 import { For, Show } from 'solid-js';
@@ -12,19 +11,11 @@ type InternalUser = Pick<User, 'id' | 'email' | 'name' | 'roles'>;
 
 export type UsersListProps = {
   users: InternalUser[];
-  onSelect?: (user: InternalUser) => void;
+  onEdit?: (user: InternalUser) => void;
+  onDelete?: (user: InternalUser) => void;
 };
 
 const UsersList = (props: UsersListProps) => {
-  const removeUserMutation = usersApi.remove({
-    onSuccess: () => {
-      globalNotificationsStore.addNotification({
-        message: () => 'User deleted',
-        color: CalloutColor.SUCCESS,
-      });
-    },
-  });
-
   return (
     <Table
       shape={TableShape.SQUARE}
@@ -38,17 +29,17 @@ const UsersList = (props: UsersListProps) => {
       }
     >
       <For each={props.users}>
-        {(row) => {
-          const handleSelectUser = () => {
-            props.onSelect?.(row);
+        {(user) => {
+          const handleEdit = () => {
+            props.onEdit?.(user);
           };
 
-          const handleRemoveUser = () => {
-            removeUserMutation.mutate({ id: row.id });
+          const handleRemove = () => {
+            props.onDelete?.(user);
           };
 
           const handleSendResetPasswordEmail = () => {
-            authenticationStore.sendResetPassword({ email: row.email }, { redirect: false });
+            authenticationStore.sendResetPassword({ email: user.email }, { redirect: false });
 
             globalNotificationsStore.addNotification({
               message: () => 'Reset password email sent to user',
@@ -62,14 +53,14 @@ const UsersList = (props: UsersListProps) => {
 
           return (
             <Table.Row>
-              <Table.Data class={styles.nameCell}>{row.name}</Table.Data>
-              <Table.Data class={styles.emailCell}>{row.email}</Table.Data>
-              <Table.Data>{row.roles.map(mapRoleToDisplay).join(', ')}</Table.Data>
+              <Table.Data class={styles.nameCell}>{user.name}</Table.Data>
+              <Table.Data class={styles.emailCell}>{user.email}</Table.Data>
+              <Table.Data>{user.roles.map(mapRoleToDisplay).join(', ')}</Table.Data>
               <Table.Data>
-                <Show when={!!props.onSelect}>
-                  <Button onClick={handleSelectUser}>S</Button>
+                <Show when={!!props.onEdit}>
+                  <Button onClick={handleEdit}>S</Button>
                 </Show>
-                <Button onClick={handleRemoveUser} color={ButtonColor.DANGER}>
+                <Button onClick={handleRemove} color={ButtonColor.DANGER}>
                   D
                 </Button>
                 <Button onClick={handleSendResetPasswordEmail} color={ButtonColor.WARNING}>
