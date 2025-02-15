@@ -6,7 +6,7 @@ import { type JSX, mergeProps, splitProps } from 'solid-js';
 
 export type DialogDeleteConfirmationProps<TItem> = Omit<
   DialogProps,
-  'isOpened' | 'closeDialog' | 'footerElement' | 'closeOnEscape' | 'closeOnClickOverlay'
+  'footerElement' | 'closeOnEscape' | 'closeOnClickOverlay'
 > & {
   selectedItem: TItem;
   dialogStore: DialogStore;

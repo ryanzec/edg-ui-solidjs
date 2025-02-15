@@ -598,9 +598,6 @@ export const ArrayFields = () => {
 
 type NestedArrayFormData = {
   array: DeepNestedStructure[];
-  object: {
-    test: string;
-  };
 };
 
 const nestedArrayFormDataSchema = zodUtils.schemaForType<NestedArrayFormData>()(
@@ -619,15 +616,14 @@ const nestedArrayFormDataSchema = zodUtils.schemaForType<NestedArrayFormData>()(
       })
       .array()
       .min(2, validationUtils.getMessage(ValidationMessageType.MIN_COUNT, ['2'])),
-    object: zod.object({
-      test: zod.string().min(3, validationUtils.getMessage(ValidationMessageType.MIN_COUNT, ['3'])),
-    }),
   }),
 );
 
 export const NestedArrayFields = () => {
   const formStore = formStoreUtils.createStore<NestedArrayFormData>({
-    onSubmit: () => {},
+    onSubmit: (data) => {
+      console.log(data);
+    },
     initialValues: {
       array: [{ partA: 'test', nested: [{ partA: 'test2' }] }],
     },
@@ -659,15 +655,16 @@ export const NestedArrayFields = () => {
                       <Label>Part B</Label>
                       <Input type="text" name={`array.${index}.partB`} />
                     </FormField>
-                    <FormField>
+                    <FormField errors={getArrayFieldError().nested?.errors}>
                       <Label>Nested</Label>
                       <Button
                         data-id="add-array-field-button"
                         type="button"
                         onclick={() => {
-                          for (let i = 0; i < 50; i++) {
-                            formStore.addArrayField(`array.${index}.nested` as keyof NestedArrayFormData, {});
-                          }
+                          // for stress testing the large amount of input fields
+                          // for (let i = 0; i < 50; i++) {
+                          formStore.addArrayField(`array.${index}.nested` as keyof NestedArrayFormData, {});
+                          // }
                         }}
                       >
                         + Add Array Field
@@ -748,11 +745,9 @@ export const NestedArrayFields = () => {
             </Index>
           </FormFields>
         </FormField>
-        <div>
-          <Button data-id="submit-button" type="submit">
-            Submit
-          </Button>
-        </div>
+        <Button data-id="submit-button" type="submit">
+          Submit
+        </Button>
       </form>
       <hr />
       <h1>Debug Tools</h1>

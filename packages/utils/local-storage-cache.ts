@@ -4,7 +4,11 @@ export type LocalStorageCacheData = {
   expires: number | boolean;
 };
 
-const get = <T = unknown>(key: string): T | undefined => {
+const get = <T = unknown>(key: string | undefined): T | undefined => {
+  if (!key) {
+    return;
+  }
+
   const now = new Date().getTime();
   const rawData = localStorage.getItem(key);
 
@@ -27,7 +31,11 @@ const get = <T = unknown>(key: string): T | undefined => {
   return returnData;
 };
 
-const set = <T = unknown>(key: string, value: T, expireIn = 0) => {
+const set = <T = unknown>(key: string | undefined, value: T, expireIn = 0) => {
+  if (!key) {
+    return;
+  }
+
   const expires = new Date().getTime();
 
   const data: LocalStorageCacheData = {
@@ -38,7 +46,11 @@ const set = <T = unknown>(key: string, value: T, expireIn = 0) => {
   return localStorage.setItem(key, JSON.stringify(data));
 };
 
-const remove = (key: string) => {
+const remove = (key: string | undefined) => {
+  if (!key) {
+    return;
+  }
+
   localStorage.removeItem(key);
 };
 
