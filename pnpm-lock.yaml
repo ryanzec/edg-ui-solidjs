@@ -11,6 +11,9 @@ importers:
       '@atlaskit/pragmatic-drag-and-drop':
         specifier: 1.4.0
         version: 1.4.0
+      '@codemirror/commands':
+        specifier: 6.8.0
+        version: 6.8.0
       '@codemirror/lang-yaml':
         specifier: 6.1.2
         version: 6.1.2

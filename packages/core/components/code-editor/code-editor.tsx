@@ -1,7 +1,8 @@
 import styles from '$/core/components/code-editor/code-editor.module.css';
 import type { CommonDataAttributes } from '$/core/types/generic';
+import { indentWithTab } from '@codemirror/commands';
 import { EditorState, type Extension } from '@codemirror/state';
-import { EditorView } from '@codemirror/view';
+import { EditorView, keymap } from '@codemirror/view';
 import classnames from 'classnames';
 import { basicSetup } from 'codemirror';
 import { type JSX, createSignal, mergeProps, onMount, splitProps } from 'solid-js';
@@ -39,6 +40,7 @@ const CodeEditor = (passedProps: CodeEditorProps) => {
                 height: '100%',
               },
             }),
+            keymap.of([indentWithTab]),
             ...(props.extensions || []),
           ],
         }),
