@@ -1,5 +1,5 @@
-import Button from '$/components/button';
-import Peek, { type PeekStore } from '$/components/peek';
+import Button from '$/core/components/button';
+import Peek, { type PeekStore } from '$/core/components/peek';
 import UserForm, { type UserFormProps } from '$web/components/user-form';
 import { createSignal, splitProps } from 'solid-js';
 

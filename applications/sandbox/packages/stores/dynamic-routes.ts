@@ -1,6 +1,6 @@
 import { type Accessor, type JSX, createRoot, createSignal } from 'solid-js';
 
-import { stringUtils } from '../../../../packages/utils/string';
+import { stringUtils } from '$/core/utils/string';
 
 export type DynamicRouteNavigation = {
   [key: string]: DynamicRouteNavigation | string;

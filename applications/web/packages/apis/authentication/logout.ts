@@ -1,5 +1,5 @@
-import { HttpMethod, httpUtils } from '$/utils/http';
-import { type CreateMutationOptions, queryUtils } from '$/utils/query';
+import { HttpMethod, httpUtils } from '$/core/utils/http';
+import { type CreateMutationOptions, queryUtils } from '$/core/utils/query';
 import { ApiRoute } from '$api/types/api';
 import type { AuthenticationLogoutRequest, AuthenticationLogoutResponse } from '$api/types/authentication';
 import { applicationConfiguration } from '$web/utils/application';

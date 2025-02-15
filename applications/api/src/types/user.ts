@@ -1,4 +1,4 @@
-import type { RequestStructure, ResponseStructure } from '$/apis/utils';
+import type { RequestStructure, ResponseStructure } from '$/core/apis/utils';
 
 export const UserRoleName = {
   STYTCH_ADMIN: 'stytch_admin',

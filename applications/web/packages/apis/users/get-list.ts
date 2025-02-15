@@ -1,5 +1,5 @@
-import { HttpMethod, httpUtils } from '$/utils/http';
-import { type CreateTrackedQueryOptions, queryUtils } from '$/utils/query';
+import { HttpMethod, httpUtils } from '$/core/utils/http';
+import { type CreateTrackedQueryOptions, queryUtils } from '$/core/utils/query';
 import type { GetUsersResponse } from '$api/types/user';
 import { QueryKey, applicationConfiguration } from '$web/utils/application';
 

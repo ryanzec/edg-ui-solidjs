@@ -1,4 +1,4 @@
-import type { CommonDataAttributes } from '$/types/generic';
+import type { CommonDataAttributes } from '$/core/types/generic';
 import styles from '$web/components/page/page.module.css';
 import classnames from 'classnames';
 import { type JSX, mergeProps, splitProps } from 'solid-js';

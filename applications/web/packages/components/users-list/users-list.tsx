@@ -1,7 +1,7 @@
-import Button, { ButtonColor } from '$/components/button';
-import { CalloutColor } from '$/components/callout';
-import Table, { TableShape } from '$/components/table';
-import { globalNotificationsStore } from '$/stores/global-notifications.store';
+import Button, { ButtonColor } from '$/core/components/button';
+import { CalloutColor } from '$/core/components/callout';
+import Table, { TableShape } from '$/core/components/table';
+import { globalNotificationsStore } from '$/core/stores/global-notifications.store';
 import { type User, type UserRole, userRoleNameToDisplayMap } from '$api/types/user';
 import styles from '$web/components/users-list/users-list.module.css';
 import { authenticationStore } from '$web/stores/authentication.store';

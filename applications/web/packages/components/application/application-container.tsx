@@ -1,10 +1,10 @@
 import { A, type BeforeLeaveEventArgs, useBeforeLeave, useNavigate } from '@solidjs/router';
 import { type JSX, Show, onCleanup, onMount } from 'solid-js';
 
-import GlobalNotifications from '$/components/global-notifications';
-import Loading from '$/components/loading';
-import { globalNotificationsStore } from '$/stores/global-notifications.store';
-import { type HttpRequest, httpUtils } from '$/utils/http';
+import GlobalNotifications from '$/core/components/global-notifications';
+import Loading from '$/core/components/loading';
+import { globalNotificationsStore } from '$/core/stores/global-notifications.store';
+import { type HttpRequest, httpUtils } from '$/core/utils/http';
 import { userUtils } from '$api/data-models/user';
 import { UserRoleName } from '$api/types/user';
 import styles from '$web/components/application/application.module.css';

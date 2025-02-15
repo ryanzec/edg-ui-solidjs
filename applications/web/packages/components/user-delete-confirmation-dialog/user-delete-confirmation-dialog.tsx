@@ -1,7 +1,7 @@
-import { CalloutColor } from '$/components/callout';
-import Dialog, { type DialogStore } from '$/components/dialog';
-import { globalNotificationsStore } from '$/stores/global-notifications.store';
-import { MutationState } from '$/utils/query';
+import { CalloutColor } from '$/core/components/callout';
+import Dialog, { type DialogStore } from '$/core/components/dialog';
+import { globalNotificationsStore } from '$/core/stores/global-notifications.store';
+import { MutationState } from '$/core/utils/query';
 import type { User } from '$api/types/user';
 import { usersApi } from '$web/apis/users';
 

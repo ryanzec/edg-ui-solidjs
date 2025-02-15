@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 
-import { mathUtils } from '$/utils/math';
+import { mathUtils } from '$/core/utils/math';
 import { redisUtils } from '$api/utils/redis';
 
 export const registerRedisApi = (api: FastifyInstance) => {

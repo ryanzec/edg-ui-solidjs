@@ -1,7 +1,7 @@
-import Button from '$/components/button';
-import { dialogComponentUtils } from '$/components/dialog';
-import { peekComponentUtils } from '$/components/peek';
-import Skeleton from '$/components/skeleton';
+import Button from '$/core/components/button';
+import { dialogComponentUtils } from '$/core/components/dialog';
+import { peekComponentUtils } from '$/core/components/peek';
+import Skeleton from '$/core/components/skeleton';
 import { usersApi } from '$web/apis/users';
 import Page from '$web/components/page';
 import UserDeleteConfirmationDialog from '$web/components/user-delete-confirmation-dialog';

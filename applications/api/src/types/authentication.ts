@@ -1,4 +1,4 @@
-import type { RequestStructure, ResponseStructure } from '$/apis/utils';
+import type { RequestStructure, ResponseStructure } from '$/core/apis/utils';
 import type { Member, Organization } from 'stytch';
 
 export type AuthenticationAuthenticateRequest = RequestStructure<{

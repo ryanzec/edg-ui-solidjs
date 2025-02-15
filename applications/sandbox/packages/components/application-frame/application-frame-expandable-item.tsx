@@ -3,11 +3,11 @@ import { Show, createEffect, createSignal, splitProps } from 'solid-js';
 
 import styles from '$sandbox/components/application-frame/application-frame.module.css';
 
-import SideNavigation from '$/components/side-navgiation';
+import SideNavigation from '$/core/components/side-navgiation';
 import type { DynamicRouteNavigation } from '$sandbox/stores/dynamic-routes';
 
-import { toggleStoreUtils } from '$/stores/toggle.store';
-import { stringUtils } from '$/utils/string';
+import { toggleStoreUtils } from '$/core/stores/toggle.store';
+import { stringUtils } from '$/core/utils/string';
 import ApplicationFrameSubNavigation from '$sandbox/components/application-frame/application-frame-sub-navigation';
 import { useLocation } from '@solidjs/router';
 

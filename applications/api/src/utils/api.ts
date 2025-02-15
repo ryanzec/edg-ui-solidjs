@@ -1,5 +1,5 @@
-import type { ResponseStructure } from '$/apis/utils';
-import { HttpError } from '$/utils/error';
+import type { ResponseStructure } from '$/core/apis/utils';
+import { HttpError } from '$/core/utils/error';
 import { globalLogger } from '$api/utils/logger';
 import { StytchError } from 'stytch';
 

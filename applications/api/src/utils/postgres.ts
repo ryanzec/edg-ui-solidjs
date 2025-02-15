@@ -1,4 +1,4 @@
-import { stringUtils } from '$/utils/string';
+import { stringUtils } from '$/core/utils/string';
 import type { PostgresColumnValue } from '$api/types/postgres';
 import { applicationConfiguration } from '$api/utils/application-configuration';
 import { globalLogger } from '$api/utils/logger';

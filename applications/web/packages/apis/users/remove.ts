@@ -1,7 +1,7 @@
 import { produce } from 'immer';
 
-import { HttpMethod, httpUtils } from '$/utils/http';
-import { type CreateMutationOptions, queryUtils } from '$/utils/query';
+import { HttpMethod, httpUtils } from '$/core/utils/http';
+import { type CreateMutationOptions, queryUtils } from '$/core/utils/query';
 import type { DeleteUserRequest, DeleteUserResponse, GetUsersResponse } from '$api/types/user';
 import { QueryKey, applicationConfiguration } from '$web/utils/application';
 

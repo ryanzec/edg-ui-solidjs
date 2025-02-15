@@ -1,6 +1,6 @@
 import { createRoot, createSignal } from 'solid-js';
 
-import { ThemeName } from '$/utils/styles';
+import { ThemeName } from '$/core/utils/styles';
 
 const createApplicationStore = () => {
   // @todo refactor to use system theming by default

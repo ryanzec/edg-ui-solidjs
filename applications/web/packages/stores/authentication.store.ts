@@ -1,7 +1,7 @@
-import { websocketManagerStore } from '$/stores/websocket-manager.store';
-import { ErrorMessage } from '$/utils/error';
-import { localStorageCacheUtils } from '$/utils/local-storage-cache';
-import { loggerUtils } from '$/utils/logger';
+import { websocketManagerStore } from '$/core/stores/websocket-manager.store';
+import { ErrorMessage } from '$/core/utils/error';
+import { localStorageCacheUtils } from '$/core/utils/local-storage-cache';
+import { loggerUtils } from '$/core/utils/logger';
 import { userUtils } from '$api/data-models/user';
 import type {
   AuthenticationAuthenticateRequest,

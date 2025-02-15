@@ -1,7 +1,7 @@
 import { createRoot, createSignal } from 'solid-js';
 
-import { localStorageCacheUtils } from '$/utils/local-storage-cache';
-import { ThemeName } from '$/utils/styles';
+import { localStorageCacheUtils } from '$/core/utils/local-storage-cache';
+import { ThemeName } from '$/core/utils/styles';
 import { LocalStorageKey } from '$web/utils/application';
 
 export type ThemeManagerStore = {

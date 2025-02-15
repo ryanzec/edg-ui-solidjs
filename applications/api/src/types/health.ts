@@ -1,4 +1,4 @@
-import type { ResponseStructure } from '$/apis/utils';
+import type { ResponseStructure } from '$/core/apis/utils';
 
 export type HealthCheckRequest = undefined;
 export type HealthCheckResponse = ResponseStructure<{

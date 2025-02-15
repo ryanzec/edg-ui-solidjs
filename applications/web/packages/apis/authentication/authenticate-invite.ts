@@ -1,4 +1,4 @@
-import { HttpMethod, httpUtils } from '$/utils/http';
+import { HttpMethod, httpUtils } from '$/core/utils/http';
 import { ApiRoute } from '$api/types/api';
 import type {
   AuthenticationAuthenticateInviteRequest,

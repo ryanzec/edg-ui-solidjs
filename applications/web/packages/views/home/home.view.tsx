@@ -1,5 +1,5 @@
-import Button from '$/components/button';
-import { websocketManagerStore } from '$/stores/websocket-manager.store';
+import Button from '$/core/components/button';
+import { websocketManagerStore } from '$/core/stores/websocket-manager.store';
 import Page from '$web/components/page';
 import { authenticationStore } from '$web/stores/authentication.store';
 

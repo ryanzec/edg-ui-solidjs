@@ -1,6 +1,6 @@
 import { type JSX, Show, createSignal } from 'solid-js';
 
-import Button from '$/components/button';
+import Button from '$/core/components/button';
 
 type ExpandableCodeProps = JSX.ButtonHTMLAttributes<HTMLDivElement> & {
   label: string;

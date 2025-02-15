@@ -1,12 +1,12 @@
 import classnames from 'classnames';
 import { type JSX, splitProps } from 'solid-js';
 
-import type { CommonDataAttributes } from '$/types/generic';
+import type { CommonDataAttributes } from '$/core/types/generic';
 import styles from '$sandbox/components/application-frame/application-frame.module.css';
 import type { DynamicRouteNavigation } from '$sandbox/stores/dynamic-routes';
 
-import Button, { ButtonShape } from '$/components/button';
-import { ThemeName } from '$/utils/styles';
+import Button, { ButtonShape } from '$/core/components/button';
+import { ThemeName } from '$/core/utils/styles';
 import { applicationStore } from '$sandbox/stores/application-store';
 import ApplicationFrameSubNavigation from './application-frame-sub-navigation';
 
