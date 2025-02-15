@@ -1,0 +1,11 @@
+.code-editor {
+  border: 1px solid var(--color-outline);
+  border-radius: var(--border-radius-sm);
+
+  /* this prevent the border + border radius from being overlapped by the editor itself  */
+  overflow: hidden;
+
+  &:has([contenteditable]:focus) {
+    border-color: var(--color-outline-active);
+  }
+}
