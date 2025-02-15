@@ -28,3 +28,11 @@ export const LanguageYaml = () => {
     </SandboxExamplesContainer>
   );
 };
+
+export const ReadOnly = () => {
+  return (
+    <SandboxExamplesContainer>
+      <CodeEditor class={styles.codeEditor} doc={yamlContent} extensions={[yaml()]} readonly />
+    </SandboxExamplesContainer>
+  );
+};

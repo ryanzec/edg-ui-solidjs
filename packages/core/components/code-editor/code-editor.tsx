@@ -1,26 +1,90 @@
 import styles from '$/core/components/code-editor/code-editor.module.css';
 import type { CommonDataAttributes } from '$/core/types/generic';
-import { indentWithTab } from '@codemirror/commands';
+import { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
+import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
+import {
+  bracketMatching,
+  defaultHighlightStyle,
+  foldGutter,
+  foldKeymap,
+  indentOnInput,
+  syntaxHighlighting,
+} from '@codemirror/language';
+import { lintKeymap } from '@codemirror/lint';
+import { search, searchKeymap } from '@codemirror/search';
 import { EditorState, type Extension } from '@codemirror/state';
-import { EditorView, keymap } from '@codemirror/view';
+import {
+  EditorView,
+  crosshairCursor,
+  drawSelection,
+  dropCursor,
+  highlightActiveLine,
+  highlightActiveLineGutter,
+  highlightSpecialChars,
+  keymap,
+  lineNumbers,
+  rectangularSelection,
+} from '@codemirror/view';
 import classnames from 'classnames';
-import { basicSetup } from 'codemirror';
 import { type JSX, createSignal, mergeProps, onMount, splitProps } from 'solid-js';
 
-export type CodeEditorProps = JSX.HTMLAttributes<HTMLDivElement> &
-  CommonDataAttributes & {
-    // some of these name don't match standard convention however I think it is better to have these props match
-    // codemirror properties when possible to make it easier to use
-    doc: string;
-    extensions?: Extension[];
-  };
+// since the basicSetup that codemirror provides is not configurable by design, it order to remove one
+// extension that I don't think makes sense by default, we need to recreate basicSetup minus that extension
+const defaultExtensions: Extension[] = [
+  lineNumbers(),
+  highlightActiveLineGutter(),
+  highlightSpecialChars(),
+  history(),
+  foldGutter(),
+  drawSelection(),
+  dropCursor(),
+  EditorState.allowMultipleSelections.of(true),
+  indentOnInput(),
+  syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+  bracketMatching(),
+  closeBrackets(),
+  autocompletion(),
+  rectangularSelection(),
+  crosshairCursor(),
+  highlightActiveLine(),
+  search(),
+  keymap.of([
+    ...closeBracketsKeymap,
+    ...defaultKeymap,
+    ...searchKeymap,
+    ...historyKeymap,
+    ...foldKeymap,
+    ...completionKeymap,
+    ...lintKeymap,
+    indentWithTab,
+  ]),
+];
 
-const defaultProps: Partial<CodeEditorProps> = {};
+type SpecificProps = {
+  // some of these name don't match standard convention however I think it is better to have these props match
+  // codemirror properties when possible to make it easier to use
+  doc: string;
+  extensions?: Extension[];
+  readonly?: boolean;
+};
+
+export type CodeEditorProps = JSX.HTMLAttributes<HTMLDivElement> & CommonDataAttributes & SpecificProps;
+
+const defaultProps: Required<SpecificProps> = {
+  doc: '',
+  extensions: [],
+  readonly: false,
+};
 
 const CodeEditor = (passedProps: CodeEditorProps) => {
   let containerElement: HTMLDivElement | undefined;
 
-  const [props, restOfProps] = splitProps(mergeProps(defaultProps, passedProps), ['class', 'doc', 'extensions']);
+  const [props, restOfProps] = splitProps(mergeProps(defaultProps, passedProps), [
+    'class',
+    'doc',
+    'extensions',
+    'readonly',
+  ]);
   const [editorView, setEditorView] = createSignal<EditorView>();
 
   onMount(() => {
@@ -30,7 +94,7 @@ const CodeEditor = (passedProps: CodeEditorProps) => {
         state: EditorState.create({
           doc: props.doc,
           extensions: [
-            basicSetup,
+            ...defaultExtensions,
             EditorView.theme({
               '&': {
                 height: '100%',
@@ -40,8 +104,9 @@ const CodeEditor = (passedProps: CodeEditorProps) => {
                 height: '100%',
               },
             }),
-            keymap.of([indentWithTab]),
-            ...(props.extensions || []),
+            EditorState.readOnly.of(props.readonly),
+            EditorView.editable.of(props.readonly !== true),
+            ...props.extensions,
           ],
         }),
       }),
