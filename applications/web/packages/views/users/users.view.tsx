@@ -1,12 +1,12 @@
+import { usersApi } from '$/application/apis/users';
+import Page from '$/application/components/page';
+import UserDeleteConfirmationDialog from '$/application/components/user-delete-confirmation-dialog';
+import UserFormPeek from '$/application/components/user-form-peek';
+import UsersList, { type UsersListProps } from '$/application/components/users-list';
 import Button from '$/core/components/button';
 import { dialogComponentUtils } from '$/core/components/dialog';
 import { peekComponentUtils } from '$/core/components/peek';
 import Skeleton from '$/core/components/skeleton';
-import { usersApi } from '$web/apis/users';
-import Page from '$web/components/page';
-import UserDeleteConfirmationDialog from '$web/components/user-delete-confirmation-dialog';
-import UserFormPeek from '$web/components/user-form-peek';
-import UsersList, { type UsersListProps } from '$web/components/users-list';
 import { Suspense, createSignal } from 'solid-js';
 
 type UsersListUser = UsersListProps['users'][0];

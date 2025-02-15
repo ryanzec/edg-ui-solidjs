@@ -1,6 +1,9 @@
 import { A, type BeforeLeaveEventArgs, useBeforeLeave, useNavigate } from '@solidjs/router';
 import { type JSX, Show, onCleanup, onMount } from 'solid-js';
 
+import { authenticationStore } from '$/application/stores/authentication.store';
+import { globalsStore } from '$/application/stores/globals.store';
+import { themeManagerStore } from '$/application/stores/theme-manager.store';
 import GlobalNotifications from '$/core/components/global-notifications';
 import Loading from '$/core/components/loading';
 import { globalNotificationsStore } from '$/core/stores/global-notifications.store';
@@ -8,9 +11,6 @@ import { type HttpRequest, httpUtils } from '$/core/utils/http';
 import { userUtils } from '$api/data-models/user';
 import { UserRoleName } from '$api/types/user';
 import styles from '$web/components/application/application.module.css';
-import { authenticationStore } from '$web/stores/authentication.store';
-import { globalsStore } from '$web/stores/globals.store';
-import { themeManagerStore } from '$web/stores/theme-manager.store';
 import { RoutePath } from '$web/utils/application';
 
 const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
@@ -34,11 +34,6 @@ const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
   });
 
   onMount(() => {
-    globalsStore.initialize({
-      navigate,
-    });
-    authenticationStore.initialize();
-
     const responseAuthenticationInterceptor = async (
       // biome-ignore lint/suspicious/noExplicitAny: this handles generic requests so it needs to allow for any
       _requestOptions: HttpRequest<any>,
@@ -51,6 +46,14 @@ const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
     };
 
     httpUtils.addHttpResponseInterceptor(responseAuthenticationInterceptor);
+
+    globalsStore.initialize({
+      navigate,
+    });
+    authenticationStore.initialize({
+      homeRedirectRoute: RoutePath.HOME,
+      loginRedirectRoute: RoutePath.LOGIN,
+    });
 
     onCleanup(() => {
       httpUtils.removeHttpResponseInterceptor(responseAuthenticationInterceptor);

@@ -1,3 +1,6 @@
+import Page from '$/application/components/page';
+import { PageLayout } from '$/application/components/page/page';
+import { authenticationStore } from '$/application/stores/authentication.store';
 import Button from '$/core/components/button';
 import FormError from '$/core/components/form-error';
 import FormField from '$/core/components/form-field';
@@ -7,9 +10,6 @@ import Label from '$/core/components/label';
 import { formStoreUtils } from '$/core/stores/form.store';
 import { ValidationMessageType, validationUtils } from '$/core/utils/validation';
 import { zodUtils } from '$/core/utils/zod';
-import Page from '$web/components/page';
-import { PageLayout } from '$web/components/page/page';
-import { authenticationStore } from '$web/stores/authentication.store';
 import { RoutePath } from '$web/utils/application';
 import { useNavigate } from '@solidjs/router';
 import { createEffect, onCleanup } from 'solid-js';

@@ -1,6 +1,7 @@
 import { produce } from 'immer';
 import { For, type JSX, Show, createSignal } from 'solid-js';
 
+import { applicationConfiguration } from '$/application/utils/application';
 import Button from '$/core/components/button/button';
 import Callout, { CalloutColor, CalloutVariant } from '$/core/components/callout';
 import Input from '$/core/components/input';
@@ -12,7 +13,6 @@ import {
   queryUtils,
 } from '$/core/utils/query/utils';
 import ExpandableCode from '$sandbox/components/expandable-code';
-import { applicationConfiguration } from '$web/utils/application';
 
 export default {
   title: 'Utils/Query',

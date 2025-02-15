@@ -1,8 +1,5 @@
-import Page from '$/application/components/page';
-import { PageLayout } from '$/application/components/page/page';
 import { authenticationStore } from '$/application/stores/authentication.store';
 import Button from '$/core/components/button';
-import FormError from '$/core/components/form-error';
 import FormField from '$/core/components/form-field';
 import FormFields from '$/core/components/form-fields';
 import Input from '$/core/components/input';
@@ -10,19 +7,16 @@ import Label from '$/core/components/label';
 import { formStoreUtils } from '$/core/stores/form.store';
 import { ValidationMessageType, validationUtils } from '$/core/utils/validation';
 import { zodUtils } from '$/core/utils/zod';
-import { useLocation } from '@solidjs/router';
 import type { Accessor } from 'solid-js';
 import * as zod from 'zod';
 
-export type ResetPasswordFormData = {
+export type SetPasswordFormData = {
   password: string;
   confirmPassword: string;
-  token: string;
-  tokenType: string;
 };
 
-const buildResetPasswordFormSchema = (formData: Accessor<Partial<ResetPasswordFormData>>) => {
-  const schema = zodUtils.schemaForType<ResetPasswordFormData>()(
+const buildResetPasswordFormSchema = (formData: Accessor<Partial<SetPasswordFormData>>) => {
+  const schema = zodUtils.schemaForType<SetPasswordFormData>()(
     zod.object({
       password: zod
         .string()
@@ -52,48 +46,34 @@ const buildResetPasswordFormSchema = (formData: Accessor<Partial<ResetPasswordFo
             message: 'Passwords must match',
           });
         }),
-      token: zod.string().min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED)),
-      tokenType: zod.string().min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED)),
     }),
   );
 
   return schema;
 };
 
-const ResetPasswordView = () => {
-  const location = useLocation();
-  const formStore = formStoreUtils.createStore<ResetPasswordFormData>({
+const SetPasswordForm = () => {
+  const formStore = formStoreUtils.createStore<SetPasswordFormData>({
     buildSchema: buildResetPasswordFormSchema,
     validateWith: {
       password: ['confirmPassword'],
       confirmPassword: ['password'],
     },
-    initialValues: {
-      token: location.query.token as string,
-      tokenType: location.query.stytch_token_type as string,
-    },
-    onSubmit: async (data: Partial<ResetPasswordFormData>) => {
+    onSubmit: async (data: Partial<SetPasswordFormData>) => {
       if (!data.password || !data.confirmPassword) {
         return;
       }
 
-      await authenticationStore.resetPassword(data as ResetPasswordFormData);
+      await authenticationStore.resetPassword(data as SetPasswordFormData);
     },
   });
 
   const formDirective = formStore.formDirective;
 
   return (
-    <Page layout={PageLayout.CENTERED}>
+    <div>
       <form use:formDirective>
-        <FormError errorMessage={authenticationStore.resetPasswordError()} />
         <FormFields>
-          <FormField>
-            <Input formData={formStore.data} name="token" type="hidden" />
-          </FormField>
-          <FormField>
-            <Input formData={formStore.data} name="tokenType" type="hidden" />
-          </FormField>
           <FormField errors={formStore.errors().password?.errors}>
             <Label>Password</Label>
             <Input type="password" formData={formStore.data} name="password" autofocus />
@@ -102,11 +82,11 @@ const ResetPasswordView = () => {
             <Label>Confirm Password</Label>
             <Input type="password" formData={formStore.data} name="confirmPassword" />
           </FormField>
-          <Button type="submit">Reset Password</Button>
+          <Button type="submit">Set Password</Button>
         </FormFields>
       </form>
-    </Page>
+    </div>
   );
 };
 
-export default ResetPasswordView;
+export default SetPasswordForm;

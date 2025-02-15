@@ -1,6 +1,6 @@
-import Page from '$web/components/page';
-import { PageLayout } from '$web/components/page/page';
-import { authenticationStore } from '$web/stores/authentication.store';
+import Page from '$/application/components/page';
+import { PageLayout } from '$/application/components/page/page';
+import { authenticationStore } from '$/application/stores/authentication.store';
 import { useLocation } from '@solidjs/router';
 import { onMount } from 'solid-js';
 

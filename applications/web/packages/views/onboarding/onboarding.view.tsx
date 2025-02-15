@@ -1,6 +1,6 @@
-import Page from '$web/components/page';
-import SetPasswordForm from '$web/components/set-password-form';
-import { authenticationStore } from '$web/stores/authentication.store';
+import Page from '$/application/components/page';
+import SetPasswordForm from '$/application/components/set-password-form';
+import { authenticationStore } from '$/application/stores/authentication.store';
 import { RoutePath } from '$web/utils/application';
 import { useNavigate } from '@solidjs/router';
 import { onMount } from 'solid-js';

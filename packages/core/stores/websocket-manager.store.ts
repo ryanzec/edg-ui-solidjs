@@ -1,6 +1,6 @@
+import { applicationConfiguration } from '$/application/utils/application';
 import { type WebsocketSendData, WebsocketState } from '$/core/types/websocket';
 import { loggerUtils } from '$/core/utils/logger';
-import { applicationConfiguration } from '$web/utils/application';
 import { createRoot, createSignal, untrack } from 'solid-js';
 
 export type WebsocketManagerStore = {

@@ -1,3 +1,5 @@
+import Page from '$/application/components/page';
+import { authenticationStore } from '$/application/stores/authentication.store';
 import Button from '$/core/components/button';
 import { CalloutColor } from '$/core/components/callout';
 import FormField from '$/core/components/form-field';
@@ -8,8 +10,6 @@ import { formStoreUtils } from '$/core/stores/form.store';
 import { globalNotificationsStore } from '$/core/stores/global-notifications.store';
 import { ValidationMessageType, validationUtils } from '$/core/utils/validation';
 import { zodUtils } from '$/core/utils/zod';
-import Page from '$web/components/page';
-import { authenticationStore } from '$web/stores/authentication.store';
 import * as zod from 'zod';
 
 export type ForgotPasswordFormData = {

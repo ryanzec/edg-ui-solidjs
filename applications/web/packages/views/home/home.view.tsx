@@ -1,7 +1,7 @@
+import Page from '$/application/components/page';
+import { authenticationStore } from '$/application/stores/authentication.store';
 import Button from '$/core/components/button';
 import { websocketManagerStore } from '$/core/stores/websocket-manager.store';
-import Page from '$web/components/page';
-import { authenticationStore } from '$web/stores/authentication.store';
 
 const HomeView = () => {
   const handleLogout = () => {
