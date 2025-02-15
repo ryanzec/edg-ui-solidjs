@@ -10,7 +10,7 @@ import {
   indentOnInput,
   syntaxHighlighting,
 } from '@codemirror/language';
-import { lintKeymap } from '@codemirror/lint';
+import { type LintSource, lintGutter, lintKeymap, linter } from '@codemirror/lint';
 import { search, searchKeymap } from '@codemirror/search';
 import { EditorState, type Extension } from '@codemirror/state';
 import {
@@ -60,54 +60,74 @@ const defaultExtensions: Extension[] = [
   ]),
 ];
 
+export type CodeEditorLanguageConfiguration = {
+  extension: Extension;
+  linter?: LintSource;
+};
+
 type SpecificProps = {
   // some of these name don't match standard convention however I think it is better to have these props match
   // codemirror properties when possible to make it easier to use
   doc: string;
+  language?: CodeEditorLanguageConfiguration;
   extensions?: Extension[];
   readonly?: boolean;
 };
 
 export type CodeEditorProps = JSX.HTMLAttributes<HTMLDivElement> & CommonDataAttributes & SpecificProps;
 
-const defaultProps: Required<SpecificProps> = {
-  doc: '',
-  extensions: [],
-  readonly: false,
-};
-
 const CodeEditor = (passedProps: CodeEditorProps) => {
   let containerElement: HTMLDivElement | undefined;
 
-  const [props, restOfProps] = splitProps(mergeProps(defaultProps, passedProps), [
-    'class',
-    'doc',
-    'extensions',
-    'readonly',
-  ]);
+  const [props, restOfProps] = splitProps(
+    mergeProps(
+      {
+        doc: '',
+        extensions: [],
+        readonly: false,
+      },
+      passedProps,
+    ),
+    ['class', 'doc', 'extensions', 'readonly', 'language'],
+  );
   const [editorView, setEditorView] = createSignal<EditorView>();
 
   onMount(() => {
+    const extensions: Extension[] = [
+      ...defaultExtensions,
+      EditorView.theme({
+        '&': {
+          height: '100%',
+          width: '100%',
+        },
+        '.cm-scroller': {
+          height: '100%',
+        },
+      }),
+      EditorState.readOnly.of(props.readonly),
+      EditorView.editable.of(props.readonly !== true),
+      ...props.extensions,
+    ];
+
+    if (props.language) {
+      extensions.push(props.language.extension);
+
+      if (props.language.linter) {
+        extensions.push(lintGutter());
+        extensions.push(
+          linter(props.language.linter, {
+            delay: 750, // Delay in ms before running the linter
+          }),
+        );
+      }
+    }
+
     setEditorView(
       new EditorView({
         parent: containerElement,
         state: EditorState.create({
           doc: props.doc,
-          extensions: [
-            ...defaultExtensions,
-            EditorView.theme({
-              '&': {
-                height: '100%',
-                width: '100%',
-              },
-              '.cm-scroller': {
-                height: '100%',
-              },
-            }),
-            EditorState.readOnly.of(props.readonly),
-            EditorView.editable.of(props.readonly !== true),
-            ...props.extensions,
-          ],
+          extensions,
         }),
       }),
     );
