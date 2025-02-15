@@ -8,6 +8,7 @@ import '@fontsource/open-sans/700.css';
 
 import '$/core/styles/variables.css';
 import '$/core/styles/manual-variables.css';
+import '$sandbox/styles/manual-variables.css';
 import '$/core/styles/keyframes.css';
 import '$/core/styles/normalize.css';
 import '$/core/styles/base.css';

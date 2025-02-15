@@ -30,6 +30,6 @@
 }
 
 .main-content {
-  padding: var(--space-base);
+  padding: var(--spacing-application-main-content);
   min-height: 100%;
 }

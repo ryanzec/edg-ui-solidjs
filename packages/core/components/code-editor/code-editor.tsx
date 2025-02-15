@@ -1,69 +1,12 @@
 import styles from '$/core/components/code-editor/code-editor.module.css';
+import { buildErrorPanelExtension } from '$/core/components/code-editor/extensions/error-panel';
+import { type CodeEditorLanguageConfiguration, defaultExtensions } from '$/core/components/code-editor/utils';
 import type { CommonDataAttributes } from '$/core/types/generic';
-import { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
-import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
-import {
-  bracketMatching,
-  defaultHighlightStyle,
-  foldGutter,
-  foldKeymap,
-  indentOnInput,
-  syntaxHighlighting,
-} from '@codemirror/language';
-import { type LintSource, lintGutter, lintKeymap, linter } from '@codemirror/lint';
-import { search, searchKeymap } from '@codemirror/search';
+import { lintGutter, linter } from '@codemirror/lint';
 import { EditorState, type Extension } from '@codemirror/state';
-import {
-  EditorView,
-  crosshairCursor,
-  drawSelection,
-  dropCursor,
-  highlightActiveLine,
-  highlightActiveLineGutter,
-  highlightSpecialChars,
-  keymap,
-  lineNumbers,
-  rectangularSelection,
-} from '@codemirror/view';
+import { EditorView } from '@codemirror/view';
 import classnames from 'classnames';
-import { type JSX, createSignal, mergeProps, onMount, splitProps } from 'solid-js';
-
-// since the basicSetup that codemirror provides is not configurable by design, it order to remove one
-// extension that I don't think makes sense by default, we need to recreate basicSetup minus that extension
-const defaultExtensions: Extension[] = [
-  lineNumbers(),
-  highlightActiveLineGutter(),
-  highlightSpecialChars(),
-  history(),
-  foldGutter(),
-  drawSelection(),
-  dropCursor(),
-  EditorState.allowMultipleSelections.of(true),
-  indentOnInput(),
-  syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
-  bracketMatching(),
-  closeBrackets(),
-  autocompletion(),
-  rectangularSelection(),
-  crosshairCursor(),
-  highlightActiveLine(),
-  search(),
-  keymap.of([
-    ...closeBracketsKeymap,
-    ...defaultKeymap,
-    ...searchKeymap,
-    ...historyKeymap,
-    ...foldKeymap,
-    ...completionKeymap,
-    ...lintKeymap,
-    indentWithTab,
-  ]),
-];
-
-export type CodeEditorLanguageConfiguration = {
-  extension: Extension;
-  linter?: LintSource;
-};
+import { type JSX, createEffect, createSignal, mergeProps, onMount, splitProps } from 'solid-js';
 
 type SpecificProps = {
   // some of these name don't match standard convention however I think it is better to have these props match
@@ -72,13 +15,12 @@ type SpecificProps = {
   language?: CodeEditorLanguageConfiguration;
   extensions?: Extension[];
   readonly?: boolean;
+  errorMessages?: string[];
 };
 
 export type CodeEditorProps = JSX.HTMLAttributes<HTMLDivElement> & CommonDataAttributes & SpecificProps;
 
 const CodeEditor = (passedProps: CodeEditorProps) => {
-  let containerElement: HTMLDivElement | undefined;
-
   const [props, restOfProps] = splitProps(
     mergeProps(
       {
@@ -88,13 +30,31 @@ const CodeEditor = (passedProps: CodeEditorProps) => {
       },
       passedProps,
     ),
-    ['class', 'doc', 'extensions', 'readonly', 'language'],
+    ['class', 'doc', 'extensions', 'readonly', 'language', 'errorMessages'],
   );
+
+  let containerElement: HTMLDivElement | undefined;
+
+  // custom extensions are broken out into their own files to keep this component as small and simple as possible
+  // (also makes multiple people working on the code editor easier with less chance of conflicts)
+  const errorPanelExtension = buildErrorPanelExtension();
+
   const [editorView, setEditorView] = createSignal<EditorView>();
+
+  createEffect(function updateErrorPanelStateMessages() {
+    const currentEditorView = editorView();
+
+    if (!currentEditorView) {
+      return;
+    }
+
+    errorPanelExtension.updateState(currentEditorView, props.errorMessages);
+  });
 
   onMount(() => {
     const extensions: Extension[] = [
       ...defaultExtensions,
+      errorPanelExtension.field,
       EditorView.theme({
         '&': {
           height: '100%',

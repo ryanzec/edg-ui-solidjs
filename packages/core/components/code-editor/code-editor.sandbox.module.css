@@ -1,3 +1,14 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  height: calc(100vh - calc(var(--spacing-application-main-content) * 2));
+}
+
+.toggle-error-trigger {
+  align-self: flex-start;
+}
+
 .code-editor {
-  height: 300px;
+  flex: 1;
 }
