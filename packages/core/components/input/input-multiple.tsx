@@ -1,6 +1,6 @@
 import Button, { ButtonColor } from '$/core/components/button';
 import FormField from '$/core/components/form-field';
-import Input from '$/core/components/input/index';
+import Input from '$/core/components/input';
 import styles from '$/core/components/input/input.module.css';
 import type { CreateFormStoreReturn } from '$/core/stores/form.store';
 import { Index } from 'solid-js';

@@ -1,6 +1,6 @@
 import Button, { ButtonColor, ButtonVariant } from '$/core/components/button';
+import Dialog, { defaultDialogProps } from '$/core/components/dialog';
 import type { DialogProps } from '$/core/components/dialog/dialog';
-import Dialog, { defaultDialogProps } from '$/core/components/dialog/index';
 import type { DialogStore } from '$/core/components/dialog/utils';
 import { type JSX, mergeProps, splitProps } from 'solid-js';
 
