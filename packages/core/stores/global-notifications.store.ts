@@ -6,12 +6,14 @@ import * as uuid from 'uuid';
 
 export type GlobalNotification = {
   id: string;
-  message: () => JSX.Element;
   emoji?: string;
   autoClose?: number;
   isRemoving?: boolean;
   removeAnimationDuration?: number;
   color?: CalloutColor;
+
+  // we make this a function instead of just a JSX.Element in case the message has signal based data
+  message: () => JSX.Element;
 };
 
 export const DEFAULT_AUTO_CLOSE = 3000;
