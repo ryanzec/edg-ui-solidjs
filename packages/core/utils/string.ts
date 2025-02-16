@@ -5,12 +5,24 @@ const pascalToKabob = (value: string) => {
     .toLowerCase();
 };
 
-const isPascalCase = (value: string): boolean => {
-  return /^([A-Z][a-z]+)+$/.test(value);
+type IsPascalCaseOptions = {
+  allowLeadingUnderscore?: boolean;
+};
+
+const isPascalCase = (value: string, options: IsPascalCaseOptions = {}): boolean => {
+  let regex = '^';
+
+  if (options.allowLeadingUnderscore) {
+    regex += '(_)?';
+  }
+
+  regex += '([A-Z][a-z]+)+$';
+
+  return new RegExp(regex).test(value);
 };
 
 const pascalToWords = (value: string) => {
-  const result = value.replace(/([A-Z])/g, ' $1');
+  const result = value.replace(/([A-Z\\_])/g, ' $1');
 
   // make sure first word is capitalized to make this also handle camelCase
   return result.charAt(0).toUpperCase() + result.slice(1);

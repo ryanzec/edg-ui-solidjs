@@ -70,7 +70,7 @@ const createDynamicRoutesStore = (): DynamicRouteStore => {
       for (const moduleExport of moduleExports) {
         // @todo(refactor) this does not guarantee that the named export is a component but we are just going to
         // @todo(refactor) assume for now until a better solution is found
-        if (stringUtils.isPascalCase(moduleExport)) {
+        if (stringUtils.isPascalCase(moduleExport, { allowLeadingUnderscore: true })) {
           const title = `${defaultExport.title}/${moduleExport}`;
           const path = `/${stringUtils.pascalToKabob(`${defaultExport.title}/${moduleExport}`)}`;
 
