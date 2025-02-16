@@ -1,5 +1,5 @@
 import type { Chart } from 'chart.js';
-import { createSignal } from 'solid-js';
+import { createSignal, onCleanup } from 'solid-js';
 
 const defaultPointRadius = 3;
 const selectedPointRadius = 8;
@@ -20,6 +20,10 @@ export type ChartStore = {
 const createStore = (): ChartStore => {
   const [chartInstance, setChartInstance] = createSignal<Chart>();
   const [selectedDataIndex, setSelectedDataIndex] = createSignal<number>();
+
+  onCleanup(() => {
+    chartInstance()?.destroy();
+  });
 
   return {
     chartInstance,

@@ -28,7 +28,7 @@ const BarChart = (props: BarChartProps) => {
     );
   });
 
-  return <canvas ref={containerElement}>CHART</canvas>;
+  return <canvas ref={containerElement} />;
 };
 
 export default BarChart;
