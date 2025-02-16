@@ -1,11 +1,10 @@
-import type { DragDropId } from '$/core/components/drag-drop/utils';
 import { draggable, dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import type { CleanupFn } from '@atlaskit/pragmatic-drag-and-drop/types';
 import { type JSX, onCleanup, onMount } from 'solid-js';
 
 export type DraggableProps = JSX.HTMLAttributes<HTMLDivElement> & {
-  draggableId: DragDropId;
-  droppableId?: DragDropId;
+  draggableId: string;
+  droppableId?: string;
   isDroppable?: boolean;
 };
 

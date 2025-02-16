@@ -1,0 +1,36 @@
+.slot {
+  margin: var(--space-xs);
+
+  &[data-swapy-highlighted] {
+    background: var(--color-neutral-subtle3);
+  }
+}
+
+.slot1 {
+  height: 300px;
+}
+
+.slot2 {
+  height: 300px;
+}
+
+.slot3 {
+  height: 300px;
+}
+
+.slot4 {
+  height: 300px;
+}
+
+.data4 {
+  background: var(--color-danger);
+  height: 100%;
+}
+
+.middle {
+  display: flex;
+
+  & > * {
+    flex: 1;
+  }
+}
