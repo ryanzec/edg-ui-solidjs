@@ -1,5 +1,5 @@
 import { defaultColor, defaultPointRadius, selectedPointRadius } from '$/core/components/chart/utils/core';
-import type { ChartData, ChartDataset } from 'chart.js';
+import type { ChartData, ChartDataset, ChartOptions } from 'chart.js';
 
 const buildDefaultLineDatasetOptions = (count: number): Partial<ChartDataset<'line'>> => {
   return {
@@ -51,4 +51,10 @@ const updateLineDataForSelected = (
   };
 };
 
-export { buildDefaultLineDatasetOptions, updateLineDataForSelected };
+const buildDefaultLineOptions = (): ChartOptions<'line'> => {
+  return {
+    maintainAspectRatio: false,
+  };
+};
+
+export { buildDefaultLineDatasetOptions, updateLineDataForSelected, buildDefaultLineOptions };

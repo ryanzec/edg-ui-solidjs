@@ -1,3 +1,4 @@
+import { chartComponentUtils } from '$/core/components/chart/utils';
 import type { ChartCommonProps } from '$/core/components/chart/utils/core';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import type { ChartOptions } from 'chart.js';
@@ -11,6 +12,8 @@ export type BarChartProps = CommonDataAttributes &
     options?: ChartOptions<'bar'>;
   };
 
+const defaultOptions = chartComponentUtils.buildDefaultBarOptions();
+
 const BarChart = (props: BarChartProps) => {
   let containerElement: HTMLCanvasElement | undefined;
 
@@ -23,7 +26,7 @@ const BarChart = (props: BarChartProps) => {
       new ChartJS<'bar'>(containerElement, {
         type: 'bar',
         data: props.data,
-        options: props.options,
+        options: props.options || defaultOptions,
       }),
     );
   });

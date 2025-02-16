@@ -57,12 +57,16 @@ const updateRadarDataForSelected = (
 };
 
 type BuildDefaultRadarOptionsOptions = {
-  pointLabelsCallback: (label: string, index: number) => string[];
+  pointLabelsCallback?: (label: string, index: number) => string[];
 };
 
-const buildDefaultRadarOptions = (options: BuildDefaultRadarOptionsOptions): ChartOptions<'radar'> => {
-  return {
-    scales: {
+const buildDefaultRadarOptions = (options: BuildDefaultRadarOptionsOptions = {}): ChartOptions<'radar'> => {
+  const chartOptions: ChartOptions<'radar'> = {
+    maintainAspectRatio: false,
+  };
+
+  if (options.pointLabelsCallback) {
+    chartOptions.scales = {
       r: {
         beginAtZero: true,
         ticks: {
@@ -78,8 +82,10 @@ const buildDefaultRadarOptions = (options: BuildDefaultRadarOptionsOptions): Cha
           padding: 10,
         },
       },
-    },
-  };
+    };
+  }
+
+  return chartOptions;
 };
 
 export { buildDefaultRadarDatasetOptions, buildDefaultRadarOptions, updateRadarDataForSelected };

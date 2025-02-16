@@ -1,3 +1,4 @@
+import { chartComponentUtils } from '$/core/components/chart/utils';
 import type { ChartCommonProps } from '$/core/components/chart/utils/core';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import ChartJS from 'chart.js/auto';
@@ -9,6 +10,8 @@ export type RadarChartProps = CommonDataAttributes &
     data: ChartData<'radar'>;
     options?: ChartOptions<'radar'>;
   };
+
+const defaultOptions = chartComponentUtils.buildDefaultRadarOptions();
 
 const RadarChart = (props: RadarChartProps) => {
   let containerElement: HTMLCanvasElement | undefined;
@@ -22,12 +25,12 @@ const RadarChart = (props: RadarChartProps) => {
       new ChartJS<'radar'>(containerElement, {
         type: 'radar',
         data: props.data,
-        options: props.options,
+        options: props.options || defaultOptions,
       }),
     );
   });
 
-  return <canvas ref={containerElement}>CHART</canvas>;
+  return <canvas ref={containerElement} />;
 };
 
 export default RadarChart;

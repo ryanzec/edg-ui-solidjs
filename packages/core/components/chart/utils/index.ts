@@ -1,6 +1,14 @@
-import { buildDefaultBarDatasetOptions, updateBarDataForSelected } from '$/core/components/chart/utils/bar';
+import {
+  buildDefaultBarDatasetOptions,
+  buildDefaultBarOptions,
+  updateBarDataForSelected,
+} from '$/core/components/chart/utils/bar';
 import { buildScalesOptions, createStore } from '$/core/components/chart/utils/core';
-import { buildDefaultLineDatasetOptions, updateLineDataForSelected } from '$/core/components/chart/utils/line';
+import {
+  buildDefaultLineDatasetOptions,
+  buildDefaultLineOptions,
+  updateLineDataForSelected,
+} from '$/core/components/chart/utils/line';
 import {
   buildDefaultRadarDatasetOptions,
   buildDefaultRadarOptions,
@@ -15,10 +23,12 @@ export const chartComponentUtils = {
   // bar
   buildDefaultBarDatasetOptions,
   updateBarDataForSelected,
+  buildDefaultBarOptions,
 
   //line
   buildDefaultLineDatasetOptions,
   updateLineDataForSelected,
+  buildDefaultLineOptions,
 
   // radar
   buildDefaultRadarDatasetOptions,

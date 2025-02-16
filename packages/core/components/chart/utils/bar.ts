@@ -1,5 +1,5 @@
 import { defaultColor, selectedColor } from '$/core/components/chart/utils/core';
-import type { ChartData, ChartDataset } from 'chart.js';
+import type { ChartData, ChartDataset, ChartOptions } from 'chart.js';
 
 const buildDefaultBarDatasetOptions = (count: number): Partial<ChartDataset<'bar'>> => {
   return {
@@ -42,4 +42,10 @@ const updateBarDataForSelected = (
   };
 };
 
-export { buildDefaultBarDatasetOptions, updateBarDataForSelected };
+const buildDefaultBarOptions = (): ChartOptions<'bar'> => {
+  return {
+    maintainAspectRatio: false,
+  };
+};
+
+export { buildDefaultBarDatasetOptions, updateBarDataForSelected, buildDefaultBarOptions };

@@ -1,3 +1,4 @@
+import { chartComponentUtils } from '$/core/components/chart/utils';
 import type { ChartCommonProps } from '$/core/components/chart/utils/core';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import type { ChartOptions } from 'chart.js';
@@ -11,6 +12,8 @@ export type LineChartProps = CommonDataAttributes &
     options?: ChartOptions<'line'>;
   };
 
+const defaultOption = chartComponentUtils.buildDefaultLineOptions();
+
 const LineChart = (props: LineChartProps) => {
   let containerElement: HTMLCanvasElement | undefined;
 
@@ -23,12 +26,12 @@ const LineChart = (props: LineChartProps) => {
       new ChartJS<'line'>(containerElement, {
         type: 'line',
         data: props.data,
-        options: props.options,
+        options: props.options || defaultOption,
       }),
     );
   });
 
-  return <canvas ref={containerElement}>CHART</canvas>;
+  return <canvas ref={containerElement} />;
 };
 
 export default LineChart;

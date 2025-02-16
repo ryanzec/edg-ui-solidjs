@@ -78,12 +78,14 @@ export const Bar = () => {
   });
 
   return (
-    <SandboxExamplesContainer>
-      <Chart.Bar chartStore={chartStore} data={chartData()} options={chartOptions()} />
-      <Show when={chartStore.selectedDataIndex()}>
+    <>
+      <SandboxExamplesContainer>
+        <Chart.Bar chartStore={chartStore} data={chartData()} options={chartOptions()} />
+      </SandboxExamplesContainer>
+      <Show when={chartStore.selectedDataIndex() !== undefined}>
         <SelectedDataPointDetails dataPoint={rawData[chartStore.selectedDataIndex()!]} />
       </Show>
-    </SandboxExamplesContainer>
+    </>
   );
 };
 
@@ -122,12 +124,14 @@ export const Line = () => {
   });
 
   return (
-    <SandboxExamplesContainer>
-      <Chart.Line chartStore={chartStore} data={chartData()} options={chartOptions()} />
-      <Show when={chartStore.selectedDataIndex()}>
+    <>
+      <SandboxExamplesContainer>
+        <Chart.Line chartStore={chartStore} data={chartData()} options={chartOptions()} />
+      </SandboxExamplesContainer>
+      <Show when={chartStore.selectedDataIndex() !== undefined}>
         <SelectedDataPointDetails dataPoint={rawData[chartStore.selectedDataIndex()!]} />
       </Show>
-    </SandboxExamplesContainer>
+    </>
   );
 };
 
@@ -169,11 +173,13 @@ export const Radar = () => {
   });
 
   return (
-    <SandboxExamplesContainer class={styles.radarChart}>
-      <Chart.Radar chartStore={chartStore} data={chartData()} options={chartOptions()} />
-      <Show when={chartStore.selectedDataIndex()}>
+    <>
+      <SandboxExamplesContainer class={styles.radarChart}>
+        <Chart.Radar chartStore={chartStore} data={chartData()} options={chartOptions()} />
+      </SandboxExamplesContainer>
+      <Show when={chartStore.selectedDataIndex() !== undefined}>
         <SelectedDataPointDetails dataPoint={rawData[chartStore.selectedDataIndex()!]} />
       </Show>
-    </SandboxExamplesContainer>
+    </>
   );
 };
