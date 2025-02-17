@@ -7,7 +7,7 @@ import styles from '$/core/components/date-picker/date-picker.module.css';
 import { datePickerComponentUtils } from '$/core/components/date-picker/utils';
 import Input, { type InputProps } from '$/core/components/input';
 import { clickOutsideDirective } from '$/core/directives/click-outside-directive';
-import type { DefaultFormData } from '$/core/stores/form.store';
+import { type DefaultFormData, formDataAttibute } from '$/core/stores/form.store';
 import type { CommonDataAttributes } from '$/core/types/generic';
 
 // this is needed to avoid this code being stripped in compilation because of the way directive work in SolidJS
@@ -91,7 +91,7 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
       // since when the user interacts with the date picker, the input would technically become blurred however
       // in this case we don't really want to consider it blurred as the date picker in really part of the input
       // so this can be used by other parts of the code (like form validation)
-      currentInputElement.dataset.blurred = 'false';
+      currentInputElement.setAttribute(formDataAttibute.BLURRED, 'false');
     }
 
     setIsDatePickerVisible(true);
@@ -106,7 +106,7 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
 
     if (currentInputElement) {
       // once the date picker is no longer visible, the user has truly blurred the input so we can force that event
-      currentInputElement.dataset.blurred = 'true';
+      currentInputElement.setAttribute(formDataAttibute.BLURRED, 'true');
       currentInputElement.dispatchEvent(new Event('blur'));
     }
 

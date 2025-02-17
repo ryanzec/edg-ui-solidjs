@@ -1,7 +1,6 @@
-import { type Locator, type Page, expect, test } from '@playwright/test';
-
-import { COMBOBOX_HIGHLIGHTED_OPTION_DATA_ATTRIBUTE } from '$/core/components/combobox/utils';
+import { comboboxDataAttribute } from '$/core/components/combobox/utils';
 import { playwrightUtils } from '$/core/utils/playwright';
+import { type Locator, type Page, expect, test } from '@playwright/test';
 
 const urls = {
   single: '/components/combobox/single',
@@ -81,7 +80,7 @@ class ComboboxPage {
       '[data-id="combobox"] [data-id="selectable-options"] [data-id="selectable-option"]:nth-child(1)',
     );
     this.comboboxHighlightedOption = page.locator(
-      `[data-id="combobox"] [data-id="selectable-options"] [${COMBOBOX_HIGHLIGHTED_OPTION_DATA_ATTRIBUTE}="true"]`,
+      `[data-id="combobox"] [data-id="selectable-options"] [${comboboxDataAttribute.HIGHLIGHTED_OPTION}="true"]`,
     );
     this.checkSelectedComboboxValue = page.locator('[data-id="check-selected-combobox-value"]');
     this.checkFormValue = page.locator('[data-id="check-form-value"]');

@@ -5,6 +5,7 @@ import ApplicationContainer from '$sandbox/components/application/application-co
 import { applicationStore } from '$sandbox/stores/application-store';
 import { dynamicRoutesStore } from '$sandbox/stores/dynamic-routes';
 import HomeView from '$sandbox/views/home-view';
+import { applicationDataAttribute } from '$web/utils/application';
 
 const ApplicationRouter = () => {
   dynamicRoutesStore.load();
@@ -14,7 +15,7 @@ const ApplicationRouter = () => {
     // functionality (global notifications, dialogs, etc.) to attach itself to the DOM and since theme css
     // variable are created based on this data attribute, we want to make sure those components have access to
     // those variables
-    document.body.dataset.theme = applicationStore.theme();
+    document.body.setAttribute(applicationDataAttribute.THEME, applicationStore.theme());
   });
 
   return (

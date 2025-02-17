@@ -6,9 +6,11 @@ import type { DefaultFormData } from '$/core/stores/form.store';
 import { Key } from '$/core/types/generic';
 import { domUtils } from '$/core/utils/dom';
 
-export const COMBOBOX_HIGHLIGHTED_OPTION_DATA_ATTRIBUTE = 'data-combobox-highlighted-option';
-export const COMBOBOX_OPTION_VALUE_DATA_ATTRIBUTE = 'data-combobox-value';
-export const COMBOBOX_GROUPED_DATA_ATTRIBUTE = 'data-combobox-grouped';
+export const comboboxDataAttribute = {
+  HIGHLIGHTED_OPTION: 'data-combobox-highlighted-option',
+  OPTION_VALUE: 'data-combobox-value',
+  GROUPED: 'data-combobox-grouped',
+};
 
 export type ComboboxOptionValue = string | number;
 
@@ -273,7 +275,7 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
 
   const getHighlightedValue = (): ComboboxOption<TData> | undefined => {
     const elements = comboboxStore.optionsContainerRef?.querySelectorAll(
-      `[${COMBOBOX_HIGHLIGHTED_OPTION_DATA_ATTRIBUTE}="true"]`,
+      `[${comboboxDataAttribute.HIGHLIGHTED_OPTION}="true"]`,
     ) as NodeListOf<HTMLElement>;
     const element = elements?.[0];
 
@@ -292,7 +294,7 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
       return;
     }
 
-    return getValueIndex(element.getAttribute(COMBOBOX_OPTION_VALUE_DATA_ATTRIBUTE) || '');
+    return getValueIndex(element.getAttribute(comboboxDataAttribute.OPTION_VALUE) || '');
   };
 
   type SelectValueOptions = {
@@ -487,7 +489,7 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
         setFocusedOption((comboboxStore.focusedOptionIndex ?? -1) + 1);
 
         const elementToScrollTo = comboboxStore.optionsContainerRef?.querySelector(
-          `[${COMBOBOX_HIGHLIGHTED_OPTION_DATA_ATTRIBUTE}="true"]`,
+          `[${comboboxDataAttribute.HIGHLIGHTED_OPTION}="true"]`,
         ) as HTMLElement;
 
         if (elementToScrollTo) {
@@ -502,7 +504,7 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
         setFocusedOption((comboboxStore.focusedOptionIndex ?? comboboxStore.displayOptions.length) - 1);
 
         const elementToScrollTo = comboboxStore.optionsContainerRef?.querySelector(
-          `[${COMBOBOX_HIGHLIGHTED_OPTION_DATA_ATTRIBUTE}="true"]`,
+          `[${comboboxDataAttribute.HIGHLIGHTED_OPTION}="true"]`,
         ) as HTMLElement;
 
         if (elementToScrollTo) {
@@ -769,7 +771,7 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
 
   createEffect(function updateHighlightedDataAttributes() {
     const elements = comboboxStore.optionsContainerRef?.querySelectorAll(
-      `[${COMBOBOX_HIGHLIGHTED_OPTION_DATA_ATTRIBUTE}="true"]`,
+      `[${comboboxDataAttribute.HIGHLIGHTED_OPTION}="true"]`,
     ) as NodeListOf<HTMLElement>;
 
     if (!elements) {
@@ -777,7 +779,7 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
     }
 
     for (const element of elements) {
-      element.setAttribute(COMBOBOX_HIGHLIGHTED_OPTION_DATA_ATTRIBUTE, 'false');
+      element.setAttribute(comboboxDataAttribute.HIGHLIGHTED_OPTION, 'false');
     }
 
     // highlight the new highlighted option
@@ -786,7 +788,7 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
     }
 
     const optionElements = comboboxStore.optionsContainerRef?.querySelectorAll(
-      `[${COMBOBOX_OPTION_VALUE_DATA_ATTRIBUTE}]`,
+      `[${comboboxDataAttribute.OPTION_VALUE}]`,
     ) as NodeListOf<HTMLElement>;
 
     const highlightedElement = optionElements?.[comboboxStore.focusedOptionIndex];
@@ -795,7 +797,7 @@ const createCombobox = <TData extends ComboboxExtraData, TFormData = DefaultForm
       return;
     }
 
-    highlightedElement.setAttribute(COMBOBOX_HIGHLIGHTED_OPTION_DATA_ATTRIBUTE, 'true');
+    highlightedElement.setAttribute(comboboxDataAttribute.HIGHLIGHTED_OPTION, 'true');
   });
 
   return {

@@ -9,3 +9,7 @@ export const RoutePath = {
 } as const;
 
 export type RoutePath = (typeof RoutePath)[keyof typeof RoutePath];
+
+export const applicationDataAttribute = {
+  THEME: 'theme',
+};

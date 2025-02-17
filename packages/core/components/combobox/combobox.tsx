@@ -4,11 +4,11 @@ import { Dynamic } from 'solid-js/web';
 
 import {
   AsyncOptionsState,
-  COMBOBOX_GROUPED_DATA_ATTRIBUTE,
   type ComboboxExtraData,
   type ComboboxOption,
   type ComboboxProps,
   comboboxComponentUtils,
+  comboboxDataAttribute,
 } from '$/core/components/combobox/utils';
 import Icon from '$/core/components/icon';
 import iconStyles from '$/core/components/icon/icon.module.css';
@@ -140,7 +140,7 @@ const Combobox = <TData extends ComboboxExtraData, TFormData = DefaultFormData>(
   };
 
   const dynamicProps = {
-    [COMBOBOX_GROUPED_DATA_ATTRIBUTE]: comboboxStore.isGrouped() ? 'true' : 'false',
+    [comboboxDataAttribute.GROUPED]: comboboxStore.isGrouped() ? 'true' : 'false',
   };
 
   createEffect(function updateDisplayOptionsInGroupFormat() {

@@ -4,7 +4,9 @@ import { createStore, produce } from 'solid-js/store';
 
 export const dragDropDataAttribute = {
   IS_DRAGGING: 'data-is-dragging',
+  IS_DRAGGABLE: 'data-is-draggable',
   IS_DROPPING: 'data-is-dropping',
+  IS_DROPPABLE: 'data-is-droppable',
   DRAG_HANDLE: 'data-drag-handle',
 };
 
@@ -147,9 +149,9 @@ const createMultipleListStore = (options: CreateMultipleListStoreOptions = {}): 
 
 const isDroppingOnDraggable = (sourceElement: HTMLElement, destinationElement: HTMLElement) => {
   return (
-    sourceElement.dataset.isDraggable === 'true' &&
-    destinationElement.dataset.isDraggable === 'true' &&
-    destinationElement.dataset.isDroppable === 'true'
+    sourceElement.getAttribute(dragDropDataAttribute.IS_DRAGGABLE) === 'true' &&
+    destinationElement.getAttribute(dragDropDataAttribute.IS_DRAGGABLE) === 'true' &&
+    destinationElement.getAttribute(dragDropDataAttribute.IS_DROPPABLE) === 'true'
   );
 };
 
@@ -245,7 +247,7 @@ const parseDestinationAndSourceMultipleList = (
 };
 
 const isDraggable = (element: HTMLElement) => {
-  return element.dataset.isDraggable === 'true';
+  return element.getAttribute(dragDropDataAttribute.IS_DRAGGABLE) === 'true';
 };
 
 export const dragDropComponentUtils = {

@@ -15,6 +15,11 @@ import * as zod from 'zod';
 import { InputType, domUtils } from '$/core/utils/dom';
 import { zodUtils } from '$/core/utils/zod';
 
+export const formDataAttibute = {
+  BLURRED: 'data-blurred',
+  UNCONTROLLED_VALUE: 'data-uncontrolled-value',
+};
+
 export type DefaultFormData = {
   // biome-ignore lint/suspicious/noExplicitAny: this is used as a default so we have to let any data type
   [key: string]: any;
@@ -403,7 +408,7 @@ const createStore = <TFormData extends object>(
     const name = target.name;
     const previousValue = lodash.get(data(), name);
     const value = target.value;
-    const uncontrolledValue = target.attributes.getNamedItem('data-uncontrolled-value')?.value ?? '';
+    const uncontrolledValue = target.getAttribute(formDataAttibute.UNCONTROLLED_VALUE) ?? '';
 
     if (uncontrolledValue === 'true') {
       return;
@@ -427,7 +432,7 @@ const createStore = <TFormData extends object>(
     const target = event.target as HTMLInputElement;
     const name = target.name;
     const currentValue = lodash.get(data(), name);
-    const blurredOverride = target.attributes.getNamedItem('data-blurred')?.value ?? 'true';
+    const blurredOverride = target.getAttribute(formDataAttibute.BLURRED) ?? 'true';
 
     if (blurredOverride === 'false') {
       return;
@@ -461,7 +466,7 @@ const createStore = <TFormData extends object>(
     let checkboxValue = lodash.get(data(), name);
 
     // if there is no value attribute, assume a true / false toggle
-    if (target.attributes.getNamedItem('value') === null) {
+    if (target.getAttribute('value') === null) {
       checkboxValue = checked;
     } else {
       if (!Array.isArray(checkboxValue)) {
@@ -584,20 +589,20 @@ const createStore = <TFormData extends object>(
 
   const applyValueFromStore = (element: Element) => {
     const inputType = domUtils.getInputType(element);
-    const inputName = element.attributes.getNamedItem('name')?.value ?? '';
+    const inputName = element.getAttribute('name') ?? '';
 
     // if the value is not in the store then we should clear out the input to make sure it reflects the stored values
     const storedValue = lodash.get(data(), inputName) ?? '';
 
     // there are times when the input is going to be managed by another piece of code (
-    const uncontrolledValue = element.attributes.getNamedItem('data-uncontrolled-value')?.value ?? '';
+    const uncontrolledValue = element.getAttribute(formDataAttibute.UNCONTROLLED_VALUE) ?? '';
 
     if (uncontrolledValue === 'true') {
       return;
     }
 
     if (inputType === InputType.CHECKBOX || inputType === InputType.RADIO) {
-      const inputValue = element.attributes.getNamedItem('value')?.value ?? '';
+      const inputValue = element.getAttribute('value') ?? '';
       const domCheckedValue = (element as HTMLInputElement).checked;
       const storeCheckedValue =
         inputType === InputType.RADIO ? storedValue === inputValue : storedValue.includes(inputValue);

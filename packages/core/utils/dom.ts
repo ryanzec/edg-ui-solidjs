@@ -38,7 +38,7 @@ const getInputType = (element?: Element) => {
     return InputType.TEXTAREA;
   }
 
-  const inputType = element.attributes.getNamedItem('type')?.value;
+  const inputType = element.getAttribute('type');
 
   switch (inputType) {
     case 'checkbox':

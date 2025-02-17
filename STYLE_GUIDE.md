@@ -774,7 +774,9 @@ This might always be practical (method with really complex interfaces / types) o
 
 ## JavaScript
 
-Nothing yet.
+### Data attributes
+
+When dealing with data attributes we should be using `getAttibute` / `setAttribute` / `removeAttribute`. While there is `dataset` that is general is an easier API, we should also be using constants to reference data attributes when working in javascript so using these methods is easier.
 
 ## SolidJs
 
