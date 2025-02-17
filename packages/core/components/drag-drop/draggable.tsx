@@ -1,3 +1,4 @@
+import { dragDropDataAttribute } from '$/core/components/drag-drop/utils';
 import { draggable, dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import type { CleanupFn } from '@atlaskit/pragmatic-drag-and-drop/types';
 import { type JSX, onCleanup, onMount } from 'solid-js';
@@ -11,28 +12,31 @@ export type DraggableProps = JSX.HTMLAttributes<HTMLDivElement> & {
 const Draggable = (props: DraggableProps) => {
   let elementRef: HTMLDivElement | undefined;
 
-  onMount(() => {
-    if (!elementRef) {
-      return;
-    }
+  const setupDraggable = (dragElement: HTMLDivElement): CleanupFn => {
+    const dragHandleElement = dragElement.querySelector(`[${dragDropDataAttribute.DRAG_HANDLE}="true"]`);
 
-    const dragHandle = elementRef.querySelector('[data-drag-handle="true"]');
-
-    const cleanupDraggable = draggable({
-      element: elementRef,
-      dragHandle: (dragHandle as Element) ?? null,
+    return draggable({
+      element: dragElement,
+      dragHandle: (dragHandleElement as Element) ?? null,
       getInitialData: () => ({
         draggableId: props.draggableId,
         droppableId: props.droppableId,
       }),
       onDragStart: ({ source }) => {
-        source.element.dataset.isDragging = 'true';
+        source.element.setAttribute(dragDropDataAttribute.IS_DRAGGING, 'true');
       },
       onDrop: ({ source }) => {
-        source.element.removeAttribute('data-is-dragging');
+        source.element.removeAttribute(dragDropDataAttribute.IS_DRAGGING);
       },
     });
+  };
 
+  onMount(() => {
+    if (!elementRef) {
+      return;
+    }
+
+    let cleanupDraggable: CleanupFn | undefined = setupDraggable(elementRef);
     let cleanupDroppable: CleanupFn | undefined = undefined;
 
     if (props.isDroppable) {
@@ -44,20 +48,41 @@ const Draggable = (props: DraggableProps) => {
         }),
         getDropEffect: () => 'move',
         onDragEnter: ({ self }) => {
-          (self.element as HTMLElement).dataset.isDropping = 'true';
+          (self.element as HTMLElement).setAttribute(dragDropDataAttribute.IS_DROPPING, 'true');
         },
         onDragLeave: ({ self }) => {
-          (self.element as HTMLElement).removeAttribute('data-is-dropping');
+          (self.element as HTMLElement).removeAttribute(dragDropDataAttribute.IS_DROPPING);
         },
         onDrop: ({ self }) => {
-          (self.element as HTMLElement).removeAttribute('data-is-dropping');
+          (self.element as HTMLElement).removeAttribute(dragDropDataAttribute.IS_DROPPING);
         },
       });
     }
 
+    // there are cases when the draggable slots do not change when items are re-positioned with drag and drop (for
+    // example, a drag drop layout might have a static layout where the content in the draggables might change but
+    // the draggable slots itself are fixed) and in those cases, the content might hold a draggable handle. when
+    // that happens we need to re-create the draggable so that the draggable handle is associated to the correct
+    // draggable slot so to do this, we re-create the draggable whenever the draggable slots content changes
+    const domObserver = new MutationObserver((mutationList) => {
+      cleanupDraggable?.();
+
+      cleanupDraggable = setupDraggable(elementRef);
+    });
+
+    domObserver.observe(elementRef, {
+      // as long as we don't change these settings, the performance of re-creating the draggable in the observer
+      // should be fine (since it only happens when nodes are added / removed) however if we update this in include
+      // attributes changing or data changing, we might need to refactor the observer to only re-create the
+      // draggable when relevant change are detected
+      childList: true,
+      subtree: true,
+    });
+
     onCleanup(() => {
-      cleanupDraggable();
+      cleanupDraggable?.();
       cleanupDroppable?.();
+      domObserver.disconnect();
     });
   });
 

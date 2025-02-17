@@ -23,8 +23,9 @@
 }
 
 .data4 {
-  background: var(--color-danger);
+  background: var(--color-danger-subtle3);
   height: 100%;
+  padding: var(--space-xs);
 }
 
 .middle {
@@ -33,4 +34,15 @@
   & > * {
     flex: 1;
   }
+}
+
+.chart-layout-slot {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.chart-container {
+  flex: 1;
 }

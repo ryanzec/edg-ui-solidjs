@@ -1,3 +1,4 @@
+import { dragDropDataAttribute } from '$/core/components/drag-drop/utils';
 import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { type JSX, onCleanup } from 'solid-js';
 
@@ -14,13 +15,13 @@ const Droppable = (props: DroppableProps) => {
       }),
       getDropEffect: () => 'move',
       onDragEnter: ({ self }) => {
-        (self.element as HTMLElement).dataset.isDropping = 'true';
+        (self.element as HTMLElement).setAttribute(dragDropDataAttribute.IS_DROPPING, 'true');
       },
       onDragLeave: ({ self }) => {
-        (self.element as HTMLElement).removeAttribute('data-is-dropping');
+        (self.element as HTMLElement).removeAttribute(dragDropDataAttribute.IS_DROPPING);
       },
       onDrop: ({ self }) => {
-        (self.element as HTMLElement).removeAttribute('data-is-dropping');
+        (self.element as HTMLElement).removeAttribute(dragDropDataAttribute.IS_DROPPING);
       },
     });
 

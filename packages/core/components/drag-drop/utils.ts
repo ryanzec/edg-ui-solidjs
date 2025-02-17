@@ -2,6 +2,12 @@ import type { DropTargetRecord, ElementDragType } from '@atlaskit/pragmatic-drag
 import type { JSX } from 'solid-js';
 import { createStore, produce } from 'solid-js/store';
 
+export const dragDropDataAttribute = {
+  IS_DRAGGING: 'data-is-dragging',
+  IS_DROPPING: 'data-is-dropping',
+  DRAG_HANDLE: 'data-drag-handle',
+};
+
 export type DragDropElement = {
   id: string;
   // if you want the element to essentially be empty, just have this method return undefined
