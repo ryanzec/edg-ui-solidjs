@@ -260,12 +260,7 @@ export const MultipleSamePage = () => {
           {dragDropStore.elements()[3].element()}
         </DragDropLayout.Slot>
       </DragDropLayout>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      <hr />
       <DragDropLayout dragDropStore={dragDropStore2} droppableId={droppableId2}>
         <DragDropLayout.Slot
           class={classnames(styles.slot)}
@@ -300,6 +295,100 @@ export const MultipleSamePage = () => {
           droppableId={droppableId2}
         >
           {dragDropStore2.elements()[3].element()}
+        </DragDropLayout.Slot>
+      </DragDropLayout>
+    </SandboxExamplesContainer>
+  );
+};
+
+export const WithEmptySlot = () => {
+  const barRawData = buildChartData(160);
+  const radarRawData = buildChartData(16);
+
+  const barChartStore = chartComponentUtils.createStore();
+  const radarChartStore = chartComponentUtils.createStore();
+
+  const [barChartData] = createSignal<ChartData<'bar'>>({
+    labels: barRawData.map((row) => row.label),
+    datasets: [
+      {
+        ...chartComponentUtils.buildDefaultBarDatasetOptions(barRawData.length),
+        label: 'Value',
+        data: barRawData.map((row) => row.value),
+      },
+    ],
+  });
+
+  const [radarChartData] = createSignal<ChartData<'radar'>>({
+    labels: radarRawData.map((row) => row.label),
+    datasets: [
+      {
+        ...chartComponentUtils.buildDefaultRadarDatasetOptions(radarRawData.length),
+        label: 'Value',
+        data: radarRawData.map((row) => row.value),
+      },
+    ],
+  });
+
+  const dragDropStore = dragDropComponentUtils.createSingleListStore({
+    defaultElements: [
+      {
+        id: '1',
+        element: () => <Chart.Bar chartStore={barChartStore} data={barChartData()} />,
+      },
+      {
+        id: '2',
+        element: () => undefined,
+      },
+      {
+        id: '3',
+        element: () => <Chart.Radar chartStore={radarChartStore} data={radarChartData()} />,
+      },
+      {
+        id: '4',
+        element: () => <div class={styles.data4}>D</div>,
+      },
+    ],
+  });
+
+  const droppableId1 = 'layout1';
+
+  return (
+    <SandboxExamplesContainer>
+      <DragDropLayout dragDropStore={dragDropStore} droppableId={droppableId1}>
+        <DragDropLayout.Slot
+          class={classnames(styles.slot)}
+          contentClass={classnames(styles.slot1)}
+          draggableId={dragDropStore.elements()[0].id}
+          droppableId={droppableId1}
+        >
+          {dragDropStore.elements()[0].element()}
+        </DragDropLayout.Slot>
+        <div class={styles.middle}>
+          <DragDropLayout.Slot
+            class={classnames(styles.slot)}
+            contentClass={classnames(styles.slot2)}
+            draggableId={dragDropStore.elements()[1].id}
+            droppableId={droppableId1}
+          >
+            {dragDropStore.elements()[1].element()}
+          </DragDropLayout.Slot>
+          <DragDropLayout.Slot
+            class={classnames(styles.slot)}
+            contentClass={classnames(styles.slot3)}
+            draggableId={dragDropStore.elements()[2].id}
+            droppableId={droppableId1}
+          >
+            {dragDropStore.elements()[2].element()}
+          </DragDropLayout.Slot>
+        </div>
+        <DragDropLayout.Slot
+          class={classnames(styles.slot)}
+          contentClass={classnames(styles.slot4)}
+          draggableId={dragDropStore.elements()[3].id}
+          droppableId={droppableId1}
+        >
+          {dragDropStore.elements()[3].element()}
         </DragDropLayout.Slot>
       </DragDropLayout>
     </SandboxExamplesContainer>

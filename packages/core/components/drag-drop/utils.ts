@@ -2,8 +2,9 @@ import type { DropTargetRecord, ElementDragType } from '@atlaskit/pragmatic-drag
 import type { JSX } from 'solid-js';
 import { createStore, produce } from 'solid-js/store';
 
-type DragDropElement = {
+export type DragDropElement = {
   id: string;
+  // if you want the element to essentially be empty, just have this method return undefined
   element: () => JSX.Element;
   meta?: {
     // biome-ignore lint/suspicious/noExplicitAny: this is a generic so we need to allow any
