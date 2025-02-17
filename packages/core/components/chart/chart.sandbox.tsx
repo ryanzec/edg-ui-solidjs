@@ -83,7 +83,9 @@ export const Bar = () => {
         <Chart.Bar chartStore={chartStore} data={chartData()} options={chartOptions()} />
       </SandboxExamplesContainer>
       <Show when={chartStore.selectedDataIndex() !== undefined}>
-        <SelectedDataPointDetails dataPoint={rawData[chartStore.selectedDataIndex()!]} />
+        {/* since the check returns true (since we need 0 to also render this), just ignoring the error */}
+        {/* @ts-expect-error */}
+        <SelectedDataPointDetails dataPoint={rawData[chartStore.selectedDataIndex()]} />
       </Show>
     </>
   );
@@ -129,7 +131,9 @@ export const Line = () => {
         <Chart.Line chartStore={chartStore} data={chartData()} options={chartOptions()} />
       </SandboxExamplesContainer>
       <Show when={chartStore.selectedDataIndex() !== undefined}>
-        <SelectedDataPointDetails dataPoint={rawData[chartStore.selectedDataIndex()!]} />
+        {/* since the check returns true (since we need 0 to also render this), just ignoring the error */}
+        {/* @ts-expect-error */}
+        <SelectedDataPointDetails dataPoint={rawData[chartStore.selectedDataIndex()]} />
       </Show>
     </>
   );
@@ -178,7 +182,9 @@ export const Radar = () => {
         <Chart.Radar chartStore={chartStore} data={chartData()} options={chartOptions()} />
       </SandboxExamplesContainer>
       <Show when={chartStore.selectedDataIndex() !== undefined}>
-        <SelectedDataPointDetails dataPoint={rawData[chartStore.selectedDataIndex()!]} />
+        {/* since the check returns true (since we need 0 to also render this), just ignoring the error */}
+        {/* @ts-expect-error */}
+        <SelectedDataPointDetails dataPoint={rawData[chartStore.selectedDataIndex()]} />
       </Show>
     </>
   );

@@ -97,9 +97,12 @@ export const Button = (passedProps: ButtonProps) => {
           <ButtonPrePostItem class={styles.preIcon} position={ButtonItemPosition.PRE} item={props.preItem} />
         )}
         <span class={styles.buttonMainContent}>
-          <Show when={!props.icon} fallback={<Icon icon={props.icon!} size={getIconSize()} />}>
-            {props.children}
-          </Show>
+          {/*
+           * while the fallback could be used to render the icon, it would result in a typescript error so just
+           * using 2 <Show /> components
+           */}
+          <Show when={props.icon}>{(icon) => <Icon icon={icon()} size={getIconSize()} />}</Show>
+          <Show when={!props.icon}>{props.children}</Show>
         </span>
         {!isLoading() && hasPostItem() && (
           <ButtonPrePostItem class={styles.preIcon} position={ButtonItemPosition.POST} item={props.postItem} />
