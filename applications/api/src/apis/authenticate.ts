@@ -69,6 +69,8 @@ export const registerAuthenticateApi = (api: FastifyInstance) => {
       const pocketBaseClient = pocketBaseUtils.createClient(authenticationUtils.getJwtCookie(request, api));
 
       if (pocketBaseClient.authStore.isValid === false) {
+        authenticationUtils.clearJwtCookie(response);
+
         throw new Error('invalid authentication token');
       }
 

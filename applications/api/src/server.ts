@@ -59,6 +59,8 @@ api.addHook('preHandler', async (request, response) => {
   const pocketBaseClient = pocketBaseUtils.createClient(jwt);
 
   if (pocketBaseClient.authStore.isValid === false) {
+    authenticationUtils.clearJwtCookie(response);
+
     throw new Error('invalid authentication token');
   }
 });
