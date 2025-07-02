@@ -1,0 +1,5 @@
+@layer components {
+  .card {
+    width: 500px;
+  }
+}

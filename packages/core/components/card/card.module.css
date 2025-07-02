@@ -1,0 +1,102 @@
+@layer components {
+  .card {
+    --card-content-section-space: var(--spacing-sm);
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--card-content-section-space);
+    padding: var(--spacing-base);
+    background-color: var(--color-surface-pure);
+    border-radius: var(--radius-sm);
+    height: 100%;
+    border: 1px solid var(--color-outline);
+  }
+
+  .as-page-section {
+    border-radius: var(--radius-base);
+    background-color: var(--color-surface);
+    padding: var(--spacing-base);
+  }
+
+  .clickable {
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--color-neutral-subtle);
+    }
+  }
+
+  .card .card {
+    background-color: var(--color-neutral-subtle);
+
+    &.clickable {
+      &:hover {
+        background-color: var(--color-neutral-subtle2);
+      }
+    }
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-pre-item {
+    display: inline-flex;
+    margin-right: var(--spacing-2xs);
+  }
+
+  .header-post-item {
+    align-self: flex-start;
+    display: inline-flex;
+    margin-left: auto;
+  }
+
+  .content {
+    flex: 1;
+  }
+
+  .footer {
+    display: flex;
+  }
+
+  .footer-right-aligned {
+    justify-content: flex-end;
+  }
+
+  .nested-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--card-content-section-space);
+  }
+
+  .nested-container > .card {
+    flex: 1;
+  }
+
+  .image-card {
+    flex-direction: row;
+  }
+
+  .image-container {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 200px;
+  }
+
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .image-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--card-content-section-space);
+  }
+}

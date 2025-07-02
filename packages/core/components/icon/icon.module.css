@@ -1,0 +1,112 @@
+@layer components {
+  .icon {
+    display: inline-flex;
+    font-size: var(--text-base);
+  }
+
+  .extra_small {
+    font-size: var(--text-xs);
+  }
+
+  .small {
+    font-size: var(--text-sm);
+  }
+
+  .large {
+    font-size: var(--text-lg);
+  }
+
+  .extra_large {
+    font-size: var(--text-xl);
+  }
+
+  .extra_large2 {
+    font-size: var(--text-2xl);
+  }
+
+  .extra_large3 {
+    font-size: var(--text-3xl);
+  }
+
+  .extra_large4 {
+    font-size: var(--text-4xl);
+  }
+
+  .spacing-left {
+    margin-left: var(--spacing-4xs);
+  }
+
+  .spacing-right {
+    margin-right: var(--spacing-4xs);
+  }
+
+  .neutral {
+    color: var(--color-neutral);
+
+    &.clickable:hover {
+      color: var(--color-neutral3);
+    }
+  }
+
+  .brand {
+    color: var(--color-brand);
+
+    &.clickable:hover {
+      color: var(--color-brand3);
+    }
+  }
+
+  .success {
+    color: var(--color-success);
+
+    &.clickable:hover {
+      color: var(--color-success3);
+    }
+  }
+
+  .info {
+    color: var(--color-info);
+
+    &.clickable:hover {
+      color: var(--color-info3);
+    }
+  }
+
+  .warning {
+    color: var(--color-warning);
+
+    &.clickable:hover {
+      color: var(--color-warning3);
+    }
+  }
+
+  .warning-high {
+    color: var(--color-warning-high);
+
+    &.clickable:hover {
+      color: var(--color-warning-high3);
+    }
+  }
+
+  .danger {
+    color: var(--color-danger);
+
+    &.clickable:hover {
+      color: var(--color-danger-bold);
+    }
+  }
+
+  .inherit {
+    color: inherit;
+  }
+
+  .group {
+    display: flex;
+    gap: var(--spacing-2xs);
+    align-content: center;
+  }
+
+  .clickable {
+    cursor: pointer;
+  }
+}

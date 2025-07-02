@@ -1,0 +1,34 @@
+@layer components {
+  .overlay {
+    z-index: var(--z-index-overlay);
+    position: fixed;
+    inset: 0;
+    background-color: var(--color-overlay-background);
+    cursor: default;
+  }
+
+  .overlay-local {
+    position: absolute;
+    cursor: default;
+  }
+
+  .strong {
+    opacity: var(--opacity-overlay-strong);
+  }
+
+  .weak {
+    opacity: var(--opacity-overlay-weak);
+  }
+
+  .content {
+    position: fixed;
+    z-index: var(--z-index-over-overlay);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .content-local {
+    position: absolute;
+  }
+}

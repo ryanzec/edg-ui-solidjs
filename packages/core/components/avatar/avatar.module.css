@@ -1,0 +1,43 @@
+@layer components {
+  .avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: var(--spacing-3xl);
+    width: var(--spacing-3xl);
+    border-radius: var(--radius-full);
+    background-color: var(--color-brand);
+    color: var(--color-on-brand);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .avatar img {
+    height: var(--spacing-3xl);
+    width: var(--spacing-3xl);
+    border-radius: var(--radius-full);
+  }
+
+  .avatar-stack {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+
+    & > :not(:last-child) {
+      margin-left: calc(var(--spacing-sm) * -1);
+    }
+
+    & .avatar {
+      border-width: 1px;
+    }
+  }
+
+  .user {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+  }
+
+  .clickable {
+    cursor: pointer;
+  }
+}

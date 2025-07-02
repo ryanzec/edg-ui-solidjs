@@ -1,0 +1,18 @@
+/* allow smooth scrolling from html itself but respect the user preference for a11y */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+html {
+  font-family: var(--font-family-geist), sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-neutral-subtle);
+}
+
+body {
+  font-size: var(--text-base);
+  line-height: var(--leading-base);
+  letter-spacing: var(--tracking-base);
+}

@@ -1,0 +1,6 @@
+@layer components {
+  .date-time {
+    display: flex;
+    gap: var(--spacing-4xs);
+  }
+}

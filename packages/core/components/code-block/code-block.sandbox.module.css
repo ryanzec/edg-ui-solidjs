@@ -1,0 +1,5 @@
+@layer components {
+  .small-width {
+    width: 300px;
+  }
+}

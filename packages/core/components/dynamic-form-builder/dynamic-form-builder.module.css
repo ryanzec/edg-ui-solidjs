@@ -1,0 +1,7 @@
+@layer components {
+  .enclosed-form {
+    border: 1px solid var(--color-outline);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+  }
+}

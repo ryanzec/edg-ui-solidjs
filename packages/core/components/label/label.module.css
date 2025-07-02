@@ -1,0 +1,18 @@
+@layer components {
+  .container {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: var(--spacing-4xs);
+    width: 100%;
+  }
+
+  .label {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .post-item {
+    margin-left: auto;
+  }
+}

@@ -1,0 +1,16 @@
+@layer components {
+  .thumbs-rating {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4xs);
+    color: var(--color-brand);
+  }
+
+  .thumbs-down {
+    transform: scaleX(-1);
+  }
+
+  .disabled {
+    opacity: var(--opacity-disabled);
+  }
+}

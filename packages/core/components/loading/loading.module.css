@@ -1,0 +1,16 @@
+@layer components {
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .icon {
+    margin-right: var(--icon-margin);
+
+    :global {
+      animation: spin 1s linear;
+      animation-iteration-count: infinite;
+    }
+  }
+}

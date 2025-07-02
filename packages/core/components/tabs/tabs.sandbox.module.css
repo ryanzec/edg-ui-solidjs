@@ -1,0 +1,6 @@
+@layer components {
+  .dark-background {
+    background-color: var(--color-text);
+    padding: var(--spacing-5xl);
+  }
+}

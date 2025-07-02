@@ -1,0 +1,118 @@
+@layer components {
+  .container {
+    display: block;
+    width: 100%;
+    cursor: text;
+  }
+
+  .input-container {
+    width: 100%;
+    color: var(--color-text);
+    background: var(--color-surface-pure);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-outline);
+    padding: var(--spacing-2xs);
+
+    &:has([type="hidden"]) {
+      display: none;
+    }
+  }
+
+  .container-focus:not(.container-disabled):not(.container-readonly):not(.container-invalid) .input-container {
+    border-color: var(--color-info);
+  }
+
+  .container:hover:not(.container-disabled):not(.container-readonly):not(.container-invalid):not(.container-focus)
+    .input-container {
+    border-color: var(--color-outline-active);
+  }
+
+  .input-inner-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-4xs);
+    min-width: 1px;
+  }
+
+  .input {
+    font-size: var(--text-base);
+    line-height: var(--leading-base);
+    letter-spacing: var(--tracking-base);
+    outline: 0;
+    background: 0;
+    border: 0;
+    flex: 1;
+  }
+
+  .container-disabled {
+    opacity: var(--opacity-disabled);
+  }
+
+  .container-readonly .input-container {
+    background-color: var(--color-surface-secondary);
+  }
+
+  .container-invalid .input-container {
+    border-color: var(--color-danger);
+  }
+
+  .input-container input::placeholder {
+    color: var(--color-input-placeholder);
+  }
+
+  .input-container {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+  }
+
+  .input-container input {
+    /*
+    * not sure why the user agent css overrides the inherited color from so need to apply the color for the input
+    * directly on the input element itself
+    */
+    color: var(--color-text);
+  }
+
+  .pre-item,
+  .post-item {
+    display: flex;
+    height: 100%;
+    align-items: center;
+  }
+
+  .pre-item {
+    margin-right: var(--spacing-4xs);
+  }
+
+  .post-item {
+    margin-left: var(--spacing-4xs);
+  }
+
+  .pre-item.pre-item-inline {
+    display: inline-block;
+  }
+
+  .post-item-is-clickable {
+    cursor: pointer;
+  }
+
+  /* multiple inputs */
+  .input-multiple-item {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-sm);
+  }
+
+  .input-multiple-item-form-field {
+    flex: 1;
+  }
+
+  /* since autocomplete does not seems to disable save password functionality, this alternative seems to work */
+  .password {
+    -webkit-text-security: disc;
+  }
+}

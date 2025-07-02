@@ -1,0 +1,44 @@
+@layer components {
+  .pagination {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-2xs) 0;
+  }
+
+  .pagination-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: var(--spacing-sm);
+  }
+
+  .pagination-numbers {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4xs);
+  }
+
+  .pagination-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    align-self: flex-end;
+  }
+
+  .pagination-number {
+    /* this helps with weird shifting of content when going from 1 digit numbers to 2 or 2 to 3 or etc. */
+    min-width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pagination-number-active {
+    background-color: var(--color-brand-subtle2);
+    color: var(--color-brand-bold);
+  }
+
+  .pagination-ellipsis {
+    padding: 0 var(--spacing-4xs);
+  }
+}

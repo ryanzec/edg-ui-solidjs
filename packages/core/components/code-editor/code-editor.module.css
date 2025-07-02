@@ -1,0 +1,36 @@
+@layer components {
+  .code-editor {
+    height: 100%;
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+
+    /* this prevent the border + border radius from being overlapped by the editor itself  */
+    overflow: hidden;
+
+    &:has([contenteditable]:focus) {
+      border-color: var(--color-outline-active);
+    }
+  }
+
+  .borderless {
+    border-radius: 0;
+    border: none;
+
+    &:has([contenteditable]:focus) {
+      border: none;
+    }
+  }
+
+  .error-messages {
+    background-color: var(--color-danger2);
+    color: var(--color-on-danger);
+    padding: var(--spacing-4xs);
+  }
+
+  /* @todo hiding until chunk updating can be fully implemented */
+  :global {
+    .cm-chunkButtons {
+      display: none;
+    }
+  }
+}

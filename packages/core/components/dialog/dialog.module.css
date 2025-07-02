@@ -1,0 +1,45 @@
+@layer components {
+  .dialog {
+    --dialog-main-spacing: var(--spacing-base);
+
+    position: fixed;
+    min-width: 400px;
+    min-height: 100px;
+    background-color: var(--color-surface-pure);
+    border-radius: var(--radius-sm);
+    z-index: var(--z-index-dialog);
+    color: var(--color-text);
+
+    /* centering */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .dialog-header {
+    display: flex;
+    align-items: center;
+    font-weight: var(--font-weight-medium);
+    padding: var(--dialog-main-spacing);
+    border-bottom: 1px solid var(--color-outline);
+  }
+
+  .close-header-trigger {
+    margin-left: auto;
+  }
+
+  .dialog-content {
+    padding: var(--dialog-main-spacing);
+  }
+
+  .dialog-footer {
+    display: flex;
+    align-items: center;
+    padding: var(--dialog-main-spacing);
+    border-top: 1px solid var(--color-outline);
+  }
+
+  .dialog-footer-right-aligned {
+    justify-content: flex-end;
+  }
+}

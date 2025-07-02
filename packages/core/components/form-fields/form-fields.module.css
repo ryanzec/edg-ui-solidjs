@@ -1,0 +1,7 @@
+@layer components {
+  .form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2xs);
+  }
+}

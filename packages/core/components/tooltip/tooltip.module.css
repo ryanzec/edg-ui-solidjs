@@ -1,0 +1,33 @@
+@layer components {
+  .tooltip {
+    display: inline-flex;
+  }
+
+  .handle {
+    /* when using things like icon, there can be extra space and using inline-flex removes that */
+    display: inline-flex;
+  }
+
+  .content {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: max-content;
+    z-index: var(--z-index-tooltip);
+    overflow: hidden;
+    max-width: 800px;
+  }
+
+  .content-styled {
+    border: 1px solid var(--color-outline-active);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-4xs) var(--spacing-2xs);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  .content-is-enabled {
+    display: inline-flex;
+  }
+}

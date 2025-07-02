@@ -1,0 +1,34 @@
+@layer components {
+  .radio label {
+    width: 100%;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+  }
+
+  .radio input {
+    display: none;
+  }
+
+  .radio .icon {
+    margin-right: var(--spacing-4xs);
+    font-size: var(--text-xl);
+  }
+
+  .radio .icon-is-checked {
+    color: var(--color-success);
+  }
+
+  .align-end {
+    input {
+      order: 1;
+      margin-left: auto;
+    }
+  }
+
+  .group {
+    .radio {
+      display: flex;
+    }
+  }
+}

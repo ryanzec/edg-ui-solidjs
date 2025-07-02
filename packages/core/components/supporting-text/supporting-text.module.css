@@ -1,0 +1,14 @@
+.supporting-text {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  letter-spacing: var(--letter-spacing-sm);
+  margin-top: var(--space-2xs);
+}
+
+.neutral {
+  color: var(--color-neutral);
+}
+
+.danger {
+  color: var(--color-danger);
+}

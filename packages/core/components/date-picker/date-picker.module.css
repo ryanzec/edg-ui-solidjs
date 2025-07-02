@@ -1,0 +1,111 @@
+@layer components {
+  .date-picker {
+    position: relative;
+    background-color: var(--color-surface-pure);
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+  }
+
+  .header {
+    width: 100%;
+    padding: var(--spacing-2xs);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-outline);
+  }
+
+  .header-text {
+    cursor: pointer;
+  }
+
+  .calendar {
+    width: 100%;
+    padding: var(--spacing-2xs);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* biome-ignore lint/suspicious/noEmptyBlock: just a placeholder */
+  .day-of-week-header-item {
+  }
+
+  .day {
+    display: inline-flex;
+    width: var(--spacing-xl);
+    height: var(--spacing-xl);
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--radius-full);
+  }
+
+  .day-current {
+    background-color: var(--color-neutral-subtle);
+  }
+
+  .day-selected {
+    background-color: var(--color-brand-subtle2);
+  }
+
+  .day:not(.day-of-week-header-item):not(.day-disabled):hover {
+    cursor: pointer;
+    background-color: var(--color-brand-subtle);
+  }
+
+  .day-inactive {
+    color: var(--color-neutral);
+  }
+
+  .day-disabled {
+    opacity: var(--opacity-disabled);
+  }
+
+  .time-container {
+    width: 100px;
+    padding: 0 var(--spacing-2xs) var(--spacing-2xs) var(--spacing-2xs);
+  }
+
+  .footer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: var(--spacing-2xs);
+    border-top: 1px solid var(--color-outline);
+  }
+
+  /* month year selection */
+  .month-year-selection {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    padding: var(--spacing-2xs);
+    background-color: var(--color-surface-pure);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    border-bottom: 1px solid var(--color-outline);
+  }
+
+  .month-year-inputs {
+    display: flex;
+    gap: var(--spacing-2xs);
+    padding-bottom: var(--spacing-2xs);
+  }
+
+  .year-selection {
+    flex: 0 0 90px;
+  }
+
+  /* biome-ignore lint/suspicious/noEmptyBlock: just a placeholder */
+  .date-picker-input {
+  }
+
+  .date-picker-input-picker-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: var(--z-index-date-picker-input-picker);
+  }
+}

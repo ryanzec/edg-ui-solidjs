@@ -1,0 +1,42 @@
+@layer components {
+  .lists-container {
+    display: flex;
+    gap: var(--spacing-sm);
+    height: 100%;
+    width: 100%;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2xs);
+    padding: var(--spacing-sm);
+    height: 100%;
+    width: 100%;
+    background-color: var(--color-neutral-subtle2);
+
+    &:has([data-is-dropping="true"]):not(:has([data-is-dragging="true"])) {
+      opacity: 0.3;
+    }
+  }
+
+  .list-item {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-brand);
+    padding: var(--spacing-2xs);
+    color: var(--color-on-brand);
+    width: 100%;
+
+    &[data-is-dragging="true"],
+    &[data-is-dropping="true"] {
+      opacity: 0.3;
+    }
+  }
+
+  .list-item-drag-handle {
+    display: inline-flex;
+    cursor: pointer;
+    margin-right: var(--spacing-4xs);
+  }
+}

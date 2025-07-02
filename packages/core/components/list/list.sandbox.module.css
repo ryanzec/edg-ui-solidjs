@@ -1,0 +1,6 @@
+@layer components {
+  .list-container {
+    width: 500px;
+    border: 1px solid var(--color-outline);
+  }
+}

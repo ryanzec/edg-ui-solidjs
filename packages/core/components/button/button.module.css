@@ -1,0 +1,469 @@
+@layer components {
+  .button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    outline: 0;
+    padding: var(--spacing-4xs) var(--spacing-2xs);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    background-color: transparent;
+    font: inherit;
+    font-size: var(--text-base);
+    line-height: var(--leading-base);
+    letter-spacing: var(--tracking-base);
+
+    /* when there is a pre icon, that change the buttons baseline so using top to make sure buttons always align */
+    vertical-align: top;
+  }
+
+  .button[disabled] {
+    opacity: var(--opacity-disabled);
+    cursor: default;
+  }
+
+  .small {
+    padding: var(--spacing-5xs) var(--spacing-2xs);
+  }
+
+  .button-content {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 1px;
+  }
+
+  .button-main-content {
+    display: inline-flex;
+    align-items: center;
+    min-width: 1px;
+  }
+
+  /* shapes */
+  .circle {
+    border-radius: var(--radius-full);
+    padding: var(--spacing-2xs);
+  }
+
+  /* outlined */
+  .outlined {
+    border: 1px solid transparent;
+  }
+
+  .text {
+    padding: 0;
+  }
+
+  /* neutral */
+  .neutral {
+    color: var(--color-neutral-bold);
+  }
+
+  .neutral.outlined {
+    border-color: var(--color-neutral-bold);
+  }
+
+  .neutral.filled {
+    background-color: var(--color-neutral);
+    color: var(--color-on-neutral);
+  }
+
+  .neutral.filled:not([disabled]):hover {
+    background-color: var(--color-neutral2);
+  }
+
+  .neutral.filled:not([disabled]):active {
+    background-color: var(--color-neutral3);
+  }
+
+  .neutral.weak {
+    background-color: var(--color-neutral-subtle2);
+  }
+
+  .neutral.weak:not([disabled]):hover,
+  .neutral.outlined:not([disabled]):hover,
+  .neutral.ghost:not([disabled]):hover {
+    background-color: var(--color-neutral-subtle3);
+  }
+
+  .neutral.weak:not([disabled]):active,
+  .neutral.outlined:not([disabled]):active,
+  .neutral.outlined.is-selected,
+  .neutral.ghost:not([disabled]):active {
+    background-color: var(--color-neutral-subtle4);
+  }
+
+  .neutral.text {
+    color: var(--color-neutral);
+  }
+
+  /* brand */
+  .brand {
+    color: var(--color-brand-bold);
+  }
+
+  .brand.outlined {
+    border-color: var(--color-brand-bold);
+  }
+
+  .brand.filled {
+    background-color: var(--color-brand);
+    color: var(--color-on-brand);
+  }
+
+  .brand.filled:not([disabled]):hover {
+    background-color: var(--color-brand2);
+  }
+
+  .brand.filled:not([disabled]):active {
+    background-color: var(--color-brand3);
+  }
+
+  .brand.weak {
+    background-color: var(--color-brand-subtle2);
+  }
+
+  .brand.weak:not([disabled]):hover,
+  .brand.outlined:not([disabled]):hover,
+  .brand.ghost:not([disabled]):hover {
+    background-color: var(--color-brand-subtle3);
+  }
+
+  .brand.weak:not([disabled]):active,
+  .brand.outlined:not([disabled]):active,
+  .brand.outlined.is-selected,
+  .brand.ghost:not([disabled]):active {
+    background-color: var(--color-brand-subtle4);
+  }
+
+  .brand.text {
+    color: var(--color-brand);
+  }
+
+  /* brand secondary */
+  .brand-secondary {
+    color: var(--color-brand-secondary-bold);
+  }
+
+  .brand-secondary.outlined {
+    border-color: var(--color-brand-secondary-bold);
+  }
+
+  .brand-secondary.filled {
+    background-color: var(--color-brand-secondary);
+    color: var(--color-on-brand-secondary);
+  }
+
+  .brand-secondary.filled:not([disabled]):hover {
+    background-color: var(--color-brand-secondary2);
+  }
+
+  .brand-secondary.filled:not([disabled]):active {
+    background-color: var(--color-brand-secondary3);
+  }
+
+  .brand-secondary.weak {
+    background-color: var(--color-brand-secondary-subtle2);
+  }
+
+  .brand-secondary.weak:not([disabled]):hover,
+  .brand-secondary.outlined:not([disabled]):hover,
+  .brand-secondary.ghost:not([disabled]):hover {
+    background-color: var(--color-brand-secondary-subtle3);
+  }
+
+  .brand-secondary.weak:not([disabled]):active,
+  .brand-secondary.outlined:not([disabled]):active,
+  .brand-secondary.outlined.is-selected,
+  .brand-secondary.ghost:not([disabled]):active {
+    background-color: var(--color-brand-secondary-subtle4);
+  }
+
+  .brand-secondary.text {
+    color: var(--color-brand-secondary);
+  }
+
+  /* success */
+  .success {
+    color: var(--color-success-bold);
+  }
+
+  .success.outlined {
+    border-color: var(--color-success-bold);
+  }
+
+  .success.filled {
+    background-color: var(--color-success);
+    color: var(--color-on-success);
+  }
+
+  .success.filled:not([disabled]):hover {
+    background-color: var(--color-success2);
+  }
+
+  .success.filled:not([disabled]):active {
+    background-color: var(--color-success3);
+  }
+
+  .success.weak {
+    background-color: var(--color-success-subtle2);
+  }
+
+  .success.weak:not([disabled]):hover,
+  .success.outlined:not([disabled]):hover,
+  .success.ghost:not([disabled]):hover {
+    background-color: var(--color-success-subtle3);
+  }
+
+  .success.weak:not([disabled]):active,
+  .success.outlined:not([disabled]):active,
+  .success.outlined.is-selected,
+  .success.ghost:not([disabled]):active {
+    background-color: var(--color-success-subtle4);
+  }
+
+  .success.text {
+    color: var(--color-success);
+  }
+
+  /* info */
+  .info {
+    color: var(--color-info-bold);
+  }
+
+  .info.outlined {
+    border-color: var(--color-info-bold);
+  }
+
+  .info.filled {
+    background-color: var(--color-info);
+    color: var(--color-on-info);
+  }
+
+  .info.filled:not([disabled]):hover {
+    background-color: var(--color-info2);
+  }
+
+  .info.filled:not([disabled]):active {
+    background-color: var(--color-info3);
+  }
+
+  .info.weak {
+    background-color: var(--color-info-subtle2);
+  }
+
+  .info.weak:not([disabled]):hover,
+  .info.outlined:not([disabled]):hover,
+  .info.ghost:not([disabled]):hover {
+    background-color: var(--color-info-subtle3);
+  }
+
+  .info.weak:not([disabled]):active,
+  .info.outlined:not([disabled]):active,
+  .info.outlined.is-selected,
+  .info.ghost:not([disabled]):active {
+    background-color: var(--color-info-subtle4);
+  }
+
+  .info.text {
+    color: var(--color-info);
+  }
+
+  /* warning */
+  .warning {
+    color: var(--color-warning-bold);
+  }
+
+  .warning.outlined {
+    border-color: var(--color-warning-bold);
+  }
+
+  .warning.filled {
+    background-color: var(--color-warning);
+    color: var(--color-on-warning);
+  }
+
+  .warning.filled:not([disabled]):hover {
+    background-color: var(--color-warning2);
+  }
+
+  .warning.filled:not([disabled]):active {
+    background-color: var(--color-warning3);
+  }
+
+  .warning.weak {
+    background-color: var(--color-warning-subtle2);
+  }
+
+  .warning.weak:not([disabled]):hover,
+  .warning.outlined:not([disabled]):hover,
+  .warning.ghost:not([disabled]):hover {
+    background-color: var(--color-warning-subtle3);
+  }
+
+  .warning.weak:not([disabled]):active,
+  .warning.outlined:not([disabled]):active,
+  .warning.outlined.is-selected,
+  .warning.ghost:not([disabled]):active {
+    background-color: var(--color-warning-subtle4);
+  }
+
+  .warning.text {
+    color: var(--color-warning);
+  }
+
+  /* warning high */
+  .warning-high {
+    color: var(--color-warning-high-bold);
+  }
+
+  .warning-high.outlined {
+    border-color: var(--color-warning-high-bold);
+  }
+
+  .warning-high.filled {
+    background-color: var(--color-warning-high);
+    color: var(--color-on-warning);
+  }
+
+  .warning-high.filled:not([disabled]):hover {
+    background-color: var(--color-warning-high2);
+  }
+
+  .warning-high.filled:not([disabled]):active {
+    background-color: var(--color-warning-high3);
+  }
+
+  .warning-high.weak {
+    background-color: var(--color-warning-high-subtle2);
+  }
+
+  .warning-high.weak:not([disabled]):hover,
+  .warning-high.outlined:not([disabled]):hover,
+  .warning-high.ghost:not([disabled]):hover {
+    background-color: var(--color-warning-high-subtle3);
+  }
+
+  .warning-high.weak:not([disabled]):active,
+  .warning-high.outlined:not([disabled]):active,
+  .warning-high.outlined.is-selected,
+  .warning-high.ghost:not([disabled]):active {
+    background-color: var(--color-warning-high-subtle4);
+  }
+
+  .warning-high.text {
+    color: var(--color-warning-high);
+  }
+
+  /* danger */
+  .danger {
+    color: var(--color-danger-bold);
+  }
+
+  .danger.outlined {
+    border-color: var(--color-danger-bold);
+  }
+
+  .danger.filled {
+    background-color: var(--color-danger);
+    color: var(--color-on-danger);
+  }
+
+  .danger.filled:not([disabled]):hover {
+    background-color: var(--color-danger2);
+  }
+
+  .danger.filled:not([disabled]):active {
+    background-color: var(--color-danger3);
+  }
+
+  .danger.weak {
+    background-color: var(--color-danger-subtle2);
+  }
+
+  .danger.weak:not([disabled]):hover,
+  .danger.outlined:not([disabled]):hover,
+  .danger.ghost:not([disabled]):hover {
+    background-color: var(--color-danger-subtle3);
+  }
+
+  .danger.weak:not([disabled]):active,
+  .danger.outlined:not([disabled]):active,
+  .danger.outlined.is-selected,
+  .danger.ghost:not([disabled]):active {
+    background-color: var(--color-danger-subtle4);
+  }
+
+  .danger.text {
+    color: var(--color-danger);
+  }
+
+  /* pre post items */
+  .pre-post-item {
+    display: inline-flex;
+  }
+
+  .pre-post-item.pre-item {
+    margin-right: var(--spacing-4xs);
+  }
+
+  .pre-post-item.post-item {
+    margin-left: var(--spacing-4xs);
+  }
+
+  .is-loading .pre-post-item {
+    :global {
+      animation: spin 1s linear;
+      animation-iteration-count: infinite;
+    }
+  }
+
+  /* group */
+  .button-group {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2xs);
+  }
+
+  /* this basically is a toggle button */
+  .button-group-attached {
+    gap: 0;
+    border: 1px solid var(--color-neutral-bold);
+    border-radius: var(--radius-lg);
+
+    .button {
+      border: 0;
+    }
+
+    /*
+    * with attached buttons, is stylistically looks weird to have the border of the button have the opacity tied to
+    * it so in that case, we only set the opacity of the content
+    */
+    .button[disabled] {
+      opacity: 1;
+
+      .button-content {
+        opacity: var(--opacity-disabled);
+      }
+    }
+
+    .button:not(:first-child) {
+      border-left: 1px solid var(--color-neutral-bold);
+    }
+
+    .button:first-child {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .button:last-child {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .button:not(:first-child):not(:last-child) {
+      border-radius: 0;
+    }
+  }
+}

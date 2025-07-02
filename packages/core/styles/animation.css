@@ -1,0 +1,4 @@
+.spin {
+  animation: spin 1s linear;
+  animation-iteration-count: infinite;
+}

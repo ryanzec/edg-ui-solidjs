@@ -1,0 +1,35 @@
+.application-frame {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+}
+
+.toggle-theme-trigger {
+  margin-bottom: var(--spacing-base);
+}
+
+.navigation {
+  padding: var(--spacing-base);
+  overflow-y: auto;
+  border-right: 1px solid var(--color-outline);
+  flex: 0 0 350px;
+}
+
+.navigation-group-header {
+  margin-top: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.sub-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  /* this prevent the element from overflowing the parent */
+  min-width: 1px;
+}
+
+.main-content {
+  padding: var(--spacing-base);
+  min-height: 100%;
+}

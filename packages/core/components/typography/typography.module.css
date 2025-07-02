@@ -1,0 +1,80 @@
+@layer components {
+  .typography {
+    font-size: var(--text-base);
+    line-height: var(--leading-base);
+    letter-spacing: var(--tracking-base);
+  }
+
+  .extra-small {
+    font-size: var(--text-xs);
+    line-height: var(--leading-xs);
+  }
+
+  .small {
+    font-size: var(--text-sm);
+    line-height: var(--leading-sm);
+    letter-spacing: var(--tracking-sm);
+  }
+
+  .large {
+    font-size: var(--text-lg);
+    line-height: var(--leading-lg);
+    letter-spacing: var(--tracking-lg);
+  }
+
+  .extra-large {
+    font-size: var(--text-xl);
+    line-height: var(--leading-xl);
+    letter-spacing: var(--tracking-xl);
+  }
+
+  .extra-large2 {
+    font-size: var(--text-2xl);
+    line-height: var(--leading-2xl);
+    letter-spacing: var(--tracking-2xl);
+  }
+
+  .extra-large3 {
+    font-size: var(--text-3xl);
+    line-height: var(--leading-3xl);
+    letter-spacing: var(--tracking-3xl);
+  }
+
+  .extra-large4 {
+    font-size: var(--text-4xl);
+    line-height: var(--leading-4xl);
+    letter-spacing: var(--tracking-4xl);
+  }
+
+  .neutral {
+    color: var(--color-neutral);
+  }
+
+  .brand {
+    color: var(--color-brand);
+  }
+
+  .success {
+    color: var(--color-success);
+  }
+
+  .info {
+    color: var(--color-info);
+  }
+
+  .warning {
+    color: var(--color-warning);
+  }
+
+  .warning-high {
+    color: var(--color-warning-high);
+  }
+
+  .danger {
+    color: var(--color-danger);
+  }
+
+  .inherit-color {
+    color: inherit;
+  }
+}

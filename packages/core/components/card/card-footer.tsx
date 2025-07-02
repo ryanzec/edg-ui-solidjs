@@ -1,0 +1,31 @@
+import classnames from 'classnames';
+import { type JSX, mergeProps, splitProps } from 'solid-js';
+
+import styles from '$/core/components/card/card.module.css';
+import { CardFooterAlignment } from '$/core/components/card/utils';
+
+export type CardFooterProps = JSX.HTMLAttributes<HTMLDivElement> & {
+  alignment?: CardFooterAlignment;
+};
+
+const CardFooter = (passedProps: CardFooterProps) => {
+  const [props, restOfProps] = splitProps(mergeProps({ alignment: CardFooterAlignment.RIGHT }, passedProps), [
+    'children',
+    'class',
+    'alignment',
+  ]);
+
+  return (
+    <div
+      data-id="footer"
+      class={classnames(styles.footer, {
+        [styles.footerRightAligned]: props.alignment === CardFooterAlignment.RIGHT,
+      })}
+      {...restOfProps}
+    >
+      {props.children}
+    </div>
+  );
+};
+
+export default CardFooter;

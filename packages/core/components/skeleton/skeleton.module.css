@@ -1,0 +1,44 @@
+@layer components {
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-base);
+  }
+
+  .bar {
+    width: 100%;
+    height: var(--spacing-base);
+    background: linear-gradient(
+      90deg,
+      var(--color-neutral-subtle2),
+      var(--color-neutral-subtle3),
+      var(--color-neutral-subtle2)
+    );
+    background-size: 200% 100%;
+    border-radius: var(--radius-sm);
+
+    :global {
+      animation: pulse 5s ease-in-out infinite;
+    }
+  }
+
+  .variable-length1 {
+    width: 33%;
+  }
+
+  .variable-length2 {
+    width: 74%;
+  }
+
+  .variable-length3 {
+    width: 49%;
+  }
+
+  .variable-length4 {
+    width: 15%;
+  }
+
+  .variable-length5 {
+    width: 88%;
+  }
+}

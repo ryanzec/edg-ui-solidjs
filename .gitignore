@@ -1,0 +1,35 @@
+*node_modules/*
+
+logs
+*.log
+*.logs
+.vscode/settings.json
+
+coverage
+mocha-coverage
+
+# development specific data
+.env
+.env.local
+docker.env
+applications/api/lowdb/*
+
+# pocketbase
+applications/backend/pb_data/*
+applications/backend/pocketbase
+
+# used for self generating certificates
+*.pem
+*.csr
+
+# artifacts
+.idea
+.eslintcache
+applications/web/build/*
+.nyc_output/*
+**/dist/*
+/test-results/
+/playwright-report/
+/playwright/.cache/
+build-visualizer.html
+.DS_Store

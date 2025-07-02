@@ -1,0 +1,9 @@
+@layer components {
+  .form-error {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .form-error-hidden {
+    display: none;
+  }
+}

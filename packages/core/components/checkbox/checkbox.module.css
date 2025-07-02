@@ -1,0 +1,78 @@
+@layer components {
+  .checkbox label {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .checkbox input:not(.toggle) {
+    display: none;
+  }
+
+  .checkbox .icon {
+    margin-right: var(--spacing-4xs);
+    font-size: var(--text-xl);
+  }
+
+  .checkbox input:checked + .icon,
+  .checkbox input:indeterminate + .icon {
+    color: var(--color-success);
+  }
+
+  .align-end {
+    input {
+      order: 1;
+      margin-left: auto;
+    }
+  }
+
+  .group {
+    .checkbox {
+      display: flex;
+    }
+  }
+
+  .toggle-container {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4xs);
+    cursor: pointer;
+  }
+
+  .toggle {
+    appearance: none;
+    background-color: var(--color-neutral);
+    border-radius: var(--radius-full);
+    align-self: center;
+    height: var(--spacing-lg);
+    width: var(--spacing-3xl);
+    cursor: pointer;
+  }
+
+  .toggle:before {
+    --checkbox-toggle-knob-inner-spacing: 4px;
+    --checkbox-toggle-know-size: calc(var(--spacing-lg) - calc(var(--checkbox-toggle-knob-inner-spacing) * 2));
+
+    content: "";
+    display: block;
+    position: relative;
+    background-color: var(--color-surface-pure);
+    height: var(--checkbox-toggle-know-size);
+    width: var(--checkbox-toggle-know-size);
+    border-radius: var(--radius-full);
+    flex: 0 0 var(--spacing-xl);
+    top: var(--checkbox-toggle-knob-inner-spacing);
+    left: var(--checkbox-toggle-knob-inner-spacing);
+
+    transition: left 0.2s;
+  }
+
+  .toggle:checked {
+    background-color: var(--color-success);
+  }
+
+  .toggle:checked:before {
+    left: calc(var(--spacing-3xl) - var(--checkbox-toggle-know-size) - var(--checkbox-toggle-knob-inner-spacing));
+  }
+}

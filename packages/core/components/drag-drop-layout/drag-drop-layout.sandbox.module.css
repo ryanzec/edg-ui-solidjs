@@ -1,0 +1,50 @@
+@layer components {
+  .slot {
+    margin: var(--spacing-2xs);
+
+    &[data-swapy-highlighted] {
+      background: var(--color-neutral-subtle3);
+    }
+  }
+
+  .slot1 {
+    height: 300px;
+  }
+
+  .slot2 {
+    height: 300px;
+  }
+
+  .slot3 {
+    height: 300px;
+  }
+
+  .slot4 {
+    height: 300px;
+  }
+
+  .data4 {
+    background: var(--color-danger-subtle3);
+    height: 100%;
+    padding: var(--spacing-2xs);
+  }
+
+  .middle {
+    display: flex;
+
+    & > * {
+      flex: 1;
+    }
+  }
+
+  .chart-layout-slot {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+
+  .chart-container {
+    flex: 1;
+  }
+}

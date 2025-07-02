@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "lib": ["dom", "DOM.Iterable", "ESNext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noEmitOnError": true,
+    "outDir": "dist",
+    "paths": {
+      "$/*": ["./packages/*"],
+      "$web/*": ["./applications/web/packages/*"],
+      "$api/*": ["./applications/api/src/*"],
+      "$sandbox/*": ["./applications/sandbox/packages/*"]
+    },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "esnext",
+    "types": ["vite/client"],
+    "useDefineForClassFields": true
+  },
+  "include": [
+    "./applications/web/packages",
+    "./applications/sandbox/packages",
+    "./applications/api/src",
+    "./packages",
+  ],
+  "exclude": ["node_modules", "dist"]
+}

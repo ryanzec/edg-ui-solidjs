@@ -1,0 +1,97 @@
+@layer components {
+  .markdown {
+    display: block;
+    line-height: var(--leading-relaxed);
+  }
+
+  .markdown_content a {
+    color: var(--color-brand);
+    text-decoration: underline;
+  }
+
+  .markdown_content h1,
+  .markdown_content h2,
+  .markdown_content h3,
+  .markdown_content h4,
+  .markdown_content h5,
+  .markdown_content h6 {
+    font-family: var(--font-family-geist), sans-serif;
+    font-weight: var(--font-weight-bold);
+    margin: var(--spacing-sm) 0;
+  }
+
+  .markdown_content h1 {
+    font-size: var(--text-3xl);
+    line-height: var(--leading-3xl);
+    letter-spacing: var(--tracking-3xl);
+  }
+
+  .markdown_content h2 {
+    font-size: var(--text-2xl);
+    line-height: var(--leading-2xl);
+    letter-spacing: var(--tracking-2xl);
+  }
+
+  .markdown_content h3 {
+    font-size: var(--text-xl);
+    line-height: var(--leading-xl);
+    letter-spacing: var(--tracking-xl);
+  }
+
+  .markdown_content h4 {
+    font-size: var(--text-lg);
+    line-height: var(--leading-lg);
+    letter-spacing: var(--tracking-lg);
+  }
+
+  .markdown_content h5 {
+    font-size: var(--text-base);
+    line-height: var(--leading-base);
+    letter-spacing: var(--tracking-base);
+  }
+
+  .markdown_content h6 {
+    font-size: var(--text-sm);
+    line-height: var(--leading-sm);
+    letter-spacing: var(--tracking-sm);
+  }
+
+  .markdown_content ul,
+  .markdown_content ol {
+    padding-left: var(--spacing-xl);
+    margin: var(--spacing-sm) 0;
+  }
+
+  .markdown_content li {
+    margin: var(--spacing-xs) 0;
+    list-style: disc;
+  }
+
+  .markdown_content blockquote {
+    border-left: 3px solid var(--color-brand);
+    padding-left: var(--spacing-base);
+    margin: var(--spacing-base) 0;
+    color: var(--color-text-subtle);
+    font-style: italic;
+  }
+
+  .markdown_content pre {
+    background-color: var(--color-surface-subtle);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    overflow-x: auto;
+    margin: var(--spacing-base) 0;
+  }
+
+  .markdown_content code {
+    background-color: var(--color-surface-subtle);
+    padding: 2px var(--spacing-xs);
+    border-radius: var(--radius-sm);
+    font-family: monospace;
+  }
+
+  .markdown_content pre code {
+    padding: 0;
+    background-color: transparent;
+  }
+}

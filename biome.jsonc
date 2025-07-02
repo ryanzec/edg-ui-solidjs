@@ -1,0 +1,45 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "vcs": {
+    "enabled": false,
+    "clientKind": "git",
+    "useIgnoreFile": false
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "ignore": [
+      // this using tailwind functionality that is not valid css so just ignore it, it is also
+      // auto generated so no need to worry about linting it
+      "packages/core/styles/variables.css"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 120
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "suspicious": {
+        "noConfusingVoidType": "off"
+      },
+      "correctness": {
+        "noUnusedImports": "warn",
+        // I believe this is react specific and since we are using solidjs,we don't need it
+        "useJsxKeyInIterable": "off"
+      }
+    },
+    "ignore": ["**/node_modules"]
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  }
+}
