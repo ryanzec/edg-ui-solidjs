@@ -1,6 +1,9 @@
+import Button from '$/core/components/button';
 import ScrollArea from '$/core/components/scroll-area';
 import Tree, { TreeSize } from '$/core/components/tree';
+import { treeComponentUtils } from '$/core/components/tree';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
+import { For, createSignal } from 'solid-js';
 
 export default {
   title: 'Components/Tree',
@@ -27,9 +30,11 @@ const handleSelectItem = (item: Item) => {
 };
 
 export const Basic = () => {
+  const treeStore = treeComponentUtils.createStore();
+
   return (
     <SandboxExamplesContainer>
-      <Tree>
+      <Tree treeStore={treeStore}>
         <Tree.Group label="Documents" item={groupItem} onSelectGroup={handleSelectGroup}>
           <Tree.Group label="Work" item={groupItem} onSelectGroup={handleSelectGroup}>
             <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} />
@@ -59,9 +64,11 @@ export const Basic = () => {
 };
 
 export const CustomIcons = () => {
+  const treeStore = treeComponentUtils.createStore();
+
   return (
     <SandboxExamplesContainer>
-      <Tree>
+      <Tree treeStore={treeStore}>
         <Tree.Group label="Documents" item={groupItem} onSelectGroup={handleSelectGroup}>
           <Tree.Group label="Work" item={groupItem} onSelectGroup={handleSelectGroup}>
             <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} icon="x" />
@@ -91,11 +98,13 @@ export const CustomIcons = () => {
 };
 
 export const Sizes = () => {
+  const treeStore = treeComponentUtils.createStore();
+
   return (
     <>
       <SandboxExamplesContainer>
         <div>Default</div>
-        <Tree>
+        <Tree treeStore={treeStore}>
           <Tree.Group label="Documents" item={groupItem} onSelectGroup={handleSelectGroup}>
             <Tree.Group label="Work" item={groupItem} onSelectGroup={handleSelectGroup}>
               <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} />
@@ -121,7 +130,7 @@ export const Sizes = () => {
           </Tree.Group>
         </Tree>
         <div>Small</div>
-        <Tree size={TreeSize.SMALL}>
+        <Tree size={TreeSize.SMALL} treeStore={treeStore}>
           <Tree.Group label="Documents" item={groupItem} onSelectGroup={handleSelectGroup}>
             <Tree.Group label="Work" item={groupItem} onSelectGroup={handleSelectGroup}>
               <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} />
@@ -152,9 +161,11 @@ export const Sizes = () => {
 };
 
 export const DeepNesting = () => {
+  const treeStore = treeComponentUtils.createStore();
+
   return (
     <SandboxExamplesContainer>
-      <Tree>
+      <Tree treeStore={treeStore}>
         <Tree.Group label="Documents" item={groupItem} onSelectGroup={handleSelectGroup}>
           <Tree.Group label="Work" item={groupItem} onSelectGroup={handleSelectGroup}>
             <Tree.Group label="More Work" item={groupItem} onSelectGroup={handleSelectGroup}>
@@ -192,9 +203,11 @@ export const DeepNesting = () => {
 };
 
 export const Active = () => {
+  const treeStore = treeComponentUtils.createStore();
+
   return (
     <SandboxExamplesContainer>
-      <Tree>
+      <Tree treeStore={treeStore}>
         <Tree.Group label="Documents" item={groupItem} defaultIsExpanded onSelectGroup={handleSelectGroup}>
           <Tree.Group label="Work" item={groupItem} defaultIsExpanded onSelectGroup={handleSelectGroup}>
             <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} isActive />
@@ -224,11 +237,13 @@ export const Active = () => {
 };
 
 export const Scrolling = () => {
+  const treeStore = treeComponentUtils.createStore();
+
   return (
     <SandboxExamplesContainer>
       <div style={{ height: '200px', width: '200px' }}>
         <ScrollArea>
-          <Tree>
+          <Tree treeStore={treeStore}>
             <Tree.Group label="Documents" item={groupItem} onSelectGroup={handleSelectGroup}>
               <Tree.Group
                 label="Work that has a very long name in order to test the scrolling functionality"
@@ -289,5 +304,91 @@ export const Scrolling = () => {
         </ScrollArea>
       </div>
     </SandboxExamplesContainer>
+  );
+};
+
+export const ScrollToItem = () => {
+  const startingItemData: Item[] = [];
+
+  for (let i = 0; i < 200; i++) {
+    startingItemData.push({
+      test: `report${i + 1}.pdf`,
+    });
+  }
+
+  const [items, setItems] = createSignal<Item[]>(startingItemData);
+
+  const treeStore = treeComponentUtils.createStore();
+
+  const handleScrollToItem = () => {
+    treeStore.scrollToItem('report100.pdf');
+  };
+
+  return (
+    <>
+      <Button onClick={handleScrollToItem}>Scroll to Item 100</Button>
+      <SandboxExamplesContainer>
+        <Tree treeStore={treeStore}>
+          <For each={items()}>
+            {(item) => (
+              <Tree.Item label={item.test} data-value={item.test} item={item} onSelectItem={handleSelectItem} />
+            )}
+          </For>
+        </Tree>
+      </SandboxExamplesContainer>
+    </>
+  );
+};
+
+export const UpdatingItems = () => {
+  const startingItemData: Item[] = [];
+
+  for (let i = 0; i < 9; i++) {
+    startingItemData.push({
+      test: `report${i + 1}.pdf`,
+    });
+  }
+
+  const [items, setItems] = createSignal<Item[]>(startingItemData);
+
+  const treeStore = treeComponentUtils.createStore();
+
+  const handleAddItem = () => {
+    setItems((prev) => [
+      ...prev,
+      {
+        test: `report${prev.length + 1}.pdf`,
+      },
+    ]);
+  };
+
+  const handleRemoveItem = () => {
+    setItems((prev) => prev.slice(0, -1));
+  };
+
+  const handleUpdateRandomItem = () => {
+    setItems((prev) => {
+      const randomIndex = Math.floor(Math.random() * prev.length);
+      const randomNumber = Math.floor(Math.random() * 100000000);
+
+      return prev.map((item, index) => (index === randomIndex ? { ...item, test: `report${randomNumber}.pdf` } : item));
+    });
+  };
+
+  return (
+    <>
+      <Button onClick={handleAddItem}>Add Item</Button>
+      <Button onClick={handleRemoveItem}>Remove Item</Button>
+      <Button onClick={handleUpdateRandomItem}>Update Random Item</Button>
+      <SandboxExamplesContainer>
+        <Tree treeStore={treeStore}>
+          <For each={items()}>
+            {(item) => (
+              <Tree.Item onSelectItem={handleSelectItem} data-value={item.test} item={item} label={item.test} />
+            )}
+          </For>
+        </Tree>
+      </SandboxExamplesContainer>
+    </>
   );
 };

@@ -13,6 +13,7 @@ export type TreeItemProps<TItem> = JSX.HTMLAttributes<HTMLDivElement> &
     onSelectItem?: (item: TItem) => void;
     icon?: IconName;
     isActive?: boolean;
+    'data-value'?: string;
   };
 
 const TreeItem = <TItem,>(passedProps: TreeItemProps<TItem>) => {
@@ -24,6 +25,7 @@ const TreeItem = <TItem,>(passedProps: TreeItemProps<TItem>) => {
     'icon',
     'onClick',
     'isActive',
+    'data-value',
   ]);
 
   const handleItemSelect = (event: MouseEvent) => {
@@ -37,7 +39,7 @@ const TreeItem = <TItem,>(passedProps: TreeItemProps<TItem>) => {
   };
 
   return (
-    <div data-id="tree-item" {...restOfProps} class="flex flex-col">
+    <div data-id="tree-item" data-value={props['data-value']} {...restOfProps} class="flex flex-col">
       <button
         class={tailwindUtils.merge('cursor-pointer hover:bg-surface-tertiary', props.class, {
           'bg-brand-subtle3': props.isActive,
