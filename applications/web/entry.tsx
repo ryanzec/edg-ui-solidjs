@@ -19,13 +19,27 @@ import '$/core/styles/variables.css';
 import '$/core/styles/animation.css';
 import '$/core/styles/keyframes.css';
 import '$/core/styles/base.css';
+
 import { dateUtils } from '$/core/utils/date';
+import posthog from 'posthog-js';
 import { render } from 'solid-js/web';
 
 import Application from '$web/components/application';
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query';
 
 dateUtils.configureTimezone('UTC');
+
+posthog.init('phc_cGHPLZlng38nsHTqna4hbTh4PjSMkBqWut0vtFh8uGQ', {
+  api_host: 'https://us.i.posthog.com',
+  person_profiles: 'identified_only',
+  autocapture: false,
+  capture_pageview: true,
+  capture_pageleave: true,
+  disable_session_recording: true,
+  disable_surveys: true,
+  enable_heatmaps: true,
+  capture_dead_clicks: false,
+});
 
 const queryClient = new QueryClient({
   defaultOptions: {

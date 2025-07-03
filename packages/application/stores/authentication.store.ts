@@ -7,6 +7,7 @@ import { loggerUtils } from '$/core/utils/logger';
 import { userUtils } from '$api/data-models/user';
 import type { AuthenticationAuthenticateRequest } from '$api/types/authentication';
 import type { User, UserRoleName } from '$api/types/user';
+import posthog from 'posthog-js';
 import { type Accessor, createRoot, createSignal } from 'solid-js';
 
 export type SessionUser = {
@@ -61,6 +62,7 @@ const createApplicationStore = (): ApplicationStore => {
   const handleAuthenticated = (user?: User) => {
     let sessionUser: SessionUser | undefined = localStorageCacheUtils.get<SessionUser>(LocalStorageKey.SESSION_USER);
 
+    // this means we are logging in and should override the session user and do initial setup work
     if (user) {
       sessionUser = {
         user,
@@ -68,6 +70,17 @@ const createApplicationStore = (): ApplicationStore => {
 
       localStorageCacheUtils.set<SessionUser>(LocalStorageKey.SESSION_USER, sessionUser);
     }
+
+    if (!sessionUser?.user) {
+      // @todo posthog error
+      handleNotAuthenticated();
+
+      return;
+    }
+
+    posthog.identify(sessionUser.user.id, {
+      organizationId: sessionUser.user.organizationId,
+    });
 
     setSessionUser(sessionUser);
     setIsAuthenticated(true);
