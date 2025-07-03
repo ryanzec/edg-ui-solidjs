@@ -39,7 +39,7 @@ export const registerAuthenticateApi = (api: FastifyInstance) => {
     try {
       const { email, password } = request.body;
 
-      const pocketBaseClient = pocketBaseUtils.createClient();
+      const pocketBaseClient = await pocketBaseUtils.createClient();
       const authData = await pocketBaseClient.collection<PocketBaseUser>('users').authWithPassword(email, password);
 
       request.log.error(authData);
@@ -66,7 +66,7 @@ export const registerAuthenticateApi = (api: FastifyInstance) => {
 
   api.get<GetCheck>(ApiRoute.AUTHENTICATION_CHECK, async (request, response) => {
     try {
-      const pocketBaseClient = pocketBaseUtils.createClient(authenticationUtils.getJwtCookie(request, api));
+      const pocketBaseClient = await pocketBaseUtils.createClient(authenticationUtils.getJwtCookie(request, api));
 
       if (pocketBaseClient.authStore.isValid === false) {
         authenticationUtils.clearJwtCookie(response);

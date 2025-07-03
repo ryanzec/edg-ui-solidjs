@@ -19,7 +19,7 @@ export const CreateUser = () => {
   const [formError, setFormError] = createSignal<string | string[] | undefined>(undefined);
   const [isProcessingForm, setIsProcessingForm] = createSignal(false);
 
-  const handleProcessForm = async (saveMode: FormSaveMode, data: { name: string; email: string; roles: string[] }) => {
+  const processForm = async (saveMode: FormSaveMode, data: { name: string; email: string; roles: string[] }) => {
     setIsProcessingForm(true);
     setFormError(undefined);
 
@@ -36,7 +36,7 @@ export const CreateUser = () => {
 
   return (
     <SandboxExamplesContainer>
-      <UserForm formError={formError()} isProcessingForm={isProcessingForm()} onProcessForm={handleProcessForm} />
+      <UserForm formError={formError()} isProcessingForm={isProcessingForm()} processForm={processForm} />
     </SandboxExamplesContainer>
   );
 };
@@ -45,7 +45,7 @@ export const UpdateUser = () => {
   const [formError, setFormError] = createSignal<string | string[] | undefined>(undefined);
   const [isProcessingForm, setIsProcessingForm] = createSignal(false);
 
-  const handleProcessForm = async (saveMode: FormSaveMode, data: { name: string; email: string; roles: string[] }) => {
+  const processForm = async (saveMode: FormSaveMode, data: { name: string; email: string; roles: string[] }) => {
     setIsProcessingForm(true);
     setFormError(undefined);
 
@@ -66,7 +66,7 @@ export const UpdateUser = () => {
         editingUser={defaultUser}
         formError={formError()}
         isProcessingForm={isProcessingForm()}
-        onProcessForm={handleProcessForm}
+        processForm={processForm}
       />
     </SandboxExamplesContainer>
   );

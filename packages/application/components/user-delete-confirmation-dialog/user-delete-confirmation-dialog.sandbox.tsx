@@ -38,7 +38,7 @@ export const Default = () => {
           dialogStore={dialogStore}
           selectedUser={mockUser}
           onDeleted={(user) => console.log('User deleted:', user)}
-          onProcessDelete={processDelete}
+          processDelete={processDelete}
         />
       </SandboxExamplesContainer>
     </>

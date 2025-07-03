@@ -95,6 +95,7 @@
     "pocketbase": "0.26.1",
     "postcss": "8.5.3",
     "postcss-nested": "7.0.2",
+    "posthog-js": "1.256.1",
     "remarkable": "2.0.1",
     "rollup-plugin-visualizer": "5.14.0",
     "scrollparent": "2.1.0",

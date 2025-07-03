@@ -17,6 +17,8 @@ const requiredEnvironmentVariables = [
   'API_CORS_ALLOWED_HEADERS',
   'LOG_LEVEL',
   'POCKETBASE_URL',
+  'POCKETBASE_ADMIN_USER',
+  'POCKETBASE_ADMIN_PASSWORD',
   'SESSION_DURATION',
   'COOKIE_SECRET',
 ];
@@ -51,6 +53,8 @@ export interface ApplicationConfiguration {
   // development
   globalResponseDelay: number;
   pocketbaseUrl: string;
+  pocketbaseAdminUser: string;
+  pocketbaseAdminPassword: string;
 }
 
 export const applicationConfiguration: ApplicationConfiguration = {
@@ -68,6 +72,8 @@ export const applicationConfiguration: ApplicationConfiguration = {
   // development
   globalResponseDelay: Number(process.env.GLOBAL_RESPONSE_DELAY || 0),
   pocketbaseUrl: (process.env.POCKETBASE_URL as string) || 'http://localhost:3001',
+  pocketbaseAdminUser: process.env.POCKETBASE_ADMIN_USER as string,
+  pocketbaseAdminPassword: process.env.POCKETBASE_ADMIN_PASSWORD as string,
 
   // session
   sessionDuration: Number(process.env.SESSION_DURATION || 1440),

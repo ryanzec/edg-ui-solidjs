@@ -11,6 +11,7 @@ export const assignableUserRoles = [UserRoleName.ADMIN, UserRoleName.USER];
 
 export type User = {
   id: string;
+  organizationId: string;
   name: string;
   email: string;
   roles: UserRoleName[];
@@ -27,7 +28,7 @@ export type GetUserRequest = RequestStructure<Pick<User, 'id'>>;
 export type GetUserResponse = ResponseStructure<User>;
 
 export type PostUserRequest = RequestStructure<
-  Pick<User, 'name' | 'email'> & {
+  Pick<User, 'name' | 'email' | 'organizationId'> & {
     roles: string[];
     password: string;
     confirmPassword: string;

@@ -8,7 +8,7 @@ export type UserDeleteConfirmationDialogProps = {
   dialogStore: DialogStore;
   selectedUser?: InternalUser;
   onDeleted?: (user: InternalUser) => void;
-  onProcessDelete: (id: string) => Promise<boolean>;
+  processDelete: (id: string) => Promise<boolean>;
 };
 
 const UserDeleteConfirmationDialog = (props: UserDeleteConfirmationDialogProps) => {
@@ -20,7 +20,7 @@ const UserDeleteConfirmationDialog = (props: UserDeleteConfirmationDialogProps) 
         return true;
       }
 
-      await props.onProcessDelete(props.selectedUser.id);
+      await props.processDelete(props.selectedUser.id);
 
       props.onDeleted?.(props.selectedUser);
 

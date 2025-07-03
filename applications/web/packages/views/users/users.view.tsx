@@ -4,6 +4,7 @@ import UserDeleteConfirmationDialog from '$/application/components/user-delete-c
 import type { CreateUserFormData, UpdateUserFormData } from '$/application/components/user-form';
 import UserFormPeek from '$/application/components/user-form-peek';
 import { UsersList, type UsersListProps } from '$/application/components/users-list';
+import { authenticationStore } from '$/application/stores/authentication.store';
 import Button from '$/core/components/button';
 import { CalloutColor } from '$/core/components/callout';
 import { dialogComponentUtils } from '$/core/components/dialog';
@@ -56,9 +57,16 @@ const UsersView = () => {
     setFormError(undefined);
   };
 
-  const handleProcessForm = async (saveMode: FormSaveMode, data: CreateUserFormData | UpdateUserFormData) => {
+  const processForm = async (saveMode: FormSaveMode, data: CreateUserFormData | UpdateUserFormData) => {
     try {
       const userId = activeUser()?.id;
+      const organizationId = authenticationStore.sessionUser()?.user.organizationId;
+
+      if (!organizationId) {
+        loggerUtils.error('organization id was not found when creating a user which should never happen');
+
+        throw new Error('Unable to create the user');
+      }
 
       if (saveMode === FormSaveMode.UPDATE) {
         if (!userId) {
@@ -80,7 +88,10 @@ const UsersView = () => {
         return;
       }
 
-      await createUserMutation.mutateAsync(data as CreateUserFormData);
+      await createUserMutation.mutateAsync({
+        ...(data as CreateUserFormData),
+        organizationId,
+      });
     } catch (error: unknown) {
       // @todo properly error handling
       setFormError(ErrorMessage.UNKNOWN as string);
@@ -89,7 +100,7 @@ const UsersView = () => {
     }
   };
 
-  const handleProcessDelete = async (id: User['id']) => {
+  const processDelete = async (id: User['id']) => {
     try {
       await deleteUserMutation.mutateAsync({ id });
 
@@ -118,14 +129,14 @@ const UsersView = () => {
         peekStore={editPeekStore}
         editingUser={activeUser()}
         formError={formError()}
-        onProcessForm={handleProcessForm}
+        processForm={processForm}
         isProcessingForm={createUserMutation.isPending || updateUserMutation.isPending}
         onSubmitForm={handleSubmitForm}
       />
       <UserDeleteConfirmationDialog
         dialogStore={deleteDialogStore}
         selectedUser={activeUser()}
-        onProcessDelete={handleProcessDelete}
+        processDelete={processDelete}
       />
     </>
   );

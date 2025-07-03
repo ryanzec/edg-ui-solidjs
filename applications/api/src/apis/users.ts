@@ -1,3 +1,4 @@
+import { HttpError } from '$/core/utils/http';
 import { ApiRoute } from '$api/types/api';
 import type { DeleteUserRequest, PocketBaseUser } from '$api/types/user';
 import type {
@@ -11,6 +12,7 @@ import type {
   PostUserResponse,
 } from '$api/types/user';
 import { apiUtils } from '$api/utils/api';
+import { applicationConfiguration } from '$api/utils/application-configuration';
 import { authenticationUtils } from '$api/utils/authentication';
 import { pocketBaseUtils } from '$api/utils/pocketbase';
 import type { FastifyInstance } from 'fastify';
@@ -20,9 +22,16 @@ export const registerUsersApi = (api: FastifyInstance) => {
 
   api.get<GetUsers>(ApiRoute.USERS, async (request, response) => {
     try {
-      const pocketBaseClient = pocketBaseUtils.createClient(authenticationUtils.getJwtCookie(request, api));
+      const pocketBaseClient = await pocketBaseUtils.createClient(authenticationUtils.getJwtCookie(request, api));
+      const organizationId = pocketBaseClient.authStore.record?.organizationId;
+
+      if (!organizationId) {
+        throw new HttpError(401);
+      }
+
       const users = await pocketBaseClient.collection<PocketBaseUser>('users').getFullList({
         batch: 10,
+        filter: `organizationId = "${organizationId}"`,
       });
 
       request.log.info({
@@ -46,7 +55,7 @@ export const registerUsersApi = (api: FastifyInstance) => {
   api.get<GetUser>(`${ApiRoute.USERS}/:userId`, async (request, response) => {
     try {
       const { userId } = request.params;
-      const pocketBaseClient = pocketBaseUtils.createClient(authenticationUtils.getJwtCookie(request, api));
+      const pocketBaseClient = await pocketBaseUtils.createClient(authenticationUtils.getJwtCookie(request, api));
       const user = await pocketBaseClient.collection<PocketBaseUser>('users').getOne(userId);
 
       return response.code(200).send(apiUtils.buildDataResponse(user));
@@ -67,12 +76,13 @@ export const registerUsersApi = (api: FastifyInstance) => {
         !request.body.email ||
         !request.body.roles ||
         !request.body.password ||
-        !request.body.confirmPassword
+        !request.body.confirmPassword ||
+        !request.body.organizationId
       ) {
         return response.code(400).send();
       }
 
-      const { name, email, roles, password, confirmPassword } = request.body;
+      const { name, email, roles, password, confirmPassword, organizationId } = request.body;
 
       request.log.info({
         type: 'create-user',
@@ -82,10 +92,19 @@ export const registerUsersApi = (api: FastifyInstance) => {
           roles,
           password,
           confirmPassword,
+          organizationId,
         },
       });
 
-      const pocketBaseClient = pocketBaseUtils.createClient(authenticationUtils.getJwtCookie(request, api));
+      const pocketBaseClient = await pocketBaseUtils.createClient(authenticationUtils.getJwtCookie(request, api));
+
+      await pocketBaseClient
+        .collection('_superusers')
+        .authWithPassword(
+          applicationConfiguration.pocketbaseAdminUser,
+          applicationConfiguration.pocketbaseAdminPassword,
+        );
+
       const user = await pocketBaseClient.collection<PocketBaseUser>('users').create({
         name,
         email,
@@ -93,6 +112,7 @@ export const registerUsersApi = (api: FastifyInstance) => {
         password,
         passwordConfirm: confirmPassword,
         emailVisibility: true,
+        organizationId,
         verified: true,
       });
 
@@ -114,7 +134,7 @@ export const registerUsersApi = (api: FastifyInstance) => {
     try {
       const { userId } = request.params;
       const { roles, name, oldPassword, password, confirmPassword } = request.body;
-      const pocketBaseClient = pocketBaseUtils.createClient(authenticationUtils.getJwtCookie(request, api));
+      const pocketBaseClient = await pocketBaseUtils.createClient(authenticationUtils.getJwtCookie(request, api));
       const updateData: Record<string, unknown> = {
         roles,
         name,
@@ -144,7 +164,7 @@ export const registerUsersApi = (api: FastifyInstance) => {
   api.delete<DeleteUser>(`${ApiRoute.USERS}/:userId`, async (request, response) => {
     try {
       const { userId } = request.params;
-      const pocketBaseClient = pocketBaseUtils.createClient(authenticationUtils.getJwtCookie(request, api));
+      const pocketBaseClient = await pocketBaseUtils.createClient(authenticationUtils.getJwtCookie(request, api));
       const user = await pocketBaseClient.collection<PocketBaseUser>('users').getOne(userId);
 
       await pocketBaseClient.collection('users').delete(userId);

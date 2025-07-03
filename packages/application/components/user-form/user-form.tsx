@@ -129,7 +129,7 @@ export type UserFormProps<TCreateInput, TUpdateInput> = {
   onFormSubmitted?: (data: CreateUserFormData | UpdateUserFormData) => void;
   onSubmitForm?: () => void;
   formError: string | string[] | undefined;
-  onProcessForm: (saveMode: FormSaveMode, data: TCreateInput | TUpdateInput) => Promise<void>;
+  processForm: (saveMode: FormSaveMode, data: TCreateInput | TUpdateInput) => Promise<void>;
   isProcessingForm: boolean;
 };
 
@@ -154,7 +154,7 @@ const UserForm = <TCreateInput, TUpdateInput>(passedProps: UserFormProps<TCreate
       props.onSubmitForm?.();
 
       if (props.editingUser) {
-        await props.onProcessForm(FormSaveMode.UPDATE, { id: props.editingUser.id, ...(data as TUpdateInput) });
+        await props.processForm(FormSaveMode.UPDATE, { id: props.editingUser.id, ...(data as TUpdateInput) });
 
         props.onFormSubmitted?.(data as CreateUserFormData);
         formStore.clear();
@@ -162,7 +162,7 @@ const UserForm = <TCreateInput, TUpdateInput>(passedProps: UserFormProps<TCreate
         return;
       }
 
-      await props.onProcessForm(FormSaveMode.CREATE, data as TCreateInput);
+      await props.processForm(FormSaveMode.CREATE, data as TCreateInput);
 
       props.onFormSubmitted?.(data as UpdateUserFormData);
       formStore.clear();
