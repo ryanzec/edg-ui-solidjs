@@ -23,6 +23,7 @@ export type ApplicationFeature = (typeof ApplicationFeature)[keyof typeof Applic
 
 const GlobalVariable = {
   BASE_API_URL: 'VITE_BASE_API_URL',
+  POSTHOG_PUBLIC_KEY: 'VITE_POSTHOG_PUBLIC_KEY',
 } as const;
 
 export type GlobalVariable = (typeof GlobalVariable)[keyof typeof GlobalVariable];
@@ -41,4 +42,5 @@ export const getGlobalVariable = (globalVariable: GlobalVariable) => {
 
 export const applicationConfiguration = {
   baseApiUrl: getGlobalVariable(GlobalVariable.BASE_API_URL),
+  posthogPublicKey: getGlobalVariable(GlobalVariable.POSTHOG_PUBLIC_KEY),
 };
