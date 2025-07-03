@@ -1,7 +1,7 @@
 import { useNavigate } from '@solidjs/router';
 import { type JSX, Show, onCleanup, onMount } from 'solid-js';
 
-import ApplicationFrame from '$/application/components/application-frame';
+import ApplicationFrame, { type ApplicationFrameProps } from '$/application/components/application-frame';
 import { authenticationStore } from '$/application/stores/authentication.store';
 import { globalsStore } from '$/application/stores/globals.store';
 import { themeManagerStore } from '$/application/stores/theme-manager.store';
@@ -9,18 +9,39 @@ import GlobalNotifications from '$/core/components/global-notifications';
 import Loading from '$/core/components/loading';
 import { globalNotificationsStore } from '$/core/stores/global-notifications.store';
 import { type HttpRequest, httpUtils } from '$/core/utils/http';
-import { userUtils } from '$api/data-models/user';
-import type { UserRoleName } from '$api/types/user';
 import styles from '$web/components/application/application.module.css';
 import { RoutePath } from '$web/utils/application';
+import posthog from 'posthog-js';
 
 const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
   const navigate = useNavigate();
 
-  const hasRole = (roleName: UserRoleName) => {
-    const sessionUser = authenticationStore.sessionUser();
+  const getUserItems = (): ApplicationFrameProps['userItems'] => {
+    const userItems = [
+      {
+        label: 'Settings',
+        onClick: () => {
+          navigate(RoutePath.USERS);
+        },
+      },
+      {
+        label: 'Logout',
+        onClick: () => {
+          authenticationStore.logout();
+        },
+      },
+    ];
 
-    return sessionUser?.user && userUtils.hasRoles(sessionUser.user, [roleName]);
+    if (posthog.isFeatureEnabled('internal-tools')) {
+      userItems.push({
+        label: 'Internal Tools',
+        onClick: () => {
+          navigate(RoutePath.HOME);
+        },
+      });
+    }
+
+    return userItems;
   };
 
   onMount(() => {
@@ -78,20 +99,7 @@ const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
               isActive: false,
             },
           ]}
-          userItems={[
-            {
-              label: 'Settings',
-              onClick: () => {
-                navigate(RoutePath.USERS);
-              },
-            },
-            {
-              label: 'Logout',
-              onClick: () => {
-                authenticationStore.logout();
-              },
-            },
-          ]}
+          userItems={getUserItems()}
           isInitializing={false}
           isAuthenticated
           user={authenticationStore.sessionUser()?.user}

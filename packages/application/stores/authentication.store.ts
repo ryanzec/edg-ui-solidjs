@@ -79,6 +79,7 @@ const createApplicationStore = (): ApplicationStore => {
     }
 
     posthog.identify(sessionUser.user.id, {
+      userId: sessionUser.user.id,
       organizationId: sessionUser.user.organizationId,
     });
 
