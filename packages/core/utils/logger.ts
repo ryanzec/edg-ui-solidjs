@@ -1,4 +1,5 @@
 import { HttpError } from '$/core/utils/http';
+import posthog from 'posthog-js';
 
 export const LogMode = {
   PRODUCTION: 'production',
@@ -18,11 +19,25 @@ const log = (...args: any) => {
 
 // biome-ignore lint/suspicious/noExplicitAny: match native api
 const warn = (...args: any) => {
+  posthog.capture('$exception', {
+    $exception_type: 'console_warning',
+    $exception_message: 'Something went wrong',
+    $exception_stack_trace_raw: console.trace(),
+    console_arguments: args,
+  });
+
   console.warn(...args);
 };
 
 // biome-ignore lint/suspicious/noExplicitAny: match native api
 const error = (...args: any) => {
+  posthog.capture('$exception', {
+    $exception_type: 'console_error',
+    $exception_message: 'Something went wrong',
+    $exception_stack_trace_raw: console.trace(),
+    console_arguments: args,
+  });
+
   console.error(...args);
 };
 

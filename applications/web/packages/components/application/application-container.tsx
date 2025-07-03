@@ -11,7 +11,7 @@ import { globalNotificationsStore } from '$/core/stores/global-notifications.sto
 import { type HttpRequest, httpUtils } from '$/core/utils/http';
 import styles from '$web/components/application/application.module.css';
 import { RoutePath } from '$web/utils/application';
-import posthog from 'posthog-js';
+import { FeatureFlag, featureFlagUtils } from '$web/utils/feature-flag';
 
 const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
       },
     ];
 
-    if (posthog.isFeatureEnabled('internal-tools')) {
+    if (featureFlagUtils.hasFeatureFlag(FeatureFlag.INTERNAL_TOOLS)) {
       userItems.push({
         label: 'Internal Tools',
         onClick: () => {

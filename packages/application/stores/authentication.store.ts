@@ -7,7 +7,7 @@ import { loggerUtils } from '$/core/utils/logger';
 import { userUtils } from '$api/data-models/user';
 import type { AuthenticationAuthenticateRequest } from '$api/types/authentication';
 import type { User, UserRoleName } from '$api/types/user';
-import posthog from 'posthog-js';
+import { analyticsUtils } from '$web/utils/analytics';
 import { type Accessor, createRoot, createSignal } from 'solid-js';
 
 export type SessionUser = {
@@ -59,7 +59,7 @@ const createApplicationStore = (): ApplicationStore => {
   const [currentLoginAction, setCurrentLoginAction] = createSignal<LoginAction>(LoginAction.NONE);
   const [loginError, setLoginError] = createSignal<string[]>([]);
 
-  const handleAuthenticated = (user?: User) => {
+  const handleAuthenticatedUser = (user?: User) => {
     let sessionUser: SessionUser | undefined = localStorageCacheUtils.get<SessionUser>(LocalStorageKey.SESSION_USER);
 
     // this means we are logging in and should override the session user and do initial setup work
@@ -72,22 +72,22 @@ const createApplicationStore = (): ApplicationStore => {
     }
 
     if (!sessionUser?.user) {
-      // @todo posthog error
-      handleNotAuthenticated();
+      loggerUtils.error('handle authenticated user did not find the session user which really should not happen');
+
+      handleNotAuthenticatedUser();
 
       return;
     }
 
-    posthog.identify(sessionUser.user.id, {
-      userId: sessionUser.user.id,
-      organizationId: sessionUser.user.organizationId,
+    analyticsUtils.identifyUser(sessionUser.user.id, {
+      organizationId: sessionUser.user.organizationId ?? '',
     });
 
     setSessionUser(sessionUser);
     setIsAuthenticated(true);
   };
 
-  const handleNotAuthenticated = () => {
+  const handleNotAuthenticatedUser = () => {
     setSessionUser(undefined);
     localStorageCacheUtils.remove(LocalStorageKey.SESSION_USER);
     setIsAuthenticated(false);
@@ -101,17 +101,17 @@ const createApplicationStore = (): ApplicationStore => {
       const sessionUser = localStorageCacheUtils.get<SessionUser>(LocalStorageKey.SESSION_USER);
 
       if (!sessionUser) {
-        handleNotAuthenticated();
+        handleNotAuthenticatedUser();
 
         return;
       }
 
       await authenticationApi.checkRaw();
 
-      handleAuthenticated();
+      handleAuthenticatedUser();
     } catch (error: unknown) {
       // failure error is not an error, it just means we are not authenticated
-      handleNotAuthenticated();
+      handleNotAuthenticatedUser();
     } finally {
       setIsInitializing(false);
     }
@@ -126,19 +126,19 @@ const createApplicationStore = (): ApplicationStore => {
 
       if (!authenticateResponse.data) {
         loggerUtils.error(ErrorMessage.UNAUTHENTICATED);
-        handleNotAuthenticated();
+        handleNotAuthenticatedUser();
 
         return;
       }
 
       const { user } = authenticateResponse.data;
 
-      handleAuthenticated(user);
+      handleAuthenticatedUser(user);
 
       // @todo redirect to previously accessed page
       globalsStore.getNavigate()(storeOptions.homeRedirectRoute);
     } catch (error: unknown) {
-      handleNotAuthenticated();
+      handleNotAuthenticatedUser();
 
       if (error instanceof Error) {
         const errorMessage = loggerUtils.getErrorInstanceMessage(error);
@@ -163,7 +163,7 @@ const createApplicationStore = (): ApplicationStore => {
 
       await authenticationApi.logoutRaw();
 
-      handleNotAuthenticated();
+      handleNotAuthenticatedUser();
 
       // incase the navigate is not available, we need to manually redirect
       if (!globalsStore.getNavigate()) {

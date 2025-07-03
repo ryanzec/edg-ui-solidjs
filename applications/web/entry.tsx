@@ -20,9 +20,8 @@ import '$/core/styles/animation.css';
 import '$/core/styles/keyframes.css';
 import '$/core/styles/base.css';
 
-import { applicationConfiguration } from '$/application/utils/application';
 import { dateUtils } from '$/core/utils/date';
-import posthog from 'posthog-js';
+import { analyticsUtils } from '$web/utils/analytics';
 import { render } from 'solid-js/web';
 
 import Application from '$web/components/application';
@@ -30,17 +29,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/solid-query';
 
 dateUtils.configureTimezone('UTC');
 
-posthog.init(applicationConfiguration.posthogPublicKey, {
-  api_host: 'https://us.i.posthog.com',
-  person_profiles: 'identified_only',
-  autocapture: false,
-  capture_pageview: true,
-  capture_pageleave: true,
-  disable_session_recording: true,
-  disable_surveys: true,
-  enable_heatmaps: true,
-  capture_dead_clicks: false,
-});
+analyticsUtils.initialize();
 
 const queryClient = new QueryClient({
   defaultOptions: {
