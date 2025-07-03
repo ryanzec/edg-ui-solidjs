@@ -31,7 +31,9 @@
   },
   "include": [
     "./applications/web/packages",
+    "./applications/web/entry.tsx",
     "./applications/sandbox/packages",
+    "./applications/sandbox/entry.tsx",
     "./applications/api/src",
     "./packages",
   ],
