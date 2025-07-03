@@ -1,4 +1,3 @@
-/* @refresh reload */
 import '$/core/types/solid-js';
 
 import '@fontsource/geist-sans/400.css';
@@ -19,6 +18,7 @@ import '$/core/styles/variables.css';
 import '$/core/styles/animation.css';
 import '$/core/styles/keyframes.css';
 import '$/core/styles/base.css';
+
 import { dateUtils } from '$/core/utils/date';
 import { render } from 'solid-js/web';
 
@@ -45,8 +45,21 @@ const queryClient = new QueryClient({
   },
 });
 
+type HMRData = {
+  appDisposer?: () => void;
+};
+
+// this is used to avoid duplication ui in the hot reload functionality
+let HMRData: HMRData = {};
+
+if (import.meta.hot) {
+  HMRData = import.meta.hot.data;
+}
+
 const start = async () => {
-  render(
+  HMRData.appDisposer?.();
+
+  HMRData.appDisposer = render(
     () => (
       <QueryClientProvider client={queryClient}>
         <Application.Router />
@@ -55,5 +68,9 @@ const start = async () => {
     document.getElementById('application-mount') as HTMLElement,
   );
 };
+
+if (import.meta.hot) {
+  import.meta.hot.accept();
+}
 
 start();

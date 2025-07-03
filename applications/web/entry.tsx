@@ -48,9 +48,9 @@ const queryClient = new QueryClient({
   },
 });
 
-interface HMRData {
+type HMRData = {
   appDisposer?: () => void;
-}
+};
 
 // this is used to avoid duplication ui in the hot reload functionality
 let HMRData: HMRData = {};
