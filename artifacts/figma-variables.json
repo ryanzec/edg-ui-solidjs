@@ -345,16 +345,16 @@
               "value": "#FDFBE8"
             },
             {
-              "name": "info/bold",
-              "type": "color",
-              "isAlias": false,
-              "value": "#0C1B29"
-            },
-            {
               "name": "warning/subtle3",
               "type": "color",
               "isAlias": false,
               "value": "#FBF7D4"
+            },
+            {
+              "name": "info/bold",
+              "type": "color",
+              "isAlias": false,
+              "value": "#0C1B29"
             },
             {
               "name": "info/on-base",
@@ -465,16 +465,16 @@
               "value": "#FEF5F5"
             },
             {
-              "name": "warning/bold",
-              "type": "color",
-              "isAlias": false,
-              "value": "#422006"
-            },
-            {
               "name": "danger/subtle3",
               "type": "color",
               "isAlias": false,
               "value": "#FDEAEA"
+            },
+            {
+              "name": "warning/bold",
+              "type": "color",
+              "isAlias": false,
+              "value": "#422006"
             },
             {
               "name": "warning/on-base",
@@ -920,16 +920,16 @@
               "value": "#3C2A02"
             },
             {
-              "name": "info/bold",
-              "type": "color",
-              "isAlias": false,
-              "value": "#FFFFFF"
-            },
-            {
               "name": "warning/subtle3",
               "type": "color",
               "isAlias": false,
               "value": "#4A3503"
+            },
+            {
+              "name": "info/bold",
+              "type": "color",
+              "isAlias": false,
+              "value": "#FFFFFF"
             },
             {
               "name": "info/on-base",
@@ -1040,16 +1040,16 @@
               "value": "#440505"
             },
             {
-              "name": "warning/bold",
-              "type": "color",
-              "isAlias": false,
-              "value": "#FFFFFF"
-            },
-            {
               "name": "danger/subtle3",
               "type": "color",
               "isAlias": false,
               "value": "#570505"
+            },
+            {
+              "name": "warning/bold",
+              "type": "color",
+              "isAlias": false,
+              "value": "#FFFFFF"
             },
             {
               "name": "warning/on-base",
@@ -1258,12 +1258,6 @@
               "type": "number",
               "isAlias": false,
               "value": 64
-            },
-            {
-              "name": "application/maximum-width",
-              "type": "number",
-              "isAlias": false,
-              "value": 1360
             }
           ]
         }

@@ -11,64 +11,66 @@ export const Default = () => {
   return (
     <div style={{ height: '200px' }}>
       <ScrollArea>
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
-        Testing
-        <br />
+        <div>
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+          Testing
+          <br />
+        </div>
       </ScrollArea>
     </div>
   );
