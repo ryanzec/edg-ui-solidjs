@@ -10,7 +10,9 @@
     "ignore": [
       // this using tailwind functionality that is not valid css so just ignore it, it is also
       // auto generated so no need to worry about linting it
-      "packages/core/styles/variables.css"
+      "packages/core/styles/variables.css",
+      // this is just pocketbase so we let it do its thing
+      "applications/backend/**/*"
     ]
   },
   "formatter": {

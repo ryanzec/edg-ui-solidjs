@@ -1,10 +1,11 @@
 import { useNavigate } from '@solidjs/router';
 import { type JSX, Show, onCleanup, onMount } from 'solid-js';
 
-import ApplicationFrame, { type ApplicationFrameProps } from '$/application/components/application-frame';
+import ApplicationFrame from '$/application/components/application-frame';
 import { authenticationStore } from '$/application/stores/authentication.store';
 import { globalsStore } from '$/application/stores/globals.store';
 import { themeManagerStore } from '$/application/stores/theme-manager.store';
+import { ApplicationFeature } from '$/application/utils/application';
 import GlobalNotifications from '$/core/components/global-notifications';
 import Loading from '$/core/components/loading';
 import { globalNotificationsStore } from '$/core/stores/global-notifications.store';
@@ -16,32 +17,26 @@ import { FeatureFlag, featureFlagUtils } from '$web/utils/feature-flag';
 const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
   const navigate = useNavigate();
 
-  const getUserItems = (): ApplicationFrameProps['userItems'] => {
-    const userItems = [
-      {
-        label: 'Settings',
-        onClick: () => {
-          navigate(RoutePath.USERS);
-        },
-      },
-      {
-        label: 'Logout',
-        onClick: () => {
-          authenticationStore.logout();
-        },
-      },
-    ];
+  const getFrameFeatures = (): ApplicationFeature[] => {
+    const features: ApplicationFeature[] = [];
 
     if (featureFlagUtils.hasFeatureFlag(FeatureFlag.INTERNAL_TOOLS)) {
-      userItems.push({
-        label: 'Internal Tools',
-        onClick: () => {
-          navigate(RoutePath.HOME);
-        },
-      });
+      features.push(ApplicationFeature.INTERNAL_TOOLS);
     }
 
-    return userItems;
+    return features;
+  };
+
+  const handleSettings = () => {
+    navigate(RoutePath.USERS);
+  };
+
+  const handleInternalTools = () => {
+    navigate(RoutePath.HOME);
+  };
+
+  const handleLogout = () => {
+    authenticationStore.logout();
   };
 
   onMount(() => {
@@ -99,10 +94,13 @@ const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
               isActive: false,
             },
           ]}
-          userItems={getUserItems()}
           isInitializing={false}
           isAuthenticated
           user={authenticationStore.sessionUser()?.user}
+          features={getFrameFeatures()}
+          onSettings={handleSettings}
+          onInternalTools={handleInternalTools}
+          onLogout={handleLogout}
         >
           <div class={styles.mainContent}>{props.children}</div>
         </ApplicationFrame>

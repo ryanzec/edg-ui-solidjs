@@ -1,8 +1,8 @@
 import ApplicationFrame from '$/application/components/application-frame';
-import styles from '$/application/components/application-frame/application-frame.sandbox.module.css';
 import Page from '$/application/components/page';
 import PageContent from '$/application/components/page/page-content';
 import UsersList, { type UsersListProps } from '$/application/components/users-list';
+import { ApplicationFeature } from '$/application/utils/application';
 import { UserRoleName } from '$api/types/user';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 import type { Navigator } from '@solidjs/router';
@@ -13,7 +13,7 @@ export default {
 
 const userProfileImage = {
   name: 'John Doe',
-  email: 'example@example.com',
+  email: 'basire@gmail.com',
 };
 
 const userNoProfileImage = {
@@ -23,6 +23,18 @@ const userNoProfileImage = {
 
 const navigate: Navigator = (route: string | number) => {
   console.log('navigate', route);
+};
+
+const handleSettings = () => {
+  console.log('settings');
+};
+
+const handleInternalTools = () => {
+  console.log('internal tools');
+};
+
+const handleLogout = () => {
+  console.log('logout');
 };
 
 export const Default = () => {
@@ -51,20 +63,15 @@ export const Default = () => {
         isActive: false,
       },
     ],
-    userItems: [
-      {
-        label: 'Logout',
-        onClick: () => {
-          console.log('logout');
-        },
-      },
-    ],
     isInitializing: false,
     isAuthenticated: true,
     user: userProfileImage,
+    onSettings: handleSettings,
+    onInternalTools: handleInternalTools,
+    onLogout: handleLogout,
   };
   return (
-    <SandboxExamplesContainer class={styles.container}>
+    <SandboxExamplesContainer class="h-full w-full">
       <ApplicationFrame {...applicationFrameProps} />
     </SandboxExamplesContainer>
   );
@@ -96,20 +103,56 @@ export const NoProfileImage = () => {
         isActive: false,
       },
     ],
-    userItems: [
+    isInitializing: false,
+    isAuthenticated: true,
+    user: userNoProfileImage,
+    onSettings: handleSettings,
+    onInternalTools: handleInternalTools,
+    onLogout: handleLogout,
+  };
+  return (
+    <SandboxExamplesContainer class="h-full w-full">
+      <ApplicationFrame {...applicationFrameProps} />
+    </SandboxExamplesContainer>
+  );
+};
+
+export const WithInternalTools = () => {
+  const applicationFrameProps = {
+    navigate: navigate,
+    homeRoute: '#',
+    topNavigationItems: [
       {
-        label: 'Logout',
-        onClick: () => {
-          console.log('logout');
-        },
+        label: 'Page 1',
+        route: '#',
+        isActive: true,
+      },
+      {
+        label: 'Page 2',
+        route: '#',
+        isActive: false,
+      },
+      {
+        label: 'Page 3',
+        route: '#',
+        isActive: false,
+      },
+      {
+        label: 'Page 4',
+        route: '#',
+        isActive: false,
       },
     ],
     isInitializing: false,
     isAuthenticated: true,
-    user: userNoProfileImage,
+    user: userProfileImage,
+    onSettings: handleSettings,
+    onInternalTools: handleInternalTools,
+    onLogout: handleLogout,
+    features: [ApplicationFeature.INTERNAL_TOOLS],
   };
   return (
-    <SandboxExamplesContainer class={styles.container}>
+    <SandboxExamplesContainer class="h-full w-full">
       <ApplicationFrame {...applicationFrameProps} />
     </SandboxExamplesContainer>
   );
@@ -141,17 +184,12 @@ export const WithPageContent = () => {
         isActive: false,
       },
     ],
-    userItems: [
-      {
-        label: 'Logout',
-        onClick: () => {
-          console.log('logout');
-        },
-      },
-    ],
     isInitializing: false,
     isAuthenticated: true,
     user: userProfileImage,
+    onSettings: handleSettings,
+    onInternalTools: handleInternalTools,
+    onLogout: handleLogout,
   };
   const mockUsers: UsersListProps['users'] = [
     {
@@ -178,6 +216,162 @@ export const WithPageContent = () => {
       email: 'grace.lee@example.com',
       roles: [UserRoleName.ADMIN, UserRoleName.USER],
     },
+    {
+      id: '5',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
+    {
+      id: '6',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
+    {
+      id: '1',
+      name: 'Jane Doe',
+      email: 'jane.doe@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
+    {
+      id: '2',
+      name: 'Alex Smith',
+      email: 'alex.smith@example.com',
+      roles: [UserRoleName.USER],
+    },
+    {
+      id: '3',
+      name: 'Bob Wilson',
+      email: 'bob.wilson@example.com',
+      roles: [UserRoleName.ADMIN],
+    },
+    {
+      id: '4',
+      name: 'Grace Lee',
+      email: 'grace.lee@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
+    {
+      id: '5',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
+    {
+      id: '6',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
+    {
+      id: '1',
+      name: 'Jane Doe',
+      email: 'jane.doe@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
+    {
+      id: '2',
+      name: 'Alex Smith',
+      email: 'alex.smith@example.com',
+      roles: [UserRoleName.USER],
+    },
+    {
+      id: '3',
+      name: 'Bob Wilson',
+      email: 'bob.wilson@example.com',
+      roles: [UserRoleName.ADMIN],
+    },
+    {
+      id: '4',
+      name: 'Grace Lee',
+      email: 'grace.lee@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
+    {
+      id: '5',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
+    {
+      id: '6',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
+    {
+      id: '1',
+      name: 'Jane Doe',
+      email: 'jane.doe@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
+    {
+      id: '2',
+      name: 'Alex Smith',
+      email: 'alex.smith@example.com',
+      roles: [UserRoleName.USER],
+    },
+    {
+      id: '3',
+      name: 'Bob Wilson',
+      email: 'bob.wilson@example.com',
+      roles: [UserRoleName.ADMIN],
+    },
+    {
+      id: '4',
+      name: 'Grace Lee',
+      email: 'grace.lee@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
+    {
+      id: '5',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
+    {
+      id: '6',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
+    {
+      id: '1',
+      name: 'Jane Doe',
+      email: 'jane.doe@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
+    {
+      id: '2',
+      name: 'Alex Smith',
+      email: 'alex.smith@example.com',
+      roles: [UserRoleName.USER],
+    },
+    {
+      id: '3',
+      name: 'Bob Wilson',
+      email: 'bob.wilson@example.com',
+      roles: [UserRoleName.ADMIN],
+    },
+    {
+      id: '4',
+      name: 'Grace Lee',
+      email: 'grace.lee@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
+    {
+      id: '5',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
+    {
+      id: '6',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      roles: [UserRoleName.ADMIN, UserRoleName.USER],
+    },
   ];
 
   // @todo(v1) type this properly when data structure known
@@ -193,7 +387,7 @@ export const WithPageContent = () => {
   };
 
   return (
-    <SandboxExamplesContainer class={styles.container}>
+    <SandboxExamplesContainer class="h-full w-full">
       <ApplicationFrame {...applicationFrameProps}>
         <Page>
           <Page.Header label="Users" />
