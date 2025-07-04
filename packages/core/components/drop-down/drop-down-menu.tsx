@@ -1,22 +1,18 @@
-import DropDown from '$/core/components/drop-down/drop-down';
+import DropDown, { type DropDownProps } from '$/core/components/drop-down/drop-down';
 import styles from '$/core/components/drop-down/drop-down.module.css';
 import List from '$/core/components/list';
 import ScrollArea from '$/core/components/scroll-area';
-import type { TooltipStore } from '$/core/components/tooltip';
-import type { Placement } from '@floating-ui/dom';
-import { type JSX, mergeProps } from 'solid-js';
+import { mergeProps } from 'solid-js';
 
-export type DropDownMenuProps = {
-  handleElement: JSX.Element;
-  contentElement: JSX.Element;
-  store: TooltipStore;
-  placement?: Placement;
-  disabled?: boolean;
-};
+export type DropDownMenuProps = Pick<
+  DropDownProps,
+  'handleElement' | 'handleClass' | 'contentElement' | 'contentClass' | 'store' | 'placement' | 'disabled' | 'class'
+>;
 
 const defaultProps: Omit<DropDownMenuProps, 'handleElement' | 'contentElement' | 'store'> = {
   placement: 'bottom-end',
   disabled: false,
+  class: '',
 };
 
 export const DropDownMenu = (passedProps: DropDownMenuProps) => {
@@ -24,10 +20,13 @@ export const DropDownMenu = (passedProps: DropDownMenuProps) => {
 
   return (
     <DropDown
+      class={props.class}
       store={props.store}
       placement={props.placement}
       handleElement={props.handleElement}
+      handleClass={props.handleClass}
       contentIsStyled={false}
+      contentClass={props.contentClass}
       contentElement={
         <List class={styles.dropDownMenuContent}>
           <ScrollArea>{props.contentElement}</ScrollArea>
