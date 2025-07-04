@@ -1,4 +1,5 @@
-import { ApplicationFeature } from '$/application/utils/application';
+import { authenticationStore } from '$/application/stores/authentication.store';
+import { ApplicationFeature, UiRouteName } from '$/application/utils/application';
 import Avatar, { AvatarSize } from '$/core/components/avatar';
 import Checkbox from '$/core/components/checkbox';
 import DropDown from '$/core/components/drop-down';
@@ -6,25 +7,38 @@ import Icon, { IconColor } from '$/core/components/icon';
 import List from '$/core/components/list';
 import type { TooltipStore } from '$/core/components/tooltip';
 import type { User } from '$api/types/user';
+import { useNavigate } from '@solidjs/router';
 import { Show } from 'solid-js';
 
 export type UserMenuProps = {
   tooltipStore: TooltipStore;
   user: Pick<User, 'name' | 'email'>;
-  onSettings: () => void;
-  onInternalTools: () => void;
-  onLogout: () => void;
   features: ApplicationFeature[];
 };
 
 const UserMenu = (props: UserMenuProps) => {
-  const handleUserItemClick = (event: MouseEvent) => {
-    // event.stopPropagation();
-    // props.tooltipStore.hide();
+  const navigate = useNavigate();
+
+  const handleSettings = () => {
+    navigate(UiRouteName.USERS);
+
+    props.tooltipStore.hide();
+  };
+
+  const handleInternalTools = () => {
+    navigate(UiRouteName.HOME);
+
+    props.tooltipStore.hide();
+  };
+
+  const handleLogout = () => {
+    authenticationStore.logout();
+
+    props.tooltipStore.hide();
   };
 
   return (
-    <button type="button" onClick={handleUserItemClick} class="w-full">
+    <button type="button" class="w-full">
       <DropDown.Menu
         class="w-full"
         store={props.tooltipStore}
@@ -43,11 +57,11 @@ const UserMenu = (props: UserMenuProps) => {
             <List.Item>
               <Checkbox.Toggle labelElement="Color Theme" />
             </List.Item>
-            <List.Item onClick={props.onSettings}>Settings</List.Item>
+            <List.Item onClick={handleSettings}>Settings</List.Item>
             <Show when={props.features.includes(ApplicationFeature.INTERNAL_TOOLS)}>
-              <List.Item onClick={props.onInternalTools}>Internal Tools</List.Item>
+              <List.Item onClick={handleInternalTools}>Internal Tools</List.Item>
             </Show>
-            <List.Item onClick={props.onLogout}>Logout</List.Item>
+            <List.Item onClick={handleLogout}>Logout</List.Item>
           </>
         }
       />

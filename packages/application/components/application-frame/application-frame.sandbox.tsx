@@ -71,7 +71,7 @@ export const Default = () => {
     onLogout: handleLogout,
   };
   return (
-    <SandboxExamplesContainer class="h-full w-full">
+    <SandboxExamplesContainer class="h-full w-full" withPadding={false}>
       <ApplicationFrame {...applicationFrameProps} />
     </SandboxExamplesContainer>
   );
@@ -111,7 +111,7 @@ export const NoProfileImage = () => {
     onLogout: handleLogout,
   };
   return (
-    <SandboxExamplesContainer class="h-full w-full">
+    <SandboxExamplesContainer class="h-full w-full" withPadding={false}>
       <ApplicationFrame {...applicationFrameProps} />
     </SandboxExamplesContainer>
   );
@@ -152,7 +152,7 @@ export const WithInternalTools = () => {
     features: [ApplicationFeature.INTERNAL_TOOLS],
   };
   return (
-    <SandboxExamplesContainer class="h-full w-full">
+    <SandboxExamplesContainer class="h-full w-full" withPadding={false}>
       <ApplicationFrame {...applicationFrameProps} />
     </SandboxExamplesContainer>
   );
@@ -387,7 +387,7 @@ export const WithPageContent = () => {
   };
 
   return (
-    <SandboxExamplesContainer class="h-full w-full">
+    <SandboxExamplesContainer class="h-full w-full" withPadding={false}>
       <ApplicationFrame {...applicationFrameProps}>
         <Page>
           <Page.Header label="Users" />

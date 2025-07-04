@@ -15,13 +15,23 @@ export type LocalStorageKey = (typeof LocalStorageKey)[keyof typeof LocalStorage
 
 export const applicationDataAttribute = {
   THEME: 'theme',
-};
+} as const;
+
+export type ApplicationDataAttribute = (typeof applicationDataAttribute)[keyof typeof applicationDataAttribute];
 
 export const ApplicationFeature = {
   INTERNAL_TOOLS: 'internal-tools',
 } as const;
 
 export type ApplicationFeature = (typeof ApplicationFeature)[keyof typeof ApplicationFeature];
+
+export const UiRouteName = {
+  HOME: '/home',
+  USERS: '/users',
+  LOGIN: '/login',
+} as const;
+
+export type UiRouteName = (typeof UiRouteName)[keyof typeof UiRouteName];
 
 const GlobalVariable = {
   BASE_API_URL: 'VITE_BASE_API_URL',

@@ -8,6 +8,7 @@ type SandboxExamplesContainerProps = ParentProps<{
   class?: string;
   isFull?: boolean;
   withPureBackground?: boolean;
+  withPadding?: boolean;
 }>;
 
 const SandboxExamplesContainer = (passedProps: SandboxExamplesContainerProps) => {
@@ -16,10 +17,11 @@ const SandboxExamplesContainer = (passedProps: SandboxExamplesContainerProps) =>
       {
         isFull: true,
         withPureBackground: false,
+        withPadding: true,
       },
       passedProps,
     ),
-    ['class', 'isFull', 'asRow', 'children', 'withPureBackground'],
+    ['class', 'isFull', 'asRow', 'children', 'withPureBackground', 'withPadding'],
   );
 
   return (
@@ -28,6 +30,7 @@ const SandboxExamplesContainer = (passedProps: SandboxExamplesContainerProps) =>
         'flex-row': props.asRow,
         'w-full min-h-full': props.isFull,
         'bg-surface-pure': props.withPureBackground,
+        'p-base': props.withPadding,
       })}
     >
       {props.children}

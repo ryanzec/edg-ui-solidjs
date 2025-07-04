@@ -117,13 +117,22 @@ const UsersView = () => {
     <>
       <Page>
         <Page.Header label="Users" actionElements={[<Button onClick={handleAddUser}>New User</Button>]} />
-        <Suspense fallback={<Skeleton />}>
-          <Show when={users()}>
-            {(users) => (
-              <UsersList users={users()} onEdit={handleEditUser} onDelete={handleRemoveUser} onAdd={handleAddUser} />
-            )}
-          </Show>
-        </Suspense>
+        <Page.Content>
+          <Suspense fallback={<Skeleton />}>
+            <Page.ContentSection>
+              <Show when={users()}>
+                {(users) => (
+                  <UsersList
+                    users={users()}
+                    onEdit={handleEditUser}
+                    onDelete={handleRemoveUser}
+                    onAdd={handleAddUser}
+                  />
+                )}
+              </Show>
+            </Page.ContentSection>
+          </Suspense>
+        </Page.Content>
       </Page>
       <UserFormPeek
         peekStore={editPeekStore}

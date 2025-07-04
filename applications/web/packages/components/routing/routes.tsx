@@ -1,9 +1,9 @@
 import { Navigate, Route } from '@solidjs/router';
 import { lazy } from 'solid-js';
 
+import { UiRouteName } from '$/application/utils/application';
 import AuthenticatedRoute from '$web/components/routing/authenticated-route';
 import UnauthenticatedRoute from '$web/components/routing/unauthenticated-route';
-import { RoutePath } from '$web/utils/application';
 
 const HomeView = lazy(() => import('$web/views/home'));
 const LoginView = lazy(() => import('$web/views/login'));
@@ -13,7 +13,7 @@ const Routes = () => {
   return (
     <>
       <Route
-        path={RoutePath.LOGIN}
+        path={UiRouteName.LOGIN}
         component={() => (
           <UnauthenticatedRoute>
             <LoginView />
@@ -21,7 +21,7 @@ const Routes = () => {
         )}
       />
       <Route
-        path={RoutePath.HOME}
+        path={UiRouteName.HOME}
         component={() => (
           <AuthenticatedRoute>
             <HomeView />
@@ -29,7 +29,7 @@ const Routes = () => {
         )}
       />
       <Route
-        path={RoutePath.USERS}
+        path={UiRouteName.USERS}
         component={() => (
           <AuthenticatedRoute>
             <UsersView />

@@ -1,4 +1,3 @@
-import styles from '$/application/components/page/page.module.css';
 import Button, { ButtonVariant } from '$/core/components/button';
 import Icon from '$/core/components/icon/icon';
 import type { CommonDataAttributes } from '$/core/types/generic';
@@ -15,28 +14,26 @@ export type PageLayout = (typeof PageLayout)[keyof typeof PageLayout];
 export type PageProps = JSX.HTMLAttributes<HTMLDivElement> &
   CommonDataAttributes & {
     layout?: PageLayout;
-    isFullWidth?: boolean;
     onClickBackLink?: () => void;
     backLinkLabel?: string;
   };
 
 const Page = (passedProps: PageProps) => {
   const [props, restOfProps] = splitProps(
-    mergeProps({ layout: PageLayout.DEFAULT, isFullWidth: false, backLinkLabel: 'Back' }, passedProps),
-    ['class', 'layout', 'isFullWidth', 'onClickBackLink', 'backLinkLabel'],
+    mergeProps({ layout: PageLayout.DEFAULT, backLinkLabel: 'Back' }, passedProps),
+    ['class', 'layout', 'onClickBackLink', 'backLinkLabel'],
   );
 
   return (
     <div
       data-id="page"
-      class={classnames(styles.outerContainer, {
-        [styles.restrictWidth]: props.isFullWidth === false,
-        [styles.centered]: props.layout === PageLayout.CENTERED,
+      class={classnames('flex h-full flex-col gap-sm flex-1', {
+        'justify-center items-center': props.layout === PageLayout.CENTERED,
       })}
     >
       <Show when={props.onClickBackLink}>
         <Button
-          class={styles.backLink}
+          class="self-start"
           onClick={props.onClickBackLink}
           variant={ButtonVariant.GHOST}
           preItem={<Icon icon="arrow-left" />}
@@ -45,8 +42,8 @@ const Page = (passedProps: PageProps) => {
         </Button>
       </Show>
       <div
-        class={classnames(styles.container, props.class, {
-          [styles.centered]: props.layout === PageLayout.CENTERED,
+        class={classnames('flex flex-col h-full gap-sm min-h-[1px]', props.class, {
+          'justify-center items-center': props.layout === PageLayout.CENTERED,
         })}
         {...restOfProps}
       />

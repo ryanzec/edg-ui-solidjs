@@ -2,11 +2,11 @@ import { Navigate } from '@solidjs/router';
 import type { JSX } from 'solid-js';
 
 import { authenticationStore } from '$/application/stores/authentication.store';
-import { RoutePath } from '$web/utils/application';
+import { UiRouteName } from '$/application/utils/application';
 
 const AuthenticatedRoute = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
   if (!authenticationStore.isAuthenticated()) {
-    return <Navigate href={RoutePath.LOGIN} />;
+    return <Navigate href={UiRouteName.LOGIN} />;
   }
 
   return props.children;

@@ -83,21 +83,6 @@ export const CenteredLayout = () => {
   );
 };
 
-export const FullWidth = () => {
-  return (
-    <SandboxExamplesContainer>
-      <Page isFullWidth={true}>
-        <Page.Header label="Full Width Page" />
-        <Page.Content>
-          <Page.ContentSection>
-            <p>This page uses the full width option without any width restrictions.</p>
-          </Page.ContentSection>
-        </Page.Content>
-      </Page>
-    </SandboxExamplesContainer>
-  );
-};
-
 export const MultipleContentSections = () => {
   return (
     <SandboxExamplesContainer>

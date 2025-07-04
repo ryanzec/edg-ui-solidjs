@@ -5,13 +5,11 @@ import ApplicationFrame from '$/application/components/application-frame';
 import { authenticationStore } from '$/application/stores/authentication.store';
 import { globalsStore } from '$/application/stores/globals.store';
 import { themeManagerStore } from '$/application/stores/theme-manager.store';
-import { ApplicationFeature } from '$/application/utils/application';
+import { ApplicationFeature, UiRouteName } from '$/application/utils/application';
 import GlobalNotifications from '$/core/components/global-notifications';
 import Loading from '$/core/components/loading';
 import { globalNotificationsStore } from '$/core/stores/global-notifications.store';
 import { type HttpRequest, httpUtils } from '$/core/utils/http';
-import styles from '$web/components/application/application.module.css';
-import { RoutePath } from '$web/utils/application';
 import { FeatureFlag, featureFlagUtils } from '$web/utils/feature-flag';
 
 const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
@@ -25,18 +23,6 @@ const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
     }
 
     return features;
-  };
-
-  const handleSettings = () => {
-    navigate(RoutePath.USERS);
-  };
-
-  const handleInternalTools = () => {
-    navigate(RoutePath.HOME);
-  };
-
-  const handleLogout = () => {
-    authenticationStore.logout();
   };
 
   onMount(() => {
@@ -57,8 +43,8 @@ const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
       navigate,
     });
     authenticationStore.initialize({
-      homeRedirectRoute: RoutePath.HOME,
-      loginRedirectRoute: RoutePath.LOGIN,
+      homeRedirectRoute: UiRouteName.HOME,
+      loginRedirectRoute: UiRouteName.LOGIN,
     });
 
     onCleanup(() => {
@@ -67,42 +53,15 @@ const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
   });
 
   return (
-    <div data-theme={themeManagerStore.theme()} class={styles.container}>
+    <div data-theme={themeManagerStore.theme()} class="h-full w-full flex">
       <Show when={authenticationStore.isInitializing() === false} fallback={<Loading />}>
         <ApplicationFrame
-          navigate={navigate}
-          homeRoute="#"
-          topNavigationItems={[
-            {
-              label: 'Page 1',
-              route: '#',
-              isActive: true,
-            },
-            {
-              label: 'Page 2',
-              route: '#',
-              isActive: false,
-            },
-            {
-              label: 'Page 3',
-              route: '#',
-              isActive: false,
-            },
-            {
-              label: 'Page 4',
-              route: '#',
-              isActive: false,
-            },
-          ]}
           isInitializing={false}
-          isAuthenticated
+          isAuthenticated={authenticationStore.isAuthenticated()}
           user={authenticationStore.sessionUser()?.user}
           features={getFrameFeatures()}
-          onSettings={handleSettings}
-          onInternalTools={handleInternalTools}
-          onLogout={handleLogout}
         >
-          <div class={styles.mainContent}>{props.children}</div>
+          <div class="w-full">{props.children}</div>
         </ApplicationFrame>
       </Show>
       <GlobalNotifications notifications={globalNotificationsStore.notifications()} />

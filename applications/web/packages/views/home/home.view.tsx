@@ -1,6 +1,5 @@
 import Page from '$/application/components/page';
 import { authenticationStore } from '$/application/stores/authentication.store';
-import Button from '$/core/components/button';
 
 const HomeView = () => {
   const handleLogout = () => {
@@ -10,7 +9,9 @@ const HomeView = () => {
   return (
     <Page>
       <Page.Header label="Home" />
-      <Button onClick={handleLogout}>Logout</Button>
+      <Page.Content>
+        <Page.ContentSection>Home Page</Page.ContentSection>
+      </Page.Content>
     </Page>
   );
 };

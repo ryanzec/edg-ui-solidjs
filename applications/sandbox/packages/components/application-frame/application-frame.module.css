@@ -30,6 +30,5 @@
 }
 
 .main-content {
-  padding: var(--spacing-base);
   min-height: 100%;
 }
