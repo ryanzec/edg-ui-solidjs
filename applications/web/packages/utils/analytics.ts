@@ -13,6 +13,10 @@ const initialize = () => {
     enable_heatmaps: true,
     capture_dead_clicks: false,
   });
+
+  if (typeof window !== 'undefined') {
+    window.posthog = posthog;
+  }
 };
 
 type IdentifyOptions = {
