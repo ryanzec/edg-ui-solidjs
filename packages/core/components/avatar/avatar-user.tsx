@@ -1,13 +1,14 @@
 import Avatar from '$/core/components/avatar/avatar';
-import styles from '$/core/components/avatar/avatar.module.css';
+import { type AvatarProps, AvatarSize } from '$/core/components/avatar/utils';
 import EllipsisText from '$/core/components/ellipsis-text';
 import Typography, { TypographySize } from '$/core/components/typography';
 import { cryptoUtils } from '$/core/utils/crypto';
 import { imageUtils } from '$/core/utils/image';
 import { stringUtils } from '$/core/utils/string';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { Show, createResource, mergeProps, splitProps } from 'solid-js';
 
-export type AvatarUserProps = {
+export type AvatarUserProps = Omit<AvatarProps, 'class'> & {
   name: string;
   email?: string;
   extraText?: string;
@@ -28,7 +29,7 @@ const getGravatarImage = async (email: string): Promise<string | undefined> => {
 };
 
 const AvatarUser = (passedProps: AvatarUserProps) => {
-  const [props, _rest] = splitProps(mergeProps({ showName: true }, passedProps), [
+  const [props, restOfProps] = splitProps(mergeProps({ showName: true, avatarSize: AvatarSize.BASE }, passedProps), [
     'name',
     'email',
     'extraText',
@@ -41,22 +42,31 @@ const AvatarUser = (passedProps: AvatarUserProps) => {
   });
 
   return (
-    <div data-id="avatar-user" class={styles.user}>
+    <div
+      data-id="avatar-user"
+      class={tailwindUtils.merge('flex items-center', {
+        'gap-4xs': restOfProps.avatarSize === AvatarSize.SMALL,
+        'gap-2xs': restOfProps.avatarSize === AvatarSize.BASE,
+      })}
+    >
       <Avatar
-        {...props}
         src={imageUrl()}
         label={stringUtils.toInitialism(props.name, { limit: 2 })}
         isClickable={props.isClickable}
         class="shrink-0"
+        {...restOfProps}
       />
       <Show when={props.showName}>
         <div class="min-w-[1px]">
-          <Show when={props.extraText}>
+          <Show when={restOfProps.avatarSize !== AvatarSize.SMALL && props.extraText}>
             <Typography size={TypographySize.SMALL} data-id="extra-text">
               {props.extraText}
             </Typography>
           </Show>
-          <Typography data-id="name">
+          <Typography
+            data-id="name"
+            size={restOfProps.avatarSize === AvatarSize.SMALL ? TypographySize.SMALL : TypographySize.BASE}
+          >
             <EllipsisText class="line-clamp-1" text={props.name} />
           </Typography>
         </div>

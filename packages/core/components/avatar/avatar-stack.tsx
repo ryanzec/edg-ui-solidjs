@@ -1,24 +1,34 @@
 import classnames from 'classnames';
-import { type JSX, Show, splitProps } from 'solid-js';
+import { type JSX, mergeProps, splitProps } from 'solid-js';
 
-import styles from '$/core/components/avatar/avatar.module.css';
+import { AvatarSize, AvatarStackContext, type AvatarStackContextData } from '$/core/components/avatar/utils';
 import type { CommonDataAttributes } from '$/core/types/generic';
 
-export type AvatarStackProps = JSX.HTMLAttributes<HTMLDivElement> &
-  CommonDataAttributes & {
-    src?: string;
-  };
+export type AvatarStackProps = JSX.HTMLAttributes<HTMLDivElement> & CommonDataAttributes & AvatarStackContextData;
 
 const AvatarStack = (passedProps: AvatarStackProps) => {
-  const [props, restOfProps] = splitProps(passedProps, ['children', 'class', 'src']);
+  const [props, remainingProps] = splitProps(passedProps, ['children', 'class']);
+  const [contextData, restOfProps] = splitProps(mergeProps({ avatarSize: AvatarSize.BASE }, remainingProps), [
+    'avatarSize',
+  ]);
 
   return (
-    <div data-id="avatar-stack" {...restOfProps} class={classnames(styles.avatarStack, props.class)}>
-      <Show when={props.src}>
-        <img alt="avatar inage" src={props.src} />
-      </Show>
-      <Show when={!props.src}>{props.children}</Show>
-    </div>
+    <AvatarStackContext.Provider value={contextData}>
+      <div
+        data-id="avatar-stack"
+        {...restOfProps}
+        class={classnames(
+          'flex flex-row-reverse justify-end [&>*]:border-1',
+          {
+            '[&>*:not(:last-child)]:-ml-2xs': contextData?.avatarSize === AvatarSize.SMALL,
+            '[&>*:not(:last-child)]:-ml-base': contextData?.avatarSize === AvatarSize.BASE,
+          },
+          props.class,
+        )}
+      >
+        {props.children}
+      </div>
+    </AvatarStackContext.Provider>
   );
 };
 
