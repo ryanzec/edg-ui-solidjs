@@ -2,11 +2,20 @@ import DropDown, { type DropDownProps } from '$/core/components/drop-down/drop-d
 import styles from '$/core/components/drop-down/drop-down.module.css';
 import List from '$/core/components/list';
 import ScrollArea from '$/core/components/scroll-area';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { mergeProps } from 'solid-js';
 
 export type DropDownMenuProps = Pick<
   DropDownProps,
-  'handleElement' | 'handleClass' | 'contentElement' | 'contentClass' | 'store' | 'placement' | 'disabled' | 'class'
+  | 'handleElement'
+  | 'handleClass'
+  | 'contentElement'
+  | 'contentClass'
+  | 'store'
+  | 'placement'
+  | 'disabled'
+  | 'class'
+  | 'offset'
 >;
 
 const defaultProps: Omit<DropDownMenuProps, 'handleElement' | 'contentElement' | 'store'> = {
@@ -23,12 +32,13 @@ export const DropDownMenu = (passedProps: DropDownMenuProps) => {
       class={props.class}
       store={props.store}
       placement={props.placement}
+      offset={props.offset}
       handleElement={props.handleElement}
       handleClass={props.handleClass}
       contentIsStyled={false}
       contentClass={props.contentClass}
       contentElement={
-        <List class={styles.dropDownMenuContent}>
+        <List class={tailwindUtils.merge('w-full', styles.dropDownMenuContent)}>
           <ScrollArea>{props.contentElement}</ScrollArea>
         </List>
       }

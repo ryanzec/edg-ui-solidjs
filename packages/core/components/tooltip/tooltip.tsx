@@ -1,4 +1,4 @@
-import { type Placement, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
+import { type OffsetOptions, type Placement, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
 import { type JSX, createContext, createEffect, createSignal, mergeProps, onCleanup, splitProps } from 'solid-js';
 
 import styles from '$/core/components/tooltip/tooltip.module.css';
@@ -25,11 +25,13 @@ export type TooltipProps = JSX.HTMLAttributes<HTMLDivElement> &
     placement?: Placement;
     store: TooltipStore;
     triggerEvent?: TooltipTriggerEvent;
+    offset?: OffsetOptions;
   };
 
 const defaultProps: Omit<TooltipProps, 'store'> = {
   placement: 'bottom-start',
   triggerEvent: TooltipTriggerEvent.HOVER,
+  offset: 5,
 };
 
 const Tooltip = (passedProps: TooltipProps) => {
@@ -39,6 +41,7 @@ const Tooltip = (passedProps: TooltipProps) => {
     'store',
     'children',
     'class',
+    'offset',
   ]);
 
   const [containerElement, setContainerElement] = createSignal<HTMLDivElement>();
@@ -128,7 +131,7 @@ const Tooltip = (passedProps: TooltipProps) => {
       computePosition(handleElement, contentElement, {
         placement: props.placement,
         // @todo(feature) should this be configurable?
-        middleware: [flip(), shift(), offset(5)],
+        middleware: [flip(), shift(), offset(props.offset)],
       }).then(({ x, y }) => {
         contentElement.style.top = `${y}px`;
         contentElement.style.left = `${x}px`;

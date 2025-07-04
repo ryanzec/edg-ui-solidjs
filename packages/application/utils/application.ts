@@ -17,7 +17,9 @@ export const applicationDataAttribute = {
   THEME: 'theme',
 };
 
-export const ApplicationFeature = {} as const;
+export const ApplicationFeature = {
+  INTERNAL_TOOLS: 'internal-tools',
+} as const;
 
 export type ApplicationFeature = (typeof ApplicationFeature)[keyof typeof ApplicationFeature];
 
