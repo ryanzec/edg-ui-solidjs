@@ -1,4 +1,4 @@
-import { createEffect, onMount } from 'solid-js';
+import { createEffect, createSignal, onMount } from 'solid-js';
 import * as zod from 'zod';
 
 import Checkbox from '$/core/components/checkbox';
@@ -13,20 +13,22 @@ export default {
 };
 
 export const Indeterminate = () => {
-  let inputRef: HTMLInputElement | undefined;
+  const [inputElementRef, setInputElementRef] = createSignal<HTMLInputElement | undefined>();
 
   onMount(() => {
-    if (!inputRef) {
+    const currentInputElementRef = inputElementRef();
+
+    if (!currentInputElementRef) {
       return;
     }
 
-    inputRef.indeterminate = true;
-    inputRef.dispatchEvent(new Event('change'));
+    currentInputElementRef.indeterminate = true;
+    currentInputElementRef.dispatchEvent(new Event('change'));
   });
 
   return (
     <SandboxExamplesContainer>
-      <Checkbox ref={inputRef} labelElement="Indeterminate" />
+      <Checkbox ref={setInputElementRef} labelElement="Indeterminate" />
     </SandboxExamplesContainer>
   );
 };

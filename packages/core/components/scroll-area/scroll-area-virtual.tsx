@@ -11,13 +11,13 @@ export type ScrollAreaVirtualProps<TData> = {
   overscan?: VirtualizerOptions<HTMLElement, Element>['overscan'];
   getItemKey?: VirtualizerOptions<HTMLElement, Element>['getItemKey'];
   hasExtraRow?: boolean;
-  virtualizedRef?: (element: HTMLElement | undefined) => void;
+  virtualizedElementRef?: (element: HTMLElement | undefined) => void;
 };
 
 const ScrollAreaVirtual = <TData,>(passedProps: ScrollAreaVirtualProps<TData>) => {
   const props = mergeProps({ overscan: 5 }, passedProps);
 
-  const [virtualizedElement, setVirtualizedElement] = createSignal<OverlayScrollbars | undefined>();
+  const [virtualizedElementRef, setVirtualizedElementRef] = createSignal<OverlayScrollbars | undefined>();
 
   // while this is a little unusual, in order for the virtualizer to work with the reactive nature of solid js
   // we need to use a getters for some of the properties which ensure when access internal, it will always be the
@@ -27,7 +27,7 @@ const ScrollAreaVirtual = <TData,>(passedProps: ScrollAreaVirtualProps<TData>) =
       return props.items.length + (props.hasExtraRow ? 1 : 0);
     },
     getScrollElement: () => {
-      const instance = virtualizedElement();
+      const instance = virtualizedElementRef();
       return instance?.elements().viewport || null;
     },
     estimateSize: props.estimateSize,
@@ -38,20 +38,20 @@ const ScrollAreaVirtual = <TData,>(passedProps: ScrollAreaVirtualProps<TData>) =
   });
 
   createEffect(function onVirtualizedComponentUpdate() {
-    const viewport = virtualizedElement()?.elements().viewport;
+    const viewport = virtualizedElementRef()?.elements().viewport;
 
     if (!viewport) {
       return;
     }
 
-    props.virtualizedRef?.(viewport);
+    props.virtualizedElementRef?.(viewport);
 
     onCleanup(() => {
-      props.virtualizedRef?.(undefined);
+      props.virtualizedElementRef?.(undefined);
     });
   });
   return (
-    <ScrollArea class={props.class} ref={setVirtualizedElement}>
+    <ScrollArea class={props.class} ref={setVirtualizedElementRef}>
       <div class="w-full relative" style={`height: ${virtualizer.getTotalSize()}px`}>
         <For each={virtualizer.getVirtualItems()}>
           {(virtualItem) => {

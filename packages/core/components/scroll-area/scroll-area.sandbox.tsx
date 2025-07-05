@@ -101,7 +101,7 @@ export const VirtualizedExpandableElements = () => {
         // this example that can be used as a reference when needed
         const item = items[index];
         const [isHidden, setIsHidden] = createSignal<boolean>(true);
-        const [element, setElement] = createSignal<Element>();
+        const [elementRef, setElementRef] = createSignal<Element>();
 
         const handleExpand = () => {
           setIsHidden(!isHidden());
@@ -109,16 +109,16 @@ export const VirtualizedExpandableElements = () => {
 
         createEffect(
           on(isHidden, function recalculateItemSize() {
-            if (!element()) {
+            if (!elementRef()) {
               return;
             }
 
-            virtualizer.measureElement(element());
+            virtualizer.measureElement(elementRef());
           }),
         );
 
         return (
-          <div data-index={index} ref={setElement}>
+          <div data-index={index} ref={setElementRef}>
             Item {item} <Button onClick={handleExpand}>{isHidden() ? 'Expand' : 'Collapse'}</Button>
             <div
               class={tailwindUtils.merge({

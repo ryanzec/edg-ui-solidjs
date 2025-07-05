@@ -1,5 +1,5 @@
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show, mergeProps, onCleanup, splitProps } from 'solid-js';
+import { type JSX, Show, createSignal, mergeProps, onCleanup, splitProps } from 'solid-js';
 
 import Overlay from '$/core/components/overlay';
 import styles from '$/core/components/peek/peek.module.css';
@@ -35,7 +35,8 @@ const Peek = (passedProps: PeekProps) => {
     ],
   );
 
-  let peekElement: HTMLElement | undefined;
+  const [peekElementRef, setPeekElementRef] = createSignal<HTMLDivElement>();
+
   let xResizeLeft = 0;
   let isDragging = false;
   let dragXStart = 0;
@@ -58,13 +59,15 @@ const Peek = (passedProps: PeekProps) => {
   };
 
   const handleWindowMouseMove = (event: MouseEvent) => {
-    if (!peekElement) {
+    const currentPeekElementRef = peekElementRef();
+
+    if (!currentPeekElementRef) {
       return;
     }
 
     const moveDiff = event.pageX - dragXStart;
 
-    peekElement.style.width = `${dragWidthStart + moveDiff * -1}px`;
+    currentPeekElementRef.style.width = `${dragWidthStart + moveDiff * -1}px`;
   };
 
   const handleWindowMouseUp = () => {
@@ -77,11 +80,13 @@ const Peek = (passedProps: PeekProps) => {
   };
 
   const handlePeekMouseDown = (event: MouseEvent) => {
-    if (!peekElement) {
+    const currentPeekElementRef = peekElementRef();
+
+    if (!currentPeekElementRef) {
       return;
     }
 
-    const peekBoundingRect = peekElement.getBoundingClientRect();
+    const peekBoundingRect = currentPeekElementRef.getBoundingClientRect();
 
     xResizeLeft = peekBoundingRect.x;
     isDragging = event.pageX >= xResizeLeft && event.pageX <= xResizeLeft + 5;
@@ -100,11 +105,13 @@ const Peek = (passedProps: PeekProps) => {
   };
 
   const handlePeekMouseMove = (event: MouseEvent) => {
-    if (!peekElement) {
+    const currentPeekElementRef = peekElementRef();
+
+    if (!currentPeekElementRef) {
       return;
     }
 
-    xResizeLeft = peekElement.getBoundingClientRect().x;
+    xResizeLeft = currentPeekElementRef.getBoundingClientRect().x;
 
     const isDraggingArea = event.pageX >= xResizeLeft && event.pageX <= xResizeLeft + 5;
 
@@ -143,7 +150,7 @@ const Peek = (passedProps: PeekProps) => {
   };
 
   const peekRef = (element: HTMLDivElement) => {
-    peekElement = element;
+    setPeekElementRef(element);
 
     document.addEventListener('keydown', handleKeyUp);
 

@@ -4,7 +4,7 @@ import type { CommonDataAttributes } from '$/core/types/generic';
 import type { ChartOptions } from 'chart.js';
 import ChartJS from 'chart.js/auto';
 import type { ChartConfiguration, ChartData } from 'chart.js/dist/types';
-import { onMount } from 'solid-js';
+import { createSignal, onMount } from 'solid-js';
 
 export type BarChartProps = CommonDataAttributes &
   ChartCommonProps & {
@@ -16,17 +16,19 @@ export type BarChartProps = CommonDataAttributes &
 const defaultOptions = chartComponentUtils.buildDefaultBarOptions();
 
 const BarChart = (props: BarChartProps) => {
-  let containerElement: HTMLCanvasElement | undefined;
+  const [containerElementRef, setContainerElementRef] = createSignal<HTMLCanvasElement | undefined>();
 
   props.chartStore.registerUpdateEffect(props);
 
   onMount(() => {
-    if (!containerElement) {
+    const currentContainerElementRef = containerElementRef();
+
+    if (!currentContainerElementRef) {
       return;
     }
 
     props.chartStore.setChartInstance(
-      new ChartJS<'bar'>(containerElement, {
+      new ChartJS<'bar'>(currentContainerElementRef, {
         type: 'bar',
         data: props.data,
         options: props.options || defaultOptions,
@@ -35,7 +37,7 @@ const BarChart = (props: BarChartProps) => {
     );
   });
 
-  return <canvas ref={containerElement} />;
+  return <canvas ref={setContainerElementRef} />;
 };
 
 export default BarChart;

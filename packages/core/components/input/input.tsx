@@ -49,12 +49,8 @@ const Input = <TFormData = DefaultFormData>(passedProps: InputProps<TFormData>) 
     ],
   );
 
-  const [inputElement, setInputElement] = createSignal<HTMLInputElement>();
+  const [inputElementRef, setInputElementRef] = createSignal<HTMLInputElement>();
   const [isInputFocused, setIsInputFocused] = createSignal(false);
-
-  const inputRef = (element: HTMLInputElement) => {
-    setInputElement(element);
-  };
 
   const formFieldContext = useContext(FormFieldContext);
 
@@ -66,7 +62,7 @@ const Input = <TFormData = DefaultFormData>(passedProps: InputProps<TFormData>) 
     setIsInputFocused(true);
 
     if (props.selectAllOnFocus) {
-      inputElement()?.select();
+      inputElementRef()?.select();
     }
 
     if (props.onFocus) {
@@ -87,7 +83,7 @@ const Input = <TFormData = DefaultFormData>(passedProps: InputProps<TFormData>) 
   };
 
   const handleClickContainer = () => {
-    inputElement()?.focus();
+    inputElementRef()?.focus();
   };
 
   const isFocused = () => isInputFocused() && !props.disabled;
@@ -97,7 +93,7 @@ const Input = <TFormData = DefaultFormData>(passedProps: InputProps<TFormData>) 
       return;
     }
 
-    inputElement()?.focus();
+    inputElementRef()?.focus();
   });
 
   return (
@@ -129,7 +125,7 @@ const Input = <TFormData = DefaultFormData>(passedProps: InputProps<TFormData>) 
           <Show when={!!props.inlineElement}>{props.inlineElement}</Show>
           <input
             data-id="input"
-            ref={inputRef}
+            ref={setInputElementRef}
             {...restOfProps}
             type={props.type !== 'password' || props.useTruePassword ? props.type : 'text'}
             name={props.name as string}

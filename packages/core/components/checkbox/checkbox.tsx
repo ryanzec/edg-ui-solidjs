@@ -41,7 +41,7 @@ const Checkbox = <TFormData = DefaultFormData>(passedProps: CheckboxProps<TFormD
   // we need to manually track the checked state of the input in order to make sure the toggle slider properly
   // reacts when the checked state of the input changes
   const [checkedState, setCheckedState] = createSignal<CheckedState>(CheckedState.UNCHECKED);
-  const [inputElement, setInputElement] = createSignal<HTMLInputElement>();
+  const [inputElementRef, setInputElementRef] = createSignal<HTMLInputElement>();
 
   const formFieldContext = useContext(FormFieldContext);
 
@@ -49,8 +49,8 @@ const Checkbox = <TFormData = DefaultFormData>(passedProps: CheckboxProps<TFormD
     loggerUtils.log('input elements that are not wrapped in a form field will not have validation');
   }
 
-  const handleInputRef = (element: HTMLInputElement) => {
-    setInputElement(element);
+  const internalSetInputElementRef = (element: HTMLInputElement) => {
+    setInputElementRef(element);
     passedProps.inputRef?.(element);
   };
 
@@ -83,13 +83,13 @@ const Checkbox = <TFormData = DefaultFormData>(passedProps: CheckboxProps<TFormD
   };
 
   createEffect(function updateInternalCheckState() {
-    if (inputElement()?.indeterminate) {
+    if (inputElementRef()?.indeterminate) {
       setCheckedState(CheckedState.INDETERMINATE);
 
       return;
     }
 
-    setCheckedState(inputElement()?.checked ? CheckedState.CHECKED : CheckedState.UNCHECKED);
+    setCheckedState(inputElementRef()?.checked ? CheckedState.CHECKED : CheckedState.UNCHECKED);
   });
 
   return (
@@ -102,7 +102,7 @@ const Checkbox = <TFormData = DefaultFormData>(passedProps: CheckboxProps<TFormD
         <input
           data-id="checkbox"
           {...restOfProps}
-          ref={handleInputRef}
+          ref={internalSetInputElementRef}
           type="checkbox"
           name={props.name as string}
           onChange={handleChange}

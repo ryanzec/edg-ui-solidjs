@@ -4,7 +4,7 @@ import type { CommonDataAttributes } from '$/core/types/generic';
 import type { ChartConfiguration, ChartOptions } from 'chart.js';
 import ChartJS from 'chart.js/auto';
 import type { ChartData } from 'chart.js/dist/types';
-import { onMount } from 'solid-js';
+import { createSignal, onMount } from 'solid-js';
 
 export type LineChartProps = CommonDataAttributes &
   ChartCommonProps & {
@@ -16,17 +16,19 @@ export type LineChartProps = CommonDataAttributes &
 const defaultOption = chartComponentUtils.buildDefaultLineOptions();
 
 const LineChart = (props: LineChartProps) => {
-  let containerElement: HTMLCanvasElement | undefined;
+  const [containerElementRef, setContainerElementRef] = createSignal<HTMLCanvasElement | undefined>();
 
   props.chartStore.registerUpdateEffect(props);
 
   onMount(() => {
-    if (!containerElement) {
+    const currentContainerElementRef = containerElementRef();
+
+    if (!currentContainerElementRef) {
       return;
     }
 
     props.chartStore.setChartInstance(
-      new ChartJS<'line'>(containerElement, {
+      new ChartJS<'line'>(currentContainerElementRef, {
         type: 'line',
         data: props.data,
         options: props.options || defaultOption,
@@ -35,7 +37,7 @@ const LineChart = (props: LineChartProps) => {
     );
   });
 
-  return <canvas ref={containerElement} />;
+  return <canvas ref={setContainerElementRef} />;
 };
 
 export default LineChart;

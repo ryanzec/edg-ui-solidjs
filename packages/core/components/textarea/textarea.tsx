@@ -36,15 +36,11 @@ const Textarea = <TFormData = DefaultFormData>(passedProps: TextareaProps<TFormD
     loggerUtils.log('input elements that are not wrapped in a form field will not have validation');
   }
 
-  const [textareaElement, setTextareaElement] = createSignal<HTMLTextAreaElement>();
-
-  const textareaRef = (element: HTMLTextAreaElement) => {
-    setTextareaElement(element);
-  };
+  const [textareaElementRef, setTextareaElementRef] = createSignal<HTMLTextAreaElement>();
 
   const handleFocus: JSX.EventHandlerUnion<HTMLTextAreaElement, FocusEvent> = (event) => {
     if (props.selectAllOnFocus) {
-      textareaElement()?.select();
+      textareaElementRef()?.select();
     }
 
     if (props.onFocus) {
@@ -59,13 +55,13 @@ const Textarea = <TFormData = DefaultFormData>(passedProps: TextareaProps<TFormD
       return;
     }
 
-    textareaElement()?.focus();
+    textareaElementRef()?.focus();
   });
 
   return (
     <textarea
       data-id="textarea"
-      ref={textareaRef}
+      ref={setTextareaElementRef}
       onFocus={handleFocus}
       {...restOfProps}
       name={props.name as string}

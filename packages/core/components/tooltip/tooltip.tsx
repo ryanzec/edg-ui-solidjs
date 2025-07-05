@@ -44,7 +44,7 @@ const Tooltip = (passedProps: TooltipProps) => {
     'offset',
   ]);
 
-  const [containerElement, setContainerElement] = createSignal<HTMLDivElement>();
+  const [containerElementRef, setContainerElementRef] = createSignal<HTMLDivElement>();
 
   const enabledTooltip = (event: Event) => {
     const toolipEnabled =
@@ -81,7 +81,7 @@ const Tooltip = (passedProps: TooltipProps) => {
   };
 
   createEffect(function setupTooltipFloatingElementAndEvents() {
-    const currentContainerElement = containerElement();
+    const currentContainerElement = containerElementRef();
 
     if (!currentContainerElement) {
       return;
@@ -152,10 +152,6 @@ const Tooltip = (passedProps: TooltipProps) => {
     });
   });
 
-  const containerRef = (element: HTMLDivElement) => {
-    setContainerElement(element);
-  };
-
   return (
     <TooltipContext.Provider value={props.tooltipStore}>
       <div
@@ -163,7 +159,7 @@ const Tooltip = (passedProps: TooltipProps) => {
           callback: props.triggerEvent === TooltipTriggerEvent.CLICK ? () => disableToolTip() : undefined,
           id: props.tooltipStore.id(),
         }}
-        ref={containerRef}
+        ref={setContainerElementRef}
         data-id="tooltip"
         class={tailwindUtils.merge(styles.tooltip, props.class)}
         {...restOfProps}

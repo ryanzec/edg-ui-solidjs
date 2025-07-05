@@ -3,6 +3,7 @@ import { buildErrorPanelExtension } from '$/core/components/code-editor/extensio
 import { type CodeEditorLanguageConfiguration, defaultExtensions } from '$/core/components/code-editor/utils';
 import CopyText from '$/core/components/copy-text';
 import type { CommonDataAttributes } from '$/core/types/generic';
+import { loggerUtils } from '$/core/utils/logger';
 import { tailwindUtils } from '$/core/utils/tailwind';
 import { lintGutter, linter } from '@codemirror/lint';
 import { EditorState, type Extension } from '@codemirror/state';
@@ -37,7 +38,7 @@ const CodeEditor = (passedProps: CodeEditorProps) => {
     ['class', 'doc', 'extensions', 'readonly', 'language', 'errorMessages', 'isBorderless', 'hasCopy'],
   );
 
-  let containerElement: HTMLDivElement | undefined;
+  const [containerElementRef, setContainerElementRef] = createSignal<HTMLDivElement | undefined>();
 
   // custom extensions are broken out into their own files to keep this component as small and simple as possible
   // (also makes multiple people working on the code editor easier with less chance of conflicts)
@@ -74,6 +75,14 @@ const CodeEditor = (passedProps: CodeEditorProps) => {
   });
 
   onMount(() => {
+    const currentContainerElementRef = containerElementRef();
+
+    if (!currentContainerElementRef) {
+      loggerUtils.error('container element reference is missing');
+
+      return;
+    }
+
     const extensions: Extension[] = [
       ...defaultExtensions,
       errorPanelExtension.field,
@@ -106,7 +115,7 @@ const CodeEditor = (passedProps: CodeEditorProps) => {
 
     setEditorView(
       new EditorView({
-        parent: containerElement,
+        parent: currentContainerElementRef,
         state: EditorState.create({
           doc: props.doc,
           extensions,
@@ -129,7 +138,7 @@ const CodeEditor = (passedProps: CodeEditorProps) => {
         class={tailwindUtils.merge(styles.codeEditor, props.class, {
           [styles.borderless]: props.isBorderless,
         })}
-        ref={containerElement}
+        ref={setContainerElementRef}
       />
     </div>
   );

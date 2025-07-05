@@ -37,7 +37,7 @@ const Dialog = (passedProps: DialogProps) => {
     'closeOnEscape',
     'closeEnabled',
   ]);
-  const dialogRef = () => {
+  const dialogElementRef = () => {
     const keyDownListener = (event: KeyboardEvent) => {
       if (props.closeEnabled === false || props.closeOnEscape === false || event.key !== Key.ESCAPE) {
         return;
@@ -72,7 +72,12 @@ const Dialog = (passedProps: DialogProps) => {
   return (
     <Show when={props.dialogStore.isOpened()}>
       <Portal>
-        <div ref={dialogRef} data-id="dialog" {...restOfProps} class={tailwindUtils.merge(styles.dialog, props.class)}>
+        <div
+          ref={dialogElementRef}
+          data-id="dialog"
+          {...restOfProps}
+          class={tailwindUtils.merge(styles.dialog, props.class)}
+        >
           <Typography size={TypographySize.EXTRA_LARGE} class={styles.dialogHeader}>
             {props.headerElement}
             <Icon class={styles.closeHeaderTrigger} icon="x" onClick={handleCloseDialog} />

@@ -6,6 +6,7 @@ import {
   defaultExtensions,
 } from '$/core/components/code-editor/utils';
 import type { CommonDataAttributes } from '$/core/types/generic';
+import { loggerUtils } from '$/core/utils/logger';
 import { tailwindUtils } from '$/core/utils/tailwind';
 import { lintGutter, linter } from '@codemirror/lint';
 import { type Chunk, MergeView, getChunks, getOriginalDoc, unifiedMergeView } from '@codemirror/merge';
@@ -103,14 +104,21 @@ const CodeEditor = (passedProps: CodeEditorDiffProps) => {
     ['class', 'doc', 'extensions', 'language', 'isBorderless', 'suggestedDoc', 'diffType', 'onChunkDecision'],
   );
 
-  let containerElement: HTMLDivElement | undefined;
-
+  const [containerElementRef, setContainerElementRef] = createSignal<HTMLDivElement>();
   const [editorView, setEditorView] = createSignal<EditorView>();
   const [mergeView, setMergeView] = createSignal<MergeView>();
   const [acceptedChunks, setAcceptedChunks] = createSignal<AcceptedChunk[]>([]);
   const [originalDocument, setOriginalDocument] = createSignal<Text>();
 
   onMount(() => {
+    const currentContainerElementRef = containerElementRef();
+
+    if (!currentContainerElementRef) {
+      loggerUtils.error('container element reference is missing');
+
+      return;
+    }
+
     const extensions: Extension[] = [
       ...defaultExtensions,
       EditorView.theme({
@@ -148,7 +156,7 @@ const CodeEditor = (passedProps: CodeEditorDiffProps) => {
     if (props.diffType === CodeEditorDiffType.UNIFIED) {
       setEditorView(
         new EditorView({
-          parent: containerElement,
+          parent: currentContainerElementRef,
           doc: props.suggestedDoc,
           extensions: [
             ...extensions,
@@ -222,7 +230,7 @@ const CodeEditor = (passedProps: CodeEditorDiffProps) => {
           doc: props.suggestedDoc,
           extensions: [...extensions, EditorView.editable.of(false), EditorState.readOnly.of(true)],
         },
-        parent: containerElement,
+        parent: currentContainerElementRef,
       }),
     );
   });
@@ -235,7 +243,7 @@ const CodeEditor = (passedProps: CodeEditorDiffProps) => {
         class={tailwindUtils.merge(styles.codeEditor, props.class, {
           [styles.borderless]: props.isBorderless,
         })}
-        ref={containerElement}
+        ref={setContainerElementRef}
       />
     </div>
   );

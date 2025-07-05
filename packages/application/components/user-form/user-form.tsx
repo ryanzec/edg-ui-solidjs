@@ -125,7 +125,7 @@ const buildUpdateUserFormSchema = (formData: Accessor<Partial<UpdateUserFormData
 export type UserFormProps<TCreateInput, TUpdateInput> = {
   editingUser?: Pick<User, 'id' | 'name' | 'email' | 'roles'>;
   useButton?: boolean;
-  submitButtonRef?: (element: HTMLButtonElement) => void;
+  submitButtonElementRef?: (element: HTMLButtonElement) => void;
   onFormSubmitted?: (data: CreateUserFormData | UpdateUserFormData) => void;
   onSubmitForm?: () => void;
   formError: string | string[] | undefined;
@@ -232,7 +232,7 @@ const UserForm = <TCreateInput, TUpdateInput>(passedProps: UserFormProps<TCreate
             </Checkbox.Group>
           </FormField>
           <Button.Group class={props.useButton ? '' : styles.hidden}>
-            <Button disabled={props.isProcessingForm} ref={props.submitButtonRef} type="submit">
+            <Button disabled={props.isProcessingForm} ref={props.submitButtonElementRef} type="submit">
               {props.editingUser ? 'Update' : 'Create'}
             </Button>
           </Button.Group>

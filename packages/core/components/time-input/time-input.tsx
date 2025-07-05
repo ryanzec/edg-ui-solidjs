@@ -13,17 +13,19 @@ export type TimeInputProps<TFormData = DefaultFormData> = InputProps<TFormData> 
 const TimeInput = <TFormData = DefaultFormData>(passedProps: TimeInputProps<TFormData>) => {
   const [props, restOfProps] = splitProps(mergeProps({ placeholder: 'Time', format: '' }, passedProps), ['format']);
 
-  let inputRef: HTMLInputElement | undefined;
+  const [inputElementRef, setInputElementRef] = createSignal<HTMLInputElement | undefined>();
   const [activeEditItem, setActiveEditItem] = createSignal<EditItem>(EditItem.NONE);
   const [activeEditCharacter, setActiveEditCharacter] = createSignal<number>(0);
   const [disableValidation, setDisabledValidation] = createSignal(false);
 
   const updateActiveEditItemBySelection = () => {
-    if (!inputRef) {
+    const currentInputElementRef = inputElementRef();
+
+    if (!currentInputElementRef) {
       return;
     }
 
-    const selectionStart = inputRef.selectionStart;
+    const selectionStart = currentInputElementRef.selectionStart;
 
     if (selectionStart === null) {
       return;
@@ -39,16 +41,18 @@ const TimeInput = <TFormData = DefaultFormData>(passedProps: TimeInputProps<TFor
   };
 
   const inlineUpdateInputValue = (currentValue: string, newPartValue: string, selectionRange: number[]) => {
-    if (!inputRef) {
+    const currentInputElementRef = inputElementRef();
+
+    if (!currentInputElementRef) {
       return;
     }
 
     const prepend = currentValue.substring(0, selectionRange[0]);
     const append = currentValue.substring(selectionRange[1]);
 
-    inputRef.value = `${prepend}${newPartValue}${append}`;
-    inputRef.setSelectionRange(selectionRange[0], selectionRange[1]);
-    inputRef.dispatchEvent(
+    currentInputElementRef.value = `${prepend}${newPartValue}${append}`;
+    currentInputElementRef.setSelectionRange(selectionRange[0], selectionRange[1]);
+    currentInputElementRef.dispatchEvent(
       new Event('input', {
         bubbles: true,
         cancelable: true,
@@ -57,36 +61,44 @@ const TimeInput = <TFormData = DefaultFormData>(passedProps: TimeInputProps<TFor
   };
 
   const handleFocus: JSX.EventHandlerUnion<HTMLInputElement, FocusEvent> = () => {
-    if (!inputRef) {
+    const currentInputElementRef = inputElementRef();
+
+    if (!currentInputElementRef) {
       return;
     }
 
-    if (!inputRef.value) {
-      inputRef.value = DEFAULT_VALUE;
+    if (!currentInputElementRef.value) {
+      currentInputElementRef.value = DEFAULT_VALUE;
     }
 
     // this should handle cases where the user tabs into the input
-    const isDefaultSelect = inputRef.selectionStart === 0 && inputRef.selectionEnd === inputRef.value.length;
+    const isDefaultSelect =
+      currentInputElementRef.selectionStart === 0 &&
+      currentInputElementRef.selectionEnd === currentInputElementRef.value.length;
 
-    if (inputRef.value === DEFAULT_VALUE || isDefaultSelect) {
+    if (currentInputElementRef.value === DEFAULT_VALUE || isDefaultSelect) {
       setActiveEditItem(EditItem.HOURS);
     }
   };
 
   const handleBlur: JSX.EventHandlerUnion<HTMLInputElement, FocusEvent> = () => {
-    if (!inputRef) {
+    const currentInputElementRef = inputElementRef();
+
+    if (!currentInputElementRef) {
       return;
     }
 
     setActiveEditItem(EditItem.NONE);
 
-    if (inputRef.value === DEFAULT_VALUE) {
-      inputRef.value = '';
+    if (currentInputElementRef.value === DEFAULT_VALUE) {
+      currentInputElementRef.value = '';
     }
   };
 
   const handleMouseUp: JSX.EventHandlerUnion<HTMLInputElement, MouseEvent> = () => {
-    if (!inputRef) {
+    const currentInputElementRef = inputElementRef();
+
+    if (!currentInputElementRef) {
       return;
     }
 
@@ -94,7 +106,9 @@ const TimeInput = <TFormData = DefaultFormData>(passedProps: TimeInputProps<TFor
   };
 
   const handleKeyDown: JSX.EventHandlerUnion<HTMLInputElement, KeyboardEvent> = (event) => {
-    if (!inputRef) {
+    const currentInputElementRef = inputElementRef();
+
+    if (!currentInputElementRef) {
       return;
     }
 
@@ -141,7 +155,10 @@ const TimeInput = <TFormData = DefaultFormData>(passedProps: TimeInputProps<TFor
         event.preventDefault();
 
         const isUp = event.key === Key.ARROW_UP;
-        const currentEditItemValue = inputRef.value.substring(inputRef.selectionStart || 0, inputRef.selectionEnd || 0);
+        const currentEditItemValue = currentInputElementRef.value.substring(
+          currentInputElementRef.selectionStart || 0,
+          currentInputElementRef.selectionEnd || 0,
+        );
         const newEditItemValue = timeInputComponentUtils.getNewSteppedEditItemValue(
           currentActiveEditItem,
           currentEditItemValue,
@@ -152,7 +169,7 @@ const TimeInput = <TFormData = DefaultFormData>(passedProps: TimeInputProps<TFor
           return;
         }
 
-        inlineUpdateInputValue(inputRef.value, newEditItemValue, selectionRange);
+        inlineUpdateInputValue(currentInputElementRef.value, newEditItemValue, selectionRange);
 
         break;
       }
@@ -165,7 +182,7 @@ const TimeInput = <TFormData = DefaultFormData>(passedProps: TimeInputProps<TFor
 
         const meridiemValue = event.key.toLowerCase() === Key.LOWER_A ? 'am' : 'pm';
 
-        inlineUpdateInputValue(inputRef.value, meridiemValue, selectionRange);
+        inlineUpdateInputValue(currentInputElementRef.value, meridiemValue, selectionRange);
 
         break;
       }
@@ -184,11 +201,11 @@ const TimeInput = <TFormData = DefaultFormData>(passedProps: TimeInputProps<TFor
         event.preventDefault();
 
         const isFirstCharacter = activeEditCharacter() === 0;
-        const currentEditItemValue = inputRef.value.substring(selectionRange[0], selectionRange[1]);
+        const currentEditItemValue = currentInputElementRef.value.substring(selectionRange[0], selectionRange[1]);
         const newItemValue = isFirstCharacter ? `0${event.key}` : `${currentEditItemValue.substring(1, 2)}${event.key}`;
         const numericValue = Number.parseInt(event.key);
 
-        inlineUpdateInputValue(inputRef.value, newItemValue, selectionRange);
+        inlineUpdateInputValue(currentInputElementRef.value, newItemValue, selectionRange);
 
         if (
           isFirstCharacter &&
@@ -230,8 +247,9 @@ const TimeInput = <TFormData = DefaultFormData>(passedProps: TimeInputProps<TFor
     trackActiveEditItemChange(() => activeEditItem());
 
     const currentActiveEditItem = activeEditItem();
+    const currentInputElementRef = inputElementRef();
 
-    if (!inputRef || currentActiveEditItem === EditItem.NONE) {
+    if (!currentInputElementRef || currentActiveEditItem === EditItem.NONE) {
       return;
     }
 
@@ -243,14 +261,14 @@ const TimeInput = <TFormData = DefaultFormData>(passedProps: TimeInputProps<TFor
 
     setActiveEditCharacter(0);
 
-    inputRef.setSelectionRange(newSelectionRange[0], newSelectionRange[1]);
+    currentInputElementRef.setSelectionRange(newSelectionRange[0], newSelectionRange[1]);
   });
 
   trackActiveEditItemChange(() => activeEditItem());
 
   return (
     <Input
-      ref={inputRef}
+      ref={setInputElementRef}
       data-id="time-input"
       {...restOfProps}
       type="type"

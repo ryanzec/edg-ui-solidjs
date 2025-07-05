@@ -53,7 +53,7 @@ const CheckboxToggle = <TFormData = DefaultFormData>(passedProps: CheckboxToggle
     return dynamicAttributes;
   };
 
-  const handleInputRef = (element: HTMLInputElement) => {
+  const internalSetInputElementRef = (element: HTMLInputElement) => {
     setInputElementRef(element);
     passedProps.inputRef?.(element);
   };
@@ -65,7 +65,7 @@ const CheckboxToggle = <TFormData = DefaultFormData>(passedProps: CheckboxToggle
         data-id="checkbox-toggle"
         {...restOfProps}
         {...getDynamicAttributes()}
-        ref={handleInputRef}
+        ref={internalSetInputElementRef}
         type="checkbox"
         class={tailwindUtils.merge(
           styles.toggle,

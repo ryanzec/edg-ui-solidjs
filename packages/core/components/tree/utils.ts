@@ -2,16 +2,16 @@ import { domUtils } from '$/core/utils/dom';
 import { type Accessor, type Setter, createSignal } from 'solid-js';
 
 export type TreeStore = {
-  parentElement: Accessor<HTMLDivElement | undefined>;
-  setParentElement: Setter<HTMLDivElement | undefined>;
+  parentElementRef: Accessor<HTMLDivElement | undefined>;
+  setParentElementRef: Setter<HTMLDivElement | undefined>;
   scrollToItem: (value: string) => void;
 };
 
 const createTreeStore = (): TreeStore => {
-  const [parentElement, setParentElement] = createSignal<HTMLDivElement | undefined>();
+  const [parentElementRef, setParentElementRef] = createSignal<HTMLDivElement | undefined>();
 
   const scrollToItem = (value: string) => {
-    const currentParentElement = parentElement();
+    const currentParentElement = parentElementRef();
 
     if (!currentParentElement) {
       return;
@@ -27,8 +27,8 @@ const createTreeStore = (): TreeStore => {
   };
 
   return {
-    parentElement,
-    setParentElement,
+    parentElementRef,
+    setParentElementRef,
     scrollToItem,
   };
 };

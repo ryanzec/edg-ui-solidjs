@@ -13,10 +13,10 @@ export type UserFormPeekProps<TCreateInput, TUpdateInput> = Omit<
 
 const UserFormPeek = <TCreateInput, TUpdateInput>(passedProps: UserFormPeekProps<TCreateInput, TUpdateInput>) => {
   const [props, restOfProps] = splitProps(passedProps, ['peekStore']);
-  const [submitButtonRef, setSubmitButtonRef] = createSignal<HTMLButtonElement | undefined>();
+  const [submitButtonElementRef, setSubmitButtonElementRef] = createSignal<HTMLButtonElement | undefined>();
 
   const handleSubmitForm = () => {
-    const button = submitButtonRef();
+    const button = submitButtonElementRef();
 
     if (!button) {
       return;
@@ -38,7 +38,7 @@ const UserFormPeek = <TCreateInput, TUpdateInput>(passedProps: UserFormPeekProps
       <Peek.Content>
         <UserForm
           useButton={false}
-          submitButtonRef={setSubmitButtonRef}
+          submitButtonElementRef={setSubmitButtonElementRef}
           onFormSubmitted={handleFormSubmitted}
           {...restOfProps}
         />

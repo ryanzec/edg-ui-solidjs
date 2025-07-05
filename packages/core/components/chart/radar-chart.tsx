@@ -4,7 +4,7 @@ import type { CommonDataAttributes } from '$/core/types/generic';
 import type { ChartConfiguration } from 'chart.js';
 import ChartJS from 'chart.js/auto';
 import type { ChartData, ChartOptions } from 'chart.js/dist/types';
-import { onMount } from 'solid-js';
+import { createSignal, onMount } from 'solid-js';
 
 export type RadarChartProps = CommonDataAttributes &
   ChartCommonProps & {
@@ -16,17 +16,19 @@ export type RadarChartProps = CommonDataAttributes &
 const defaultOptions = chartComponentUtils.buildDefaultRadarOptions();
 
 const RadarChart = (props: RadarChartProps) => {
-  let containerElement: HTMLCanvasElement | undefined;
+  const [containerElementRef, setContainerElementRef] = createSignal<HTMLCanvasElement | undefined>();
 
   props.chartStore.registerUpdateEffect(props);
 
   onMount(() => {
-    if (!containerElement) {
+    const currentContainerElementRef = containerElementRef();
+
+    if (!currentContainerElementRef) {
       return;
     }
 
     props.chartStore.setChartInstance(
-      new ChartJS<'radar'>(containerElement, {
+      new ChartJS<'radar'>(currentContainerElementRef, {
         type: 'radar',
         data: props.data,
         options: props.options || defaultOptions,
@@ -35,7 +37,7 @@ const RadarChart = (props: RadarChartProps) => {
     );
   });
 
-  return <canvas ref={containerElement} />;
+  return <canvas ref={setContainerElementRef} />;
 };
 
 export default RadarChart;

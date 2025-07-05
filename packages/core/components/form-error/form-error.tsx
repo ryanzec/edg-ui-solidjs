@@ -12,7 +12,7 @@ export type FormErrorProps = CalloutProps & {
 };
 
 const FormError = (passedProps: FormErrorProps) => {
-  let formErrorElement: HTMLDivElement | undefined;
+  const [formErrorElementRef, setFormErrorElementRef] = createSignal<HTMLFormElement | undefined>();
 
   const [props, restOfProps] = splitProps(mergeProps({ offset: 10, behavior: 'auto' as ScrollBehavior }, passedProps), [
     'errorMessage',
@@ -27,7 +27,9 @@ const FormError = (passedProps: FormErrorProps) => {
   };
 
   createEffect(function scrollToFormErrorOnFirstRender() {
-    if (hasShownFormError() || !props.errorMessage || !formErrorElement) {
+    const currentFormErrorElementRef = formErrorElementRef();
+
+    if (hasShownFormError() || !props.errorMessage || !currentFormErrorElementRef) {
       // this will reset if we have shown the error once it is remove making sure if it is displayed again, we will
       // scroll to it again
       setHasShownFormError(!!props.errorMessage);
@@ -35,7 +37,7 @@ const FormError = (passedProps: FormErrorProps) => {
       return;
     }
 
-    const scrollParentElement = getScrollParent(formErrorElement);
+    const scrollParentElement = getScrollParent(currentFormErrorElementRef);
 
     if (!scrollParentElement) {
       return;
@@ -43,7 +45,7 @@ const FormError = (passedProps: FormErrorProps) => {
 
     setHasShownFormError(true);
 
-    const desiredY = formErrorElement.offsetTop + props.offset * -1;
+    const desiredY = currentFormErrorElementRef.offsetTop + props.offset * -1;
 
     scrollParentElement.scrollTo({ top: desiredY, behavior: props.behavior });
   });
@@ -51,7 +53,7 @@ const FormError = (passedProps: FormErrorProps) => {
   return (
     <Show when={errorMessages().length > 0}>
       <Callout
-        ref={formErrorElement}
+        ref={setFormErrorElementRef}
         data-id="form-error"
         {...restOfProps}
         // we use css to hide the element instead of <Show /> because we need the element to be present in the dom

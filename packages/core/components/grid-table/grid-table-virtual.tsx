@@ -10,12 +10,12 @@ export type VirtualGridTableProps<TRowData> = Omit<GridTableProps, 'children'> &
   children: ScrollAreaVirtualProps<TRowData>['children'];
   hasExtraRow?: boolean;
   scrollAreaClass?: string;
-  virtualizedRef?: (element: HTMLElement | undefined) => void;
+  virtualizedElementRef?: (element: HTMLElement | undefined) => void;
 };
 
 const VirtualGridTable = <TRowData,>(passedProps: VirtualGridTableProps<TRowData>) => {
   const [props, restOfProps] = splitProps(passedProps, [
-    'virtualizedRef',
+    'virtualizedElementRef',
     'headerData',
     'virtualProps',
     'children',
@@ -51,7 +51,7 @@ const VirtualGridTable = <TRowData,>(passedProps: VirtualGridTableProps<TRowData
         class={props.scrollAreaClass}
         {...props.virtualProps}
         hasExtraRow={props.hasExtraRow}
-        virtualizedRef={props.virtualizedRef}
+        virtualizedElementRef={props.virtualizedElementRef}
       >
         {props.children}
       </ScrollArea.Virtual>

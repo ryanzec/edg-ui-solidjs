@@ -1,7 +1,7 @@
 import { dragDropDataAttribute } from '$/core/components/drag-drop/utils';
 import { draggable, dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import type { CleanupFn } from '@atlaskit/pragmatic-drag-and-drop/types';
-import { type JSX, onCleanup, onMount } from 'solid-js';
+import { type JSX, createSignal, onCleanup, onMount } from 'solid-js';
 
 export type DraggableProps = JSX.HTMLAttributes<HTMLDivElement> & {
   draggableId: string;
@@ -10,7 +10,7 @@ export type DraggableProps = JSX.HTMLAttributes<HTMLDivElement> & {
 };
 
 const Draggable = (props: DraggableProps) => {
-  let elementRef: HTMLDivElement | undefined;
+  const [elementRef, setElementRef] = createSignal<HTMLDivElement | undefined>();
 
   const setupDraggable = (dragElement: HTMLDivElement): CleanupFn => {
     const dragHandleElement = dragElement.querySelector(`[${dragDropDataAttribute.DRAG_HANDLE}="true"]`);
@@ -32,16 +32,18 @@ const Draggable = (props: DraggableProps) => {
   };
 
   onMount(() => {
-    if (!elementRef) {
+    const currentElement = elementRef();
+
+    if (!currentElement) {
       return;
     }
 
-    let cleanupDraggable: CleanupFn | undefined = setupDraggable(elementRef);
+    let cleanupDraggable: CleanupFn | undefined = setupDraggable(currentElement);
     let cleanupDroppable: CleanupFn | undefined = undefined;
 
     if (props.isDroppable) {
       cleanupDroppable = dropTargetForElements({
-        element: elementRef,
+        element: currentElement,
         getData: () => ({
           draggableId: props.draggableId,
           droppableId: props.droppableId,
@@ -67,10 +69,10 @@ const Draggable = (props: DraggableProps) => {
     const domObserver = new MutationObserver((mutationList) => {
       cleanupDraggable?.();
 
-      cleanupDraggable = setupDraggable(elementRef);
+      cleanupDraggable = setupDraggable(currentElement);
     });
 
-    domObserver.observe(elementRef, {
+    domObserver.observe(currentElement, {
       // as long as we don't change these settings, the performance of re-creating the draggable in the observer
       // should be fine (since it only happens when nodes are added / removed) however if we update this in include
       // attributes changing or data changing, we might need to refactor the observer to only re-create the
@@ -88,7 +90,7 @@ const Draggable = (props: DraggableProps) => {
 
   return (
     <div
-      ref={elementRef}
+      ref={setElementRef}
       class={props.class}
       data-is-draggable="true"
       data-is-droppable={props.isDroppable && props.droppableId ? 'true' : 'false'}

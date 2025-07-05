@@ -683,7 +683,7 @@ export const Virtualized = () => {
             const item = newLargeData[index];
             const isLastRow = index === newLargeData.length - 1;
             const [isExpanded, setIsExpanded] = createSignal(false);
-            const [element, setElement] = createSignal<Element>();
+            const [elementRef, setElementRef] = createSignal<Element>();
             const dropDownStore = tooltipComponentUtils.createStore();
 
             // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
@@ -711,7 +711,7 @@ export const Virtualized = () => {
 
             return (
               // biome-ignore lint/a11y/useSemanticElements: we do this to have a more flexible table component
-              <GridTable class={tableCss} ref={setElement} data-index={index} role="row">
+              <GridTable class={tableCss} ref={setElementRef} data-index={index} role="row">
                 <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isLastRow={isLastRow} isStartOfRow>
                   {item.name}
                 </GridTable.Data>
@@ -859,7 +859,7 @@ export const SortableVirtualized = () => {
             const item = newLargeData[index];
             const isLastRow = index === newLargeData.length - 1;
             const [isExpanded, setIsExpanded] = createSignal(false);
-            const [element, setElement] = createSignal<Element>();
+            const [elementRef, setElementRef] = createSignal<Element>();
             const dropDownStore = tooltipComponentUtils.createStore();
 
             // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
@@ -876,16 +876,16 @@ export const SortableVirtualized = () => {
             };
 
             createEffect(function recalculateItemSize() {
-              if (!element()) {
+              if (!elementRef()) {
                 return;
               }
 
-              virtualizer.measureElement(element());
+              virtualizer.measureElement(elementRef());
             });
 
             return (
               // biome-ignore lint/a11y/useSemanticElements: we do this to have a more flexible table component
-              <GridTable class={tableCss} ref={setElement} data-index={index} role="row">
+              <GridTable class={tableCss} ref={setElementRef} data-index={index} role="row">
                 <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isLastRow={isLastRow} isStartOfRow>
                   {item.name}
                 </GridTable.Data>

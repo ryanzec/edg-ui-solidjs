@@ -265,7 +265,7 @@ const Combobox = <TData extends ComboboxExtraData, TFormData = DefaultFormData>(
         <button type="button">
           <List
             data-id="selectable-options"
-            ref={comboboxStore.optionsContainerRef}
+            ref={comboboxStore.optionsContainerElementRef}
             class={tailwindUtils.merge(styles.list, {
               [styles.openedList]: comboboxStore.store.isOpened,
             })}

@@ -616,7 +616,7 @@ const createComboboxStore = <TData extends ComboboxExtraData, TFormData = Defaul
     );
   };
 
-  const optionsContainerRef = (element: HTMLDivElement) => {
+  const optionsContainerElementRef = (element: HTMLDivElement) => {
     setComboboxStore(
       produce((store) => {
         store.optionsContainerRef = element;
@@ -833,7 +833,7 @@ const createComboboxStore = <TData extends ComboboxExtraData, TFormData = Defaul
     getSelectionOptionProps,
     getSelectedOptionProps,
     isGrouped,
-    optionsContainerRef,
+    optionsContainerElementRef,
   };
 };
 

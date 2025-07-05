@@ -31,7 +31,7 @@ const Tree = (passedProps: TreeProps) => {
   return (
     <TreeContext.Provider value={props}>
       <div
-        ref={props.treeStore.setParentElement}
+        ref={props.treeStore.setParentElementRef}
         data-id="tree"
         {...restOfProps}
         class={tailwindUtils.merge('flex flex-col', props.class)}

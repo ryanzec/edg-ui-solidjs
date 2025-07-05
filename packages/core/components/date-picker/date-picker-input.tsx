@@ -58,7 +58,7 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
     'defaultEndSelectedDate',
   ]);
 
-  const [containerElement, setContainerElement] = createSignal<HTMLDivElement>();
+  const [containerElementRef, setContainerElementRef] = createSignal<HTMLDivElement>();
   const [inputElement, setInputElement] = createSignal<HTMLInputElement>();
   const [isDatePickerVisible, setIsDatePickerVisible] = createSignal(false);
   const startDate = datePickerComponentUtils.createInputDateStore({
@@ -69,10 +69,6 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
     includeTime: datePickerProps.includeTime,
     defaultDate: props.defaultEndSelectedDate,
   });
-
-  const containerRef = (element: HTMLDivElement) => {
-    setContainerElement(element);
-  };
 
   const inputRef = (element: HTMLInputElement) => {
     setInputElement(element);
@@ -162,7 +158,7 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
   });
 
   createEffect(function positionDatePickerFloatingElement() {
-    const currentContainerElement = containerElement();
+    const currentContainerElement = containerElementRef();
 
     if (!currentContainerElement) {
       return;
@@ -199,7 +195,7 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
   return (
     <div
       data-id="date-picker-input"
-      ref={containerRef}
+      ref={setContainerElementRef}
       class={tailwindUtils.merge(styles.datePickerInput, props.class)}
       use:clickOutsideDirective={{ callback: hideDatePicker }}
     >
