@@ -40,6 +40,7 @@ const Avatar = (passedProps: AvatarProps) => {
           'cursor-pointer': props.isClickable,
           'h-base w-base': avatarSize() === AvatarSize.SMALL,
           'h-3xl w-3xl': avatarSize() === AvatarSize.BASE,
+          'h-full w-full': avatarSize() === AvatarSize.FILL,
         },
         props.class,
       )}

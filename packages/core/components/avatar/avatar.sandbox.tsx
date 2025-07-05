@@ -117,6 +117,15 @@ export const Sizes = () => {
       <Avatar avatarSize={AvatarSize.BASE} src="https://avatars.githubusercontent.com/u/444206?v=4">
         SJ
       </Avatar>
+      <div>Fill (fills based on parent size)</div>
+      <div class="w-[100px] h-[100px]">
+        <Avatar avatarSize={AvatarSize.FILL} label="SJ" />
+      </div>
+      <div class="w-[200px] h-[200px]">
+        <Avatar avatarSize={AvatarSize.FILL} src="https://avatars.githubusercontent.com/u/444206?v=4">
+          SJ
+        </Avatar>
+      </div>
     </SandboxExamplesContainer>
   );
 };

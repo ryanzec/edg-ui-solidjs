@@ -4,6 +4,7 @@ import type { TypographyProps } from '../typography';
 export const AvatarSize = {
   SMALL: 'small',
   BASE: 'base',
+  FILL: 'fill',
 } as const;
 
 export type AvatarSize = (typeof AvatarSize)[keyof typeof AvatarSize];
