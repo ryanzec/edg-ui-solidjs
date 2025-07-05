@@ -1,6 +1,6 @@
 import styles from '$/core/components/typography/typography.module.css';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import type { ParentProps } from 'solid-js';
+import type { JSX } from 'solid-js';
 import { mergeProps, splitProps } from 'solid-js';
 
 export const TypographySize = {
@@ -37,15 +37,15 @@ export const TypographyLayout = {
 
 export type TypographyLayout = (typeof TypographyLayout)[keyof typeof TypographyLayout];
 
-export type TypographyProps = ParentProps<{
+export type TypographyProps = JSX.HTMLAttributes<HTMLDivElement> & {
   size?: TypographySize;
   color?: TypographyColor;
   class?: string;
   layout?: TypographyLayout;
-}>;
+};
 
 const Typography = (passedProps: TypographyProps) => {
-  const [props] = splitProps(
+  const [props, restOfProps] = splitProps(
     mergeProps(
       { size: TypographySize.BASE, color: TypographyColor.INHERIT, layout: TypographyLayout.BLOCK },
       passedProps,
@@ -55,6 +55,7 @@ const Typography = (passedProps: TypographyProps) => {
 
   return (
     <div
+      {...restOfProps}
       class={tailwindUtils.merge(
         styles.typography,
         {

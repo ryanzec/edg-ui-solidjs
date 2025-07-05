@@ -4,7 +4,7 @@ import { devices } from '@playwright/test';
 
 import { viteUtils } from './vite-utils';
 
-const DEV_SERVER_URL = 'http://localhost:6006/';
+const DEV_SERVER_URL = 'https://localhost:6006/';
 
 /**
  * See https://playwright.dev/docs/test-configuration.
