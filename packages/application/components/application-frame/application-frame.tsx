@@ -5,6 +5,7 @@ import Icon, { IconColor, IconSize } from '$/core/components/icon';
 import Loading from '$/core/components/loading';
 import ScrollArea from '$/core/components/scroll-area';
 import { tooltipComponentUtils } from '$/core/components/tooltip';
+import { sizerStoreUtils } from '$/core/stores/sizer.store';
 import { themeManagerStore } from '$/core/stores/theme-manager.store';
 import { toggleStoreUtils } from '$/core/stores/toggle.store';
 import type { CommonDataAttributes } from '$/core/types/generic';
@@ -40,6 +41,27 @@ const ApplicationFrame = (passedProps: ApplicationFrameProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const sizerStore = sizerStoreUtils.createStore({
+    resizeFromSide: 'right',
+    syncSizeWithMovement: false,
+    onSizeChanged: (startSize, _newSize, moveDifference) => {
+      const initialToggleState = startSize > 60;
+
+      if (moveDifference >= 50) {
+        sidebarOpenedToggleStore.setIsToggled(true);
+
+        return;
+      }
+
+      if (moveDifference <= -50) {
+        sidebarOpenedToggleStore.setIsToggled(false);
+
+        return;
+      }
+
+      sidebarOpenedToggleStore.setIsToggled(initialToggleState);
+    },
+  });
   const userDropDownStore = tooltipComponentUtils.createStore();
   const sidebarOpenedToggleStore = toggleStoreUtils.createStore({
     defaultIsToggled: true,
@@ -53,6 +75,16 @@ const ApplicationFrame = (passedProps: ApplicationFrameProps) => {
     sidebarOpenedToggleStore.toggle();
   };
 
+  const setSidebarElementRef = (element: HTMLDivElement) => {
+    sizerStore.setElementRef(element);
+
+    console.log(element);
+    console.log(sizerStore.elementRef());
+    console.log('---');
+
+    sizerStore.setupResizeEvents();
+  };
+
   return (
     <>
       <div
@@ -63,18 +95,13 @@ const ApplicationFrame = (passedProps: ApplicationFrameProps) => {
         <Show when={props.isInitializing === false} fallback={<Loading.Section>Loading...</Loading.Section>}>
           <Show when={props.isAuthenticated}>
             <div
+              ref={setSidebarElementRef}
+              data-id="sidebar"
               class={tailwindUtils.merge('flex flex-col h-full bg-brand-subtle3 gap-2xs relative', {
                 'w-[250px]': sidebarOpenedToggleStore.isToggled(),
                 'w-[60px]': sidebarOpenedToggleStore.isToggled() === false,
               })}
             >
-              <button
-                type="button"
-                class="absolute top-none right-[-20px] cursor-pointer z-[1] bg-brand-subtle3 w-[20px] h-[20px] inline-flex items-center justify-center"
-                onClick={handleToggleSidebar}
-              >
-                <Icon icon={sidebarOpenedToggleStore.isToggled() ? 'caret-left' : 'caret-right'} />
-              </button>
               <Show
                 when={sidebarOpenedToggleStore.isToggled()}
                 fallback={<div class="self-center max-w-full p-3xs w-[40px] h-[40px]" innerHTML={CompanyLogoSmall} />}

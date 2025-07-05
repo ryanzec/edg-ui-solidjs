@@ -1,4 +1,6 @@
-import { type Accessor, type Setter, createSignal } from 'solid-js';
+import { type Accessor, type Setter, createSignal, splitProps } from 'solid-js';
+
+const CURSOR_CHANGE_OFFSET = 5;
 
 export type SizerStore = {
   elementRef: Accessor<HTMLDivElement | undefined>;
@@ -8,8 +10,22 @@ export type SizerStore = {
   setupResizeEvents: () => void;
 };
 
-export const createSizerStore = (): SizerStore => {
+export type CreateSizerStoreOptions = {
+  resizeFromSide?: 'left' | 'right';
+  syncSizeWithMovement?: boolean;
+  onSizeChanged?: (startSize: number, newSize: number, moveDifference: number) => void;
+};
+
+export const createSizerStore = (options: CreateSizerStoreOptions = {}): SizerStore => {
+  const [callbacks, restOfOptions] = splitProps(options, ['onSizeChanged']);
+
+  const finalOptions = Object.assign<CreateSizerStoreOptions, CreateSizerStoreOptions>(
+    { resizeFromSide: 'left', syncSizeWithMovement: true },
+    structuredClone(restOfOptions),
+  );
+
   let xResizeLeft = 0;
+  let xResizeRight = 0;
   let isDragging = false;
   let dragXStart = 0;
   let dragWidthStart = 0;
@@ -23,9 +39,17 @@ export const createSizerStore = (): SizerStore => {
       return;
     }
 
-    const moveDiff = event.pageX - dragXStart;
+    const moveDifference = event.pageX - dragXStart;
 
-    currentElementRef.style.width = `${dragWidthStart + moveDiff * -1}px`;
+    // when moving from the left the size change is inversed to the movement
+    const moveMultiplier = finalOptions.resizeFromSide === 'left' ? -1 : 1;
+    const newWidth = dragWidthStart + moveDifference * moveMultiplier;
+
+    if (finalOptions.syncSizeWithMovement) {
+      currentElementRef.style.width = `${newWidth}px`;
+    }
+
+    callbacks.onSizeChanged?.(dragWidthStart, newWidth, moveDifference);
   };
 
   const handleWindowMouseUp = () => {
@@ -47,7 +71,12 @@ export const createSizerStore = (): SizerStore => {
     const elementBoundingRect = currentElementRef.getBoundingClientRect();
 
     xResizeLeft = elementBoundingRect.x;
-    isDragging = event.pageX >= xResizeLeft && event.pageX <= xResizeLeft + 5;
+    xResizeRight = elementBoundingRect.x + elementBoundingRect.width;
+
+    isDragging =
+      finalOptions.resizeFromSide === 'right'
+        ? event.pageX >= xResizeRight - CURSOR_CHANGE_OFFSET && event.pageX <= xResizeRight
+        : event.pageX >= xResizeLeft && event.pageX <= xResizeLeft + CURSOR_CHANGE_OFFSET;
 
     if (!isDragging) {
       return;
@@ -69,9 +98,21 @@ export const createSizerStore = (): SizerStore => {
       return;
     }
 
-    xResizeLeft = currentElementRef.getBoundingClientRect().x;
+    if (isDragging) {
+      document.body.style.cursor = 'ew-resize';
 
-    const isDraggingArea = event.pageX >= xResizeLeft && event.pageX <= xResizeLeft + 5;
+      return;
+    }
+
+    const elementBoundingRect = currentElementRef.getBoundingClientRect();
+
+    xResizeLeft = elementBoundingRect.x;
+    xResizeRight = elementBoundingRect.x + elementBoundingRect.width;
+
+    const isDraggingArea =
+      finalOptions.resizeFromSide === 'right'
+        ? event.pageX >= xResizeRight - CURSOR_CHANGE_OFFSET && event.pageX <= xResizeRight
+        : event.pageX >= xResizeLeft && event.pageX <= xResizeLeft + CURSOR_CHANGE_OFFSET;
 
     if (!isDraggingArea) {
       document.body.style.cursor = 'auto';
@@ -80,6 +121,14 @@ export const createSizerStore = (): SizerStore => {
     }
 
     document.body.style.cursor = 'ew-resize';
+  };
+
+  const handleElementMouseLeave = () => {
+    if (isDragging) {
+      return;
+    }
+
+    document.body.style.cursor = 'auto';
   };
 
   const setupResizeEvents = () => {
@@ -91,6 +140,7 @@ export const createSizerStore = (): SizerStore => {
 
     currentElementRef.addEventListener('mousemove', handleElementMouseMove);
     currentElementRef.addEventListener('mousedown', handleElementMouseDown);
+    currentElementRef.addEventListener('mouseleave', handleElementMouseLeave);
   };
 
   return {

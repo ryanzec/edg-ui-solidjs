@@ -75,13 +75,11 @@ const Peek = (passedProps: PeekProps) => {
 
     document.addEventListener('keydown', handleKeyUp);
 
-    queueMicrotask(() => {
-      setupCloseEvents(element);
+    setupCloseEvents(element);
 
-      if (props.isResizable === true) {
-        sizerStore.setupResizeEvents();
-      }
-    });
+    if (props.isResizable === true) {
+      sizerStore.setupResizeEvents();
+    }
 
     onCleanup(() => {
       document.removeEventListener('keydown', handleKeyUp);
