@@ -1,6 +1,6 @@
 import { type Accessor, type Setter, createSignal, splitProps } from 'solid-js';
 
-const CURSOR_CHANGE_OFFSET = 5;
+const CURSOR_CHANGE_OFFSET = 10;
 
 export type SizerStore = {
   elementRef: Accessor<HTMLDivElement | undefined>;
@@ -14,10 +14,20 @@ export type CreateSizerStoreOptions = {
   resizeFromSide?: 'left' | 'right';
   syncSizeWithMovement?: boolean;
   onSizeChanged?: (startSize: number, newSize: number, moveDifference: number) => void;
+  onMouseEnterResizeArea?: () => void;
+  onMouseLeaveResizeArea?: () => void;
+  onResizeStarted?: () => void;
+  onResizeEnded?: () => void;
 };
 
 export const createSizerStore = (options: CreateSizerStoreOptions = {}): SizerStore => {
-  const [callbacks, restOfOptions] = splitProps(options, ['onSizeChanged']);
+  const [callbacks, restOfOptions] = splitProps(options, [
+    'onSizeChanged',
+    'onMouseEnterResizeArea',
+    'onMouseLeaveResizeArea',
+    'onResizeStarted',
+    'onResizeEnded',
+  ]);
 
   const finalOptions = Object.assign<CreateSizerStoreOptions, CreateSizerStoreOptions>(
     { resizeFromSide: 'left', syncSizeWithMovement: true },
@@ -59,6 +69,8 @@ export const createSizerStore = (options: CreateSizerStoreOptions = {}): SizerSt
 
     window.removeEventListener('mouseup', handleWindowMouseUp);
     window.removeEventListener('mousemove', handleWindowMouseMove);
+
+    callbacks.onResizeEnded?.();
   };
 
   const handleElementMouseDown = (event: MouseEvent) => {
@@ -82,6 +94,7 @@ export const createSizerStore = (options: CreateSizerStoreOptions = {}): SizerSt
       return;
     }
 
+    callbacks.onResizeStarted?.();
     dragXStart = event.pageX;
     dragWidthStart = elementBoundingRect.width;
 
@@ -115,11 +128,13 @@ export const createSizerStore = (options: CreateSizerStoreOptions = {}): SizerSt
         : event.pageX >= xResizeLeft && event.pageX <= xResizeLeft + CURSOR_CHANGE_OFFSET;
 
     if (!isDraggingArea) {
+      callbacks.onMouseLeaveResizeArea?.();
       document.body.style.cursor = 'auto';
 
       return;
     }
 
+    callbacks.onMouseEnterResizeArea?.();
     document.body.style.cursor = 'ew-resize';
   };
 
@@ -128,6 +143,7 @@ export const createSizerStore = (options: CreateSizerStoreOptions = {}): SizerSt
       return;
     }
 
+    callbacks.onMouseLeaveResizeArea?.();
     document.body.style.cursor = 'auto';
   };
 
