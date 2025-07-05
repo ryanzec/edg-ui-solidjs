@@ -42,7 +42,7 @@ const InputMultiple = <TFormData extends object>(passedProps: InputMultipleProps
                   type="text"
                   name={`${props.fieldName as string}.${index}` as keyof TFormData}
                   formData={props.formStore.data}
-                  postItem={<Icon color={IconColor.DANGER} icon="trash" onClick={handleDelete} />}
+                  postElement={<Icon color={IconColor.DANGER} icon="trash" onClick={handleDelete} />}
                 />
               </FormField>
             </div>

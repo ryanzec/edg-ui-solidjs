@@ -8,7 +8,7 @@ import Loading from '$/core/components/loading';
 
 export type LabelProps = JSX.LabelHTMLAttributes<HTMLLabelElement> & {
   isLoading?: boolean;
-  postItem?: JSX.Element;
+  postElement?: JSX.Element;
   iconSize?: IconSize;
 };
 
@@ -17,7 +17,7 @@ const Label = (passedProps: LabelProps) => {
     'children',
     'class',
     'isLoading',
-    'postItem',
+    'postElement',
   ]);
 
   return (
@@ -29,8 +29,8 @@ const Label = (passedProps: LabelProps) => {
           <Loading class={iconStyles.spacingLeft} />
         </Show>
       </label>
-      <Show when={props.postItem}>
-        <div class={styles.postItem}>{props.postItem}</div>
+      <Show when={props.postElement}>
+        <div class={styles.postItem}>{props.postElement}</div>
       </Show>
     </div>
   );

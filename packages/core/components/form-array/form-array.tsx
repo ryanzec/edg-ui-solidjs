@@ -25,7 +25,7 @@ const FormArray = (props: FormArrayProps) => {
           variant={ButtonVariant.GHOST}
           color={ButtonColor.INFO}
           onclick={props.onAdd}
-          preItem={<Icon icon="plus-circle" />}
+          preElement={<Icon icon="plus-circle" />}
         >
           {props.addLabel}
         </Button>

@@ -46,7 +46,7 @@ export const ButtonDropDown = (passedProps: ButtonDropDownProps) => {
           data-id="button-drop-down-trigger"
           {...restOfProps}
           class={props.class}
-          postItem={<Icon icon={getIconName()} />}
+          postElement={<Icon icon={getIconName()} />}
         >
           {props.label}
         </Button>

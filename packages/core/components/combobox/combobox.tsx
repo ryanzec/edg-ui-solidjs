@@ -230,7 +230,7 @@ const Combobox = <TData extends ComboboxExtraData, TFormData = DefaultFormData>(
           data-uncontrolled-value="true"
           disabled={props.disabled}
           preItemIsInline
-          inlineItem={
+          inlineElement={
             <Show when={props.isMulti && props.selected.length > 0 && !!props.selectedComponent}>
               <For each={props.selected}>
                 {(option: ComboboxOption<TData>, optionIndex: Accessor<number>) => {
@@ -246,7 +246,7 @@ const Combobox = <TData extends ComboboxExtraData, TFormData = DefaultFormData>(
               </For>
             </Show>
           }
-          postItem={
+          postElement={
             props.disabled ? null : (
               <div class={styles.inputActions}>
                 <Show

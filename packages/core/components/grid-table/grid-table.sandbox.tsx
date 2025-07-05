@@ -354,7 +354,7 @@ export const Pagination = () => {
         class="grid-cols-[1fr_auto_auto_auto]"
         items={currentItems()}
         headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-        tableFooterElement={<PaginationComponent store={paginationStore} onPageChange={handlePageChange} />}
+        footerElement={<PaginationComponent store={paginationStore} onPageChange={handlePageChange} />}
       >
         {(row, index) => {
           const isLastRow = index() === currentItems().length - 1;
@@ -400,7 +400,7 @@ export const PaginationCursor = () => {
         class="grid-cols-[1fr_auto_auto_auto]"
         items={currentItems()}
         headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-        tableFooterElement={<PaginationComponent.Cursor store={paginationStore} onPageChange={handlePageChange} />}
+        footerElement={<PaginationComponent.Cursor store={paginationStore} onPageChange={handlePageChange} />}
       >
         {(row, index) => {
           const isLastRow = index() === currentItems().length - 1;
@@ -456,7 +456,7 @@ export const PaginationWithDelay = () => {
         class="grid-cols-[1fr_auto_auto_auto]"
         items={currentItems()}
         headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-        tableFooterElement={<PaginationComponent store={paginationStore} onPageChange={handlePageChange} />}
+        footerElement={<PaginationComponent store={paginationStore} onPageChange={handlePageChange} />}
       >
         {(row, index) => {
           const isLastRow = index() === currentItems().length - 1;
@@ -502,7 +502,7 @@ export const PaginationWithCustomDefaultCurrentPage = () => {
         class="grid-cols-[1fr_auto_auto_auto]"
         items={currentItems()}
         headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-        tableFooterElement={<PaginationComponent store={paginationStore} onPageChange={handlePageChange} />}
+        footerElement={<PaginationComponent store={paginationStore} onPageChange={handlePageChange} />}
       >
         {(row, index) => {
           const isLastRow = index() === currentItems().length - 1;
@@ -549,7 +549,7 @@ export const PaginationWithOptionsExample = () => {
         class="grid-cols-[1fr_auto_auto_auto]"
         items={currentItems()}
         headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-        tableFooterElement={<PaginationComponent store={paginationStore} onPageChange={handlePageChange} />}
+        footerElement={<PaginationComponent store={paginationStore} onPageChange={handlePageChange} />}
       >
         {(row, index) => {
           const isLastRow = index() === currentItems().length - 1;
@@ -591,7 +591,7 @@ export const SinglePagePagination = () => {
         class="grid-cols-[1fr_auto_auto_auto]"
         items={singlePageItems}
         headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-        tableFooterElement={<PaginationComponent store={paginationStore} onPageChange={handlePageChange} />}
+        footerElement={<PaginationComponent store={paginationStore} onPageChange={handlePageChange} />}
       >
         {(row, index) => {
           const isLastRow = index() === singlePageItems.length - 1;
@@ -639,7 +639,7 @@ export const PaginationWithNumbers = () => {
         class="grid-cols-[1fr_auto_auto_auto]"
         items={currentItems()}
         headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-        tableFooterElement={<PaginationComponent store={paginationStore} onPageChange={handlePageChange} showNumbers />}
+        footerElement={<PaginationComponent store={paginationStore} onPageChange={handlePageChange} showNumbers />}
       >
         {(row, index) => {
           const isLastRow = index() === currentItems().length - 1;

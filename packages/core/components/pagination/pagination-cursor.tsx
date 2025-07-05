@@ -49,7 +49,7 @@ const PaginationCursor = (passedProps: PaginationCursorProps) => {
             variant={ButtonVariant.GHOST}
             onClick={() => handlePageChange(props.store.previousCursor(), 'previous')}
             disabled={!props.store.previousCursor() || props.store.isLoading()}
-            preItem={<Icon icon="arrow-left" />}
+            preElement={<Icon icon="arrow-left" />}
           >
             Previous
           </Button>
@@ -57,7 +57,7 @@ const PaginationCursor = (passedProps: PaginationCursorProps) => {
             variant={ButtonVariant.GHOST}
             onClick={() => handlePageChange(props.store.nextCursor(), 'next')}
             disabled={!props.store.nextCursor() || props.store.isLoading()}
-            postItem={<Icon icon="arrow-right" />}
+            postElement={<Icon icon="arrow-right" />}
           >
             Next
           </Button>

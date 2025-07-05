@@ -5,7 +5,7 @@ import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
 export type GridTableProps = Omit<JSX.HTMLAttributes<HTMLDivElement>, 'role'> & {
   class?: string;
   children: JSX.Element;
-  tableFooterElement?: JSX.Element;
+  footerElement?: JSX.Element;
   role?: 'table' | 'row';
 };
 
@@ -17,7 +17,7 @@ const GridTable = (passedProps: GridTableProps) => {
   const [props, restOfProps] = splitProps(mergeProps(defaultProps, passedProps), [
     'class',
     'children',
-    'tableFooterElement',
+    'footerElement',
     'role',
   ]);
 
@@ -26,8 +26,8 @@ const GridTable = (passedProps: GridTableProps) => {
       <div class={tailwindUtils.merge('grid', props.class)} role={props.role} {...restOfProps}>
         {props.children}
       </div>
-      <Show when={props.tableFooterElement}>
-        <GridTableFooter>{props.tableFooterElement}</GridTableFooter>
+      <Show when={props.footerElement}>
+        <GridTableFooter>{props.footerElement}</GridTableFooter>
       </Show>
     </>
   );

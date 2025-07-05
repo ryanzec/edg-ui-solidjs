@@ -36,7 +36,7 @@ const Page = (passedProps: PageProps) => {
           class="self-start"
           onClick={props.onClickBackLink}
           variant={ButtonVariant.GHOST}
-          preItem={<Icon icon="arrow-left" />}
+          preElement={<Icon icon="arrow-left" />}
         >
           {props.backLinkLabel}
         </Button>

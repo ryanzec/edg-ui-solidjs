@@ -6,13 +6,13 @@ import { ButtonItemPosition } from '$/core/components/button/utils';
 
 export type ButtonIconProps = JSX.HTMLAttributes<HTMLDivElement> & {
   position?: ButtonItemPosition;
-  item: JSX.Element;
+  itemElement: JSX.Element;
 };
 
 const ButtonPrePostItem = (passedProps: ButtonIconProps) => {
   const [props, restOfProps] = splitProps(
     mergeProps({ position: ButtonItemPosition.PRE, isLoading: false, isIconOnly: false }, passedProps),
-    ['position', 'item', 'class'],
+    ['position', 'itemElement', 'class'],
   );
 
   return (
@@ -24,7 +24,7 @@ const ButtonPrePostItem = (passedProps: ButtonIconProps) => {
         [styles.postItem]: props.position === ButtonItemPosition.POST,
       })}
     >
-      {props.item}
+      {props.itemElement}
     </div>
   );
 };

@@ -40,7 +40,7 @@ export const PostItem = () => {
   return (
     <>
       <div style={{ width: '500px' }}>
-        <Label postItem={<Button>Button</Button>}>With Post Item</Label>
+        <Label postElement={<Button>Button</Button>}>With Post Item</Label>
       </div>
     </>
   );

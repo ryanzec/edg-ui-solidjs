@@ -25,22 +25,22 @@ export const Default = () => {
       </FormField>
       <FormField>
         <Label for="test3">Pre Item</Label>
-        <Input id="test3" placeholder="Just a placeholder" preItem={<Icon icon="plus" />} />
+        <Input id="test3" placeholder="Just a placeholder" preElement={<Icon icon="plus" />} />
       </FormField>
       <FormField>
         <Label for="test4">Label</Label>
-        <Input id="test4" preItem={<Icon icon="plus" />} />
+        <Input id="test4" preElement={<Icon icon="plus" />} />
       </FormField>
       <FormField>
         <Label for="test5">Post Item</Label>
-        <Input id="test5" placeholder="Just a placeholder" postItem={<Icon icon="plus" />} />
+        <Input id="test5" placeholder="Just a placeholder" postElement={<Icon icon="plus" />} />
       </FormField>
       <FormField>
         <Label for="test6">Clickable Post Item</Label>
         <Input
           id="test6"
           placeholder="Just a placeholder"
-          postItem={<Icon icon="plus" onClick={() => console.log('test')} />}
+          postElement={<Icon icon="plus" onClick={() => console.log('test')} />}
           postItemIsClickable
         />
       </FormField>
@@ -49,8 +49,8 @@ export const Default = () => {
         <Input
           id="test7"
           placeholder="Just a placeholder"
-          postItem={<Icon icon="plus" />}
-          preItem={<Icon icon="plus" />}
+          postElement={<Icon icon="plus" />}
+          preElement={<Icon icon="plus" />}
         />
       </FormField>
       <FormField errors={['Required']}>
@@ -77,18 +77,18 @@ export const Default = () => {
       </FormField>
       <FormField>
         <Label for="test13">Pre Item Inline</Label>
-        <Input id="test13" placeholder="Just a placeholder" preItem="$" preItemIsInline />
+        <Input id="test13" placeholder="Just a placeholder" preElement="$" preItemIsInline />
       </FormField>
       <FormField>
         <Label for="test14">Readonly</Label>
-        <Input id="test14" placeholder="Just a placeholder" preItem="$" preItemIsInline readonly />
+        <Input id="test14" placeholder="Just a placeholder" preElement="$" preItemIsInline readonly />
       </FormField>
       <FormField>
         <Label for="test15">Readonly (with normal display)</Label>
         <Input
           id="test15"
           placeholder="Just a placeholder"
-          preItem="$"
+          preElement="$"
           preItemIsInline
           readonly
           includeReadonlyStyles={false}

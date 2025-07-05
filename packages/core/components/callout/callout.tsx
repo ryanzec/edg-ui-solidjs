@@ -8,8 +8,8 @@ export type CalloutProps = JSX.HTMLAttributes<HTMLDivElement> & {
   color?: CalloutColor;
   variant?: CalloutVariant;
   isCentered?: boolean;
-  preItem?: JSX.Element;
-  postItem?: JSX.Element;
+  preElement?: JSX.Element;
+  postElement?: JSX.Element;
   extraContentElement?: JSX.Element;
   contentClass?: string;
   hasSideBorder?: boolean;
@@ -34,8 +34,8 @@ const Callout = (passedProps: CalloutProps) => {
       'class',
       'children',
       'isCentered',
-      'preItem',
-      'postItem',
+      'preElement',
+      'postElement',
       'contentClass',
       'hasSideBorder',
       'inheritTextColor',
@@ -69,8 +69,8 @@ const Callout = (passedProps: CalloutProps) => {
         [styles.inheritText]: props.inheritTextColor,
       })}
     >
-      <Show when={props.preItem}>
-        <div class={styles.preItem}>{props.preItem}</div>
+      <Show when={props.preElement}>
+        <div class={styles.preItem}>{props.preElement}</div>
       </Show>
       <span
         class={tailwindUtils.merge('flex flex-col gap-2xs items-start', props.contentClass, {
@@ -80,8 +80,8 @@ const Callout = (passedProps: CalloutProps) => {
         {props.children}
         {props.extraContentElement}
       </span>
-      <Show when={props.postItem}>
-        <div class={styles.postItem}>{props.postItem}</div>
+      <Show when={props.postElement}>
+        <div class={styles.postItem}>{props.postElement}</div>
       </Show>
     </div>
   );

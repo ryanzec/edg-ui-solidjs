@@ -100,7 +100,7 @@ export const Chat = () => {
         formData={formStore.data}
         errors={formStore.errors()?.textarea?.errors}
         isProcessing={isProcessing()}
-        buttonContentElement={isProcessing() ? 'Generating...' : 'Generate'}
+        mainButtonElement={isProcessing() ? 'Generating...' : 'Generate'}
       />
     </>
   );

@@ -60,7 +60,7 @@ const Pagination = (passedProps: PaginationProps) => {
             variant={ButtonVariant.GHOST}
             onClick={() => handlePageChange(props.store.currentPage() - 1)}
             disabled={props.store.currentPage() === 1 || props.store.totalPages() <= 1 || props.store.isLoading()}
-            preItem={<Icon icon="arrow-left" />}
+            preElement={<Icon icon="arrow-left" />}
           >
             Previous
           </Button>
@@ -72,7 +72,7 @@ const Pagination = (passedProps: PaginationProps) => {
               props.store.totalPages() <= 1 ||
               props.store.isLoading()
             }
-            postItem={<Icon icon="arrow-right" />}
+            postElement={<Icon icon="arrow-right" />}
           >
             Next
           </Button>

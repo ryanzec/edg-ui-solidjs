@@ -4,7 +4,7 @@ import type { JSX } from 'solid-js';
 
 export type EllipsisTextTooltipProps = {
   text: string;
-  tooltipContent: JSX.Element;
+  tooltipContentElement: JSX.Element;
   tooltipContentClass?: string;
   class?: string;
 };
@@ -27,7 +27,7 @@ const EllipsisTextTooltip = (props: EllipsisTextTooltipProps) => {
       >
         {props.text}
       </Tooltip.Handle>
-      <Tooltip.Content class={props.tooltipContentClass}>{props.tooltipContent}</Tooltip.Content>
+      <Tooltip.Content class={props.tooltipContentClass}>{props.tooltipContentElement}</Tooltip.Content>
     </Tooltip>
   );
 };

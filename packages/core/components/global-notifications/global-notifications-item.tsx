@@ -27,7 +27,7 @@ const GlobalNotificationsItem = (passedProps: GlobalNotificationsListItemProps) 
       color={calloutColor()}
       variant={CalloutVariant.WEAK}
       style={{ 'animation-duration': `${REMOVE_ANIMATION_DURATION * 1.05}ms` }}
-      postItem={
+      postElement={
         <Icon
           icon="x"
           class={styles.removeTrigger}

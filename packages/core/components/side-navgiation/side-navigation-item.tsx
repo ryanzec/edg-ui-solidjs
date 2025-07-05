@@ -9,7 +9,7 @@ import { loggerUtils } from '$/core/utils/logger';
 import { Dynamic } from 'solid-js/web';
 
 export type SideNavigationItemProps = JSX.HTMLAttributes<HTMLDivElement> & {
-  headerItem: JSX.Element;
+  headerElement: JSX.Element;
   toggleStore?: ToggleStoreInstance;
   onClick?: () => void;
   iconName?: IconName;
@@ -28,7 +28,7 @@ const SideNavigationItem = (passedProps: SideNavigationItemProps) => {
   const [props, restOfProps] = splitProps(mergeProps(defaultProps, passedProps), [
     'children',
     'class',
-    'headerItem',
+    'headerElement',
     'toggleStore',
     'iconName',
     'iconVariant',
@@ -96,7 +96,7 @@ const SideNavigationItem = (passedProps: SideNavigationItemProps) => {
           color={props.toggleStore?.isToggled() || props.isActive ? IconColor.BRAND : IconColor.NEUTRAL}
           variant={props.iconVariant}
         />
-        {props.headerItem}
+        {props.headerElement}
       </Dynamic>
       <div class={styles.subItems}>{props.children}</div>
     </div>

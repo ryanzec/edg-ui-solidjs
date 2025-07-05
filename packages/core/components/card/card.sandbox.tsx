@@ -38,7 +38,7 @@ export const SubHeader = () => {
   return (
     <SandboxExamplesContainer>
       <Card>
-        <Card.Header label="Header" subLabel="Sub Header" />
+        <Card.Header label="Header" subLabelElement="Sub Header" />
         <Card.Content>Content</Card.Content>
         <Card.Footer>
           <Button>Footer Action</Button>
@@ -52,7 +52,7 @@ export const PreItem = () => {
   return (
     <SandboxExamplesContainer>
       <Card>
-        <Card.Header label="Header" subLabel="Sub Header" preItem={<Button>Action</Button>} />
+        <Card.Header label="Header" subLabelElement="Sub Header" preElement={<Button>Action</Button>} />
         <Card.Content>Content</Card.Content>
         <Card.Footer>
           <Button>Footer Action</Button>
@@ -66,7 +66,7 @@ export const PostItem = () => {
   return (
     <SandboxExamplesContainer>
       <Card>
-        <Card.Header label="Header" subLabel="Sub Header" postItem={<Button>Action</Button>} />
+        <Card.Header label="Header" subLabelElement="Sub Header" postElement={<Button>Action</Button>} />
         <Card.Content>Content</Card.Content>
         <Card.Footer>
           <Button>Footer Action</Button>
@@ -82,9 +82,9 @@ export const PreAndPostItem = () => {
       <Card>
         <Card.Header
           label="Header"
-          subLabel="Sub Header"
-          preItem={<Button>Action</Button>}
-          postItem={<Button>Action</Button>}
+          subLabelElement="Sub Header"
+          preElement={<Button>Action</Button>}
+          postElement={<Button>Action</Button>}
         />
         <Card.Content>Content</Card.Content>
         <Card.Footer>
@@ -131,7 +131,7 @@ export const Nested = () => {
             </Card.Footer>
           </Card>
           <Card>
-            <Card.Header label="Header" subLabel="Sub Header" />
+            <Card.Header label="Header" subLabelElement="Sub Header" />
             <Card.Content>Content</Card.Content>
             <Card.Footer>
               <Button>Footer Action</Button>
@@ -164,7 +164,7 @@ export const NestedWrapper = () => {
             </Card.Footer>
           </Card>
           <Card>
-            <Card.Header label="Header" subLabel="Sub Header" />
+            <Card.Header label="Header" subLabelElement="Sub Header" />
             <Card.Content>Content</Card.Content>
             <Card.Footer>
               <Button>Footer Action</Button>

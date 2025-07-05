@@ -10,7 +10,7 @@ export type ListItemProps = Omit<DynamicProps<'button' | 'div', JSX.HTMLAttribut
     isSelected?: boolean;
     isClickable?: boolean;
     isEndOfSection?: boolean;
-    preItem?: JSX.Element;
+    preElement?: JSX.Element;
   };
 
 const ListItem = (passedProps: ListItemProps) => {
@@ -18,7 +18,7 @@ const ListItem = (passedProps: ListItemProps) => {
     'class',
     'children',
     'isSelected',
-    'preItem',
+    'preElement',
     'isClickable',
     'onClick',
     'isEndOfSection',
@@ -49,8 +49,8 @@ const ListItem = (passedProps: ListItemProps) => {
         [styles.endOfSection]: props.isEndOfSection,
       })}
     >
-      <Show when={props.preItem}>
-        <span class={styles.preItem}>{props.preItem}</span>
+      <Show when={props.preElement}>
+        <span class={styles.preItem}>{props.preElement}</span>
       </Show>
       {props.children}
     </Dynamic>

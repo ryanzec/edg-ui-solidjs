@@ -26,7 +26,7 @@ const TreeLabel = (passedProps: TreeLabelProps) => {
           'text-bold': props.isActive,
         })}
       >
-        <EllipsisText.Tooltip class="line-clamp-1" text={props.label} tooltipContent={props.label} />
+        <EllipsisText.Tooltip class="line-clamp-1" text={props.label} tooltipContentElement={props.label} />
       </span>
     </div>
   );

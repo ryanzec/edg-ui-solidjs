@@ -17,13 +17,13 @@ export const Variants = () => {
           <div>Filled</div>
           <Button.Group>
             <Button>Filled</Button>
-            <Button variant={ButtonVariant.FILLED} preItem={<Icon icon="plus" />}>
+            <Button variant={ButtonVariant.FILLED} preElement={<Icon icon="plus" />}>
               Filled
             </Button>
-            <Button variant={ButtonVariant.FILLED} postItem={<Icon icon="plus" />}>
+            <Button variant={ButtonVariant.FILLED} postElement={<Icon icon="plus" />}>
               Filled
             </Button>
-            <Button variant={ButtonVariant.FILLED} preItem={<Icon icon="plus" />} postItem={<Icon icon="plus" />}>
+            <Button variant={ButtonVariant.FILLED} preElement={<Icon icon="plus" />} postElement={<Icon icon="plus" />}>
               Filled
             </Button>
             <Button variant={ButtonVariant.FILLED} disabled>
@@ -37,13 +37,13 @@ export const Variants = () => {
           <div>Weak</div>
           <Button.Group>
             <Button variant={ButtonVariant.WEAK}>Filled</Button>
-            <Button variant={ButtonVariant.WEAK} preItem={<Icon icon="plus" />}>
+            <Button variant={ButtonVariant.WEAK} preElement={<Icon icon="plus" />}>
               Weak
             </Button>
-            <Button variant={ButtonVariant.WEAK} postItem={<Icon icon="plus" />}>
+            <Button variant={ButtonVariant.WEAK} postElement={<Icon icon="plus" />}>
               Weak
             </Button>
-            <Button variant={ButtonVariant.WEAK} preItem={<Icon icon="plus" />} postItem={<Icon icon="plus" />}>
+            <Button variant={ButtonVariant.WEAK} preElement={<Icon icon="plus" />} postElement={<Icon icon="plus" />}>
               Weak
             </Button>
             <Button variant={ButtonVariant.WEAK} disabled>
@@ -57,13 +57,17 @@ export const Variants = () => {
           <div>Outlined</div>
           <Button.Group>
             <Button variant={ButtonVariant.OUTLINED}>Outlined</Button>
-            <Button variant={ButtonVariant.OUTLINED} preItem={<Icon icon="plus" />}>
+            <Button variant={ButtonVariant.OUTLINED} preElement={<Icon icon="plus" />}>
               Outlined
             </Button>
-            <Button variant={ButtonVariant.OUTLINED} postItem={<Icon icon="plus" />}>
+            <Button variant={ButtonVariant.OUTLINED} postElement={<Icon icon="plus" />}>
               Outlined
             </Button>
-            <Button variant={ButtonVariant.OUTLINED} preItem={<Icon icon="plus" />} postItem={<Icon icon="plus" />}>
+            <Button
+              variant={ButtonVariant.OUTLINED}
+              preElement={<Icon icon="plus" />}
+              postElement={<Icon icon="plus" />}
+            >
               Outlined
             </Button>
             <Button variant={ButtonVariant.OUTLINED} disabled>
@@ -77,13 +81,13 @@ export const Variants = () => {
           <div>Ghost</div>
           <Button.Group>
             <Button variant={ButtonVariant.GHOST}>Outlined</Button>
-            <Button variant={ButtonVariant.GHOST} preItem={<Icon icon="plus" />}>
+            <Button variant={ButtonVariant.GHOST} preElement={<Icon icon="plus" />}>
               Outlined
             </Button>
-            <Button variant={ButtonVariant.GHOST} postItem={<Icon icon="plus" />}>
+            <Button variant={ButtonVariant.GHOST} postElement={<Icon icon="plus" />}>
               Outlined
             </Button>
-            <Button variant={ButtonVariant.GHOST} preItem={<Icon icon="plus" />} postItem={<Icon icon="plus" />}>
+            <Button variant={ButtonVariant.GHOST} preElement={<Icon icon="plus" />} postElement={<Icon icon="plus" />}>
               Outlined
             </Button>
             <Button variant={ButtonVariant.GHOST} disabled>
@@ -106,10 +110,10 @@ export const Colors = () => {
         <Button color={ButtonColor.BRAND} variant={ButtonVariant.WEAK}>
           Weak
         </Button>
-        <Button color={ButtonColor.BRAND} variant={ButtonVariant.OUTLINED} preItem={<Icon icon="plus" />}>
+        <Button color={ButtonColor.BRAND} variant={ButtonVariant.OUTLINED} preElement={<Icon icon="plus" />}>
           Outlined
         </Button>
-        <Button color={ButtonColor.BRAND} variant={ButtonVariant.GHOST} postItem={<Icon icon="plus" />}>
+        <Button color={ButtonColor.BRAND} variant={ButtonVariant.GHOST} postElement={<Icon icon="plus" />}>
           Ghost
         </Button>
         <Button color={ButtonColor.BRAND} variant={ButtonVariant.FILLED} disabled>
@@ -118,39 +122,43 @@ export const Colors = () => {
         <Button color={ButtonColor.BRAND} variant={ButtonVariant.WEAK} disabled>
           Weak
         </Button>
-        <Button color={ButtonColor.BRAND} variant={ButtonVariant.OUTLINED} preItem={<Icon icon="plus" />} disabled>
+        <Button color={ButtonColor.BRAND} variant={ButtonVariant.OUTLINED} preElement={<Icon icon="plus" />} disabled>
           Outlined
         </Button>
-        <Button color={ButtonColor.BRAND} variant={ButtonVariant.GHOST} postItem={<Icon icon="plus" />} disabled>
+        <Button color={ButtonColor.BRAND} variant={ButtonVariant.GHOST} postElement={<Icon icon="plus" />} disabled>
           Ghost
         </Button>
       </Button.Group>
       <Button.Group>
-        <Button color={ButtonColor.BRAND} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.FILLED} />
-        <Button color={ButtonColor.BRAND} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.WEAK} />
-        <Button color={ButtonColor.BRAND} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.OUTLINED} />
-        <Button color={ButtonColor.BRAND} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.GHOST} />
+        <Button color={ButtonColor.BRAND} postElement={<Icon icon="question-mark" />} variant={ButtonVariant.FILLED} />
+        <Button color={ButtonColor.BRAND} postElement={<Icon icon="question-mark" />} variant={ButtonVariant.WEAK} />
         <Button
           color={ButtonColor.BRAND}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
+          variant={ButtonVariant.OUTLINED}
+        />
+        <Button color={ButtonColor.BRAND} postElement={<Icon icon="question-mark" />} variant={ButtonVariant.GHOST} />
+        <Button
+          color={ButtonColor.BRAND}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.FILLED}
           disabled
         />
         <Button
           color={ButtonColor.BRAND}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.WEAK}
           disabled
         />
         <Button
           color={ButtonColor.BRAND}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.OUTLINED}
           disabled
         />
         <Button
           color={ButtonColor.BRAND}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.GHOST}
           disabled
         />
@@ -162,10 +170,10 @@ export const Colors = () => {
         <Button color={ButtonColor.BRAND_SECONDARY} variant={ButtonVariant.WEAK}>
           Weak
         </Button>
-        <Button color={ButtonColor.BRAND_SECONDARY} variant={ButtonVariant.OUTLINED} preItem={<Icon icon="plus" />}>
+        <Button color={ButtonColor.BRAND_SECONDARY} variant={ButtonVariant.OUTLINED} preElement={<Icon icon="plus" />}>
           Outlined
         </Button>
-        <Button color={ButtonColor.BRAND_SECONDARY} variant={ButtonVariant.GHOST} postItem={<Icon icon="plus" />}>
+        <Button color={ButtonColor.BRAND_SECONDARY} variant={ButtonVariant.GHOST} postElement={<Icon icon="plus" />}>
           Ghost
         </Button>
         <Button color={ButtonColor.BRAND_SECONDARY} variant={ButtonVariant.FILLED} disabled>
@@ -177,7 +185,7 @@ export const Colors = () => {
         <Button
           color={ButtonColor.BRAND_SECONDARY}
           variant={ButtonVariant.OUTLINED}
-          preItem={<Icon icon="plus" />}
+          preElement={<Icon icon="plus" />}
           disabled
         >
           Outlined
@@ -185,7 +193,7 @@ export const Colors = () => {
         <Button
           color={ButtonColor.BRAND_SECONDARY}
           variant={ButtonVariant.GHOST}
-          postItem={<Icon icon="plus" />}
+          postElement={<Icon icon="plus" />}
           disabled
         >
           Ghost
@@ -194,45 +202,45 @@ export const Colors = () => {
       <Button.Group>
         <Button
           color={ButtonColor.BRAND_SECONDARY}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.FILLED}
         />
         <Button
           color={ButtonColor.BRAND_SECONDARY}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.WEAK}
         />
         <Button
           color={ButtonColor.BRAND_SECONDARY}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.OUTLINED}
         />
         <Button
           color={ButtonColor.BRAND_SECONDARY}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.GHOST}
         />
         <Button
           color={ButtonColor.BRAND_SECONDARY}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.FILLED}
           disabled
         />
         <Button
           color={ButtonColor.BRAND_SECONDARY}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.WEAK}
           disabled
         />
         <Button
           color={ButtonColor.BRAND_SECONDARY}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.OUTLINED}
           disabled
         />
         <Button
           color={ButtonColor.BRAND_SECONDARY}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.GHOST}
           disabled
         />
@@ -244,10 +252,10 @@ export const Colors = () => {
         <Button color={ButtonColor.NEUTRAL} variant={ButtonVariant.WEAK}>
           Weak
         </Button>
-        <Button color={ButtonColor.NEUTRAL} variant={ButtonVariant.OUTLINED} preItem={<Icon icon="plus" />}>
+        <Button color={ButtonColor.NEUTRAL} variant={ButtonVariant.OUTLINED} preElement={<Icon icon="plus" />}>
           Outlined
         </Button>
-        <Button color={ButtonColor.NEUTRAL} variant={ButtonVariant.GHOST} postItem={<Icon icon="plus" />}>
+        <Button color={ButtonColor.NEUTRAL} variant={ButtonVariant.GHOST} postElement={<Icon icon="plus" />}>
           Ghost
         </Button>
         <Button color={ButtonColor.NEUTRAL} variant={ButtonVariant.FILLED} disabled>
@@ -256,39 +264,47 @@ export const Colors = () => {
         <Button color={ButtonColor.NEUTRAL} variant={ButtonVariant.WEAK} disabled>
           Weak
         </Button>
-        <Button color={ButtonColor.NEUTRAL} variant={ButtonVariant.OUTLINED} preItem={<Icon icon="plus" />} disabled>
+        <Button color={ButtonColor.NEUTRAL} variant={ButtonVariant.OUTLINED} preElement={<Icon icon="plus" />} disabled>
           Outlined
         </Button>
-        <Button color={ButtonColor.NEUTRAL} variant={ButtonVariant.GHOST} postItem={<Icon icon="plus" />} disabled>
+        <Button color={ButtonColor.NEUTRAL} variant={ButtonVariant.GHOST} postElement={<Icon icon="plus" />} disabled>
           Ghost
         </Button>
       </Button.Group>
       <Button.Group>
-        <Button color={ButtonColor.NEUTRAL} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.FILLED} />
-        <Button color={ButtonColor.NEUTRAL} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.WEAK} />
-        <Button color={ButtonColor.NEUTRAL} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.OUTLINED} />
-        <Button color={ButtonColor.NEUTRAL} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.GHOST} />
         <Button
           color={ButtonColor.NEUTRAL}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
+          variant={ButtonVariant.FILLED}
+        />
+        <Button color={ButtonColor.NEUTRAL} postElement={<Icon icon="question-mark" />} variant={ButtonVariant.WEAK} />
+        <Button
+          color={ButtonColor.NEUTRAL}
+          postElement={<Icon icon="question-mark" />}
+          variant={ButtonVariant.OUTLINED}
+        />
+        <Button color={ButtonColor.NEUTRAL} postElement={<Icon icon="question-mark" />} variant={ButtonVariant.GHOST} />
+        <Button
+          color={ButtonColor.NEUTRAL}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.FILLED}
           disabled
         />
         <Button
           color={ButtonColor.NEUTRAL}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.WEAK}
           disabled
         />
         <Button
           color={ButtonColor.NEUTRAL}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.OUTLINED}
           disabled
         />
         <Button
           color={ButtonColor.NEUTRAL}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.GHOST}
           disabled
         />
@@ -300,10 +316,10 @@ export const Colors = () => {
         <Button color={ButtonColor.SUCCESS} variant={ButtonVariant.WEAK}>
           Weak
         </Button>
-        <Button color={ButtonColor.SUCCESS} variant={ButtonVariant.OUTLINED} preItem={<Icon icon="plus" />}>
+        <Button color={ButtonColor.SUCCESS} variant={ButtonVariant.OUTLINED} preElement={<Icon icon="plus" />}>
           Outlined
         </Button>
-        <Button color={ButtonColor.SUCCESS} variant={ButtonVariant.GHOST} postItem={<Icon icon="plus" />}>
+        <Button color={ButtonColor.SUCCESS} variant={ButtonVariant.GHOST} postElement={<Icon icon="plus" />}>
           Ghost
         </Button>
         <Button color={ButtonColor.SUCCESS} variant={ButtonVariant.FILLED} disabled>
@@ -312,39 +328,47 @@ export const Colors = () => {
         <Button color={ButtonColor.SUCCESS} variant={ButtonVariant.WEAK} disabled>
           Weak
         </Button>
-        <Button color={ButtonColor.SUCCESS} variant={ButtonVariant.OUTLINED} preItem={<Icon icon="plus" />} disabled>
+        <Button color={ButtonColor.SUCCESS} variant={ButtonVariant.OUTLINED} preElement={<Icon icon="plus" />} disabled>
           Outlined
         </Button>
-        <Button color={ButtonColor.SUCCESS} variant={ButtonVariant.GHOST} postItem={<Icon icon="plus" />} disabled>
+        <Button color={ButtonColor.SUCCESS} variant={ButtonVariant.GHOST} postElement={<Icon icon="plus" />} disabled>
           Ghost
         </Button>
       </Button.Group>
       <Button.Group>
-        <Button color={ButtonColor.SUCCESS} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.FILLED} />
-        <Button color={ButtonColor.SUCCESS} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.WEAK} />
-        <Button color={ButtonColor.SUCCESS} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.OUTLINED} />
-        <Button color={ButtonColor.SUCCESS} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.GHOST} />
         <Button
           color={ButtonColor.SUCCESS}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
+          variant={ButtonVariant.FILLED}
+        />
+        <Button color={ButtonColor.SUCCESS} postElement={<Icon icon="question-mark" />} variant={ButtonVariant.WEAK} />
+        <Button
+          color={ButtonColor.SUCCESS}
+          postElement={<Icon icon="question-mark" />}
+          variant={ButtonVariant.OUTLINED}
+        />
+        <Button color={ButtonColor.SUCCESS} postElement={<Icon icon="question-mark" />} variant={ButtonVariant.GHOST} />
+        <Button
+          color={ButtonColor.SUCCESS}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.FILLED}
           disabled
         />
         <Button
           color={ButtonColor.SUCCESS}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.WEAK}
           disabled
         />
         <Button
           color={ButtonColor.SUCCESS}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.OUTLINED}
           disabled
         />
         <Button
           color={ButtonColor.SUCCESS}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.GHOST}
           disabled
         />
@@ -356,10 +380,10 @@ export const Colors = () => {
         <Button color={ButtonColor.INFO} variant={ButtonVariant.WEAK}>
           Weak
         </Button>
-        <Button color={ButtonColor.INFO} variant={ButtonVariant.OUTLINED} preItem={<Icon icon="plus" />}>
+        <Button color={ButtonColor.INFO} variant={ButtonVariant.OUTLINED} preElement={<Icon icon="plus" />}>
           Outlined
         </Button>
-        <Button color={ButtonColor.INFO} variant={ButtonVariant.GHOST} postItem={<Icon icon="plus" />}>
+        <Button color={ButtonColor.INFO} variant={ButtonVariant.GHOST} postElement={<Icon icon="plus" />}>
           Ghost
         </Button>
         <Button color={ButtonColor.INFO} variant={ButtonVariant.FILLED} disabled>
@@ -368,39 +392,39 @@ export const Colors = () => {
         <Button color={ButtonColor.INFO} variant={ButtonVariant.WEAK} disabled>
           Weak
         </Button>
-        <Button color={ButtonColor.INFO} variant={ButtonVariant.OUTLINED} preItem={<Icon icon="plus" />} disabled>
+        <Button color={ButtonColor.INFO} variant={ButtonVariant.OUTLINED} preElement={<Icon icon="plus" />} disabled>
           Outlined
         </Button>
-        <Button color={ButtonColor.INFO} variant={ButtonVariant.GHOST} postItem={<Icon icon="plus" />} disabled>
+        <Button color={ButtonColor.INFO} variant={ButtonVariant.GHOST} postElement={<Icon icon="plus" />} disabled>
           Ghost
         </Button>
       </Button.Group>
       <Button.Group>
-        <Button color={ButtonColor.INFO} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.FILLED} />
-        <Button color={ButtonColor.INFO} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.WEAK} />
-        <Button color={ButtonColor.INFO} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.OUTLINED} />
-        <Button color={ButtonColor.INFO} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.GHOST} />
+        <Button color={ButtonColor.INFO} postElement={<Icon icon="question-mark" />} variant={ButtonVariant.FILLED} />
+        <Button color={ButtonColor.INFO} postElement={<Icon icon="question-mark" />} variant={ButtonVariant.WEAK} />
+        <Button color={ButtonColor.INFO} postElement={<Icon icon="question-mark" />} variant={ButtonVariant.OUTLINED} />
+        <Button color={ButtonColor.INFO} postElement={<Icon icon="question-mark" />} variant={ButtonVariant.GHOST} />
         <Button
           color={ButtonColor.INFO}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.FILLED}
           disabled
         />
         <Button
           color={ButtonColor.INFO}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.WEAK}
           disabled
         />
         <Button
           color={ButtonColor.INFO}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.OUTLINED}
           disabled
         />
         <Button
           color={ButtonColor.INFO}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.GHOST}
           disabled
         />
@@ -412,10 +436,10 @@ export const Colors = () => {
         <Button color={ButtonColor.WARNING} variant={ButtonVariant.WEAK}>
           Weak
         </Button>
-        <Button color={ButtonColor.WARNING} variant={ButtonVariant.OUTLINED} preItem={<Icon icon="plus" />}>
+        <Button color={ButtonColor.WARNING} variant={ButtonVariant.OUTLINED} preElement={<Icon icon="plus" />}>
           Outlined
         </Button>
-        <Button color={ButtonColor.WARNING} variant={ButtonVariant.GHOST} postItem={<Icon icon="plus" />}>
+        <Button color={ButtonColor.WARNING} variant={ButtonVariant.GHOST} postElement={<Icon icon="plus" />}>
           Ghost
         </Button>
         <Button color={ButtonColor.WARNING} variant={ButtonVariant.FILLED} disabled>
@@ -424,39 +448,47 @@ export const Colors = () => {
         <Button color={ButtonColor.WARNING} variant={ButtonVariant.WEAK} disabled>
           Weak
         </Button>
-        <Button color={ButtonColor.WARNING} variant={ButtonVariant.OUTLINED} preItem={<Icon icon="plus" />} disabled>
+        <Button color={ButtonColor.WARNING} variant={ButtonVariant.OUTLINED} preElement={<Icon icon="plus" />} disabled>
           Outlined
         </Button>
-        <Button color={ButtonColor.WARNING} variant={ButtonVariant.GHOST} postItem={<Icon icon="plus" />} disabled>
+        <Button color={ButtonColor.WARNING} variant={ButtonVariant.GHOST} postElement={<Icon icon="plus" />} disabled>
           Ghost
         </Button>
       </Button.Group>
       <Button.Group>
-        <Button color={ButtonColor.WARNING} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.FILLED} />
-        <Button color={ButtonColor.WARNING} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.WEAK} />
-        <Button color={ButtonColor.WARNING} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.OUTLINED} />
-        <Button color={ButtonColor.WARNING} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.GHOST} />
         <Button
           color={ButtonColor.WARNING}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
+          variant={ButtonVariant.FILLED}
+        />
+        <Button color={ButtonColor.WARNING} postElement={<Icon icon="question-mark" />} variant={ButtonVariant.WEAK} />
+        <Button
+          color={ButtonColor.WARNING}
+          postElement={<Icon icon="question-mark" />}
+          variant={ButtonVariant.OUTLINED}
+        />
+        <Button color={ButtonColor.WARNING} postElement={<Icon icon="question-mark" />} variant={ButtonVariant.GHOST} />
+        <Button
+          color={ButtonColor.WARNING}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.FILLED}
           disabled
         />
         <Button
           color={ButtonColor.WARNING}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.WEAK}
           disabled
         />
         <Button
           color={ButtonColor.WARNING}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.OUTLINED}
           disabled
         />
         <Button
           color={ButtonColor.WARNING}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.GHOST}
           disabled
         />
@@ -468,10 +500,10 @@ export const Colors = () => {
         <Button color={ButtonColor.WARNING_HIGH} variant={ButtonVariant.WEAK}>
           Weak
         </Button>
-        <Button color={ButtonColor.WARNING_HIGH} variant={ButtonVariant.OUTLINED} preItem={<Icon icon="plus" />}>
+        <Button color={ButtonColor.WARNING_HIGH} variant={ButtonVariant.OUTLINED} preElement={<Icon icon="plus" />}>
           Outlined
         </Button>
-        <Button color={ButtonColor.WARNING_HIGH} variant={ButtonVariant.GHOST} postItem={<Icon icon="plus" />}>
+        <Button color={ButtonColor.WARNING_HIGH} variant={ButtonVariant.GHOST} postElement={<Icon icon="plus" />}>
           Ghost
         </Button>
         <Button color={ButtonColor.WARNING_HIGH} variant={ButtonVariant.FILLED} disabled>
@@ -483,57 +515,62 @@ export const Colors = () => {
         <Button
           color={ButtonColor.WARNING_HIGH}
           variant={ButtonVariant.OUTLINED}
-          preItem={<Icon icon="plus" />}
+          preElement={<Icon icon="plus" />}
           disabled
         >
           Outlined
         </Button>
-        <Button color={ButtonColor.WARNING_HIGH} variant={ButtonVariant.GHOST} postItem={<Icon icon="plus" />} disabled>
+        <Button
+          color={ButtonColor.WARNING_HIGH}
+          variant={ButtonVariant.GHOST}
+          postElement={<Icon icon="plus" />}
+          disabled
+        >
           Ghost
         </Button>
       </Button.Group>
       <Button.Group>
         <Button
           color={ButtonColor.WARNING_HIGH}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.FILLED}
         />
         <Button
           color={ButtonColor.WARNING_HIGH}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.WEAK}
         />
         <Button
           color={ButtonColor.WARNING_HIGH}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.OUTLINED}
         />
         <Button
           color={ButtonColor.WARNING_HIGH}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.GHOST}
         />
         <Button
           color={ButtonColor.WARNING_HIGH}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.FILLED}
           disabled
         />
         <Button
           color={ButtonColor.WARNING_HIGH}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.WEAK}
           disabled
         />
         <Button
           color={ButtonColor.WARNING_HIGH}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.OUTLINED}
           disabled
         />
         <Button
           color={ButtonColor.WARNING_HIGH}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.GHOST}
           disabled
         />
@@ -545,10 +582,10 @@ export const Colors = () => {
         <Button color={ButtonColor.DANGER} variant={ButtonVariant.WEAK}>
           Weak
         </Button>
-        <Button color={ButtonColor.DANGER} variant={ButtonVariant.OUTLINED} preItem={<Icon icon="plus" />}>
+        <Button color={ButtonColor.DANGER} variant={ButtonVariant.OUTLINED} preElement={<Icon icon="plus" />}>
           Outlined
         </Button>
-        <Button color={ButtonColor.DANGER} variant={ButtonVariant.GHOST} postItem={<Icon icon="plus" />}>
+        <Button color={ButtonColor.DANGER} variant={ButtonVariant.GHOST} postElement={<Icon icon="plus" />}>
           Ghost
         </Button>
         <Button color={ButtonColor.DANGER} variant={ButtonVariant.FILLED} disabled>
@@ -557,39 +594,43 @@ export const Colors = () => {
         <Button color={ButtonColor.DANGER} variant={ButtonVariant.WEAK} disabled>
           Weak
         </Button>
-        <Button color={ButtonColor.DANGER} variant={ButtonVariant.OUTLINED} preItem={<Icon icon="plus" />} disabled>
+        <Button color={ButtonColor.DANGER} variant={ButtonVariant.OUTLINED} preElement={<Icon icon="plus" />} disabled>
           Outlined
         </Button>
-        <Button color={ButtonColor.DANGER} variant={ButtonVariant.GHOST} postItem={<Icon icon="plus" />} disabled>
+        <Button color={ButtonColor.DANGER} variant={ButtonVariant.GHOST} postElement={<Icon icon="plus" />} disabled>
           Ghost
         </Button>
       </Button.Group>
       <Button.Group>
-        <Button color={ButtonColor.DANGER} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.FILLED} />
-        <Button color={ButtonColor.DANGER} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.WEAK} />
-        <Button color={ButtonColor.DANGER} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.OUTLINED} />
-        <Button color={ButtonColor.DANGER} postItem={<Icon icon="question-mark" />} variant={ButtonVariant.GHOST} />
+        <Button color={ButtonColor.DANGER} postElement={<Icon icon="question-mark" />} variant={ButtonVariant.FILLED} />
+        <Button color={ButtonColor.DANGER} postElement={<Icon icon="question-mark" />} variant={ButtonVariant.WEAK} />
         <Button
           color={ButtonColor.DANGER}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
+          variant={ButtonVariant.OUTLINED}
+        />
+        <Button color={ButtonColor.DANGER} postElement={<Icon icon="question-mark" />} variant={ButtonVariant.GHOST} />
+        <Button
+          color={ButtonColor.DANGER}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.FILLED}
           disabled
         />
         <Button
           color={ButtonColor.DANGER}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.WEAK}
           disabled
         />
         <Button
           color={ButtonColor.DANGER}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.OUTLINED}
           disabled
         />
         <Button
           color={ButtonColor.DANGER}
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.GHOST}
           disabled
         />
@@ -682,17 +723,17 @@ export const PrePostItems = () => {
   return (
     <>
       <div>Pre Item</div>
-      <Button preItem={<Icon icon="question-mark" />} variant={ButtonVariant.FILLED}>
+      <Button preElement={<Icon icon="question-mark" />} variant={ButtonVariant.FILLED}>
         Button
       </Button>
       <div>Pre Item</div>
-      <Button postItem={<Icon icon="question-mark" />} variant={ButtonVariant.FILLED}>
+      <Button postElement={<Icon icon="question-mark" />} variant={ButtonVariant.FILLED}>
         Button
       </Button>
       <div>Pre and Post Item</div>
       <Button
-        preItem={<Icon icon="question-mark" />}
-        postItem={<Icon icon="question-mark" />}
+        preElement={<Icon icon="question-mark" />}
+        postElement={<Icon icon="question-mark" />}
         variant={ButtonVariant.FILLED}
       >
         Button
@@ -705,24 +746,24 @@ export const Toggle = () => {
   return (
     <>
       <Button.Group isAttached>
-        <Button.Toggle postItem={<Icon icon="question-mark" />} />
+        <Button.Toggle postElement={<Icon icon="question-mark" />} />
         <Button.Toggle>Weak</Button.Toggle>
-        <Button.Toggle isSelected preItem={<Icon icon="plus" />}>
+        <Button.Toggle isSelected preElement={<Icon icon="plus" />}>
           Outlined
         </Button.Toggle>
-        <Button.Toggle postItem={<Icon icon="plus" />} />
-        <Button.Toggle preItem={<Icon icon="plus" />} postItem={<Icon icon="plus" />}>
+        <Button.Toggle postElement={<Icon icon="plus" />} />
+        <Button.Toggle preElement={<Icon icon="plus" />} postElement={<Icon icon="plus" />}>
           Text
         </Button.Toggle>
         <Button.Toggle disabled>Filled</Button.Toggle>
         <Button.Toggle disabled>Weak</Button.Toggle>
-        <Button.Toggle preItem={<Icon icon="plus" />} disabled>
+        <Button.Toggle preElement={<Icon icon="plus" />} disabled>
           Outlined
         </Button.Toggle>
-        <Button.Toggle postItem={<Icon icon="plus" />} disabled>
+        <Button.Toggle postElement={<Icon icon="plus" />} disabled>
           Ghost
         </Button.Toggle>
-        <Button.Toggle preItem={<Icon icon="plus" />} postItem={<Icon icon="plus" />} disabled>
+        <Button.Toggle preElement={<Icon icon="plus" />} postElement={<Icon icon="plus" />} disabled>
           Text
         </Button.Toggle>
       </Button.Group>
@@ -735,7 +776,7 @@ export const Loading = () => {
     <>
       <Button.Group>
         <Button
-          postItem={<Icon icon="question-mark" />}
+          postElement={<Icon icon="question-mark" />}
           variant={ButtonVariant.FILLED}
           state={ButtonState.IS_LOADING}
         />
@@ -743,7 +784,7 @@ export const Loading = () => {
           color={ButtonColor.WARNING}
           variant={ButtonVariant.FILLED}
           state={ButtonState.IS_LOADING}
-          preItem={<Icon icon="plus" />}
+          preElement={<Icon icon="plus" />}
         >
           Filled
         </Button>
@@ -751,7 +792,7 @@ export const Loading = () => {
           color={ButtonColor.WARNING}
           variant={ButtonVariant.OUTLINED}
           state={ButtonState.IS_LOADING}
-          postItem={<Icon icon="plus" />}
+          postElement={<Icon icon="plus" />}
         >
           Outline
         </Button>
@@ -759,8 +800,8 @@ export const Loading = () => {
           color={ButtonColor.WARNING}
           variant={ButtonVariant.GHOST}
           state={ButtonState.IS_LOADING}
-          preItem={<Icon icon="plus" />}
-          postItem={<Icon icon="plus" />}
+          preElement={<Icon icon="plus" />}
+          postElement={<Icon icon="plus" />}
         >
           Ghost
         </Button>
@@ -1001,10 +1042,10 @@ export const Sizes = () => {
           <Button size={ButtonSize.BASE} variant={ButtonVariant.FILLED}>
             Base
           </Button>
-          <Button size={ButtonSize.BASE} variant={ButtonVariant.FILLED} preItem={<Icon icon="plus" />}>
+          <Button size={ButtonSize.BASE} variant={ButtonVariant.FILLED} preElement={<Icon icon="plus" />}>
             Base
           </Button>
-          <Button size={ButtonSize.BASE} variant={ButtonVariant.FILLED} postItem={<Icon icon="plus" />}>
+          <Button size={ButtonSize.BASE} variant={ButtonVariant.FILLED} postElement={<Icon icon="plus" />}>
             Base
           </Button>
           <Button size={ButtonSize.BASE} variant={ButtonVariant.FILLED} shape={ButtonShape.CIRCLE} icon="x" />
@@ -1020,10 +1061,10 @@ export const Sizes = () => {
           <Button size={ButtonSize.SMALL} variant={ButtonVariant.FILLED}>
             Base
           </Button>
-          <Button size={ButtonSize.SMALL} variant={ButtonVariant.FILLED} preItem={<Icon icon="plus" />}>
+          <Button size={ButtonSize.SMALL} variant={ButtonVariant.FILLED} preElement={<Icon icon="plus" />}>
             Base
           </Button>
-          <Button size={ButtonSize.SMALL} variant={ButtonVariant.FILLED} postItem={<Icon icon="plus" />}>
+          <Button size={ButtonSize.SMALL} variant={ButtonVariant.FILLED} postElement={<Icon icon="plus" />}>
             Base
           </Button>
           <Button size={ButtonSize.SMALL} variant={ButtonVariant.FILLED} shape={ButtonShape.CIRCLE} icon="x" />

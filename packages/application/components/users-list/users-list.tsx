@@ -60,10 +60,10 @@ const UsersList = (props: UsersListProps) => {
                   dropDownStore={dropDownStore}
                   contentElement={
                     <>
-                      <List.Item onClick={handleEdit} preItem={<Icon icon="pencil" />}>
+                      <List.Item onClick={handleEdit} preElement={<Icon icon="pencil" />}>
                         Edit
                       </List.Item>
-                      <List.Item onClick={handleRemove} preItem={<Icon icon="x" />}>
+                      <List.Item onClick={handleRemove} preElement={<Icon icon="x" />}>
                         Remove
                       </List.Item>
                     </>

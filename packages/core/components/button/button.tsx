@@ -21,8 +21,8 @@ export type ButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> &
     color?: ButtonColor;
     state?: ButtonState;
     shape?: ButtonShape;
-    preItem?: JSX.Element;
-    postItem?: JSX.Element;
+    preElement?: JSX.Element;
+    postElement?: JSX.Element;
     loadingIconPosition?: ButtonItemPosition;
     size?: ButtonSize;
     icon?: IconName;
@@ -46,8 +46,8 @@ export const Button = (passedProps: ButtonProps) => {
       'variant',
       'disabled',
       'class',
-      'preItem',
-      'postItem',
+      'preElement',
+      'postElement',
       'loadingIconPosition',
       'state',
       'color',
@@ -58,8 +58,8 @@ export const Button = (passedProps: ButtonProps) => {
   );
 
   const isLoading = () => props.state === ButtonState.IS_LOADING;
-  const hasPreItem = () => props.preItem || (isLoading() && props.loadingIconPosition === ButtonItemPosition.PRE);
-  const hasPostItem = () => props.postItem || (isLoading() && props.loadingIconPosition === ButtonItemPosition.POST);
+  const hasPreItem = () => props.preElement || (isLoading() && props.loadingIconPosition === ButtonItemPosition.PRE);
+  const hasPostItem = () => props.postElement || (isLoading() && props.loadingIconPosition === ButtonItemPosition.POST);
 
   return (
     <button
@@ -87,10 +87,14 @@ export const Button = (passedProps: ButtonProps) => {
     >
       <span class={styles.buttonContent}>
         {isLoading() && (
-          <ButtonPrePostItem class={styles.preIcon} position={ButtonItemPosition.PRE} item={<Icon icon="spinner" />} />
+          <ButtonPrePostItem
+            class={styles.preIcon}
+            position={ButtonItemPosition.PRE}
+            itemElement={<Icon icon="spinner" />}
+          />
         )}
         {!isLoading() && hasPreItem() && (
-          <ButtonPrePostItem class={styles.preIcon} position={ButtonItemPosition.PRE} item={props.preItem} />
+          <ButtonPrePostItem class={styles.preIcon} position={ButtonItemPosition.PRE} itemElement={props.preElement} />
         )}
         <span class={styles.buttonMainContent}>
           {/*
@@ -101,7 +105,11 @@ export const Button = (passedProps: ButtonProps) => {
           <Show when={!props.icon}>{props.children}</Show>
         </span>
         {!isLoading() && hasPostItem() && (
-          <ButtonPrePostItem class={styles.preIcon} position={ButtonItemPosition.POST} item={props.postItem} />
+          <ButtonPrePostItem
+            class={styles.preIcon}
+            position={ButtonItemPosition.POST}
+            itemElement={props.postElement}
+          />
         )}
       </span>
     </button>

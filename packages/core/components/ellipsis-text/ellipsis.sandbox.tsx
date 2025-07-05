@@ -40,7 +40,7 @@ export const TooltipSignleLine = () => {
         <EllipsisText.Tooltip
           class="line-clamp-1"
           text="This is a long text that will be truncated"
-          tooltipContent="This is a tooltip"
+          tooltipContentElement="This is a tooltip"
         />
       </div>
     </SandboxExamplesContainer>
@@ -54,7 +54,7 @@ export const TooltipMultipleLines = () => {
         <EllipsisText.Tooltip
           class="line-clamp-3"
           text="This is a long text that will be truncated"
-          tooltipContent="This is a tooltip"
+          tooltipContentElement="This is a tooltip"
         />
       </div>
     </SandboxExamplesContainer>

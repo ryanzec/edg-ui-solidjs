@@ -1,6 +1,6 @@
 import styles from '$/core/components/skeleton/skeleton.module.css';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, mergeProps, splitProps } from 'solid-js';
+import { For, type JSX, mergeProps, splitProps } from 'solid-js';
 
 export type SkeletonProps = JSX.HTMLAttributes<HTMLDivElement> & {
   barCount?: number;
@@ -40,7 +40,11 @@ const Skeleton = (passedProps: SkeletonProps) => {
 
   return (
     <div data-id="skeleton" class={tailwindUtils.merge(props.class, styles.container)} {...restOfProps}>
-      {barElements}
+      <For each={barElements}>
+        {(barElement) => {
+          return barElement;
+        }}
+      </For>
     </div>
   );
 };

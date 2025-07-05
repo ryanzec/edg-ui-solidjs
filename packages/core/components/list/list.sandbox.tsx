@@ -18,9 +18,9 @@ export const ListItem = () => {
   return (
     <>
       <List class={styles.listContainer}>
-        <List.Item preItem={<Avatar>SJ</Avatar>}>Item 1</List.Item>
+        <List.Item preElement={<Avatar>SJ</Avatar>}>Item 1</List.Item>
         <List.Item isEndOfSection>End of section</List.Item>
-        <List.Item preItem={<Icon icon="check" />}>Item 2</List.Item>
+        <List.Item preElement={<Icon icon="check" />}>Item 2</List.Item>
         <List.Item isSelected>Selected Item</List.Item>
         <List.Item onClick={handleClick}>Has click handler</List.Item>
         <List.Item isClickable>Marked as clickable</List.Item>

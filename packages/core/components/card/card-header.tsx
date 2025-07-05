@@ -5,36 +5,36 @@ import styles from '$/core/components/card/card.module.css';
 import Typography, { TypographySize } from '$/core/components/typography';
 
 export type CardHeaderProps = JSX.HTMLAttributes<HTMLDivElement> & {
-  preItem?: JSX.Element;
-  postItem?: JSX.Element;
+  preElement?: JSX.Element;
+  postElement?: JSX.Element;
   label?: string;
-  subLabel?: JSX.Element;
+  subLabelElement?: JSX.Element;
 };
 const CardHeader = (passedProps: CardHeaderProps) => {
   const [props, restOfProps] = splitProps(passedProps, [
     'children',
     'class',
     'label',
-    'preItem',
-    'postItem',
-    'subLabel',
+    'preElement',
+    'postElement',
+    'subLabelElement',
   ]);
 
   return (
     <div data-id="header" class={tailwindUtils.merge(styles.header, props.class)} {...restOfProps}>
-      <Show when={props.preItem}>
-        <div class={styles.headerPreItem}>{props.preItem}</div>
+      <Show when={props.preElement}>
+        <div class={styles.headerPreItem}>{props.preElement}</div>
       </Show>
       <div>
         <Show when={props.label}>
           <Typography size={TypographySize.LARGE}>{props.label}</Typography>
         </Show>
-        <Show when={props.subLabel}>
-          <Typography>{props.subLabel}</Typography>
+        <Show when={props.subLabelElement}>
+          <Typography>{props.subLabelElement}</Typography>
         </Show>
       </div>
-      <Show when={props.postItem}>
-        <div class={styles.headerPostItem}>{props.postItem}</div>
+      <Show when={props.postElement}>
+        <div class={styles.headerPostItem}>{props.postElement}</div>
       </Show>
     </div>
   );

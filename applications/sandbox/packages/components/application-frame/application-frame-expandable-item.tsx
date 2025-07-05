@@ -64,7 +64,7 @@ const ApplicationFrameExpandableItem = (passedProps: ApplicationFrameExpandableI
           class={tailwindUtils.merge(styles.navigationSubSection, {
             [styles.navigationSection]: hasSubNavigation(),
           })}
-          headerItem={stringUtils.toWords(props.routeKey)}
+          headerElement={stringUtils.toWords(props.routeKey)}
           toggleStore={toggleStore}
         >
           <ApplicationFrameSubNavigation routes={props.routes} />

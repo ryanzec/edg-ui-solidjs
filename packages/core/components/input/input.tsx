@@ -7,10 +7,10 @@ import { type DefaultFormData, FormInputValidationState } from '$/core/stores/fo
 import { loggerUtils } from '$/core/utils/logger';
 
 export type InputProps<TFormData = DefaultFormData> = Omit<JSX.InputHTMLAttributes<HTMLInputElement>, 'name'> & {
-  preItem?: JSX.Element;
+  preElement?: JSX.Element;
   preItemIsInline?: boolean;
-  postItem?: JSX.Element;
-  inlineItem?: JSX.Element;
+  postElement?: JSX.Element;
+  inlineElement?: JSX.Element;
   postItemIsClickable?: boolean;
   inputContainerClass?: string;
   includeReadonlyStyles?: false;
@@ -31,10 +31,10 @@ const Input = <TFormData = DefaultFormData>(passedProps: InputProps<TFormData>) 
       'onBlur',
       'disabled',
       'readonly',
-      'preItem',
+      'preElement',
       'preItemIsInline',
-      'postItem',
-      'inlineItem',
+      'postElement',
+      'inlineElement',
       'postItemIsClickable',
       'inputContainerClass',
       'includeReadonlyStyles',
@@ -108,25 +108,25 @@ const Input = <TFormData = DefaultFormData>(passedProps: InputProps<TFormData>) 
         [styles.containerReadonly]: props.readonly && props.includeReadonlyStyles,
         [styles.containerFocus]: isFocused(),
         [styles.containerInvalid]: formFieldContext?.validationState() === FormInputValidationState.INVALID,
-        [styles.containerWithPreItem]: !!props.preItem,
+        [styles.containerWithPreItem]: !!props.preElement,
         [styles.containerWithInlinePreItem]: props.preItemIsInline,
-        [styles.containerWithPostItem]: !!props.postItem,
+        [styles.containerWithPostItem]: !!props.postElement,
       })}
       onClick={handleClickContainer}
       tabindex="-1"
     >
       <div class={tailwindUtils.merge(styles.inputContainer, props.inputContainerClass)}>
-        <Show when={props.preItem}>
+        <Show when={props.preElement}>
           <div
             class={tailwindUtils.merge(styles.preItem, {
               [styles.preItemInline]: props.preItemIsInline,
             })}
           >
-            {props.preItem}
+            {props.preElement}
           </div>
         </Show>
         <div class={styles.inputInnerContainer}>
-          <Show when={!!props.inlineItem}>{props.inlineItem}</Show>
+          <Show when={!!props.inlineElement}>{props.inlineElement}</Show>
           <input
             data-id="input"
             ref={inputRef}
@@ -143,13 +143,13 @@ const Input = <TFormData = DefaultFormData>(passedProps: InputProps<TFormData>) 
             autocomplete="off"
           />
         </div>
-        <Show when={props.postItem}>
+        <Show when={props.postElement}>
           <div
             class={tailwindUtils.merge(styles.postItem, {
               [styles.postItemIsClickable]: !!props.postItemIsClickable,
             })}
           >
-            {props.postItem}
+            {props.postElement}
           </div>
         </Show>
       </div>
