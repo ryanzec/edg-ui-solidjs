@@ -53,7 +53,7 @@ const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
   });
 
   return (
-    <div data-theme={themeManagerStore.theme()} class="h-full w-full flex">
+    <div data-theme={themeManagerStore.theme()} class="h-[100vh] w-[100vw] flex">
       <Show when={authenticationStore.isInitializing() === false} fallback={<Loading />}>
         <ApplicationFrame
           isInitializing={false}

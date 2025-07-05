@@ -46,7 +46,7 @@ const ApplicationFrame = (passedProps: ApplicationFrameProps) => {
 
   return (
     <>
-      <div data-id="application-frame" data-theme={themeManagerStore.theme()} class="flex h-[100vh] w-[100vw]">
+      <div data-id="application-frame" data-theme={themeManagerStore.theme()} class="flex h-full w-full">
         <Show when={props.isInitializing === false} fallback={<Loading.Section>Loading...</Loading.Section>}>
           <Show when={props.isAuthenticated}>
             <div class="flex flex-col h-full w-[250px] bg-[#d1ddd8] gap-2xs">
