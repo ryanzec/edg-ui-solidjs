@@ -19,6 +19,7 @@ import { zodUtils } from '$/core/utils/zod';
 export const formDataAttribute = {
   BLURRED: 'data-blurred',
   UNCONTROLLED_VALUE: 'data-uncontrolled-value',
+  ALTERNATE_VALUE: 'data-alternate-value',
 };
 
 export const FormSaveMode = {
@@ -477,6 +478,7 @@ const createStore = <TFormData extends object>(
     const name = target.name;
     const previousValue = lodash.get(data(), name);
     const value = target.value;
+    const alternateValue = target.getAttribute(formDataAttribute.ALTERNATE_VALUE);
     const checked = target.checked;
     let checkboxValue = lodash.get(data(), name);
 
@@ -488,12 +490,22 @@ const createStore = <TFormData extends object>(
         checkboxValue = [];
       }
 
-      if (checked) {
-        // since checkboxValue is from a store and that is not directly mutable, we need to create a new array
-        // insteead of using push
-        checkboxValue = [...new Set([...checkboxValue, value])];
-      } else {
+      if (checked === false) {
         checkboxValue = checkboxValue.filter((currentValue: unknown) => currentValue !== value);
+
+        if (alternateValue !== null) {
+          // since checkboxValue is from a store and that is not directly mutable, we need to create a new array
+          // instead of using push
+          checkboxValue = [...new Set([...checkboxValue, alternateValue])];
+        }
+      } else {
+        if (alternateValue !== null) {
+          checkboxValue = checkboxValue.filter((currentValue: unknown) => currentValue !== alternateValue);
+        }
+
+        // since checkboxValue is from a store and that is not directly mutable, we need to create a new array
+        // instead of using push
+        checkboxValue = [...new Set([...checkboxValue, value])];
       }
     }
 

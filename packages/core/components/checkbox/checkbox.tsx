@@ -11,9 +11,8 @@ import { loggerUtils } from '$/core/utils/logger';
 export type CheckboxProps<TFormData = DefaultFormData> = Omit<JSX.InputHTMLAttributes<HTMLInputElement>, 'name'> & {
   labelElement?: JSX.Element;
   alignEnd?: boolean;
-  name?: keyof TFormData;
-  notInForm?: boolean;
   inputRef?: (element: HTMLInputElement) => void;
+  name?: keyof TFormData;
 
   // while not directly used, used to infer the type for name to give properly type checking on that property
   formData?: Accessor<Partial<TFormData>>;
