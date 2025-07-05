@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { For, type JSX, Show, splitProps } from 'solid-js';
 
 import styles from '$/core/components/supporting-text/supporting-text.module.css';
@@ -20,7 +20,7 @@ const SupportingText = (passedProps: SupportingTextProps) => {
       <div
         data-id="supporting-text"
         {...restOfProps}
-        class={classnames(props.class, styles.supportingText, {
+        class={tailwindUtils.merge(props.class, styles.supportingText, {
           [styles.neutral]: props.color === SupportingTextColor.NEUTRAL,
           [styles.danger]: props.color === SupportingTextColor.DANGER,
         })}

@@ -1,5 +1,5 @@
 import Tooltip, { tooltipComponentUtils } from '$/core/components/tooltip';
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import type { JSX } from 'solid-js';
 
 export type EllipsisTextTooltipProps = {
@@ -20,7 +20,7 @@ const EllipsisTextTooltip = (props: EllipsisTextTooltipProps) => {
     <Tooltip store={tooltipStore} placement="bottom" class="w-full">
       <Tooltip.Handle
         isStyled={false}
-        class={classnames('text-ellipsis overflow-hidden', props.class, {
+        class={tailwindUtils.merge('text-ellipsis overflow-hidden', props.class, {
           '!inline-block': isSingleLine(),
           'whitespace-nowrap': isSingleLine(),
         })}

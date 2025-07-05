@@ -6,7 +6,7 @@ import { OverlayScrollbarsComponent, type OverlayScrollbarsComponentProps } from
 import { type Setter, children, splitProps } from 'solid-js';
 
 import styles from '$/core/components/scroll-area/scroll-area.module.css';
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 const defaultScrollbarOptions: PartialOptions = {
   scrollbars: {
@@ -28,7 +28,7 @@ const ScrollArea = (
   return (
     <OverlayScrollbarsComponent
       defer
-      class={classnames(styles.scrollArea, props.class)}
+      class={tailwindUtils.merge(styles.scrollArea, props.class)}
       options={{
         ...props.options,
         scrollbars: {

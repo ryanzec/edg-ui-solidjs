@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, splitProps } from 'solid-js';
 
 import styles from '$/core/components/peek/peek.module.css';
@@ -10,7 +10,7 @@ const PeekFooter = (passedProps: PeekFooterProps) => {
   const [props, restOfProps] = splitProps(passedProps, ['children', 'class']);
 
   return (
-    <div data-id="footer" {...restOfProps} class={classnames(styles.peekFooter, props.class)}>
+    <div data-id="footer" {...restOfProps} class={tailwindUtils.merge(styles.peekFooter, props.class)}>
       {props.children}
     </div>
   );

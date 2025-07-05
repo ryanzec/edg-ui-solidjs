@@ -1,6 +1,6 @@
 import type { ParentProps } from 'solid-js';
 
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { mergeProps, splitProps } from 'solid-js';
 
 type SandboxExamplesContainerProps = ParentProps<{
@@ -26,7 +26,7 @@ const SandboxExamplesContainer = (passedProps: SandboxExamplesContainerProps) =>
 
   return (
     <div
-      class={classnames('flex flex-col gap-base', props.class, {
+      class={tailwindUtils.merge('flex flex-col gap-base', props.class, {
         'flex-row': props.asRow,
         'w-full min-h-full': props.isFull,
         'bg-surface-pure': props.withPureBackground,

@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { For, Show, createSignal } from 'solid-js';
 import * as zod from 'zod';
 
@@ -243,7 +243,7 @@ const CustomSelectableOption = (props: ComboboxSelectableOptionProps<CustomExtra
   return (
     <List.Item
       data-id={`option${props.isFocusedOption(props.optionIndex) ? ' highlighted-option' : ''}`}
-      class={classnames(styles.selectableOption)}
+      class={tailwindUtils.merge(styles.selectableOption)}
       isSelected={props.isFocusedOption(props.optionIndex)}
       onMouseEnter={() => props.onMouseEnterOption(props.optionIndex)}
       onMouseLeave={() => props.onMouseLeaveOption()}

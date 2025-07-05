@@ -17,9 +17,9 @@ import Input from '$/core/components/input';
 import Label from '$/core/components/label';
 import Radio from '$/core/components/radio';
 import Textarea from '$/core/components/textarea';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { ValidationMessageType } from '$/core/utils/validation';
 import { zodUtils } from '$/core/utils/zod';
-import classnames from 'classnames';
 import * as lodash from 'lodash';
 import { For, Show, createEffect, createReaction, createSignal } from 'solid-js';
 import * as zod from 'zod';
@@ -187,7 +187,7 @@ const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderP
 
   return (
     <FormFields
-      class={classnames({
+      class={tailwindUtils.merge({
         [styles.enclosedForm]: props.encloseForm,
       })}
     >

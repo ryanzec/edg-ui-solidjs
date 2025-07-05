@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
 
 import styles from '$/core/components/list/list.module.css';
@@ -43,7 +43,7 @@ const ListItem = (passedProps: ListItemProps) => {
       {...restOfProps}
       component={elementType()}
       onClick={props.onClick}
-      class={classnames(styles.listItem, props.class, {
+      class={tailwindUtils.merge(styles.listItem, props.class, {
         [styles.selectedItem]: props.isSelected,
         [styles.isClickable]: checkIsClickable(),
         [styles.endOfSection]: props.isEndOfSection,

@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { Match, Switch } from 'solid-js';
 
 import styles from '$/core/components/combobox/combobox.module.css';
@@ -12,20 +12,22 @@ const FormattedSelectableOption = <TData extends ComboboxExtraData>(props: Combo
     <List.Item
       data-id="selectable-option"
       data-combobox-value={props.option.value}
-      class={classnames(styles.selectableOption, styles.listOption)}
+      class={tailwindUtils.merge(styles.selectableOption, styles.listOption)}
       onMouseEnter={() => props.onMouseEnterOption(props.optionIndex)}
       onMouseDown={() => props.onMouseDownOption(props.option)}
       tabIndex={-1}
     >
-      <Switch fallback={<Icon class={classnames(styles.invisible, iconStyles.spacingRight)} icon="question-mark" />}>
+      <Switch
+        fallback={<Icon class={tailwindUtils.merge(styles.invisible, iconStyles.spacingRight)} icon="question-mark" />}
+      >
         <Match when={props.isFocusedOption(props.optionIndex) && props.isSelectedOption(props.option.value)}>
-          <Icon class={classnames(iconStyles.spacingRight)} color={IconColor.DANGER} icon="x" />
+          <Icon class={tailwindUtils.merge(iconStyles.spacingRight)} color={IconColor.DANGER} icon="x" />
         </Match>
         <Match when={props.isSelectedOption(props.option.value)}>
-          <Icon class={classnames(iconStyles.spacingRight)} color={IconColor.SUCCESS} icon="check" />
+          <Icon class={tailwindUtils.merge(iconStyles.spacingRight)} color={IconColor.SUCCESS} icon="check" />
         </Match>
         <Match when={props.isFocusedOption(props.optionIndex)}>
-          <Icon class={classnames(iconStyles.spacingRight)} color={IconColor.SUCCESS} icon="plus" />
+          <Icon class={tailwindUtils.merge(iconStyles.spacingRight)} color={IconColor.SUCCESS} icon="plus" />
         </Match>
       </Switch>
       {props.option.label}

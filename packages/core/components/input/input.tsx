@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type Accessor, type JSX, Show, createSignal, mergeProps, onMount, splitProps, useContext } from 'solid-js';
 
 import { FormFieldContext } from '$/core/components/form-field';
@@ -103,7 +103,7 @@ const Input = <TFormData = DefaultFormData>(passedProps: InputProps<TFormData>) 
   return (
     <button
       type="button"
-      class={classnames(styles.container, {
+      class={tailwindUtils.merge(styles.container, {
         [styles.containerDisabled]: props.disabled,
         [styles.containerReadonly]: props.readonly && props.includeReadonlyStyles,
         [styles.containerFocus]: isFocused(),
@@ -115,10 +115,10 @@ const Input = <TFormData = DefaultFormData>(passedProps: InputProps<TFormData>) 
       onClick={handleClickContainer}
       tabindex="-1"
     >
-      <div class={classnames(styles.inputContainer, props.inputContainerClass)}>
+      <div class={tailwindUtils.merge(styles.inputContainer, props.inputContainerClass)}>
         <Show when={props.preItem}>
           <div
-            class={classnames(styles.preItem, {
+            class={tailwindUtils.merge(styles.preItem, {
               [styles.preItemInline]: props.preItemIsInline,
             })}
           >
@@ -133,7 +133,7 @@ const Input = <TFormData = DefaultFormData>(passedProps: InputProps<TFormData>) 
             {...restOfProps}
             type={props.type !== 'password' || props.useTruePassword ? props.type : 'text'}
             name={props.name as string}
-            class={classnames(styles.input, props.class, {
+            class={tailwindUtils.merge(styles.input, props.class, {
               [styles.password]: props.type === 'password',
             })}
             disabled={props.disabled}
@@ -145,7 +145,7 @@ const Input = <TFormData = DefaultFormData>(passedProps: InputProps<TFormData>) 
         </div>
         <Show when={props.postItem}>
           <div
-            class={classnames(styles.postItem, {
+            class={tailwindUtils.merge(styles.postItem, {
               [styles.postItemIsClickable]: !!props.postItemIsClickable,
             })}
           >

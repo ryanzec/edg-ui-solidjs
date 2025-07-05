@@ -1,6 +1,6 @@
 import styles from '$/core/components/date-time/date-time.module.css';
 import { DateFormat, type TimeFormat, TimezoneFormat } from '$/core/utils/date';
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import type { Dayjs } from 'dayjs';
 import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
 
@@ -22,7 +22,7 @@ const DateTime = (passedProps: DateTimeProps) => {
   };
 
   return (
-    <div class={classnames(styles.dateTime, props.class)} {...restOfProps}>
+    <div class={tailwindUtils.merge(styles.dateTime, props.class)} {...restOfProps}>
       <span>{convertedDate().format(props.dateFormat)}</span>
       <Show when={props.timeFormat}>
         <span>{convertedDate().format(props.timeFormat)}</span>

@@ -1,7 +1,7 @@
 import styles from '$/core/components/code-block/code-block.module.css';
 import CopyText from '$/core/components/copy-text';
 import Typography, { type TypographyProps, TypographySize } from '$/core/components/typography';
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { mergeProps, splitProps } from 'solid-js';
 
 export const CodeBlockVariant = {
@@ -37,7 +37,7 @@ const CodeBlock = (passedProps: CodeBlockProps) => {
       data-id="code-block"
       {...restOfProps}
       size={TypographySize.SMALL}
-      class={classnames(styles.codeBlock, {
+      class={tailwindUtils.merge(styles.codeBlock, {
         [styles.inline]: props.variant === CodeBlockVariant.INLINE,
       })}
     >

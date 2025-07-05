@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
 import { Dynamic, type DynamicProps } from 'solid-js/web';
 
@@ -64,7 +64,7 @@ const Card = (passedProps: CardProps) => {
       component={elementType()}
       {...restOfProps}
       {...extraProps()}
-      class={classnames(styles.card, props.class, {
+      class={tailwindUtils.merge(styles.card, props.class, {
         [styles.asPageSection]: props.asPageSection,
         [styles.clickable]: props.onClick || props.link,
       })}

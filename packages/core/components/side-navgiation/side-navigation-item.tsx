@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, children, createEffect, createSignal, mergeProps, splitProps } from 'solid-js';
 
 import Icon, { IconColor, IconSize } from '$/core/components/icon';
@@ -84,7 +84,7 @@ const SideNavigationItem = (passedProps: SideNavigationItemProps) => {
     <div
       data-id="item"
       {...restOfProps}
-      class={classnames(styles.item, props.class, {
+      class={tailwindUtils.merge(styles.item, props.class, {
         [styles.isCollapsed]: !props.toggleStore?.isToggled(),
       })}
     >

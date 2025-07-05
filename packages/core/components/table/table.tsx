@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
 
 import ScrollArea from '$/core/components/scroll-area';
@@ -26,20 +26,22 @@ const Table = (passedProps: TableProps) => {
 
   return (
     <div
-      class={classnames(styles.tableContainer, props.class, {
+      class={tailwindUtils.merge(styles.tableContainer, props.class, {
         [styles.tableRounded]: props.shape === TableShape.ROUNDED,
       })}
     >
       <div class={styles.innerContainer}>
         <ScrollArea class={styles.tableScrollArea}>
-          <table data-id="table" {...restOfProps} class={classnames(styles.table, props.class)}>
+          <table data-id="table" {...restOfProps} class={tailwindUtils.merge(styles.table, props.class)}>
             <Show when={props.tableHead}>
-              <thead class={classnames({ [styles.tableHeadSticky]: props.hasFixedHeader })}>{props.tableHead}</thead>
+              <thead class={tailwindUtils.merge({ [styles.tableHeadSticky]: props.hasFixedHeader })}>
+                {props.tableHead}
+              </thead>
             </Show>
             <tbody>{props.children}</tbody>
           </table>
           <Show when={props.tableFooter}>
-            <div class={classnames(styles.tableFooter)}>{props.tableFooter}</div>
+            <div class={tailwindUtils.merge(styles.tableFooter)}>{props.tableFooter}</div>
           </Show>
         </ScrollArea>
       </div>

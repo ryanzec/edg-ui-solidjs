@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, mergeProps, splitProps } from 'solid-js';
 
 import styles from '$/core/components/button/button.module.css';
@@ -19,7 +19,7 @@ const ButtonPrePostItem = (passedProps: ButtonIconProps) => {
     <div
       data-id="button-icon"
       {...restOfProps}
-      class={classnames(styles.prePostItem, props.class, {
+      class={tailwindUtils.merge(styles.prePostItem, props.class, {
         [styles.preItem]: props.position === ButtonItemPosition.PRE,
         [styles.postItem]: props.position === ButtonItemPosition.POST,
       })}

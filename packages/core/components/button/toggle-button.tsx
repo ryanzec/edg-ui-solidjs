@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { splitProps } from 'solid-js';
 
 import Button, { type ButtonProps } from '$/core/components/button/button';
@@ -16,7 +16,7 @@ const ToggleButton = (passedProps: ButtonToggleProps) => {
     <Button
       data-id="toggle-button"
       {...restOfProps}
-      class={classnames(props.class, { [styles.isSelected]: props.isSelected })}
+      class={tailwindUtils.merge(props.class, { [styles.isSelected]: props.isSelected })}
       variant={ButtonVariant.OUTLINED}
       color={ButtonColor.NEUTRAL}
     />

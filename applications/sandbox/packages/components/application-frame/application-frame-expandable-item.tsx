@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { Show, createEffect, createSignal, splitProps } from 'solid-js';
 
 import styles from '$sandbox/components/application-frame/application-frame.module.css';
@@ -61,7 +61,7 @@ const ApplicationFrameExpandableItem = (passedProps: ApplicationFrameExpandableI
       </Show>
       <Show when={!hasSubNavigation()}>
         <SideNavigation.Item
-          class={classnames(styles.navigationSubSection, {
+          class={tailwindUtils.merge(styles.navigationSubSection, {
             [styles.navigationSection]: hasSubNavigation(),
           })}
           headerItem={stringUtils.toWords(props.routeKey)}

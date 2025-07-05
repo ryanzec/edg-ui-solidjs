@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, createEffect, createSignal } from 'solid-js';
 
 import styles from '$/core/components/side-navgiation/side-navigation.module.css';
@@ -20,7 +20,7 @@ const SideNavigationSubItem = (props: SideNavigationSubItemProps) => {
   >({});
 
   createEffect(function updateComponentData() {
-    const cssClasses = classnames(styles.subItem, props.class, {
+    const cssClasses = tailwindUtils.merge(styles.subItem, props.class, {
       [styles.subItemActive]: props.isActive,
     });
 

@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import {
   type Accessor,
   For,
@@ -54,7 +54,7 @@ const FormField = (passedProps: FormFieldProps) => {
         validationState: contextValidationState,
       }}
     >
-      <div data-id="form-field" {...restOfProps} class={classnames(props.class, styles.formField)}>
+      <div data-id="form-field" {...restOfProps} class={tailwindUtils.merge(props.class, styles.formField)}>
         {props.children}
         <Show when={props.showErrors && (props.errors || []).length > 0}>
           <Typography data-id="validation-message" color={TypographyColor.DANGER} size={TypographySize.SMALL}>

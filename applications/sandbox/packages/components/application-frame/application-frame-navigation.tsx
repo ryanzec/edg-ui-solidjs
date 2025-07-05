@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, splitProps } from 'solid-js';
 
 import type { CommonDataAttributes } from '$/core/types/generic';
@@ -23,7 +23,7 @@ const ApplicationFrameNavigation = (passedProps: ApplicationFrameNavigationProps
   };
 
   return (
-    <div data-id="navigation" class={classnames(styles.navigation, props.class)} {...restOfProps}>
+    <div data-id="navigation" class={tailwindUtils.merge(styles.navigation, props.class)} {...restOfProps}>
       {/*<ScrollArea>*/}
       <Button
         shape={ButtonShape.CIRCLE}

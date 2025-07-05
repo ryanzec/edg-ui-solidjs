@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import type dayjs from 'dayjs';
 import { Index, type JSX, Show, createMemo, createSignal, mergeProps, splitProps } from 'solid-js';
 
@@ -204,7 +204,7 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
   };
 
   return (
-    <div data-id="date-picker" {...restOfProps} class={classnames(styles.datePicker, props.class)}>
+    <div data-id="date-picker" {...restOfProps} class={tailwindUtils.merge(styles.datePicker, props.class)}>
       <div class={styles.header}>
         <Icon icon="caret-left" onClick={moveToPreviousMonth} />
         <button type="button" class={styles.headerText} onClick={handleToggleMonthYearSelection}>
@@ -214,13 +214,13 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
       </div>
       <div class={styles.calendar}>
         <div>
-          <span class={classnames(styles.day, styles.dayOfWeekHeaderItem)}>Su</span>
-          <span class={classnames(styles.day, styles.dayOfWeekHeaderItem)}>Mo</span>
-          <span class={classnames(styles.day, styles.dayOfWeekHeaderItem)}>Tu</span>
-          <span class={classnames(styles.day, styles.dayOfWeekHeaderItem)}>We</span>
-          <span class={classnames(styles.day, styles.dayOfWeekHeaderItem)}>Th</span>
-          <span class={classnames(styles.day, styles.dayOfWeekHeaderItem)}>Fr</span>
-          <span class={classnames(styles.day, styles.dayOfWeekHeaderItem)}>Sa</span>
+          <span class={tailwindUtils.merge(styles.day, styles.dayOfWeekHeaderItem)}>Su</span>
+          <span class={tailwindUtils.merge(styles.day, styles.dayOfWeekHeaderItem)}>Mo</span>
+          <span class={tailwindUtils.merge(styles.day, styles.dayOfWeekHeaderItem)}>Tu</span>
+          <span class={tailwindUtils.merge(styles.day, styles.dayOfWeekHeaderItem)}>We</span>
+          <span class={tailwindUtils.merge(styles.day, styles.dayOfWeekHeaderItem)}>Th</span>
+          <span class={tailwindUtils.merge(styles.day, styles.dayOfWeekHeaderItem)}>Fr</span>
+          <span class={tailwindUtils.merge(styles.day, styles.dayOfWeekHeaderItem)}>Sa</span>
         </div>
         <Index each={currentViewDays()}>
           {(days) => {
@@ -230,7 +230,7 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
                   {(day) => {
                     return (
                       <button
-                        class={classnames(styles.day, {
+                        class={tailwindUtils.merge(styles.day, {
                           [styles.dayInactive]: !day().isCurrentMonth,
                           [styles.dayDisabled]: day().isDisabled,
                           [styles.dayCurrent]: day().formatCurrentCheck === currentDayFormatted,

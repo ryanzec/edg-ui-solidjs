@@ -7,7 +7,7 @@ import { clickOutsideDirective } from '$/core/directives/click-outside-directive
 import { clickOutsideDirectiveDataAttribute } from '$/core/directives/click-outside-directive/click-outside-directive';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import { loggerUtils } from '$/core/utils/logger';
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 // this is needed to avoid this code being stripped in compilation because of the way directive work in SolidJS
 clickOutsideDirective;
@@ -165,7 +165,7 @@ const Tooltip = (passedProps: TooltipProps) => {
         }}
         ref={containerRef}
         data-id="tooltip"
-        class={classnames(styles.tooltip, props.class)}
+        class={tailwindUtils.merge(styles.tooltip, props.class)}
         {...restOfProps}
       >
         {props.children}

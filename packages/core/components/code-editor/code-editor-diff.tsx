@@ -6,11 +6,11 @@ import {
   defaultExtensions,
 } from '$/core/components/code-editor/utils';
 import type { CommonDataAttributes } from '$/core/types/generic';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { lintGutter, linter } from '@codemirror/lint';
 import { type Chunk, MergeView, getChunks, getOriginalDoc, unifiedMergeView } from '@codemirror/merge';
 import { EditorState, type Extension, type Text } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
-import classnames from 'classnames';
 import { type JSX, createSignal, mergeProps, onMount, splitProps } from 'solid-js';
 
 const findModifiedChunks = (prevChunks: readonly Chunk[], currChunks: readonly Chunk[]): Chunk[] => {
@@ -232,7 +232,7 @@ const CodeEditor = (passedProps: CodeEditorDiffProps) => {
     <div class="relative">
       <div
         {...restOfProps}
-        class={classnames(styles.codeEditor, props.class, {
+        class={tailwindUtils.merge(styles.codeEditor, props.class, {
           [styles.borderless]: props.isBorderless,
         })}
         ref={containerElement}

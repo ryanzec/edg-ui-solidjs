@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show, splitProps } from 'solid-js';
 
 import type { CommonDataAttributes } from '$/core/types/generic';
@@ -18,11 +18,11 @@ const ApplicationFrame = (passedProps: ApplicationFrameProps) => {
   const [props, restOfProps] = splitProps(passedProps, ['isLoading', 'navigation', 'class', 'children']);
 
   return (
-    <div data-id="application-frame" class={classnames(styles.applicationFrame, props.class)} {...restOfProps}>
+    <div data-id="application-frame" class={tailwindUtils.merge(styles.applicationFrame, props.class)} {...restOfProps}>
       <Show when={props.isLoading === false} fallback={<div>Loading</div>}>
         <ApplicationFrameNavigation routes={props.navigation} />
-        <div class={classnames(styles.subContainer)}>
-          <div data-id="sandbox-main-content" class={classnames(styles.mainContent)}>
+        <div class={tailwindUtils.merge(styles.subContainer)}>
+          <div data-id="sandbox-main-content" class={tailwindUtils.merge(styles.mainContent)}>
             {props.children}
           </div>
         </div>

@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type Accessor, type JSX, Show, createEffect, createSignal, splitProps, useContext } from 'solid-js';
 
 import styles from '$/core/components/checkbox/checkbox.module.css';
@@ -95,7 +95,7 @@ const Checkbox = <TFormData = DefaultFormData>(passedProps: CheckboxProps<TFormD
 
   return (
     <span
-      class={classnames(styles.checkbox, props.class, {
+      class={tailwindUtils.merge(styles.checkbox, props.class, {
         [styles.alignEnd]: props.alignEnd,
       })}
     >
@@ -108,7 +108,7 @@ const Checkbox = <TFormData = DefaultFormData>(passedProps: CheckboxProps<TFormD
           name={props.name as string}
           onChange={handleChange}
         />
-        <Icon class={classnames(styles.icon)} icon={getCheckedStateIcon()} />
+        <Icon class={tailwindUtils.merge(styles.icon)} icon={getCheckedStateIcon()} />
         <Show when={props.labelElement}>
           <span class={styles.label}>{props.labelElement}</span>
         </Show>

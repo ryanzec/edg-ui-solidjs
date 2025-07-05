@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
 
 import type { IconSize } from '$/core/components/icon';
@@ -21,9 +21,9 @@ const Label = (passedProps: LabelProps) => {
   ]);
 
   return (
-    <div data-id="label" class={classnames(styles.container, props.class)}>
+    <div data-id="label" class={tailwindUtils.merge(styles.container, props.class)}>
       {/* biome-ignore lint/a11y/noLabelWithoutControl: provided by ...restOfProps */}
-      <label data-id="label" {...restOfProps} class={classnames(styles.label, props.class)}>
+      <label data-id="label" {...restOfProps} class={tailwindUtils.merge(styles.label, props.class)}>
         {props.children}
         <Show when={props.isLoading}>
           <Loading class={iconStyles.spacingLeft} />

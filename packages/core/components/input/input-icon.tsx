@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, splitProps } from 'solid-js';
 
 import styles from '$/core/components/input/input.module.css';
@@ -13,7 +13,7 @@ const InputIcon = (props: InputIconProps) => {
   const [local, restOfProps] = splitProps(props, ['icon', 'class']);
 
   return (
-    <span data-id="input-icon" {...restOfProps} class={classnames(local.class, styles.icon)}>
+    <span data-id="input-icon" {...restOfProps} class={tailwindUtils.merge(local.class, styles.icon)}>
       {local.icon}
     </span>
   );

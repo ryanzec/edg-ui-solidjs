@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 import styles from '$/core/components/combobox/combobox.module.css';
 import type { ComboboxExtraData, ComboboxSelectableOptionProps } from '$/core/components/combobox/utils';
@@ -9,7 +9,7 @@ const SelectableOption = <TData extends ComboboxExtraData>(props: ComboboxSelect
     <List.Item
       data-id="selectable-option"
       data-combobox-value={props.option.value}
-      class={classnames(styles.selectableOption, styles.listOption)}
+      class={tailwindUtils.merge(styles.selectableOption, styles.listOption)}
       onMouseMove={() => props.onMouseEnterOption(props.optionIndex)}
       onMouseDown={() => props.onMouseDownOption(props.option)}
       tabIndex={-1}

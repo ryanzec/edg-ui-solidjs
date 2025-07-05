@@ -3,9 +3,9 @@ import { dragDropComponentUtils } from '$/core/components/drag-drop';
 import DragDropLayout from '$/core/components/drag-drop-layout';
 import styles from '$/core/components/drag-drop-layout/drag-drop-layout.sandbox.module.css';
 import Icon, { IconSize } from '$/core/components/icon';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 import type { ChartData } from 'chart.js';
-import classnames from 'classnames';
 import { createSignal } from 'solid-js';
 import * as uuid from 'uuid';
 
@@ -98,8 +98,8 @@ export const Default = () => {
     <SandboxExamplesContainer>
       <DragDropLayout dragDropStore={dragDropStore} droppableId={droppableId1}>
         <DragDropLayout.Slot
-          class={classnames(styles.slot)}
-          contentClass={classnames(styles.slot1)}
+          class={tailwindUtils.merge(styles.slot)}
+          contentClass={tailwindUtils.merge(styles.slot1)}
           draggableId={dragDropStore.elements()[0].id}
           droppableId={droppableId1}
         >
@@ -107,16 +107,16 @@ export const Default = () => {
         </DragDropLayout.Slot>
         <div class={styles.middle}>
           <DragDropLayout.Slot
-            class={classnames(styles.slot)}
-            contentClass={classnames(styles.slot2)}
+            class={tailwindUtils.merge(styles.slot)}
+            contentClass={tailwindUtils.merge(styles.slot2)}
             draggableId={dragDropStore.elements()[1].id}
             droppableId={droppableId1}
           >
             {dragDropStore.elements()[1].element()}
           </DragDropLayout.Slot>
           <DragDropLayout.Slot
-            class={classnames(styles.slot)}
-            contentClass={classnames(styles.slot3)}
+            class={tailwindUtils.merge(styles.slot)}
+            contentClass={tailwindUtils.merge(styles.slot3)}
             draggableId={dragDropStore.elements()[2].id}
             droppableId={droppableId1}
           >
@@ -124,8 +124,8 @@ export const Default = () => {
           </DragDropLayout.Slot>
         </div>
         <DragDropLayout.Slot
-          class={classnames(styles.slot)}
-          contentClass={classnames(styles.slot4)}
+          class={tailwindUtils.merge(styles.slot)}
+          contentClass={tailwindUtils.merge(styles.slot4)}
           draggableId={dragDropStore.elements()[3].id}
           droppableId={droppableId1}
         >
@@ -227,8 +227,8 @@ export const MultipleSamePage = () => {
     <SandboxExamplesContainer>
       <DragDropLayout dragDropStore={dragDropStore} droppableId={droppableId1}>
         <DragDropLayout.Slot
-          class={classnames(styles.slot)}
-          contentClass={classnames(styles.slot1)}
+          class={tailwindUtils.merge(styles.slot)}
+          contentClass={tailwindUtils.merge(styles.slot1)}
           draggableId={dragDropStore.elements()[0].id}
           droppableId={droppableId1}
         >
@@ -236,16 +236,16 @@ export const MultipleSamePage = () => {
         </DragDropLayout.Slot>
         <div class={styles.middle}>
           <DragDropLayout.Slot
-            class={classnames(styles.slot)}
-            contentClass={classnames(styles.slot2)}
+            class={tailwindUtils.merge(styles.slot)}
+            contentClass={tailwindUtils.merge(styles.slot2)}
             draggableId={dragDropStore.elements()[1].id}
             droppableId={droppableId1}
           >
             {dragDropStore.elements()[1].element()}
           </DragDropLayout.Slot>
           <DragDropLayout.Slot
-            class={classnames(styles.slot)}
-            contentClass={classnames(styles.slot3)}
+            class={tailwindUtils.merge(styles.slot)}
+            contentClass={tailwindUtils.merge(styles.slot3)}
             draggableId={dragDropStore.elements()[2].id}
             droppableId={droppableId1}
           >
@@ -253,8 +253,8 @@ export const MultipleSamePage = () => {
           </DragDropLayout.Slot>
         </div>
         <DragDropLayout.Slot
-          class={classnames(styles.slot)}
-          contentClass={classnames(styles.slot4)}
+          class={tailwindUtils.merge(styles.slot)}
+          contentClass={tailwindUtils.merge(styles.slot4)}
           draggableId={dragDropStore.elements()[3].id}
           droppableId={droppableId1}
         >
@@ -264,8 +264,8 @@ export const MultipleSamePage = () => {
       <hr />
       <DragDropLayout dragDropStore={dragDropStore2} droppableId={droppableId2}>
         <DragDropLayout.Slot
-          class={classnames(styles.slot)}
-          contentClass={classnames(styles.slot1)}
+          class={tailwindUtils.merge(styles.slot)}
+          contentClass={tailwindUtils.merge(styles.slot1)}
           draggableId={dragDropStore2.elements()[0].id}
           droppableId={droppableId2}
         >
@@ -273,16 +273,16 @@ export const MultipleSamePage = () => {
         </DragDropLayout.Slot>
         <div class={styles.middle}>
           <DragDropLayout.Slot
-            class={classnames(styles.slot)}
-            contentClass={classnames(styles.slot2)}
+            class={tailwindUtils.merge(styles.slot)}
+            contentClass={tailwindUtils.merge(styles.slot2)}
             draggableId={dragDropStore2.elements()[1].id}
             droppableId={droppableId2}
           >
             {dragDropStore2.elements()[1].element()}
           </DragDropLayout.Slot>
           <DragDropLayout.Slot
-            class={classnames(styles.slot)}
-            contentClass={classnames(styles.slot3)}
+            class={tailwindUtils.merge(styles.slot)}
+            contentClass={tailwindUtils.merge(styles.slot3)}
             draggableId={dragDropStore2.elements()[2].id}
             droppableId={droppableId2}
           >
@@ -290,8 +290,8 @@ export const MultipleSamePage = () => {
           </DragDropLayout.Slot>
         </div>
         <DragDropLayout.Slot
-          class={classnames(styles.slot)}
-          contentClass={classnames(styles.slot4)}
+          class={tailwindUtils.merge(styles.slot)}
+          contentClass={tailwindUtils.merge(styles.slot4)}
           draggableId={dragDropStore2.elements()[3].id}
           droppableId={droppableId2}
         >
@@ -358,8 +358,8 @@ export const WithEmptySlot = () => {
     <SandboxExamplesContainer>
       <DragDropLayout dragDropStore={dragDropStore} droppableId={droppableId1}>
         <DragDropLayout.Slot
-          class={classnames(styles.slot)}
-          contentClass={classnames(styles.slot1)}
+          class={tailwindUtils.merge(styles.slot)}
+          contentClass={tailwindUtils.merge(styles.slot1)}
           draggableId={dragDropStore.elements()[0].id}
           droppableId={droppableId1}
         >
@@ -367,16 +367,16 @@ export const WithEmptySlot = () => {
         </DragDropLayout.Slot>
         <div class={styles.middle}>
           <DragDropLayout.Slot
-            class={classnames(styles.slot)}
-            contentClass={classnames(styles.slot2)}
+            class={tailwindUtils.merge(styles.slot)}
+            contentClass={tailwindUtils.merge(styles.slot2)}
             draggableId={dragDropStore.elements()[1].id}
             droppableId={droppableId1}
           >
             {dragDropStore.elements()[1].element()}
           </DragDropLayout.Slot>
           <DragDropLayout.Slot
-            class={classnames(styles.slot)}
-            contentClass={classnames(styles.slot3)}
+            class={tailwindUtils.merge(styles.slot)}
+            contentClass={tailwindUtils.merge(styles.slot3)}
             draggableId={dragDropStore.elements()[2].id}
             droppableId={droppableId1}
           >
@@ -384,8 +384,8 @@ export const WithEmptySlot = () => {
           </DragDropLayout.Slot>
         </div>
         <DragDropLayout.Slot
-          class={classnames(styles.slot)}
-          contentClass={classnames(styles.slot4)}
+          class={tailwindUtils.merge(styles.slot)}
+          contentClass={tailwindUtils.merge(styles.slot4)}
           draggableId={dragDropStore.elements()[3].id}
           droppableId={droppableId1}
         >
@@ -488,8 +488,8 @@ export const WithHandles = () => {
     <SandboxExamplesContainer>
       <DragDropLayout dragDropStore={dragDropStore} droppableId={droppableId1}>
         <DragDropLayout.Slot
-          class={classnames(styles.slot)}
-          contentClass={classnames(styles.slot1)}
+          class={tailwindUtils.merge(styles.slot)}
+          contentClass={tailwindUtils.merge(styles.slot1)}
           draggableId={dragDropStore.elements()[0].id}
           droppableId={droppableId1}
         >
@@ -497,16 +497,16 @@ export const WithHandles = () => {
         </DragDropLayout.Slot>
         <div class={styles.middle}>
           <DragDropLayout.Slot
-            class={classnames(styles.slot)}
-            contentClass={classnames(styles.slot2)}
+            class={tailwindUtils.merge(styles.slot)}
+            contentClass={tailwindUtils.merge(styles.slot2)}
             draggableId={dragDropStore.elements()[1].id}
             droppableId={droppableId1}
           >
             {dragDropStore.elements()[1].element()}
           </DragDropLayout.Slot>
           <DragDropLayout.Slot
-            class={classnames(styles.slot)}
-            contentClass={classnames(styles.slot3)}
+            class={tailwindUtils.merge(styles.slot)}
+            contentClass={tailwindUtils.merge(styles.slot3)}
             draggableId={dragDropStore.elements()[2].id}
             droppableId={droppableId1}
           >
@@ -514,8 +514,8 @@ export const WithHandles = () => {
           </DragDropLayout.Slot>
         </div>
         <DragDropLayout.Slot
-          class={classnames(styles.slot)}
-          contentClass={classnames(styles.slot4)}
+          class={tailwindUtils.merge(styles.slot)}
+          contentClass={tailwindUtils.merge(styles.slot4)}
           draggableId={dragDropStore.elements()[3].id}
           droppableId={droppableId1}
         >

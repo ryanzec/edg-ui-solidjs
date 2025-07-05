@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
 
 import Checkbox from '$/core/components/checkbox';
@@ -36,7 +36,7 @@ const TableRow = (passedProps: TableRowProps) => {
     <tr
       data-id="row"
       {...restOfProps}
-      class={classnames(styles.tableRow, props.class, { [styles.tableRowIsSelected]: props.isSelected })}
+      class={tailwindUtils.merge(styles.tableRow, props.class, { [styles.tableRowIsSelected]: props.isSelected })}
     >
       <Show when={props.isSelectable}>
         {/* setting the width to 1px will make the table data element only take up the width of the content */}

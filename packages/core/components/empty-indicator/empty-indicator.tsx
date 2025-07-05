@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show, splitProps } from 'solid-js';
 
 import Button from '$/core/components/button';
@@ -14,7 +14,7 @@ const EmptyIndicator = (passedProps: EmptyIndicatorProps) => {
   const [props, restOfProps] = splitProps(passedProps, ['class', 'label', 'actionLabel', 'onTriggerAction']);
 
   return (
-    <div data-id="empty-indicator" {...restOfProps} class={classnames(styles.emptyIndicator, props.class)}>
+    <div data-id="empty-indicator" {...restOfProps} class={tailwindUtils.merge(styles.emptyIndicator, props.class)}>
       {props.label}
       <Show when={props.actionLabel && props.onTriggerAction}>
         <Button onClick={props.onTriggerAction}>{props.actionLabel}</Button>

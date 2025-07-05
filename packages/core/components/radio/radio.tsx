@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type Accessor, type JSX, createSignal, splitProps } from 'solid-js';
 
 import Icon from '$/core/components/icon';
@@ -42,14 +42,14 @@ const Radio = <TFormData = DefaultFormData>(passedProps: RadioProps<TFormData>) 
 
   return (
     <span
-      class={classnames(styles.radio, props.class, {
+      class={tailwindUtils.merge(styles.radio, props.class, {
         [styles.alignEnd]: props.alignEnd,
       })}
     >
       <label>
         <input data-id="radio" {...restOfProps} type="radio" name={props.name as string} onChange={handleSelect} />
         <Icon
-          class={classnames(styles.icon, {
+          class={tailwindUtils.merge(styles.icon, {
             [styles.iconIsChecked]: isChecked(),
           })}
           icon={isChecked() ? 'check-circle' : 'circle'}

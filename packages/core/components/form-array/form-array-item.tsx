@@ -1,6 +1,6 @@
 import styles from '$/core/components/form-array/form-array.module.css';
 import Icon, { IconColor } from '$/core/components/icon';
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show } from 'solid-js';
 
 export type FormArrayItemProps = {
@@ -12,7 +12,7 @@ export type FormArrayItemProps = {
 const FormArrayItem = (props: FormArrayItemProps) => {
   return (
     <div
-      class={classnames(styles.itemContainer, {
+      class={tailwindUtils.merge(styles.itemContainer, {
         [styles.itemEnclosed]: props.encloseItem,
       })}
     >

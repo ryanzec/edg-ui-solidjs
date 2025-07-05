@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type Accessor, type JSX, createSignal, mergeProps, onMount, splitProps, useContext } from 'solid-js';
 
 import { FormFieldContext } from '$/core/components/form-field';
@@ -69,7 +69,7 @@ const Textarea = <TFormData = DefaultFormData>(passedProps: TextareaProps<TFormD
       onFocus={handleFocus}
       {...restOfProps}
       name={props.name as string}
-      class={classnames(styles.textarea, props.class, {
+      class={tailwindUtils.merge(styles.textarea, props.class, {
         [styles.invalid]: formFieldContext?.validationState() === FormInputValidationState.INVALID,
       })}
     />

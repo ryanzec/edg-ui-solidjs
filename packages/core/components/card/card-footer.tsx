@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, mergeProps, splitProps } from 'solid-js';
 
 import styles from '$/core/components/card/card.module.css';
@@ -18,7 +18,7 @@ const CardFooter = (passedProps: CardFooterProps) => {
   return (
     <div
       data-id="footer"
-      class={classnames(styles.footer, {
+      class={tailwindUtils.merge(styles.footer, {
         [styles.footerRightAligned]: props.alignment === CardFooterAlignment.RIGHT,
       })}
       {...restOfProps}

@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 import styles from '$/core/components/combobox/combobox.module.css';
 import type { ComboboxSelectableGroupHeaderProps } from '$/core/components/combobox/utils';
@@ -6,7 +6,10 @@ import List from '$/core/components/list';
 
 const SelectableGroupHeader = (props: ComboboxSelectableGroupHeaderProps) => {
   return (
-    <List.Item data-id="selectable-group-header" class={classnames(styles.selectableGroupHeader, styles.listOption)}>
+    <List.Item
+      data-id="selectable-group-header"
+      class={tailwindUtils.merge(styles.selectableGroupHeader, styles.listOption)}
+    >
       {props.label}
     </List.Item>
   );

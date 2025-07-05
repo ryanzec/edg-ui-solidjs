@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, mergeProps, splitProps } from 'solid-js';
 
 import Icon, { type IconProps, IconColor, IconSize } from '$/core/components/icon';
@@ -18,7 +18,7 @@ const Loading = (passedProps: LoadingProps) => {
   );
 
   return (
-    <div data-id="loading" {...restOfProps} class={classnames(props.class, styles.loading)}>
+    <div data-id="loading" {...restOfProps} class={tailwindUtils.merge(props.class, styles.loading)}>
       <Icon icon="spinner" size={props.iconSize} class={styles.icon} color={props.iconColor} />
     </div>
   );

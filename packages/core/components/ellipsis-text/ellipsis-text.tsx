@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type EllipsisTextProps = {
   text: string;
@@ -11,7 +11,7 @@ const EllipsisText = (props: EllipsisTextProps) => {
   return (
     // w-full makes sure the element does not overflow the parent container
     <span
-      class={classnames('text-ellipsis overflow-hidden w-full', props.class, {
+      class={tailwindUtils.merge('text-ellipsis overflow-hidden w-full', props.class, {
         '!inline-block': isSingleLine(),
         'whitespace-nowrap': isSingleLine(),
       })}

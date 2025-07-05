@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show, splitProps } from 'solid-js';
 
 import styles from '$/core/components/card/card.module.css';
@@ -21,7 +21,7 @@ const CardHeader = (passedProps: CardHeaderProps) => {
   ]);
 
   return (
-    <div data-id="header" class={classnames(styles.header, props.class)} {...restOfProps}>
+    <div data-id="header" class={tailwindUtils.merge(styles.header, props.class)} {...restOfProps}>
       <Show when={props.preItem}>
         <div class={styles.headerPreItem}>{props.preItem}</div>
       </Show>

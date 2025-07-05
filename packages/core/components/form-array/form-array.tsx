@@ -1,7 +1,7 @@
 import Button, { ButtonColor, ButtonVariant } from '$/core/components/button';
 import styles from '$/core/components/form-array/form-array.module.css';
 import Icon from '$/core/components/icon';
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show } from 'solid-js';
 
 export type FormArrayProps = {
@@ -15,7 +15,7 @@ export type FormArrayProps = {
 
 const FormArray = (props: FormArrayProps) => {
   return (
-    <div data-id="form-array-container" class={classnames(styles.container, props.class)}>
+    <div data-id="form-array-container" class={tailwindUtils.merge(styles.container, props.class)}>
       {props.children}
       <Show when={!props.hideAddButton}>
         <Button

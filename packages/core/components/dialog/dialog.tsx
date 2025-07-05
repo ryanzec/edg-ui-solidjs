@@ -4,7 +4,7 @@ import Icon from '$/core/components/icon';
 import Overlay from '$/core/components/overlay';
 import Typography, { TypographySize } from '$/core/components/typography';
 import { Key } from '$/core/types/generic';
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show, mergeProps, onCleanup, splitProps } from 'solid-js';
 import { Portal } from 'solid-js/web';
 
@@ -72,7 +72,7 @@ const Dialog = (passedProps: DialogProps) => {
   return (
     <Show when={props.dialogStore.isOpened()}>
       <Portal>
-        <div ref={dialogRef} data-id="dialog" {...restOfProps} class={classnames(styles.dialog, props.class)}>
+        <div ref={dialogRef} data-id="dialog" {...restOfProps} class={tailwindUtils.merge(styles.dialog, props.class)}>
           <Typography size={TypographySize.EXTRA_LARGE} class={styles.dialogHeader}>
             {props.headerElement}
             <Icon class={styles.closeHeaderTrigger} icon="x" onClick={handleCloseDialog} />
@@ -80,7 +80,7 @@ const Dialog = (passedProps: DialogProps) => {
           <div class={styles.dialogContent}>{props.children}</div>
           <Show when={props.footerElement}>
             <div
-              class={classnames(styles.dialogFooter, {
+              class={tailwindUtils.merge(styles.dialogFooter, {
                 [styles.dialogFooterRightAligned]: props.footerAlignment,
               })}
             >

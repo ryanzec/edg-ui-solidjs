@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { splitProps } from 'solid-js';
 
 import Button, { ButtonVariant } from '$/core/components/button';
@@ -42,7 +42,7 @@ const PaginationCursor = (passedProps: PaginationCursorProps) => {
   };
 
   return (
-    <div class={classnames(styles.pagination, props.class)} data-id="pagination-cursor" {...restOfProps}>
+    <div class={tailwindUtils.merge(styles.pagination, props.class)} data-id="pagination-cursor" {...restOfProps}>
       <div class={styles.paginationContent}>
         <div class={styles.paginationActions}>
           <Button

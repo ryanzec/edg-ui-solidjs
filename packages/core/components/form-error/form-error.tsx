@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import getScrollParent from 'scrollparent';
 import { For, Show, createEffect, createSignal, mergeProps, splitProps } from 'solid-js';
 
@@ -56,7 +56,7 @@ const FormError = (passedProps: FormErrorProps) => {
         {...restOfProps}
         // we use css to hide the element instead of <Show /> because we need the element to be present in the dom
         // for the ref to work properly
-        class={classnames(styles.formError, {
+        class={tailwindUtils.merge(styles.formError, {
           [styles.formErrorHidden]: !props.errorMessage,
         })}
         color={CalloutColor.DANGER}

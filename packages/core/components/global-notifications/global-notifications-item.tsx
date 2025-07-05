@@ -6,7 +6,7 @@ import {
   REMOVE_ANIMATION_DURATION,
   globalNotificationsStore,
 } from '$/core/stores/global-notifications.store';
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, splitProps } from 'solid-js';
 
 export type GlobalNotificationsListItemProps = JSX.HTMLAttributes<HTMLDivElement> & {
@@ -21,7 +21,7 @@ const GlobalNotificationsItem = (passedProps: GlobalNotificationsListItemProps) 
     <Callout
       data-id="global-notifications-item"
       {...restOfProps}
-      class={classnames(styles.notification, props.class, {
+      class={tailwindUtils.merge(styles.notification, props.class, {
         [styles.isRemoving]: props.notification.isRemoving || false,
       })}
       color={calloutColor()}

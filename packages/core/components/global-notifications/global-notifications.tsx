@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { For, type JSX, Show, mergeProps, splitProps } from 'solid-js';
 
 import GlobalNotificationsItem from '$/core/components/global-notifications/global-notifications-item';
@@ -23,7 +23,7 @@ const GlobalNotifications = (passedProps: GlobalNotificationsListProps) => {
       <div
         data-id="global-notifications"
         {...restOfProps}
-        class={classnames(props.class, styles.notifications, {
+        class={tailwindUtils.merge(props.class, styles.notifications, {
           [styles.topLeft]: props.position === GlobalNotificationPosition.TOP_LEFT,
           [styles.topRight]: props.position === GlobalNotificationPosition.TOP_RIGHT,
           [styles.bottomLeft]: props.position === GlobalNotificationPosition.BOTTOM_LEFT,

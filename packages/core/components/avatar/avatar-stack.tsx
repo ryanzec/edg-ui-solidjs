@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, mergeProps, splitProps } from 'solid-js';
 
 import { AvatarSize, AvatarStackContext, type AvatarStackContextData } from '$/core/components/avatar/utils';
@@ -17,7 +17,7 @@ const AvatarStack = (passedProps: AvatarStackProps) => {
       <div
         data-id="avatar-stack"
         {...restOfProps}
-        class={classnames(
+        class={tailwindUtils.merge(
           'flex flex-row-reverse justify-end [&>*]:border-1',
           {
             '[&>*:not(:last-child)]:-ml-2xs': contextData?.avatarSize === AvatarSize.SMALL,

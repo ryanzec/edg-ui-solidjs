@@ -1,7 +1,7 @@
 import Button, { ButtonVariant } from '$/core/components/button';
 import Icon from '$/core/components/icon/icon';
 import type { CommonDataAttributes } from '$/core/types/generic';
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
 
 export const PageLayout = {
@@ -27,7 +27,7 @@ const Page = (passedProps: PageProps) => {
   return (
     <div
       data-id="page"
-      class={classnames('flex h-full flex-col gap-sm flex-1', {
+      class={tailwindUtils.merge('flex h-full flex-col gap-sm flex-1', {
         'justify-center items-center': props.layout === PageLayout.CENTERED,
       })}
     >
@@ -42,7 +42,7 @@ const Page = (passedProps: PageProps) => {
         </Button>
       </Show>
       <div
-        class={classnames('flex flex-col h-full gap-sm min-h-[1px]', props.class, {
+        class={tailwindUtils.merge('flex flex-col h-full gap-sm min-h-[1px]', props.class, {
           'justify-center items-center': props.layout === PageLayout.CENTERED,
         })}
         {...restOfProps}

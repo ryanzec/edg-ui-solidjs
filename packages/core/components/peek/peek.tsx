@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show, mergeProps, onCleanup, splitProps } from 'solid-js';
 
 import Overlay from '$/core/components/overlay';
@@ -161,7 +161,7 @@ const Peek = (passedProps: PeekProps) => {
     <Show when={props.peekStore.isOpened()}>
       <Portal>
         <div data-id="peek">
-          <div ref={peekRef} {...restOfProps} class={classnames(styles.peek, props.class)}>
+          <div ref={peekRef} {...restOfProps} class={tailwindUtils.merge(styles.peek, props.class)}>
             {props.children}
           </div>
           <Show when={props.hasOverlay}>

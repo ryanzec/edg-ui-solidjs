@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, mergeProps, splitProps } from 'solid-js';
 
 import styles from '$/core/components/icon/icon.module.css';
@@ -30,7 +30,7 @@ const Icon = (passedProps: IconProps) => {
     <i
       data-id="icon"
       {...restOfProps}
-      class={classnames(`ph-${props.icon}`, styles.icon, props.class, {
+      class={tailwindUtils.merge(`ph-${props.icon}`, styles.icon, props.class, {
         ph: props.variant === IconVariant.REGULAR,
         'ph-bold': props.variant === IconVariant.BOLD,
         'ph-fill': props.variant === IconVariant.FILL,

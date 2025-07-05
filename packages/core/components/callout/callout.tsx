@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
 
 import styles from '$/core/components/callout/callout.module.css';
@@ -48,7 +48,7 @@ const Callout = (passedProps: CalloutProps) => {
     <div
       data-id="callout"
       {...restOfProps}
-      class={classnames(props.class, styles.callout, {
+      class={tailwindUtils.merge(props.class, styles.callout, {
         [styles.sideBorder]: props.hasSideBorder,
         [styles.neutral]: props.color === CalloutColor.NEUTRAL,
         [styles.neutralStrong]: props.color === CalloutColor.NEUTRAL && isStrong,
@@ -73,7 +73,7 @@ const Callout = (passedProps: CalloutProps) => {
         <div class={styles.preItem}>{props.preItem}</div>
       </Show>
       <span
-        class={classnames('flex flex-col gap-2xs items-start', props.contentClass, {
+        class={tailwindUtils.merge('flex flex-col gap-2xs items-start', props.contentClass, {
           [styles.centered]: props.isCentered,
         })}
       >

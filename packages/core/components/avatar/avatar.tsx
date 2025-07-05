@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { Show, mergeProps, splitProps, useContext } from 'solid-js';
 
 import { type AvatarProps, AvatarSize, AvatarStackContext } from '$/core/components/avatar/utils';
@@ -34,7 +34,7 @@ const Avatar = (passedProps: AvatarProps) => {
       data-id="avatar"
       color={TypographyColor.NONE}
       {...restOfProps}
-      class={classnames(
+      class={tailwindUtils.merge(
         'flex items-center justify-center rounded-full bg-brand text-on-brand font-medium',
         {
           'cursor-pointer': props.isClickable,

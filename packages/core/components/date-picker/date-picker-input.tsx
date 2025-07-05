@@ -1,5 +1,5 @@
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
-import classnames from 'classnames';
 import { Show, createEffect, createSignal, mergeProps, onCleanup, splitProps } from 'solid-js';
 
 import DatePicker, { type DatePickerProps } from '$/core/components/date-picker/date-picker';
@@ -200,7 +200,7 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
     <div
       data-id="date-picker-input"
       ref={containerRef}
-      class={classnames(styles.datePickerInput, props.class)}
+      class={tailwindUtils.merge(styles.datePickerInput, props.class)}
       use:clickOutsideDirective={{ callback: hideDatePicker }}
     >
       <Input

@@ -22,7 +22,6 @@ QUICK THINGS TODO
 - add `local` for node environment in api
 - remove `hasPassword`
 - ellipsis text update on resize of element
-- add scroll to item for tree component
 - add shift + click to submit for text area component
 
 REVIEW COMPONENTS:
@@ -67,5 +66,3 @@ REVIEW COMPONENTS:
 - typography
 - unsaved changes dialog
 
-OTHER THINGS TODO:
-- remove usage of `classnames`

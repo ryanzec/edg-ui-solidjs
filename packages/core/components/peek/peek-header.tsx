@@ -2,7 +2,7 @@ import Icon from '$/core/components/icon';
 import styles from '$/core/components/peek/peek.module.css';
 import Typography, { type TypographyProps, TypographySize } from '$/core/components/typography';
 import type { CommonDataAttributes } from '$/core/types/generic';
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { splitProps } from 'solid-js';
 
 export type PeekHeaderProps = TypographyProps &
@@ -18,7 +18,7 @@ const PeekHeader = (passedProps: PeekHeaderProps) => {
       size={TypographySize.EXTRA_LARGE}
       data-id="header"
       {...restOfProps}
-      class={classnames(styles.peekHeader, props.class)}
+      class={tailwindUtils.merge(styles.peekHeader, props.class)}
     >
       {props.title}
       <Icon data-peek-close icon="x" isClickable />

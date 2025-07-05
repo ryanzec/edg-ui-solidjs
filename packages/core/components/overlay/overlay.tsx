@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { mergeProps, splitProps } from 'solid-js';
 import { Portal } from 'solid-js/web';
 
@@ -14,7 +14,7 @@ const Overlay = (passedProps: OverlayProps) => {
         data-id="overlay"
         {...restOfProps}
         type="button"
-        class={classnames(styles.overlay, props.class, {
+        class={tailwindUtils.merge(styles.overlay, props.class, {
           [styles.strong]: props.variant === OverlayVariant.STRONG,
           [styles.weak]: props.variant === OverlayVariant.WEAK,
         })}

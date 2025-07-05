@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, splitProps } from 'solid-js';
 
 import styles from '$/core/components/table/table.module.css';
@@ -10,7 +10,7 @@ const TableHeader = (passedProps: TableHeaderProps) => {
   const [props, restOfProps] = splitProps(passedProps, ['children', 'class']);
 
   return (
-    <th data-id="header" {...restOfProps} class={classnames(styles.tableHeader, props.class)}>
+    <th data-id="header" {...restOfProps} class={tailwindUtils.merge(styles.tableHeader, props.class)}>
       {props.children}
     </th>
   );

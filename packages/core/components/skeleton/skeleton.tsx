@@ -1,5 +1,5 @@
 import styles from '$/core/components/skeleton/skeleton.module.css';
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, mergeProps, splitProps } from 'solid-js';
 
 export type SkeletonProps = JSX.HTMLAttributes<HTMLDivElement> & {
@@ -31,7 +31,7 @@ const Skeleton = (passedProps: SkeletonProps) => {
 
     barElements.push(
       <div
-        class={classnames(styles.bar, {
+        class={tailwindUtils.merge(styles.bar, {
           [variableLengthClasses[variableLengthIndex]]: props.variableLength,
         })}
       />,
@@ -39,7 +39,7 @@ const Skeleton = (passedProps: SkeletonProps) => {
   }
 
   return (
-    <div data-id="skeleton" class={classnames(props.class, styles.container)} {...restOfProps}>
+    <div data-id="skeleton" class={tailwindUtils.merge(props.class, styles.container)} {...restOfProps}>
       {barElements}
     </div>
   );

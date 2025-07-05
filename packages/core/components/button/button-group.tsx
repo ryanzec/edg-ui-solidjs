@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, splitProps } from 'solid-js';
 
 import styles from '$/core/components/button/button.module.css';
@@ -14,7 +14,7 @@ const ButtonGroup = (passedProps: ButtonGroupProps) => {
     <div
       data-id="button-group"
       {...restOfProps}
-      class={classnames(styles.buttonGroup, props.class, {
+      class={tailwindUtils.merge(styles.buttonGroup, props.class, {
         [styles.buttonGroupAttached]: props.isAttached,
       })}
     />

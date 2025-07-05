@@ -1,5 +1,5 @@
 import styles from '$/core/components/badge/badge.module.css';
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import type { JSX } from 'solid-js';
 
 export type BadgeGroupProps = {
@@ -8,7 +8,7 @@ export type BadgeGroupProps = {
 };
 
 const BadgeGroup = (props: BadgeGroupProps) => {
-  return <div class={classnames(styles.group, props.class)}>{props.children}</div>;
+  return <div class={tailwindUtils.merge(styles.group, props.class)}>{props.children}</div>;
 };
 
 export default BadgeGroup;

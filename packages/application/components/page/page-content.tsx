@@ -1,5 +1,5 @@
 import type { CommonDataAttributes } from '$/core/types/generic';
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, mergeProps, splitProps } from 'solid-js';
 
 export type PageContentProps = JSX.HTMLAttributes<HTMLDivElement> & CommonDataAttributes;
@@ -7,7 +7,7 @@ export type PageContentProps = JSX.HTMLAttributes<HTMLDivElement> & CommonDataAt
 const PageContent = (passedProps: PageContentProps) => {
   const [props, restOfProps] = splitProps(mergeProps({}, passedProps), ['class']);
 
-  return <div data-id="content" class={classnames('flex flex-col flex-1', props.class)} {...restOfProps} />;
+  return <div data-id="content" class={tailwindUtils.merge('flex flex-col flex-1', props.class)} {...restOfProps} />;
 };
 
 export default PageContent;

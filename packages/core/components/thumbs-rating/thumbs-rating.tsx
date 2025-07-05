@@ -1,7 +1,7 @@
 import Icon from '$/core/components/icon';
 import { IconVariant } from '$/core/components/icon';
 import styles from '$/core/components/thumbs-rating/thumbs-rating.module.css';
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { mergeProps } from 'solid-js';
 
 export type ThumbsRatingProps = {
@@ -23,7 +23,7 @@ const ThumbsRating = (passedProps: ThumbsRatingProps) => {
   return (
     <div class={styles.thumbsRating}>
       <Icon
-        class={classnames({
+        class={tailwindUtils.merge({
           [styles.disabled]: props.currentRating === -1,
         })}
         icon="thumbs-up"
@@ -31,7 +31,7 @@ const ThumbsRating = (passedProps: ThumbsRatingProps) => {
         onClick={props.currentRating === 0 ? handleRateUp : undefined}
       />
       <Icon
-        class={classnames(styles.thumbsDown, {
+        class={tailwindUtils.merge(styles.thumbsDown, {
           [styles.disabled]: props.currentRating === 1,
         })}
         icon="thumbs-down"

@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { For, Show, splitProps } from 'solid-js';
 
 import Button, { ButtonVariant } from '$/core/components/button';
@@ -33,7 +33,7 @@ const Pagination = (passedProps: PaginationProps) => {
   };
 
   return (
-    <div class={classnames(styles.pagination, props.class)} data-id="pagination" {...restOfProps}>
+    <div class={tailwindUtils.merge(styles.pagination, props.class)} data-id="pagination" {...restOfProps}>
       <div class={styles.paginationContent}>
         <Show when={props.showNumbers}>
           <div class={styles.paginationNumbers}>
@@ -42,7 +42,7 @@ const Pagination = (passedProps: PaginationProps) => {
                 <Show when={typeof page === 'number'} fallback={<span class={styles.paginationEllipsis}>{page}</span>}>
                   <Button
                     variant={ButtonVariant.GHOST}
-                    class={classnames(styles.paginationNumber, {
+                    class={tailwindUtils.merge(styles.paginationNumber, {
                       [styles.paginationNumberActive]: page === props.store.currentPage(),
                     })}
                     onClick={() => handlePageChange(page as number)}

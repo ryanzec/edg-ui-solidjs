@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, splitProps } from 'solid-js';
 
 import styles from '$/core/components/card/card.module.css';
@@ -9,7 +9,7 @@ const CardContent = (passedProps: CardContentProps) => {
   const [props, restOfProps] = splitProps(passedProps, ['children', 'class']);
 
   return (
-    <div data-id="content" class={classnames(styles.content, props.class)} {...restOfProps}>
+    <div data-id="content" class={tailwindUtils.merge(styles.content, props.class)} {...restOfProps}>
       {props.children}
     </div>
   );

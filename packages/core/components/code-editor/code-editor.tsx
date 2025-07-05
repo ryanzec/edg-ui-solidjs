@@ -3,10 +3,10 @@ import { buildErrorPanelExtension } from '$/core/components/code-editor/extensio
 import { type CodeEditorLanguageConfiguration, defaultExtensions } from '$/core/components/code-editor/utils';
 import CopyText from '$/core/components/copy-text';
 import type { CommonDataAttributes } from '$/core/types/generic';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { lintGutter, linter } from '@codemirror/lint';
 import { EditorState, type Extension } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
-import classnames from 'classnames';
 import { type JSX, Show, createEffect, createSignal, mergeProps, onMount, splitProps } from 'solid-js';
 
 export type CodeEditorProps = JSX.HTMLAttributes<HTMLDivElement> &
@@ -126,7 +126,7 @@ const CodeEditor = (passedProps: CodeEditorProps) => {
       </Show>
       <div
         {...restOfProps}
-        class={classnames(styles.codeEditor, props.class, {
+        class={tailwindUtils.merge(styles.codeEditor, props.class, {
           [styles.borderless]: props.isBorderless,
         })}
         ref={containerElement}

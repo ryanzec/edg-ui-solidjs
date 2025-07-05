@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, splitProps } from 'solid-js';
 
 import styles from '$/core/components/checkbox/checkbox.module.css';
@@ -11,7 +11,7 @@ const CheckboxGroup = (passedProps: CheckboxGroupProps) => {
   const [props, restOfProps] = splitProps(passedProps, ['class', 'children']);
 
   return (
-    <div data-id="checkbox-group" {...restOfProps} class={classnames(styles.group, props.class)}>
+    <div data-id="checkbox-group" {...restOfProps} class={tailwindUtils.merge(styles.group, props.class)}>
       {props.children}
     </div>
   );

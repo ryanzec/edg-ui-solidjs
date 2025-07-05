@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
 
 import ButtonPrePostItem from '$/core/components/button/button-pre-post-item';
@@ -66,7 +66,7 @@ export const Button = (passedProps: ButtonProps) => {
       data-id="button"
       type="button"
       {...restOfProps}
-      class={classnames(styles.button, props.class, {
+      class={tailwindUtils.merge(styles.button, props.class, {
         [styles.filled]: props.variant === ButtonVariant.FILLED,
         [styles.weak]: props.variant === ButtonVariant.WEAK,
         [styles.outlined]: props.variant === ButtonVariant.OUTLINED,

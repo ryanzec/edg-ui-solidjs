@@ -3,7 +3,7 @@ import { type JSX, mergeProps, splitProps, useContext } from 'solid-js';
 import { TooltipContext } from '$/core/components/tooltip/tooltip';
 import styles from '$/core/components/tooltip/tooltip.module.css';
 import { loggerUtils } from '$/core/utils/logger';
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type TooltipHandleProps = JSX.HTMLAttributes<HTMLSpanElement> & {
   isStyled?: boolean;
@@ -24,7 +24,7 @@ const TooltipHandle = (passedProps: TooltipHandleProps) => {
     <span
       data-id="tooltip-handle"
       data-tooltip-handle={context.id()}
-      class={classnames(props.class, {
+      class={tailwindUtils.merge(props.class, {
         [styles.handle]: props.isStyled,
       })}
       {...restOfProps}

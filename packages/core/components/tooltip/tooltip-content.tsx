@@ -3,7 +3,7 @@ import { type JSX, mergeProps, splitProps, useContext } from 'solid-js';
 import { TooltipContext } from '$/core/components/tooltip/tooltip';
 import styles from '$/core/components/tooltip/tooltip.module.css';
 import { loggerUtils } from '$/core/utils/logger';
-import classnames from 'classnames';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { Portal } from 'solid-js/web';
 
 export type TooltipContentProps = JSX.HTMLAttributes<HTMLDivElement> & {
@@ -26,7 +26,7 @@ const TooltipContent = (passedProps: TooltipContentProps) => {
       <div
         data-id="tooltip-content"
         data-tooltip-content={context.id()}
-        class={classnames(styles.content, props.class, {
+        class={tailwindUtils.merge(styles.content, props.class, {
           [styles.contentIsEnabled]: context.isShowing(),
           [styles.contentStyled]: props.isStyled,
         })}
