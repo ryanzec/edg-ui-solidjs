@@ -2,10 +2,14 @@ import { authenticationStore } from '$/application/stores/authentication.store';
 import { ApplicationFeature, UiRouteName } from '$/application/utils/application';
 import Avatar, { AvatarSize } from '$/core/components/avatar';
 import Checkbox from '$/core/components/checkbox';
+import { checkboxComponentsUtils } from '$/core/components/checkbox/utils';
 import DropDown from '$/core/components/drop-down';
+import FormField from '$/core/components/form-field';
 import Icon, { IconColor } from '$/core/components/icon';
 import List from '$/core/components/list';
 import type { TooltipStore } from '$/core/components/tooltip';
+import { themeManagerStore } from '$/core/stores/theme-manager.store';
+import { ThemeName } from '$/core/utils/styles';
 import { tailwindUtils } from '$/core/utils/tailwind';
 import type { User } from '$api/types/user';
 import { useNavigate } from '@solidjs/router';
@@ -47,6 +51,14 @@ const UserMenu = (passedProps: UserMenuProps) => {
     props.userMenuTooltipStore.hide();
   };
 
+  const handleThemeChange = (event: Event) => {
+    const newTheme: ThemeName = checkboxComponentsUtils.getValueFromElement(
+      event.target as HTMLInputElement,
+    ) as ThemeName;
+
+    themeManagerStore.setTheme(newTheme);
+  };
+
   return (
     <button type="button" class="w-full">
       <DropDown.Menu
@@ -79,7 +91,16 @@ const UserMenu = (passedProps: UserMenuProps) => {
         contentElement={
           <>
             <List.Item>
-              <Checkbox.Toggle labelElement="Color Theme" />
+              <FormField>
+                <Checkbox.Toggle
+                  labelElement="Light Mode"
+                  value={ThemeName.LIGHT}
+                  alternateLabelElement="Dark Mode"
+                  alternateValue={ThemeName.DARK}
+                  onChange={handleThemeChange}
+                  checked={themeManagerStore.theme() === ThemeName.LIGHT}
+                />
+              </FormField>
             </List.Item>
             <List.Item onClick={handleSettings}>Settings</List.Item>
             <Show when={props.features.includes(ApplicationFeature.INTERNAL_TOOLS)}>
