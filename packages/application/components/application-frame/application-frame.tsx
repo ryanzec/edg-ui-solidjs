@@ -59,7 +59,7 @@ const ApplicationFrame = (passedProps: ApplicationFrameProps) => {
         <Show when={props.isInitializing === false} fallback={<Loading.Section>Loading...</Loading.Section>}>
           <Show when={props.isAuthenticated}>
             <div
-              class={tailwindUtils.merge('flex flex-col h-full bg-[#d1ddd8] gap-2xs relative', {
+              class={tailwindUtils.merge('flex flex-col h-full bg-brand-subtle3 gap-2xs relative', {
                 'w-[250px]': sidebarOpenedToggleStore.isToggled(),
                 'w-[60px]': sidebarOpenedToggleStore.isToggled() === false,
               })}
@@ -81,7 +81,7 @@ const ApplicationFrame = (passedProps: ApplicationFrameProps) => {
                 <div class="flex flex-col gap-2xs">
                   <button
                     class={tailwindUtils.merge(
-                      'flex gap-3xs items-center rounded-full mx-xs px-2xs py-4xs hover:bg-[#a8bfb6] cursor-pointer',
+                      'flex gap-3xs items-center rounded-full mx-xs px-2xs py-4xs hover:bg-brand-subtle4 cursor-pointer',
                       {
                         'bg-[#a8bfb6]': routeUtils.isActive(UiRouteName.HOME, location.pathname),
                       },
