@@ -4,7 +4,7 @@ import FormFields from '$/core/components/form-fields';
 import Label from '$/core/components/label';
 import Peek, { peekComponentUtils } from '$/core/components/peek';
 import Textarea from '$/core/components/textarea';
-import TextareaChat from '$/core/components/textarea/textarea-chat';
+import TextareaInnerActions from '$/core/components/textarea/textarea-inner-actions';
 import { formStoreUtils } from '$/core/stores/form.store';
 import { createSignal } from 'solid-js';
 
@@ -79,7 +79,7 @@ export const SelectAll = () => {
   );
 };
 
-export const Chat = () => {
+export const InnerActions = () => {
   const formStore = formStoreUtils.createStore<{ textarea: string[] }>({
     onSubmit: async (values) => {
       console.log(values);
@@ -94,7 +94,7 @@ export const Chat = () => {
   return (
     <>
       <Button onClick={handleToggleProcessing}>Toggle Processing</Button>
-      <TextareaChat
+      <TextareaInnerActions
         name="textarea"
         placeholder="Add instructions"
         formData={formStore.data}

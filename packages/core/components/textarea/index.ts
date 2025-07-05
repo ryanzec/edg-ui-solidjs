@@ -1,10 +1,10 @@
 import { default as BaseTextarea, type TextareaProps } from '$/core/components/textarea/textarea';
-import Chat, { type TextareaChatProps } from '$/core/components/textarea/textarea-chat';
+import InnerActions, { type TextareaInnerActionsProps } from '$/core/components/textarea/textarea-inner-actions';
 
-export type { TextareaProps, TextareaChatProps };
+export type { TextareaProps, TextareaInnerActionsProps as TextareaChatProps };
 
 const Textarea = Object.assign(BaseTextarea, {
-  Chat: Chat,
+  InnerActions,
 });
 
 export default Textarea;

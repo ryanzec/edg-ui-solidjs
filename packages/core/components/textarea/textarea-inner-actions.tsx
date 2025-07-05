@@ -5,14 +5,19 @@ import { FormField, type FormFieldProps } from '$/core/components/form-field';
 import Textarea, { type TextareaProps } from '$/core/components/textarea/textarea';
 import type { DefaultFormData } from '$/core/stores/form.store';
 
-export type TextareaChatProps<TFormData = DefaultFormData> = Omit<TextareaProps<TFormData>, 'selectAllOnFocus'> &
+export type TextareaInnerActionsProps<TFormData = DefaultFormData> = Omit<
+  TextareaProps<TFormData>,
+  'selectAllOnFocus'
+> &
   Pick<FormFieldProps, 'errors'> & {
     isProcessing: boolean;
     mainButtonElement: JSX.Element;
     extraButtonElements?: JSX.Element[];
   };
 
-export const TextareaChat = <TFormData = DefaultFormData>(passedProps: TextareaChatProps<TFormData>) => {
+export const TextareaInnerActions = <TFormData = DefaultFormData>(
+  passedProps: TextareaInnerActionsProps<TFormData>,
+) => {
   const [props, resetOfProps] = splitProps(passedProps, [
     'isProcessing',
     'mainButtonElement',
@@ -45,4 +50,4 @@ export const TextareaChat = <TFormData = DefaultFormData>(passedProps: TextareaC
   );
 };
 
-export default TextareaChat;
+export default TextareaInnerActions;
