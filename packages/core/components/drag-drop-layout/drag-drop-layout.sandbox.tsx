@@ -96,7 +96,7 @@ export const Default = () => {
 
   return (
     <SandboxExamplesContainer>
-      <DragDropLayout dragDropStore={dragDropStore} droppableId={droppableId1}>
+      <DragDropLayout dragDropSingleListStore={dragDropStore} droppableId={droppableId1}>
         <DragDropLayout.Slot
           class={tailwindUtils.merge(styles.slot)}
           contentClass={tailwindUtils.merge(styles.slot1)}
@@ -225,7 +225,7 @@ export const MultipleSamePage = () => {
 
   return (
     <SandboxExamplesContainer>
-      <DragDropLayout dragDropStore={dragDropStore} droppableId={droppableId1}>
+      <DragDropLayout dragDropSingleListStore={dragDropStore} droppableId={droppableId1}>
         <DragDropLayout.Slot
           class={tailwindUtils.merge(styles.slot)}
           contentClass={tailwindUtils.merge(styles.slot1)}
@@ -262,7 +262,7 @@ export const MultipleSamePage = () => {
         </DragDropLayout.Slot>
       </DragDropLayout>
       <hr />
-      <DragDropLayout dragDropStore={dragDropStore2} droppableId={droppableId2}>
+      <DragDropLayout dragDropSingleListStore={dragDropStore2} droppableId={droppableId2}>
         <DragDropLayout.Slot
           class={tailwindUtils.merge(styles.slot)}
           contentClass={tailwindUtils.merge(styles.slot1)}
@@ -356,7 +356,7 @@ export const WithEmptySlot = () => {
 
   return (
     <SandboxExamplesContainer>
-      <DragDropLayout dragDropStore={dragDropStore} droppableId={droppableId1}>
+      <DragDropLayout dragDropSingleListStore={dragDropStore} droppableId={droppableId1}>
         <DragDropLayout.Slot
           class={tailwindUtils.merge(styles.slot)}
           contentClass={tailwindUtils.merge(styles.slot1)}
@@ -486,7 +486,7 @@ export const WithHandles = () => {
 
   return (
     <SandboxExamplesContainer>
-      <DragDropLayout dragDropStore={dragDropStore} droppableId={droppableId1}>
+      <DragDropLayout dragDropSingleListStore={dragDropStore} droppableId={droppableId1}>
         <DragDropLayout.Slot
           class={tailwindUtils.merge(styles.slot)}
           contentClass={tailwindUtils.merge(styles.slot1)}

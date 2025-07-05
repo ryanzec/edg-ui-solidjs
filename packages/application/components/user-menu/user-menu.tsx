@@ -11,7 +11,7 @@ import { useNavigate } from '@solidjs/router';
 import { Show } from 'solid-js';
 
 export type UserMenuProps = {
-  tooltipStore: TooltipStore;
+  userMenuTooltipStore: TooltipStore;
   user: Pick<User, 'name' | 'email'>;
   features: ApplicationFeature[];
 };
@@ -22,26 +22,26 @@ const UserMenu = (props: UserMenuProps) => {
   const handleSettings = () => {
     navigate(UiRouteName.USERS);
 
-    props.tooltipStore.hide();
+    props.userMenuTooltipStore.hide();
   };
 
   const handleInternalTools = () => {
     navigate(UiRouteName.HOME);
 
-    props.tooltipStore.hide();
+    props.userMenuTooltipStore.hide();
   };
 
   const handleLogout = () => {
     authenticationStore.logout();
 
-    props.tooltipStore.hide();
+    props.userMenuTooltipStore.hide();
   };
 
   return (
     <button type="button" class="w-full">
       <DropDown.Menu
         class="w-full"
-        store={props.tooltipStore}
+        tooltipStore={props.userMenuTooltipStore}
         placement="right-end"
         handleClass="w-full"
         offset={{ mainAxis: -5, crossAxis: -5 }}

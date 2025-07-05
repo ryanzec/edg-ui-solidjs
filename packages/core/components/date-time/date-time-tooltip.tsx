@@ -8,7 +8,7 @@ const DateTimeTooltip = (props: DateTimeTooltipProps) => {
   const tooltipStore = tooltipComponentUtils.createStore();
 
   return (
-    <Tooltip store={tooltipStore} placement="bottom">
+    <Tooltip tooltipStore={tooltipStore} placement="bottom">
       <Tooltip.Handle isStyled={false}>
         <DateTime {...props} />
       </Tooltip.Handle>

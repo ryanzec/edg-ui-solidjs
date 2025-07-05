@@ -5,7 +5,7 @@ import { loggerUtils } from '$/core/utils/logger';
 import type { Accessor } from 'solid-js';
 
 type BuildHandleCursorPageChangeOptions = {
-  paginationStore: CursorPaginationStore;
+  cursorPaginationStore: CursorPaginationStore;
   refetch: () => Promise<{ previousCursor: string | undefined; nextCursor: string | undefined }>;
   queryString: Accessor<{ cursor?: string }>;
   setQueryString: (queryString: { cursor?: string }) => void;
@@ -24,11 +24,11 @@ const buildHandleCursorPageChange = (
         cursor: lastCursor,
       });
 
-      options.paginationStore.setIsLoading(true);
+      options.cursorPaginationStore.setIsLoading(true);
 
       const response = await options.refetch();
 
-      options.paginationStore.setIsLoading(false);
+      options.cursorPaginationStore.setIsLoading(false);
 
       options.onPageChanged?.();
 
@@ -47,7 +47,7 @@ const buildHandleCursorPageChange = (
 
       return false;
     } finally {
-      options.paginationStore.setIsLoading(false);
+      options.cursorPaginationStore.setIsLoading(false);
     }
   };
 };

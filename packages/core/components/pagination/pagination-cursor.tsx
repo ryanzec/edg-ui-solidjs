@@ -15,7 +15,7 @@ type PageChangeReturn = {
 type PageChangeDirection = 'previous' | 'next';
 
 export type PaginationCursorProps = CommonDataAttributes & {
-  store: CursorPaginationStore;
+  cursorPaginationStore: CursorPaginationStore;
   onPageChange?: (
     cursorToLoad: string | undefined,
     direction: PageChangeDirection,
@@ -24,7 +24,7 @@ export type PaginationCursorProps = CommonDataAttributes & {
 };
 
 const PaginationCursor = (passedProps: PaginationCursorProps) => {
-  const [props, restOfProps] = splitProps(passedProps, ['onPageChange', 'class', 'store']);
+  const [props, restOfProps] = splitProps(passedProps, ['onPageChange', 'class', 'cursorPaginationStore']);
 
   const handlePageChange = async (cursorToLoad: string | undefined, direction: PageChangeDirection) => {
     if (!cursorToLoad) {
@@ -37,8 +37,8 @@ const PaginationCursor = (passedProps: PaginationCursorProps) => {
       return;
     }
 
-    props.store.setPreviousCursor(cursorResult.newPreviousCursor);
-    props.store.setNextCursor(cursorResult.newNextCursor);
+    props.cursorPaginationStore.setPreviousCursor(cursorResult.newPreviousCursor);
+    props.cursorPaginationStore.setNextCursor(cursorResult.newNextCursor);
   };
 
   return (
@@ -47,16 +47,16 @@ const PaginationCursor = (passedProps: PaginationCursorProps) => {
         <div class={styles.paginationActions}>
           <Button
             variant={ButtonVariant.GHOST}
-            onClick={() => handlePageChange(props.store.previousCursor(), 'previous')}
-            disabled={!props.store.previousCursor() || props.store.isLoading()}
+            onClick={() => handlePageChange(props.cursorPaginationStore.previousCursor(), 'previous')}
+            disabled={!props.cursorPaginationStore.previousCursor() || props.cursorPaginationStore.isLoading()}
             preElement={<Icon icon="arrow-left" />}
           >
             Previous
           </Button>
           <Button
             variant={ButtonVariant.GHOST}
-            onClick={() => handlePageChange(props.store.nextCursor(), 'next')}
-            disabled={!props.store.nextCursor() || props.store.isLoading()}
+            onClick={() => handlePageChange(props.cursorPaginationStore.nextCursor(), 'next')}
+            disabled={!props.cursorPaginationStore.nextCursor() || props.cursorPaginationStore.isLoading()}
             postElement={<Icon icon="arrow-right" />}
           >
             Next

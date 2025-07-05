@@ -12,7 +12,7 @@ export const Expanded = () => {
   return (
     <div>
       <SideNavigation>
-        <SideNavigation.Item toggleStore={toggleStore} headerElement="Button">
+        <SideNavigation.Item childrenToggleStore={toggleStore} headerElement="Button">
           <SideNavigation.SubItem>DropDown</SideNavigation.SubItem>
           <SideNavigation.SubItem isActive>IconButton</SideNavigation.SubItem>
           <SideNavigation.SubItem>Loading</SideNavigation.SubItem>
@@ -30,7 +30,7 @@ export const Collapsed = () => {
   return (
     <div>
       <SideNavigation>
-        <SideNavigation.Item toggleStore={toggleStore} headerElement="Button">
+        <SideNavigation.Item childrenToggleStore={toggleStore} headerElement="Button">
           <SideNavigation.SubItem>DropDown</SideNavigation.SubItem>
           <SideNavigation.SubItem isActive>IconButton</SideNavigation.SubItem>
           <SideNavigation.SubItem>Loading</SideNavigation.SubItem>
@@ -48,7 +48,7 @@ export const CustomIcon = () => {
   return (
     <div>
       <SideNavigation>
-        <SideNavigation.Item toggleStore={toggleStore} headerElement="Button" iconName="text-align-justify">
+        <SideNavigation.Item childrenToggleStore={toggleStore} headerElement="Button" iconName="text-align-justify">
           <SideNavigation.SubItem>DropDown</SideNavigation.SubItem>
           <SideNavigation.SubItem isActive>IconButton</SideNavigation.SubItem>
           <SideNavigation.SubItem>Loading</SideNavigation.SubItem>
@@ -85,7 +85,11 @@ export const ListWithLinks = () => {
       <SideNavigation>
         <SideNavigation.Item headerElement="Button1" href="#1" />
         <SideNavigation.Item headerElement="Button2" href="#2" />
-        <SideNavigation.Item toggleStore={toggleStore1} headerElement="Button3 (links)" iconName="text-align-justify">
+        <SideNavigation.Item
+          childrenToggleStore={toggleStore1}
+          headerElement="Button3 (links)"
+          iconName="text-align-justify"
+        >
           <SideNavigation.SubItem href="#dropdowm">DropDown</SideNavigation.SubItem>
           <SideNavigation.SubItem href="#iconbutton" isActive>
             IconButton
@@ -95,7 +99,7 @@ export const ListWithLinks = () => {
           <SideNavigation.SubItem href="#variant">Variant</SideNavigation.SubItem>
         </SideNavigation.Item>
         <SideNavigation.Item headerElement="Button4" href="#4" />
-        <SideNavigation.Item toggleStore={toggleStore2} headerElement="Button5" iconName="text-align-justify">
+        <SideNavigation.Item childrenToggleStore={toggleStore2} headerElement="Button5" iconName="text-align-justify">
           <SideNavigation.SubItem>DropDown</SideNavigation.SubItem>
           <SideNavigation.SubItem isActive>IconButton</SideNavigation.SubItem>
           <SideNavigation.SubItem>Loading</SideNavigation.SubItem>

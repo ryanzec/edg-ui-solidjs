@@ -11,14 +11,14 @@ export type DropDownMenuProps = Pick<
   | 'handleClass'
   | 'contentElement'
   | 'contentClass'
-  | 'store'
+  | 'tooltipStore'
   | 'placement'
   | 'disabled'
   | 'class'
   | 'offset'
 >;
 
-const defaultProps: Omit<DropDownMenuProps, 'handleElement' | 'contentElement' | 'store'> = {
+const defaultProps: Omit<DropDownMenuProps, 'handleElement' | 'contentElement' | 'tooltipStore'> = {
   placement: 'bottom-end',
   disabled: false,
   class: '',
@@ -30,7 +30,7 @@ export const DropDownMenu = (passedProps: DropDownMenuProps) => {
   return (
     <DropDown
       class={props.class}
-      store={props.store}
+      tooltipStore={props.tooltipStore}
       placement={props.placement}
       offset={props.offset}
       handleElement={props.handleElement}

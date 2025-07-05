@@ -71,7 +71,9 @@ const ApplicationFrame = (passedProps: ApplicationFrameProps) => {
               </nav>
               <div class="mt-auto">
                 <Show when={props.user}>
-                  {(user) => <UserMenu tooltipStore={userDropDownStore} user={user()} features={props.features} />}
+                  {(user) => (
+                    <UserMenu userMenuTooltipStore={userDropDownStore} user={user()} features={props.features} />
+                  )}
                 </Show>
               </div>
             </div>

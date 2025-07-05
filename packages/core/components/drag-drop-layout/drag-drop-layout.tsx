@@ -8,7 +8,7 @@ import { type JSX, onCleanup, onMount } from 'solid-js';
 export type DragDropLayoutProps = JSX.HTMLAttributes<HTMLDivElement> &
   CommonDataAttributes & {
     droppableId: string;
-    dragDropStore: DragDropSingleListStore;
+    dragDropSingleListStore: DragDropSingleListStore;
   };
 
 const DragDropLayout = (props: DragDropLayoutProps) => {
@@ -41,7 +41,7 @@ const DragDropLayout = (props: DragDropLayoutProps) => {
         } = dragDropComponentUtils.parseDestinationAndSourceSingleList(
           destination,
           source,
-          props.dragDropStore.elements(),
+          props.dragDropSingleListStore.elements(),
         );
 
         const isDroppingOnDraggable = dragDropComponentUtils.isDroppingOnDraggable(sourceElement, destinationElement);
@@ -58,7 +58,7 @@ const DragDropLayout = (props: DragDropLayoutProps) => {
           return;
         }
 
-        props.dragDropStore.swapItems(sourceIndex, destinationIndex);
+        props.dragDropSingleListStore.swapItems(sourceIndex, destinationIndex);
       },
     });
 

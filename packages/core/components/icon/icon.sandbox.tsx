@@ -207,7 +207,7 @@ export const AllIcons = () => {
 
             return (
               <div class={styles.iconContainer}>
-                <Tooltip store={tooltipStore} triggerEvent={TooltipTriggerEvent.HOVER}>
+                <Tooltip tooltipStore={tooltipStore} triggerEvent={TooltipTriggerEvent.HOVER}>
                   <Tooltip.Handle>
                     <Icon
                       icon={iconName}

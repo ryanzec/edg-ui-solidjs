@@ -65,7 +65,7 @@ const ApplicationFrameExpandableItem = (passedProps: ApplicationFrameExpandableI
             [styles.navigationSection]: hasSubNavigation(),
           })}
           headerElement={stringUtils.toWords(props.routeKey)}
-          toggleStore={toggleStore}
+          childrenToggleStore={toggleStore}
         >
           <ApplicationFrameSubNavigation routes={props.routes} />
         </SideNavigation.Item>

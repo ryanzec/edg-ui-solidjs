@@ -3,7 +3,7 @@ import Tooltip, { tooltipComponentUtils, type TooltipProps } from '$/core/compon
 import { clipboardUtils } from '$/core/utils/clipboard';
 import { createEffect, createSignal, mergeProps, splitProps } from 'solid-js';
 
-export type CopyTextProps = Omit<TooltipProps, 'store'> & {
+export type CopyTextProps = Omit<TooltipProps, 'tooltipStore'> & {
   text: string;
   copyLabel?: string;
 };
@@ -30,7 +30,7 @@ const CopyText = (passedProps: CopyTextProps) => {
   });
 
   return (
-    <Tooltip data-id="copy-text" {...restOfProps} triggerEvent="hover" store={tooltipStore} placement="bottom">
+    <Tooltip data-id="copy-text" {...restOfProps} triggerEvent="hover" tooltipStore={tooltipStore} placement="bottom">
       <Tooltip.Handle data-id="handle">
         <Icon icon="copy" onClick={handleCopy} />
       </Tooltip.Handle>

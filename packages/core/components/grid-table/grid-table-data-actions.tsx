@@ -6,11 +6,11 @@ import { type JSX, splitProps } from 'solid-js';
 
 export type GridTableDataActionsProps = GridTableDataProps & {
   contentElement: JSX.Element;
-  dropDownStore: TooltipStore;
+  actionsTooltipStore: TooltipStore;
 };
 
 const GridTableDataActions = (passedProps: GridTableDataActionsProps) => {
-  const [props, restOfProps] = splitProps(passedProps, ['contentElement', 'dropDownStore']);
+  const [props, restOfProps] = splitProps(passedProps, ['contentElement', 'actionsTooltipStore']);
 
   const handleClick = (event: MouseEvent) => {
     // since the table row it self can be clickable, we need to stop the event from bubbling up to the row
@@ -20,7 +20,7 @@ const GridTableDataActions = (passedProps: GridTableDataActionsProps) => {
   return (
     <GridTableData onClick={handleClick} {...restOfProps}>
       <DropDown.Menu
-        store={props.dropDownStore}
+        tooltipStore={props.actionsTooltipStore}
         handleElement={<Icon class="cursor-pointer" icon="dots-three" />}
         contentElement={props.contentElement}
       />

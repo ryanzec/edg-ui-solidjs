@@ -39,7 +39,7 @@ export const ButtonDropDown = (passedProps: ButtonDropDownProps) => {
 
   return (
     <DropDown.Menu
-      store={props.tooltipStore}
+      tooltipStore={props.tooltipStore}
       placement={props.placement}
       handleElement={
         <Button

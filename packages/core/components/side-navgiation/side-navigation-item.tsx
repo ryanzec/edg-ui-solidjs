@@ -10,7 +10,7 @@ import { Dynamic } from 'solid-js/web';
 
 export type SideNavigationItemProps = JSX.HTMLAttributes<HTMLDivElement> & {
   headerElement: JSX.Element;
-  toggleStore?: ToggleStore;
+  childrenToggleStore?: ToggleStore;
   onClick?: () => void;
   iconName?: IconName;
   iconVariant?: IconVariant;
@@ -29,7 +29,7 @@ const SideNavigationItem = (passedProps: SideNavigationItemProps) => {
     'children',
     'class',
     'headerElement',
-    'toggleStore',
+    'childrenToggleStore',
     'iconName',
     'iconVariant',
     'isActive',
@@ -43,7 +43,8 @@ const SideNavigationItem = (passedProps: SideNavigationItemProps) => {
     JSX.HTMLAttributes<HTMLAnchorElement> | JSX.HTMLAttributes<HTMLButtonElement>
   >({});
 
-  props.toggleStore = !props.toggleStore && !!solidChildren() ? toggleStoreUtils.createStore() : props.toggleStore;
+  props.childrenToggleStore =
+    !props.childrenToggleStore && !!solidChildren() ? toggleStoreUtils.createStore() : props.childrenToggleStore;
 
   const handleClick = () => {
     if (!solidChildren()) {
@@ -58,7 +59,7 @@ const SideNavigationItem = (passedProps: SideNavigationItemProps) => {
       return;
     }
 
-    props.toggleStore?.toggle();
+    props.childrenToggleStore?.toggle();
   };
 
   createEffect(function updateComponentData() {
@@ -85,7 +86,7 @@ const SideNavigationItem = (passedProps: SideNavigationItemProps) => {
       data-id="item"
       {...restOfProps}
       class={tailwindUtils.merge(styles.item, props.class, {
-        [styles.isCollapsed]: !props.toggleStore?.isToggled(),
+        [styles.isCollapsed]: !props.childrenToggleStore?.isToggled(),
       })}
     >
       <Dynamic data-id="item" component={component()} {...componentProps()}>
@@ -93,7 +94,7 @@ const SideNavigationItem = (passedProps: SideNavigationItemProps) => {
           class={styles.headerIndicatorIcon}
           icon={props.iconName}
           size={IconSize.LARGE}
-          color={props.toggleStore?.isToggled() || props.isActive ? IconColor.BRAND : IconColor.NEUTRAL}
+          color={props.childrenToggleStore?.isToggled() || props.isActive ? IconColor.BRAND : IconColor.NEUTRAL}
           variant={props.iconVariant}
         />
         {props.headerElement}

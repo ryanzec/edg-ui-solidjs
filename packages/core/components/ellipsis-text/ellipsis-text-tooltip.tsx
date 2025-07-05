@@ -17,7 +17,7 @@ const EllipsisTextTooltip = (props: EllipsisTextTooltipProps) => {
   const isSingleLine = () => props.class?.includes('line-clamp-1');
 
   return (
-    <Tooltip store={tooltipStore} placement="bottom" class="w-full">
+    <Tooltip tooltipStore={tooltipStore} placement="bottom" class="w-full">
       <Tooltip.Handle
         isStyled={false}
         class={tailwindUtils.merge('text-ellipsis overflow-hidden', props.class, {

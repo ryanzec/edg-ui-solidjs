@@ -20,7 +20,7 @@ export const Default = () => {
   return (
     <SandboxExamplesContainer>
       <DropDown
-        store={dropDownStore}
+        tooltipStore={dropDownStore}
         handleElement={<Icon icon="question-mark" isClickable />}
         contentElement="drop down content"
       />
@@ -42,13 +42,13 @@ export const UnstyledContent = () => {
   return (
     <SandboxExamplesContainer>
       <DropDown
-        store={dropDownStore1}
+        tooltipStore={dropDownStore1}
         handleElement={<button type="button">should not be done, just for testing and demonstration purposes</button>}
         contentIsStyled={false}
         contentElement="drop down content"
       />
       <DropDown
-        store={dropDownStore2}
+        tooltipStore={dropDownStore2}
         handleElement={<button type="button">with extra styling</button>}
         contentIsStyled={false}
         contentElement={
@@ -72,7 +72,7 @@ export const Menu = () => {
 
   return (
     <DropDown.Menu
-      store={dropDownStore}
+      tooltipStore={dropDownStore}
       handleElement={<Icon icon="question-mark" isClickable />}
       contentElement={
         <>
@@ -97,7 +97,7 @@ export const ExtraLong = () => {
 
   return (
     <DropDown.Menu
-      store={dropDownStore}
+      tooltipStore={dropDownStore}
       handleElement={<Icon icon="question-mark" isClickable />}
       contentElement={
         <>

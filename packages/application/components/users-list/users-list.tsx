@@ -57,7 +57,7 @@ const UsersList = (props: UsersListProps) => {
                 <GridTable.DataActions
                   isLastRow={isLastRow}
                   isEndOfRow
-                  dropDownStore={dropDownStore}
+                  actionsTooltipStore={dropDownStore}
                   contentElement={
                     <>
                       <List.Item onClick={handleEdit} preElement={<Icon icon="pencil" />}>

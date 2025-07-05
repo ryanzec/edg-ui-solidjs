@@ -23,12 +23,12 @@ export type TooltipDataAttributes = (typeof TooltipDataAttributes)[keyof typeof 
 export type TooltipProps = JSX.HTMLAttributes<HTMLDivElement> &
   CommonDataAttributes & {
     placement?: Placement;
-    store: TooltipStore;
+    tooltipStore: TooltipStore;
     triggerEvent?: TooltipTriggerEvent;
     offset?: OffsetOptions;
   };
 
-const defaultProps: Omit<TooltipProps, 'store'> = {
+const defaultProps: Omit<TooltipProps, 'tooltipStore'> = {
   placement: 'bottom-start',
   triggerEvent: TooltipTriggerEvent.HOVER,
   offset: 5,
@@ -38,7 +38,7 @@ const Tooltip = (passedProps: TooltipProps) => {
   const [props, restOfProps] = splitProps(mergeProps(defaultProps, passedProps), [
     'placement',
     'triggerEvent',
-    'store',
+    'tooltipStore',
     'children',
     'class',
     'offset',
@@ -54,7 +54,7 @@ const Tooltip = (passedProps: TooltipProps) => {
       return;
     }
 
-    props.store.show();
+    props.tooltipStore.show();
   };
 
   const disableToolTip = (event?: Event) => {
@@ -66,7 +66,7 @@ const Tooltip = (passedProps: TooltipProps) => {
       return;
     }
 
-    props.store.hide();
+    props.tooltipStore.hide();
   };
 
   const toggleTooltip = (event: Event) => {
@@ -77,7 +77,7 @@ const Tooltip = (passedProps: TooltipProps) => {
       return;
     }
 
-    props.store.toggle();
+    props.tooltipStore.toggle();
   };
 
   createEffect(function setupTooltipFloatingElementAndEvents() {
@@ -87,7 +87,7 @@ const Tooltip = (passedProps: TooltipProps) => {
       return;
     }
 
-    const id = props.store.id();
+    const id = props.tooltipStore.id();
     const handleElement = document.body.querySelector(`[data-tooltip-handle="${id}"]`) as HTMLElement;
     const contentElement = document.body.querySelector(`[data-tooltip-content="${id}"]`) as HTMLElement;
 
@@ -99,7 +99,7 @@ const Tooltip = (passedProps: TooltipProps) => {
     }
 
     if (
-      props.store.onlyIfScrollable() &&
+      props.tooltipStore.onlyIfScrollable() &&
       handleElement.scrollHeight <= handleElement.offsetHeight &&
       handleElement.scrollWidth <= handleElement.offsetWidth
     ) {
@@ -121,7 +121,7 @@ const Tooltip = (passedProps: TooltipProps) => {
         break;
 
       default:
-        contentElement.setAttribute(clickOutsideDirectiveDataAttribute.IGNORE_CLICK_OUTSIDE, props.store.id());
+        contentElement.setAttribute(clickOutsideDirectiveDataAttribute.IGNORE_CLICK_OUTSIDE, props.tooltipStore.id());
         handleElement.addEventListener('click', toggleTooltip);
 
         break;
@@ -157,11 +157,11 @@ const Tooltip = (passedProps: TooltipProps) => {
   };
 
   return (
-    <TooltipContext.Provider value={props.store}>
+    <TooltipContext.Provider value={props.tooltipStore}>
       <div
         use:clickOutsideDirective={{
           callback: props.triggerEvent === TooltipTriggerEvent.CLICK ? () => disableToolTip() : undefined,
-          id: props.store.id(),
+          id: props.tooltipStore.id(),
         }}
         ref={containerRef}
         data-id="tooltip"
