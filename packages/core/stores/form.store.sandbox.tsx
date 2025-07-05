@@ -866,7 +866,7 @@ export const DynamicFormElements = () => {
     if (randomField.type === RandomFormFieldType.DATE || randomField.type === RandomFormFieldType.DATE_RANGE) {
       setDatePickerValues({
         ...datePickerValues(),
-        [randomFieldName]: datePickerComponentUtils.createInputValueStore(),
+        [randomFieldName]: datePickerComponentUtils.createInputDateRangeStore(),
       });
     }
 

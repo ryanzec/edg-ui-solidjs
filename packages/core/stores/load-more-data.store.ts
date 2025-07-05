@@ -7,7 +7,7 @@ type CreateLoadMoreDataStoreOptions = {
   loadMoreData?: () => Promise<void>;
 };
 
-export type LoadMoreDataStoreInstance = {
+export type LoadMoreDataStore = {
   setAutoLoadTriggerElement: Setter<HTMLDivElement | undefined>;
   isLoading: Accessor<boolean>;
 };
@@ -38,7 +38,7 @@ const registerObserver = (element: Element, callback: PositionCallback) => {
   };
 };
 
-const createStore = (options: CreateLoadMoreDataStoreOptions): LoadMoreDataStoreInstance => {
+const createLoadMoreDataStore = (options: CreateLoadMoreDataStoreOptions): LoadMoreDataStore => {
   const [autoLoadTriggerElement, setAutoLoadTriggerElement] = createSignal<HTMLDivElement>();
   const [isLoading, setIsLoading] = createSignal(false);
 
@@ -113,5 +113,5 @@ const createStore = (options: CreateLoadMoreDataStoreOptions): LoadMoreDataStore
 };
 
 export const loadMoreDataStoreUtils = {
-  createStore,
+  createStore: createLoadMoreDataStore,
 };

@@ -1,7 +1,7 @@
 import type { CalloutColor } from '$/core/components/callout';
 import { produce } from 'immer';
 import { pullAt } from 'lodash';
-import { type JSX, createRoot, createSignal, untrack } from 'solid-js';
+import { type Accessor, type JSX, createRoot, createSignal, untrack } from 'solid-js';
 import * as uuid from 'uuid';
 
 export type GlobalNotification = {
@@ -15,11 +15,18 @@ export type GlobalNotification = {
   message: () => JSX.Element;
 };
 
+export type GlobalNotificationsStore = {
+  notifications: Accessor<GlobalNotification[]>;
+  addNotification: (notification: Omit<GlobalNotification, 'id'>) => void;
+  removeNotification: (id: GlobalNotification['id']) => void;
+  clearNotifications: () => void;
+};
+
 export const DEFAULT_AUTO_CLOSE = 3000;
 
 export const REMOVE_ANIMATION_DURATION = 350;
 
-const createGlobalNotificationsStore = () => {
+const createGlobalNotificationsStore = (): GlobalNotificationsStore => {
   const [notifications, setNotifications] = createSignal<GlobalNotification[]>([]);
 
   const addNotification = (notification: Omit<GlobalNotification, 'id'>) => {

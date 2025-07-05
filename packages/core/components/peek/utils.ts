@@ -1,6 +1,6 @@
 import { type Accessor, createSignal } from 'solid-js';
 
-type CreateStoreParams = {
+type CreatePeekStoreOptions = {
   defaultIsOpened?: boolean;
 };
 
@@ -11,8 +11,8 @@ export type PeekStore = {
   close: () => void;
 };
 
-const createStore = (params: CreateStoreParams = {}): PeekStore => {
-  const [isOpened, setIsOpened] = createSignal(params.defaultIsOpened ?? false);
+const createPeekStore = (options: CreatePeekStoreOptions = {}): PeekStore => {
+  const [isOpened, setIsOpened] = createSignal(options.defaultIsOpened ?? false);
 
   const toggle = (overrideIsEnabled?: boolean) => {
     if (overrideIsEnabled === true || overrideIsEnabled === false) {
@@ -40,5 +40,5 @@ const createStore = (params: CreateStoreParams = {}): PeekStore => {
 };
 
 export const peekComponentUtils = {
-  createStore,
+  createStore: createPeekStore,
 };

@@ -1,8 +1,14 @@
-import { createRoot, createSignal } from 'solid-js';
+import { type Accessor, type Setter, createRoot, createSignal } from 'solid-js';
 
 import { ThemeName } from '$/core/utils/styles';
 
-const createApplicationStore = () => {
+export type ApplicationStore = {
+  theme: Accessor<ThemeName>;
+  setTheme: Setter<ThemeName>;
+  toggleTheme: () => void;
+};
+
+const createApplicationStore = (): ApplicationStore => {
   // @todo refactor to use system theming by default
   const [theme, setTheme] = createSignal<ThemeName>(ThemeName.LIGHT);
 

@@ -4,13 +4,13 @@ import { type JSX, children, createEffect, createSignal, mergeProps, splitProps 
 import Icon, { IconColor, IconSize } from '$/core/components/icon';
 import { type IconName, IconVariant } from '$/core/components/icon/utils';
 import styles from '$/core/components/side-navgiation/side-navigation.module.css';
-import { type ToggleStoreInstance, toggleStoreUtils } from '$/core/stores/toggle.store';
+import { type ToggleStore, toggleStoreUtils } from '$/core/stores/toggle.store';
 import { loggerUtils } from '$/core/utils/logger';
 import { Dynamic } from 'solid-js/web';
 
 export type SideNavigationItemProps = JSX.HTMLAttributes<HTMLDivElement> & {
   headerElement: JSX.Element;
-  toggleStore?: ToggleStoreInstance;
+  toggleStore?: ToggleStore;
   onClick?: () => void;
   iconName?: IconName;
   iconVariant?: IconVariant;

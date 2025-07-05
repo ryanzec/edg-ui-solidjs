@@ -1,6 +1,6 @@
 import { type Accessor, createSignal } from 'solid-js';
 
-type CreateStoreOptions = {
+type CreatePaginationStoreOptions = {
   defaultCurrentPage?: number;
   itemsPerPage?: number;
   totalItems: number;
@@ -23,7 +23,7 @@ export type PaginationStore = {
   visiblePageNumbers: () => (number | string)[];
 };
 
-const createStore = (options: CreateStoreOptions): PaginationStore => {
+const createPaginationStore = (options: CreatePaginationStoreOptions): PaginationStore => {
   const [currentPage, setCurrentPage] = createSignal(options.defaultCurrentPage || 1);
   const [isLoading, setIsLoading] = createSignal(false);
   const [itemsPerPage, setItemsPerPage] = createSignal(options.itemsPerPage || 10);
@@ -89,7 +89,7 @@ const createStore = (options: CreateStoreOptions): PaginationStore => {
   };
 };
 
-type CreateCursorStoreOptions = {
+type CreateCursorPaginationStoreOptions = {
   defaultPreviousCursor?: string;
   defaultNextCursor?: string;
   itemsPerPage?: number;
@@ -97,7 +97,7 @@ type CreateCursorStoreOptions = {
   surroundingPages?: number;
 };
 
-export type PaginationCursorStore = {
+export type CursorPaginationStore = {
   previousCursor: Accessor<string | undefined>;
   setPreviousCursor: (previousCursor: string | undefined) => void;
   nextCursor: Accessor<string | undefined>;
@@ -111,7 +111,7 @@ export type PaginationCursorStore = {
   totalPages: () => number;
 };
 
-const createCursorStore = (options: CreateCursorStoreOptions = {}): PaginationCursorStore => {
+const createCursorPaginationStore = (options: CreateCursorPaginationStoreOptions = {}): CursorPaginationStore => {
   const [previousCursor, setPreviousCursor] = createSignal(options.defaultPreviousCursor || '');
   const [nextCursor, setNextCursor] = createSignal(options.defaultNextCursor || '');
   const [isLoading, setIsLoading] = createSignal(false);
@@ -138,6 +138,6 @@ const createCursorStore = (options: CreateCursorStoreOptions = {}): PaginationCu
 };
 
 export const paginationStoreUtils = {
-  createStore,
-  createCursorStore,
+  createStore: createPaginationStore,
+  createCursorStore: createCursorPaginationStore,
 };

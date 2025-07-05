@@ -13,11 +13,11 @@ export type UnsavedChangesDialogStore = {
   handleUnsavedDialogStay: () => void;
 };
 
-export type UnsavedChangesDialogOptions = {
+export type CreateUnsavedChangesDialogOptions = {
   navigate: Navigator;
 };
 
-const createStore = (options: UnsavedChangesDialogOptions): UnsavedChangesDialogStore => {
+const createUnsavedChangesDialogStore = (options: CreateUnsavedChangesDialogOptions): UnsavedChangesDialogStore => {
   const [redirectUrl, setRedirectUrl] = createSignal<string>('');
   const [allowLeave, setAllowLeave] = createSignal<boolean>(false);
   const dialogStore = dialogComponentUtils.createStore();
@@ -52,5 +52,5 @@ const createStore = (options: UnsavedChangesDialogOptions): UnsavedChangesDialog
 };
 
 export const unsavedChangesDialogComponentUtils = {
-  createStore,
+  createStore: createUnsavedChangesDialogStore,
 };

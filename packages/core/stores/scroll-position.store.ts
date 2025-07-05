@@ -11,11 +11,11 @@ export type ScrollPositionStore = {
   trackedElement: Accessor<HTMLElement | undefined>;
 };
 
-export type ScrollPositionStoreOptions = {
+export type CreateScrollPositionStoreOptions = {
   trackingElement: Accessor<HTMLElement | undefined>;
 };
 
-const createStore = (options: ScrollPositionStoreOptions): ScrollPositionStore => {
+const createScrollPositionStore = (options: CreateScrollPositionStoreOptions): ScrollPositionStore => {
   const [scrollPosition, setScrollPosition] = createSignal<ScrollPosition>({ x: 0, y: 0 });
 
   createEffect(
@@ -48,5 +48,5 @@ const createStore = (options: ScrollPositionStoreOptions): ScrollPositionStore =
 };
 
 export const scrollPositionStoreUtils = {
-  createStore,
+  createStore: createScrollPositionStore,
 };

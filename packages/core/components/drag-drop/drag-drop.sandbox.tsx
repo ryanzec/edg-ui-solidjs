@@ -10,7 +10,7 @@ export default {
 };
 
 export const Kanban = () => {
-  const dragDropStore = dragDropComponentUtils.createMultipleListStore({
+  const dragDropStore = dragDropComponentUtils.createMultipleListsStore({
     defaultElements: {
       list1: [
         { id: '1', element: () => <div>1</div> },

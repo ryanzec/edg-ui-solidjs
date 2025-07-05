@@ -1,16 +1,16 @@
 import { createSignal } from 'solid-js';
 
-type CreateToggleOptions = {
+type CreateToggleStoreOptions = {
   defaultIsToggled?: boolean;
 };
 
-export type ToggleStoreInstance = {
+export type ToggleStore = {
   isToggled: () => boolean;
   setIsToggled: (value: boolean) => void;
   toggle: () => void;
 };
 
-const createStore = (options: CreateToggleOptions = {}): ToggleStoreInstance => {
+const createToggleStore = (options: CreateToggleStoreOptions = {}): ToggleStore => {
   const [isToggled, setIsToggled] = createSignal<boolean>(options.defaultIsToggled ?? false);
 
   const toggle = () => {
@@ -25,5 +25,5 @@ const createStore = (options: CreateToggleOptions = {}): ToggleStoreInstance => 
 };
 
 export const toggleStoreUtils = {
-  createStore,
+  createStore: createToggleStore,
 };

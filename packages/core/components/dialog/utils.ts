@@ -14,7 +14,7 @@ export type DialogStore = {
   toggle: () => void;
 };
 
-const createStore = (): DialogStore => {
+const createDialogStore = (): DialogStore => {
   const [isOpened, setIsOpened] = createSignal<boolean>(false);
 
   const open = () => {
@@ -38,5 +38,5 @@ const createStore = (): DialogStore => {
 };
 
 export const dialogComponentUtils = {
-  createStore,
+  createStore: createDialogStore,
 };

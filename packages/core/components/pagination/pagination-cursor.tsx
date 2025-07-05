@@ -4,7 +4,7 @@ import { splitProps } from 'solid-js';
 import Button, { ButtonVariant } from '$/core/components/button';
 import Icon from '$/core/components/icon';
 import styles from '$/core/components/pagination/pagination.module.css';
-import type { PaginationCursorStore } from '$/core/stores/pagination.store';
+import type { CursorPaginationStore } from '$/core/stores/pagination.store';
 import type { CommonDataAttributes } from '$/core/types/generic';
 
 type PageChangeReturn = {
@@ -15,7 +15,7 @@ type PageChangeReturn = {
 type PageChangeDirection = 'previous' | 'next';
 
 export type PaginationCursorProps = CommonDataAttributes & {
-  store: PaginationCursorStore;
+  store: CursorPaginationStore;
   onPageChange?: (
     cursorToLoad: string | undefined,
     direction: PageChangeDirection,

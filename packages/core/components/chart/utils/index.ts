@@ -5,8 +5,8 @@ import {
 } from '$/core/components/chart/utils/bar';
 import {
   buildScalesOptions,
+  createChartStore,
   createCustomTicks,
-  createStore,
   limitTickCount,
   transformDataValueForCustomTicks,
 } from '$/core/components/chart/utils/core';
@@ -26,11 +26,12 @@ export type { BuildDefaultRadarOptionsOptions };
 
 export const chartComponentUtils = {
   // general
-  createStore,
+  createStore: createChartStore,
   buildScalesOptions,
   createCustomTicks,
   limitTickCount,
   transformDataValueForCustomTicks,
+
   // bar
   buildDefaultBarDatasetOptions,
   updateBarDataForSelected,

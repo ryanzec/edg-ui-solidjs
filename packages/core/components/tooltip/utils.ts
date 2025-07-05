@@ -9,7 +9,7 @@ export const TooltipTriggerEvent = {
 
 export type TooltipTriggerEvent = (typeof TooltipTriggerEvent)[keyof typeof TooltipTriggerEvent];
 
-type CreateStoreParams = {
+type CreateTooltipStoreOptions = {
   id?: string;
   defaultOnlyIfScrollable?: boolean;
 };
@@ -25,11 +25,11 @@ export type TooltipStore = {
   hide: () => void;
 };
 
-const createStore = (params: CreateStoreParams = {}): TooltipStore => {
+const createTooltipStore = (options: CreateTooltipStoreOptions = {}): TooltipStore => {
   const [isShowing, setIsShowing] = createSignal(false);
   const [isEnabled, internalSetIsEnabled] = createSignal(true);
-  const [onlyIfScrollable] = createSignal(params.defaultOnlyIfScrollable ?? false);
-  const [id] = createSignal<string>(params.id || uuid.v4());
+  const [onlyIfScrollable] = createSignal(options.defaultOnlyIfScrollable ?? false);
+  const [id] = createSignal<string>(options.id || uuid.v4());
 
   const toggle = () => {
     if (isEnabled() === false) {
@@ -74,5 +74,5 @@ const createStore = (params: CreateStoreParams = {}): TooltipStore => {
 };
 
 export const tooltipComponentUtils = {
-  createStore,
+  createStore: createTooltipStore,
 };

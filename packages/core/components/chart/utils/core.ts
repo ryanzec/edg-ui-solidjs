@@ -26,7 +26,7 @@ export type ChartStore = {
   ) => void;
 };
 
-const createStore = (): ChartStore => {
+const createChartStore = (): ChartStore => {
   const [chartInstance, setChartInstance] = createSignal<Chart>();
   const [selectedDataIndex, setSelectedDataIndex] = createSignal<number>();
 
@@ -232,7 +232,7 @@ export {
   selectedColor,
   defaultPointRadius,
   selectedPointRadius,
-  createStore,
+  createChartStore,
   buildScalesOptions,
   createCustomTicks,
   limitTickCount,

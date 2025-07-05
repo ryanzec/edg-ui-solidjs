@@ -1,11 +1,11 @@
 import type { PaginationProps } from '$/core/components/pagination/pagination';
 import type { PaginationCursorProps } from '$/core/components/pagination/pagination-cursor';
-import type { PaginationCursorStore, PaginationStore } from '$/core/stores/pagination.store';
+import type { CursorPaginationStore, PaginationStore } from '$/core/stores/pagination.store';
 import { loggerUtils } from '$/core/utils/logger';
 import type { Accessor } from 'solid-js';
 
 type BuildHandleCursorPageChangeOptions = {
-  paginationStore: PaginationCursorStore;
+  paginationStore: CursorPaginationStore;
   refetch: () => Promise<{ previousCursor: string | undefined; nextCursor: string | undefined }>;
   queryString: Accessor<{ cursor?: string }>;
   setQueryString: (queryString: { cursor?: string }) => void;

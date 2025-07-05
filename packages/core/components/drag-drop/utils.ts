@@ -72,7 +72,7 @@ const createSingleListStore = (options: CreateSingleListStoreOptions = {}): Drag
   };
 };
 
-export type DragDropMultipleListStore = {
+export type DragDropMultipleListsStore = {
   elements: () => {
     [key: string]: DragDropElement[];
   };
@@ -81,20 +81,20 @@ export type DragDropMultipleListStore = {
   moveItem: (sourceListId: string, sourceItemId: DragDropElement, destinationListId: string) => void;
 };
 
-type CreateMultipleListStoreOptions = {
+type CreateMultipleListsStoreOptions = {
   defaultElements?: {
     [key: string]: DragDropElement[];
   };
 };
 
-type DragDropMultipleListStoreData = {
+type DragDropMultipleListsStoreData = {
   elements: {
     [key: string]: DragDropElement[];
   };
 };
 
-const createMultipleListStore = (options: CreateMultipleListStoreOptions = {}): DragDropMultipleListStore => {
-  const [dragDropStore, setDragDropStore] = createStore<DragDropMultipleListStoreData>({
+const createMultipleListsStore = (options: CreateMultipleListsStoreOptions = {}): DragDropMultipleListsStore => {
+  const [dragDropStore, setDragDropStore] = createStore<DragDropMultipleListsStoreData>({
     elements: options.defaultElements || {},
   });
 
@@ -252,7 +252,7 @@ const isDraggable = (element: HTMLElement) => {
 
 export const dragDropComponentUtils = {
   createSingleListStore,
-  createMultipleListStore,
+  createMultipleListsStore,
   isDroppingOnDraggable,
   isDraggable,
   parseDestinationAndSourceSingleList,

@@ -7,7 +7,7 @@ export type TreeStore = {
   scrollToItem: (value: string) => void;
 };
 
-const createStore = () => {
+const createTreeStore = (): TreeStore => {
   const [parentElement, setParentElement] = createSignal<HTMLDivElement | undefined>();
 
   const scrollToItem = (value: string) => {
@@ -34,5 +34,5 @@ const createStore = () => {
 };
 
 export const treeComponentUtils = {
-  createStore,
+  createStore: createTreeStore,
 };
