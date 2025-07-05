@@ -17,11 +17,15 @@ const PageContentSection = (passedProps: PageContentSectionProps) => {
 
   return (
     <div
-      class={tailwindUtils.merge('border-outline border bg-surface rounded-base', props.class, {
-        'p-base': props.hasPadding,
-        'flex flex-row': props.hasSidePanel,
-        'flex-1': props.expandFull,
-      })}
+      class={tailwindUtils.merge(
+        'border-outline border bg-surface rounded-base',
+        {
+          'p-base': props.hasPadding,
+          'flex flex-row': props.hasSidePanel,
+          'flex-1': props.expandFull,
+        },
+        props.class,
+      )}
       {...restOfProps}
     />
   );

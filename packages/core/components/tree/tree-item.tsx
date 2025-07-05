@@ -41,9 +41,13 @@ const TreeItem = <TItem,>(passedProps: TreeItemProps<TItem>) => {
   return (
     <div data-id="tree-item" data-value={props['data-value']} {...restOfProps} class="flex flex-col">
       <button
-        class={tailwindUtils.merge('cursor-pointer hover:bg-surface-tertiary', props.class, {
-          'bg-brand-subtle3': props.isActive,
-        })}
+        class={tailwindUtils.merge(
+          'cursor-pointer hover:bg-surface-tertiary',
+          {
+            'bg-brand-subtle3': props.isActive,
+          },
+          props.class,
+        )}
         type="button"
         onClick={handleClick}
         onDblClick={handleItemSelect}

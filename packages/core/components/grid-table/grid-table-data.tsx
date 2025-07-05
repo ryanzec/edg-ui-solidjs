@@ -41,7 +41,6 @@ const GridTableData = (passedProps: GridTableDataProps) => {
       component={getMainComponentName()}
       class={tailwindUtils.merge(
         'px-lg py-base bg-surface-secondary inline-flex items-center min-w-[1px]',
-        props.class,
         {
           'rounded-tl-base': props.isExpanded && props.isStartOfRow,
           'rounded-l-base': props.isExpanded === false && props.isStartOfRow,
@@ -50,6 +49,7 @@ const GridTableData = (passedProps: GridTableDataProps) => {
           'cursor-pointer': props.onClick,
           'mb-2xs': props.isLastRow === false,
         },
+        props.class,
       )}
       {...getMainComponentProps()}
       {...rest}

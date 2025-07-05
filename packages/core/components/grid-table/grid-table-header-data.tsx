@@ -97,11 +97,11 @@ const GridTableHeaderData = (passedProps: GridTableHeaderDataProps) => {
       role="columnheader"
       class={tailwindUtils.merge(
         'px-lg py-base font-medium uppercase min-w-[1px] flex items-center gap-3xs mb-2xs rounded-sm',
-        props.class,
         {
           'cursor-pointer': isSortable(),
           'hover:bg-neutral-subtle': isSortable(),
         },
+        props.class,
       )}
       {...restOfProps}
       {...extraProps()}

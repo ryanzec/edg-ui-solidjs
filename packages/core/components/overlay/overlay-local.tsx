@@ -12,10 +12,15 @@ const OverlayLocal = (passedProps: OverlayProps) => {
       data-id="overlay-local"
       {...restOfProps}
       type="button"
-      class={tailwindUtils.merge(styles.overlay, styles.overlayLocal, props.class, {
-        [styles.strong]: props.variant === OverlayVariant.STRONG,
-        [styles.weak]: props.variant === OverlayVariant.WEAK,
-      })}
+      class={tailwindUtils.merge(
+        styles.overlay,
+        styles.overlayLocal,
+        {
+          [styles.strong]: props.variant === OverlayVariant.STRONG,
+          [styles.weak]: props.variant === OverlayVariant.WEAK,
+        },
+        props.class,
+      )}
     />
   );
 };

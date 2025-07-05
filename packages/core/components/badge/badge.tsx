@@ -41,27 +41,31 @@ const Badge = (passedProps: BadgeProps) => {
       data-id="badge"
       {...restOfProps}
       size={badgeSizeTypographySizeMap[props.size]}
-      class={tailwindUtils.merge(props.class, styles.badge, {
-        [styles.badgeLarge]: props.size === BadgeSize.LARGE,
-        [styles.badgePill]: props.shape === BadgeShape.PILL,
-        [styles.neutral]: props.color === BadgeColor.NEUTRAL,
-        [styles.neutralStrong]: props.color === BadgeColor.NEUTRAL && isStrong,
-        [styles.brand]: props.color === BadgeColor.BRAND,
-        [styles.brandStrong]: props.color === BadgeColor.BRAND && isStrong,
-        [styles.brandSecondary]: props.color === BadgeColor.BRAND_SECONDARY,
-        [styles.brandSecondaryStrong]: props.color === BadgeColor.BRAND_SECONDARY && isStrong,
-        [styles.success]: props.color === BadgeColor.SUCCESS,
-        [styles.successStrong]: props.color === BadgeColor.SUCCESS && isStrong,
-        [styles.info]: props.color === BadgeColor.INFO,
-        [styles.infoStrong]: props.color === BadgeColor.INFO && isStrong,
-        [styles.warning]: props.color === BadgeColor.WARNING,
-        [styles.warningStrong]: props.color === BadgeColor.WARNING && isStrong,
-        [styles.warningHigh]: props.color === BadgeColor.WARNING_HIGH,
-        [styles.warningHighStrong]: props.color === BadgeColor.WARNING_HIGH && isStrong,
-        [styles.danger]: props.color === BadgeColor.DANGER,
-        [styles.dangerStrong]: props.color === BadgeColor.DANGER && isStrong,
-        [styles.transparent]: props.variant === BadgeVariant.TRANSPARENT,
-      })}
+      class={tailwindUtils.merge(
+        styles.badge,
+        {
+          [styles.badgeLarge]: props.size === BadgeSize.LARGE,
+          [styles.badgePill]: props.shape === BadgeShape.PILL,
+          [styles.neutral]: props.color === BadgeColor.NEUTRAL,
+          [styles.neutralStrong]: props.color === BadgeColor.NEUTRAL && isStrong,
+          [styles.brand]: props.color === BadgeColor.BRAND,
+          [styles.brandStrong]: props.color === BadgeColor.BRAND && isStrong,
+          [styles.brandSecondary]: props.color === BadgeColor.BRAND_SECONDARY,
+          [styles.brandSecondaryStrong]: props.color === BadgeColor.BRAND_SECONDARY && isStrong,
+          [styles.success]: props.color === BadgeColor.SUCCESS,
+          [styles.successStrong]: props.color === BadgeColor.SUCCESS && isStrong,
+          [styles.info]: props.color === BadgeColor.INFO,
+          [styles.infoStrong]: props.color === BadgeColor.INFO && isStrong,
+          [styles.warning]: props.color === BadgeColor.WARNING,
+          [styles.warningStrong]: props.color === BadgeColor.WARNING && isStrong,
+          [styles.warningHigh]: props.color === BadgeColor.WARNING_HIGH,
+          [styles.warningHighStrong]: props.color === BadgeColor.WARNING_HIGH && isStrong,
+          [styles.danger]: props.color === BadgeColor.DANGER,
+          [styles.dangerStrong]: props.color === BadgeColor.DANGER && isStrong,
+          [styles.transparent]: props.variant === BadgeVariant.TRANSPARENT,
+        },
+        props.class,
+      )}
     >
       {props.preIcon && (
         <Icon

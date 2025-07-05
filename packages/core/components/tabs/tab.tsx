@@ -45,13 +45,13 @@ const Tab = (passedProps: TabProps) => {
       {...restOfProps}
       class={tailwindUtils.merge(
         'flex items-center gap-3xs px-2xs py-4xs font-medium border border-outline cursor-pointer text-nowrap',
-        props.class,
         {
           'rounded-sm': context?.variant === TabVariant.DEFAULT,
           'text-text-inverse border-0': context?.onInverse,
           'text-sm leading-sm tracking-sm': context?.size === TabSize.SMALL,
           'bg-brand text-on-brand border-brand': props.isActive,
         },
+        props.class,
       )}
     >
       <Show when={props.icon}>{(icon) => <Icon icon={icon()} />}</Show>

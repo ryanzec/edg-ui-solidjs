@@ -10,9 +10,12 @@ const Link = (passedProps: LinkProps) => {
 
   return (
     <a
-      class={tailwindUtils.merge(props.class, {
-        'text-[#0000ee] visited:text-[#551a8b]': !props.isUnstyled,
-      })}
+      class={tailwindUtils.merge(
+        {
+          'text-[#0000ee] visited:text-[#551a8b]': !props.isUnstyled,
+        },
+        props.class,
+      )}
       {...restOfProps}
     />
   );

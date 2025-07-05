@@ -55,27 +55,31 @@ const Typography = (passedProps: TypographyProps) => {
 
   return (
     <div
-      class={tailwindUtils.merge(styles.typography, props.class, {
-        [styles.extraSmall]: props.size === TypographySize.EXTRA_SMALL,
-        [styles.small]: props.size === TypographySize.SMALL,
-        [styles.large]: props.size === TypographySize.LARGE,
-        [styles.extraLarge]: props.size === TypographySize.EXTRA_LARGE,
-        [styles.extraLarge2]: props.size === TypographySize.EXTRA_LARGE2,
-        [styles.extraLarge3]: props.size === TypographySize.EXTRA_LARGE3,
-        [styles.extraLarge4]: props.size === TypographySize.EXTRA_LARGE4,
-        [styles.neutral]: props.color === TypographyColor.NEUTRAL,
-        [styles.brand]: props.color === TypographyColor.BRAND,
-        [styles.success]: props.color === TypographyColor.SUCCESS,
-        [styles.info]: props.color === TypographyColor.INFO,
-        [styles.warning]: props.color === TypographyColor.WARNING,
-        [styles.warningHigh]: props.color === TypographyColor.WARNING_HIGH,
-        [styles.danger]: props.color === TypographyColor.DANGER,
-        [styles.inheritColor]: props.color === TypographyColor.INHERIT,
+      class={tailwindUtils.merge(
+        styles.typography,
+        {
+          [styles.extraSmall]: props.size === TypographySize.EXTRA_SMALL,
+          [styles.small]: props.size === TypographySize.SMALL,
+          [styles.large]: props.size === TypographySize.LARGE,
+          [styles.extraLarge]: props.size === TypographySize.EXTRA_LARGE,
+          [styles.extraLarge2]: props.size === TypographySize.EXTRA_LARGE2,
+          [styles.extraLarge3]: props.size === TypographySize.EXTRA_LARGE3,
+          [styles.extraLarge4]: props.size === TypographySize.EXTRA_LARGE4,
+          [styles.neutral]: props.color === TypographyColor.NEUTRAL,
+          [styles.brand]: props.color === TypographyColor.BRAND,
+          [styles.success]: props.color === TypographyColor.SUCCESS,
+          [styles.info]: props.color === TypographyColor.INFO,
+          [styles.warning]: props.color === TypographyColor.WARNING,
+          [styles.warningHigh]: props.color === TypographyColor.WARNING_HIGH,
+          [styles.danger]: props.color === TypographyColor.DANGER,
+          [styles.inheritColor]: props.color === TypographyColor.INHERIT,
 
-        // using flex will prevent extra space that can appear at the bottom
-        'inline-flex': props.layout === TypographyLayout.INLINE,
-        flex: props.layout === TypographyLayout.BLOCK,
-      })}
+          // using flex will prevent extra space that can appear at the bottom
+          'inline-flex': props.layout === TypographyLayout.INLINE,
+          flex: props.layout === TypographyLayout.BLOCK,
+        },
+        props.class,
+      )}
     >
       {props.children}
     </div>

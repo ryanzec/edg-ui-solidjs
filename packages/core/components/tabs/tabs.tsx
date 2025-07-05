@@ -49,10 +49,14 @@ const Tabs = (passedProps: TabsProps) => {
       <div
         data-id="tabs"
         {...restOfProps}
-        class={tailwindUtils.merge('flex', props.class, {
-          'gap-2xs': props.variant === TabVariant.DEFAULT,
-          'flex-col': props.orientation === TabOrientation.VERTICAL,
-        })}
+        class={tailwindUtils.merge(
+          'flex',
+          {
+            'gap-2xs': props.variant === TabVariant.DEFAULT,
+            'flex-col': props.orientation === TabOrientation.VERTICAL,
+          },
+          props.class,
+        )}
       />
     </TabsContext.Provider>
   );
