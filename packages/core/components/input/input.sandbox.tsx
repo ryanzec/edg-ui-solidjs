@@ -151,6 +151,25 @@ export const MultipleInput = () => {
   );
 };
 
+export const PrePostElements = () => {
+  return (
+    <FormFields>
+      <FormField>
+        <Label for="test1">Label</Label>
+        <Input id="test1" preElement={<Icon icon="plus" />} />
+      </FormField>
+      <FormField>
+        <Label for="test2">Label</Label>
+        <Input id="test2" postElement={<Icon icon="plus" />} />
+      </FormField>
+      <FormField>
+        <Label for="test3">Label</Label>
+        <Input id="test3" preElement={<Icon icon="plus" />} postElement={<Icon icon="plus" />} />
+      </FormField>
+    </FormFields>
+  );
+};
+
 // not exported as this is only for testing and would be caught in a `pnpm build:check`
 const NameTypingTest = () => {
   const form = formStoreUtils.createStore<{ input: string }>({

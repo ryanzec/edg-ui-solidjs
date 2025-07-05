@@ -1,9 +1,8 @@
 import { default as BaseInput, type InputProps } from '$/core/components/input/input';
-import Icon, { type InputIconProps } from '$/core/components/input/input-icon';
 import Multiple, { type InputMultipleProps } from '$/core/components/input/input-multiple';
 
-export type { InputProps, InputIconProps, InputMultipleProps };
+export type { InputProps, InputMultipleProps };
 
-export const Input = Object.assign(BaseInput, { Icon, Multiple });
+export const Input = Object.assign(BaseInput, { Multiple });
 
 export default Input;
