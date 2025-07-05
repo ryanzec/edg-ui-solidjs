@@ -6,17 +6,27 @@ import DropDown from '$/core/components/drop-down';
 import Icon, { IconColor } from '$/core/components/icon';
 import List from '$/core/components/list';
 import type { TooltipStore } from '$/core/components/tooltip';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import type { User } from '$api/types/user';
 import { useNavigate } from '@solidjs/router';
-import { Show } from 'solid-js';
+import { Show, mergeProps } from 'solid-js';
 
 export type UserMenuProps = {
   userMenuTooltipStore: TooltipStore;
   user: Pick<User, 'name' | 'email'>;
   features: ApplicationFeature[];
+  showName?: boolean;
+  isCollapsed?: boolean;
 };
 
-const UserMenu = (props: UserMenuProps) => {
+const UserMenu = (passedProps: UserMenuProps) => {
+  const props = mergeProps(
+    {
+      isCollapsed: false,
+    },
+    passedProps,
+  );
+
   const navigate = useNavigate();
 
   const handleSettings = () => {
@@ -46,9 +56,23 @@ const UserMenu = (props: UserMenuProps) => {
         handleClass="w-full"
         offset={{ mainAxis: -5, crossAxis: -5 }}
         handleElement={
-          <div class="flex w-full items-center justify-between cursor-pointer px-2xs mx-xs py-4xs mb-2xs rounded-full hover:bg-[#a8bfb6]">
-            <Avatar.User avatarSize={AvatarSize.SMALL} name={props.user.name} email={props.user.email} />
-            <Icon class="ml-auto" icon="caret-right" color={IconColor.INHERIT} />
+          <div
+            class={tailwindUtils.merge(
+              'flex w-full items-center justify-between cursor-pointer mx-xs mb-2xs rounded-full hover:bg-[#a8bfb6]',
+              {
+                'px-2xs py-4xs': props.isCollapsed === false,
+              },
+            )}
+          >
+            <Avatar.User
+              avatarSize={props.isCollapsed ? AvatarSize.FILL : AvatarSize.SMALL}
+              name={props.user.name}
+              email={props.user.email}
+              showName={props.showName}
+            />
+            <Show when={props.isCollapsed === false}>
+              <Icon class="ml-auto" icon="caret-right" color={IconColor.INHERIT} />
+            </Show>
           </div>
         }
         contentClass="min-w-[250px]"
