@@ -102,11 +102,14 @@ const ApplicationFrame = (passedProps: ApplicationFrameProps) => {
             <div
               ref={setSidebarElementRef}
               data-id="sidebar"
-              class={tailwindUtils.merge('flex flex-col h-full bg-brand-subtle3 gap-2xs relative', {
-                'w-[250px]': sidebarOpenedToggleStore.isToggled(),
-                'w-[60px]': sidebarOpenedToggleStore.isToggled() === false,
-                'shadow-[inset_-4px_0_0_0_var(--color-brand-subtle4)]': isResizingSidebar(),
-              })}
+              class={tailwindUtils.merge(
+                'flex flex-col h-full bg-brand-subtle3 gap-2xs relative transition-shadow duration-150 ease-in-out delay-100',
+                {
+                  'w-[250px]': sidebarOpenedToggleStore.isToggled(),
+                  'w-[60px]': sidebarOpenedToggleStore.isToggled() === false,
+                  'shadow-[inset_-4px_0_0_0_var(--color-brand-subtle4)]': isResizingSidebar(),
+                },
+              )}
             >
               <Show
                 when={sidebarOpenedToggleStore.isToggled()}
