@@ -10,6 +10,12 @@
     &:has([contenteditable]:focus) {
       border-color: var(--color-outline-active);
     }
+
+    :global {
+      .cm-merge-b .cm-changedLine {
+        background-color: red;
+      }
+    }
   }
 
   .borderless {
@@ -26,11 +32,25 @@
     color: var(--color-on-danger);
     padding: var(--spacing-4xs);
   }
+}
 
-  /* @todo hiding until chunk updating can be fully implemented */
+.code-editor {
   :global {
-    .cm-chunkButtons {
-      display: none;
+    .cm-merge-a .cm-changedLine,
+    .cm-merge-b .cm-mergeSpacer {
+      background-color: var(--color-danger-subtle3);
     }
+
+    .cm-merge-b .cm-changedLine,
+    .cm-merge-a .cm-mergeSpacer {
+      background-color: var(--color-success-subtle3);
+    }
+  }
+}
+
+/* @todo hiding until chunk updating can be fully implemented */
+:global {
+  .cm-chunkButtons {
+    display: none;
   }
 }

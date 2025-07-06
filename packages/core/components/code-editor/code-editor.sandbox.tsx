@@ -234,22 +234,42 @@ export const ErrorMessage = () => {
 };
 
 export const DiffSideBySide = () => {
+  const handleChunkDecision = (decision: string, chunkIndex: number) => {
+    console.log(`Side-by-side chunk ${chunkIndex} ${decision}ed`);
+  };
+
   return (
-    <SandboxExamplesContainer class={styles.codeEditor}>
-      <CodeEditor.Diff
-        doc={yamlContent}
-        diffType={CodeEditorDiffType.SIDE_BY_SIDE}
-        suggestedDoc={suggestedYamlContent}
-      />
-    </SandboxExamplesContainer>
+    <div class={styles.container}>
+      <p>Side-by-side diff with Accept/Reject buttons on the right editor</p>
+      <SandboxExamplesContainer class={styles.codeEditor}>
+        <CodeEditor.Diff
+          doc={yamlContent}
+          diffType={CodeEditorDiffType.SIDE_BY_SIDE}
+          suggestedDoc={suggestedYamlContent}
+          onChunkDecision={handleChunkDecision}
+        />
+      </SandboxExamplesContainer>
+    </div>
   );
 };
 
 export const DiffUnified = () => {
+  const handleChunkDecision = (decision: string, chunkIndex: number) => {
+    console.log(`Chunk ${chunkIndex} ${decision}ed`);
+  };
+
   return (
-    <SandboxExamplesContainer class={styles.codeEditor}>
-      <CodeEditor.Diff doc={yamlContent} diffType={CodeEditorDiffType.UNIFIED} suggestedDoc={suggestedYamlContent} />
-    </SandboxExamplesContainer>
+    <div class={styles.container}>
+      <p>Accept/Reject buttons appear inline next to each diff chunk. Click to accept or reject individual changes.</p>
+      <SandboxExamplesContainer class={styles.codeEditor}>
+        <CodeEditor.Diff
+          doc={yamlContent}
+          diffType={CodeEditorDiffType.UNIFIED}
+          suggestedDoc={suggestedYamlContent}
+          onChunkDecision={handleChunkDecision}
+        />
+      </SandboxExamplesContainer>
+    </div>
   );
 };
 

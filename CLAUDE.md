@@ -1,0 +1,118 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# SolidJS Web Application Coding Guidelines
+
+## Tech Stack
+- **Frontend Framework**: SolidJS with TypeScript
+- **Build System**: Vite
+- **Package Manager**: pnpm
+- **Styling**: Tailwind CSS + CSS Modules (only for complex cases)
+- **State Management**: SolidJS Signals / Stores for local state / Tanstack for remote state
+- **Unit Testing**: Vitest
+- **UI/Component Testing**: Playwright (using sandbox system)
+
+## Core Development Principles
+
+### Code Standards & Refactoring
+- **Follow existing patterns**: Do not refactor existing coding standards to something else
+- **Library-first approach**: Prefer library functionality > introduce new libraries > write custom code
+- **Production-ready**: Write all code as if it's going directly to production
+- **Simplicity first**: Explore simpler solutions before complicated ones
+- **Pattern consistency**: Use existing patterns instead of introducing new ones
+
+### Dependency Management
+- **Exact versions**: When adding npm packages, use latest version with exact version syntax (no auto-update)
+- **Library preference order**: Use existing functionality → add new library → write custom code
+
+## Code Organization & Structure
+
+### Component Architecture
+- **Single responsibility**: Keep components under 400 lines whenever possible
+- **One component per file**: Each component should have its own file
+- **Avoid unnecessary breaking**: Don't split components if it makes reasoning overly complex
+- **Reusable components**: Create component folders/files for generally reusable components
+- **Utils organization**: Place generic functionality in utils files
+
+### File Structure Requirements
+- **Reference before creation**: If you can't find a file, ask for reference before creating new files
+- **Sandbox pattern**: Update sandbox files when updating components; create new ones following existing patterns if none exist
+
+## Naming Conventions & Code Style
+
+### Naming Standards
+- **Descriptive but concise**: Use `clickEvent` instead of `event` or `clickButtonEvent`
+- **Avoid abbreviations**: Exception for `id`
+- **CSS naming**: Use `kebab-case` in CSS, `camelCase` when imported to JavaScript/TypeScript
+
+### Code Formatting
+- **Blank lines**: Add blank line before return statements and conditional control statements (`return`, `break`, `continue`)
+- **Early exits**: Prefer early returns over else statements or conditional nesting
+- **Self-documenting**: Use naming that makes code self-commenting
+- **Single-line Conditionals**: Signle line conditionals should always have wrapping curly braces
+
+### Comments Policy
+- **Minimal comments**: Only comment when explaining complex algorithms or the "why", not the "what"
+- **Self-documenting code**: Prioritize clear naming over comments
+- **Required comments**: Add comments above type casts/any usage that should be investigated later
+
+## TypeScript Guidelines
+
+### Type System
+- **Types over interfaces**: Favor `type` over `interface` whenever possible
+- **Proper typing**: Use appropriate TypeScript typing throughout
+- **Type resolution hierarchy**:
+    1. Fix typing properly
+    2. Explicit cast as needed (without `unknown`)
+    3. Use `any` as last resort with explanatory comment
+
+### Null Safety
+- **Optional chaining**: Use `props.onClick?.()` for function calls when possible
+- **Null checking**: Always use null checking for function calls
+
+## Component Development
+
+### Props & Data Passing
+- **Object props**: Pass related data as objects instead of individual properties
+- **Conditional classes**: Use `TailwindMergeUtils.merge()` utility method multiple or conditional classes
+
+### Styling Requirements
+- **No inline styles**: Never inline styles
+- **CSS modules**: Import CSS and use class names from modules
+- **Sandbox CSS**: For sandbox files, use `.sandbox.module.css` naming convention
+- **Tailwind first**: Use Tailwind for most styling needs
+- **Complex CSS**: When dealing with complex CSS, you can can CSS modules over tailwind for readability
+
+## Testing & Quality
+
+### Testing Strategy
+- **Unit tests**: Use Vitest for unit testing
+- **Component tests**: Use Playwright with sandbox system for UI/component testing
+- **No mocking**: Never mock anything unless for sandbox or testing files
+
+### Code Quality
+- **DRY principle**: Avoid code duplication, search for existing utils/components to reuse
+- **Bug prevention**: When fixing bugs or making changes, ensure no previously fixed bugs are reintroduced
+- **Scope limitation**: Only make updates required for the task, don't modify unrelated code
+- **Impact awareness**: Consider other code areas when making changes
+
+## Development Workflow
+
+### Task Execution
+1. **Analyze existing patterns** before implementing
+2. **Search for reusable components/utils** before creating new ones
+3. **Follow established file structure** and naming conventions
+4. **Update related sandbox files** when modifying components
+5. **Verify no regression** in previously working functionality
+
+### Code Review Checklist
+- [ ] Follows existing coding standards
+- [ ] Uses appropriate library functionality
+- [ ] Maintains consistent patterns
+- [ ] Includes proper TypeScript typing
+- [ ] Uses CSS modules (no inline styles)
+- [ ] Includes sandbox updates if applicable
+- [ ] Maintains code organization standards
+- [ ] Uses descriptive naming conventions
