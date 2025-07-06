@@ -14,7 +14,7 @@
   }
 
   .as-page-section {
-    border-radius: var(--radius-base);
+    border-radius: var(--radius-sm);
     background-color: var(--color-surface);
     padding: var(--spacing-base);
   }
