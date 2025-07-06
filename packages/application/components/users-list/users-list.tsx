@@ -4,7 +4,7 @@ import Icon from '$/core/components/icon';
 import List from '$/core/components/list';
 import { tooltipComponentUtils } from '$/core/components/tooltip';
 import type { User } from '$api/types/user';
-import { For, Show } from 'solid-js';
+import { Show } from 'solid-js';
 
 type InternalUser = Pick<User, 'id' | 'email' | 'name' | 'roles'>;
 
@@ -21,59 +21,59 @@ const UsersList = (props: UsersListProps) => {
       when={props.users.length > 0}
       fallback={<EmptyIndicator label="No users found" actionLabel="Add User" onTriggerAction={props.onAdd} noBorder />}
     >
-      <GridTable class="grid-cols-[300px_300px_1fr_auto]">
-        <GridTable.HeaderData>Name</GridTable.HeaderData>
-        <GridTable.HeaderData>Email</GridTable.HeaderData>
-        <GridTable.HeaderData>Roles</GridTable.HeaderData>
-        <GridTable.HeaderData />
-        <For each={props.users}>
-          {(user, index) => {
-            const isLastRow = index() === props.users.length - 1;
-            const dropDownStore = tooltipComponentUtils.createStore();
+      <GridTable.Simple
+        class="grid-cols-[300px_300px_1fr_auto]"
+        headerData={['Name', 'Email', 'Roles']}
+        hasActions
+        items={props.users}
+        columnCount={4}
+      >
+        {(user, index) => {
+          const isLastRow = index() === props.users.length - 1;
+          const dropDownStore = tooltipComponentUtils.createStore();
 
-            const handleEdit = () => {
-              props.onEdit?.(user);
+          const handleEdit = () => {
+            props.onEdit?.(user);
 
-              dropDownStore.hide();
-            };
+            dropDownStore.hide();
+          };
 
-            const handleRemove = () => {
-              props.onDelete?.(user);
+          const handleRemove = () => {
+            props.onDelete?.(user);
 
-              dropDownStore.hide();
-            };
+            dropDownStore.hide();
+          };
 
-            return (
-              <>
-                <GridTable.Data onClick={handleEdit} isLastRow={isLastRow} isStartOfRow>
-                  {user.name}
-                </GridTable.Data>
-                <GridTable.Data onClick={handleEdit} isLastRow={isLastRow}>
-                  {user.email}
-                </GridTable.Data>
-                <GridTable.Data onClick={handleEdit} isLastRow={isLastRow}>
-                  {user.roles.join(', ')}
-                </GridTable.Data>
-                <GridTable.DataActions
-                  isLastRow={isLastRow}
-                  isEndOfRow
-                  actionsTooltipStore={dropDownStore}
-                  contentElement={
-                    <>
-                      <List.Item onClick={handleEdit} preElement={<Icon icon="pencil" />}>
-                        Edit
-                      </List.Item>
-                      <List.Item onClick={handleRemove} preElement={<Icon icon="x" />}>
-                        Remove
-                      </List.Item>
-                    </>
-                  }
-                />
-              </>
-            );
-          }}
-        </For>
-      </GridTable>
+          return (
+            <>
+              <GridTable.Data onClick={handleEdit} isLastRow={isLastRow} isStartOfRow>
+                {user.name}
+              </GridTable.Data>
+              <GridTable.Data onClick={handleEdit} isLastRow={isLastRow}>
+                {user.email}
+              </GridTable.Data>
+              <GridTable.Data onClick={handleEdit} isLastRow={isLastRow}>
+                {user.roles.join(', ')}
+              </GridTable.Data>
+              <GridTable.DataActions
+                isLastRow={isLastRow}
+                isEndOfRow
+                actionsTooltipStore={dropDownStore}
+                contentElement={
+                  <>
+                    <List.Item onClick={handleEdit} preElement={<Icon icon="pencil" />}>
+                      Edit
+                    </List.Item>
+                    <List.Item onClick={handleRemove} preElement={<Icon icon="x" />}>
+                      Remove
+                    </List.Item>
+                  </>
+                }
+              />
+            </>
+          );
+        }}
+      </GridTable.Simple>
     </Show>
   );
 };
