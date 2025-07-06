@@ -13,6 +13,7 @@ import {
 } from '$/core/components/button/utils';
 import Icon from '$/core/components/icon';
 import type { IconName } from '$/core/components/icon/utils';
+import Typography, { TypographySize } from '$/core/components/typography';
 import type { CommonDataAttributes } from '$/core/types/generic';
 
 export type ButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> &
@@ -26,6 +27,7 @@ export type ButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> &
     loadingIconPosition?: ButtonItemPosition;
     size?: ButtonSize;
     icon?: IconName;
+    marker?: string;
   };
 
 export const Button = (passedProps: ButtonProps) => {
@@ -54,6 +56,7 @@ export const Button = (passedProps: ButtonProps) => {
       'shape',
       'size',
       'icon',
+      'marker',
     ],
   );
 
@@ -66,7 +69,7 @@ export const Button = (passedProps: ButtonProps) => {
       data-id="button"
       type="button"
       {...restOfProps}
-      class={tailwindUtils.merge(styles.button, props.class, {
+      class={tailwindUtils.merge('relative', styles.button, props.class, {
         [styles.filled]: props.variant === ButtonVariant.FILLED,
         [styles.weak]: props.variant === ButtonVariant.WEAK,
         [styles.outlined]: props.variant === ButtonVariant.OUTLINED,
@@ -85,6 +88,11 @@ export const Button = (passedProps: ButtonProps) => {
       })}
       disabled={props.disabled || isLoading()}
     >
+      <Show when={props.marker}>
+        <span class="absolute -top-2xs right-4xs bg-danger3 px-4xs text-xs leading-xs rounded-sm">
+          <Typography size={TypographySize.EXTRA_SMALL}>{props.marker}</Typography>
+        </span>
+      </Show>
       <span class={styles.buttonContent}>
         {isLoading() && (
           <ButtonPrePostItem

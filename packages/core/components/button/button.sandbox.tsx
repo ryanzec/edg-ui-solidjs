@@ -1077,3 +1077,14 @@ export const Sizes = () => {
     </SandboxExamplesContainer>
   );
 };
+
+export const Marker = () => {
+  return (
+    <SandboxExamplesContainer>
+      <Button.Group>
+        <Button marker="BETA">Marker Button</Button>
+        <Button marker="BETA">Marker</Button>
+      </Button.Group>
+    </SandboxExamplesContainer>
+  );
+};
