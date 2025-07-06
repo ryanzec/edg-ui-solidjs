@@ -14,8 +14,8 @@ const GridTableExpandableRowContent = (passedProps: GridTableExpandableRowConten
   return (
     <Show when={props.isExpanded}>
       <div
-        class={tailwindUtils.merge('px-lg py-base bg-surface-secondary  min-w-[1px] rounded-b-base', {
-          'mb-2xs -mt-2xs': props.isLastRow === false,
+        class={tailwindUtils.merge('px-lg py-base min-w-[1px] border-l border-r border-outline', {
+          'border-b rounded-b-sm': props.isLastRow,
         })}
         style={`grid-column: span ${props.columnCount};`}
       >

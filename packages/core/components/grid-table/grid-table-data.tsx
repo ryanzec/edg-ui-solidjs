@@ -5,6 +5,7 @@ import { Dynamic } from 'solid-js/web';
 export type GridTableDataProps = JSX.HTMLAttributes<HTMLDivElement> & {
   isStartOfRow?: boolean;
   isEndOfRow?: boolean;
+  isFirstRow?: boolean;
   isLastRow?: boolean;
   isExpanded?: boolean;
   linkUrl?: string;
@@ -13,8 +14,11 @@ export type GridTableDataProps = JSX.HTMLAttributes<HTMLDivElement> & {
 
 const GridTableData = (passedProps: GridTableDataProps) => {
   const [props, rest] = splitProps(
-    mergeProps({ isStartOfRow: false, isEndOfRow: false, isLastRow: false, isExpanded: false }, passedProps),
-    ['class', 'isStartOfRow', 'isEndOfRow', 'isLastRow', 'isExpanded', 'linkUrl', 'onClick'],
+    mergeProps(
+      { isStartOfRow: false, isEndOfRow: false, isFirstRow: false, isLastRow: false, isExpanded: false },
+      passedProps,
+    ),
+    ['class', 'isStartOfRow', 'isEndOfRow', 'isFirstRow', 'isLastRow', 'isExpanded', 'linkUrl', 'onClick'],
   );
 
   const getMainComponentName = () => {
@@ -40,14 +44,16 @@ const GridTableData = (passedProps: GridTableDataProps) => {
       role="cell"
       component={getMainComponentName()}
       class={tailwindUtils.merge(
-        'px-lg py-base bg-surface-secondary inline-flex items-center min-w-[1px]',
+        'px-sm py-2xs inline-flex items-center min-w-[1px] border-t border-outline',
         {
-          'rounded-tl-base': props.isExpanded && props.isStartOfRow,
-          'rounded-l-base': props.isExpanded === false && props.isStartOfRow,
-          'rounded-tr-base': props.isExpanded && props.isEndOfRow,
-          'rounded-r-base': props.isExpanded === false && props.isEndOfRow,
+          'border-l': props.isStartOfRow,
+          'border-r': props.isEndOfRow,
+          // 'rounded-tl-sm': props.isFirstRow && props.isStartOfRow,
+          // 'rounded-tr-sm': props.isFirstRow && props.isEndOfRow,
+          'rounded-bl-sm': props.isLastRow && props.isStartOfRow,
+          'rounded-br-sm': props.isLastRow && props.isEndOfRow,
           'cursor-pointer': props.onClick,
-          'mb-2xs': props.isLastRow === false,
+          'border-b': props.isLastRow && !props.isExpanded,
         },
         props.class,
       )}

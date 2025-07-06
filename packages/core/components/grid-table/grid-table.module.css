@@ -1,9 +1,9 @@
 .row-first-data {
-  border-top-left-radius: var(--radius-base);
-  border-bottom-left-radius: var(--radius-base);
+  border-top-left-radius: var(--radius-sm);
+  border-bottom-left-radius: var(--radius-sm);
 }
 
 .row-last-data {
-  border-top-right-radius: var(--radius-base);
-  border-bottom-right-radius: var(--radius-base);
+  border-top-right-radius: var(--radius-sm);
+  border-bottom-right-radius: var(--radius-sm);
 }

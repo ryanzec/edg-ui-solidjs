@@ -16,6 +16,9 @@ export type GridTableHeaderDataProps = JSX.HTMLAttributes<HTMLDivElement> & {
   sortKey?: string;
   sortDirection?: GridTableSortDirection;
   onSortChange?: (sortKey: string, newSortDirection: GridTableSortDirection) => void;
+  isFirstColumn?: boolean;
+  isLastColumn?: boolean;
+  hasItems?: boolean;
 };
 
 const GridTableHeaderData = (passedProps: GridTableHeaderDataProps) => {
@@ -25,6 +28,9 @@ const GridTableHeaderData = (passedProps: GridTableHeaderDataProps) => {
     'onSortChange',
     'children',
     'sortKey',
+    'isFirstColumn',
+    'isLastColumn',
+    'hasItems',
   ]);
 
   const isSortable = () => {
@@ -96,10 +102,12 @@ const GridTableHeaderData = (passedProps: GridTableHeaderDataProps) => {
       // biome-ignore lint/a11y/useSemanticElements: we use div for grid styling compatibility
       role="columnheader"
       class={tailwindUtils.merge(
-        'px-lg py-base font-medium uppercase min-w-[1px] flex items-center gap-3xs mb-2xs rounded-sm',
+        'px-sm py-2xs font-medium uppercase min-w-[1px] flex items-center gap-3xs border-t border-outline border-b mb-[-1px]',
         {
           'cursor-pointer': isSortable(),
           'hover:bg-neutral-subtle': isSortable(),
+          'border-l rounded-tl-sm': props.isFirstColumn,
+          'border-r rounded-tr-sm': props.isLastColumn,
         },
         props.class,
       )}
