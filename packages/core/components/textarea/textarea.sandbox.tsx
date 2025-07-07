@@ -100,7 +100,7 @@ export const InnerActions = () => {
         formData={formStore.data}
         errors={formStore.errors()?.textarea?.errors}
         isProcessing={isProcessing()}
-        mainButtonElement={isProcessing() ? 'Generating...' : 'Generate'}
+        mainButtonLabelElement={isProcessing() ? 'Generating...' : 'Generate'}
       />
     </>
   );

@@ -1,17 +1,39 @@
 import { applicationConfiguration } from '$/application/utils/application';
-import posthog from 'posthog-js';
+import posthog, { type PostHogConfig } from 'posthog-js';
+
+const productionOptions: Partial<PostHogConfig> = {
+  api_host: 'https://us.i.posthog.com',
+  person_profiles: 'identified_only',
+  autocapture: false,
+  capture_pageview: true,
+  capture_pageleave: true,
+  disable_session_recording: true,
+  disable_surveys: true,
+  enable_heatmaps: true,
+  capture_dead_clicks: false,
+};
+
+const developmentOptions: Partial<PostHogConfig> = {
+  api_host: 'https://eu.posthog.com',
+  person_profiles: 'identified_only',
+  autocapture: false,
+  capture_pageview: false,
+  capture_pageleave: false,
+  disable_session_recording: true,
+  disable_surveys: true,
+  enable_heatmaps: false,
+  capture_dead_clicks: false,
+};
 
 const initialize = () => {
-  posthog.init(applicationConfiguration.posthogPublicKey, {
-    api_host: 'https://us.i.posthog.com',
-    person_profiles: 'identified_only',
-    autocapture: false,
-    capture_pageview: true,
-    capture_pageleave: true,
-    disable_session_recording: true,
-    disable_surveys: true,
-    enable_heatmaps: true,
-    capture_dead_clicks: false,
+  posthog.init(
+    applicationConfiguration.posthogPublicKey,
+    import.meta.env.MODE !== 'production' ? developmentOptions : productionOptions,
+  );
+
+  // global data for all events
+  posthog.register({
+    env: import.meta.env.MODE !== 'production' ? 'development' : 'production',
   });
 
   if (typeof window !== 'undefined') {
@@ -24,15 +46,7 @@ type IdentifyOptions = {
 };
 
 const identifyUser = (userId: string, options: IdentifyOptions) => {
-  const userProperties: Record<string, unknown> = {
-    userId,
-  };
-
-  if (options.organizationId) {
-    userProperties.organizationId = options.organizationId;
-  }
-
-  posthog.identify(userId, userProperties);
+  posthog.identify(userId, options);
 };
 
 export const analyticsUtils = {

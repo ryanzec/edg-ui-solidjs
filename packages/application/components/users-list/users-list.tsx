@@ -59,7 +59,7 @@ const UsersList = (props: UsersListProps) => {
                 isLastRow={isLastRow}
                 isEndOfRow
                 actionsTooltipStore={dropDownStore}
-                contentElement={
+                dropDownContentElement={
                   <>
                     <List.Item onClick={handleEdit} preElement={<Icon icon="pencil" />}>
                       Edit

@@ -59,7 +59,7 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
   ]);
 
   const [containerElementRef, setContainerElementRef] = createSignal<HTMLDivElement>();
-  const [inputElement, setInputElement] = createSignal<HTMLInputElement>();
+  const [inputElementRef, setInputElementRef] = createSignal<HTMLInputElement>();
   const [isDatePickerVisible, setIsDatePickerVisible] = createSignal(false);
   const startDate = datePickerComponentUtils.createInputDateStore({
     includeTime: datePickerProps.includeTime,
@@ -70,12 +70,8 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
     defaultDate: props.defaultEndSelectedDate,
   });
 
-  const inputRef = (element: HTMLInputElement) => {
-    setInputElement(element);
-  };
-
   const showDatePicker = () => {
-    const currentInputElement = inputElement();
+    const currentInputElement = inputElementRef();
 
     if (currentInputElement) {
       // since when the user interacts with the date picker, the input would technically become blurred however
@@ -92,7 +88,7 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
       return;
     }
 
-    const currentInputElement = inputElement();
+    const currentInputElement = inputElementRef();
 
     if (currentInputElement) {
       // once the date picker is no longer visible, the user has truly blurred the input so we can force that event
@@ -104,7 +100,7 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
   };
 
   const handleSelectDate = (selectedDate?: Date, which?: WhichDate) => {
-    const currentInputElement = inputElement();
+    const currentInputElement = inputElementRef();
 
     if (!currentInputElement) {
       return;
@@ -128,7 +124,7 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
   };
 
   createEffect(function updateInput() {
-    const currentInputElement = inputElement();
+    const currentInputElement = inputElementRef();
 
     if (!currentInputElement) {
       return;
@@ -200,7 +196,7 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
       use:clickOutsideDirective={{ callback: hideDatePicker }}
     >
       <Input
-        ref={inputRef}
+        ref={setInputElementRef}
         data-id="date-picker-input"
         {...restOfProps}
         onFocus={showDatePicker}

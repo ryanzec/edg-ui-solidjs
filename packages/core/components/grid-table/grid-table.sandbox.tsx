@@ -290,7 +290,7 @@ export const Linked = () => {
                   isFirstRow={isFirstRow}
                   isLastRow={isLastRow}
                   actionsTooltipStore={dropDownStore}
-                  contentElement={<List.Item onClick={() => handleEdit(item)}>Edit</List.Item>}
+                  dropDownContentElement={<List.Item onClick={() => handleEdit(item)}>Edit</List.Item>}
                   isEndOfRow
                 />
               </>
@@ -372,7 +372,7 @@ export const ExtraContent = () => {
                   isLastRow={isLastRow}
                   isExpanded={isExpanded()}
                   actionsTooltipStore={dropDownStore}
-                  contentElement={
+                  dropDownContentElement={
                     <>
                       <List.Item onClick={() => handleEdit(item)}>Edit</List.Item>
                       <List.Item onClick={handleExpand}>Expand</List.Item>

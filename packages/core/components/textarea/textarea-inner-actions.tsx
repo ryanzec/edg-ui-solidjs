@@ -11,7 +11,7 @@ export type TextareaInnerActionsProps<TFormData = DefaultFormData> = Omit<
 > &
   Pick<FormFieldProps, 'errors'> & {
     isProcessing: boolean;
-    mainButtonElement: JSX.Element;
+    mainButtonLabelElement: JSX.Element;
     extraButtonElements?: JSX.Element[];
   };
 
@@ -20,7 +20,7 @@ export const TextareaInnerActions = <TFormData = DefaultFormData>(
 ) => {
   const [props, resetOfProps] = splitProps(passedProps, [
     'isProcessing',
-    'mainButtonElement',
+    'mainButtonLabelElement',
     'errors',
     'extraButtonElements',
   ]);
@@ -41,7 +41,7 @@ export const TextareaInnerActions = <TFormData = DefaultFormData>(
               state={props.isProcessing ? ButtonState.IS_LOADING : undefined}
               class="shrink-0 !ml-auto"
             >
-              {props.mainButtonElement}
+              {props.mainButtonLabelElement}
             </Button>
           </Button.Group>
         </div>

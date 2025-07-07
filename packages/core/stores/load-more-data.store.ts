@@ -8,7 +8,7 @@ type CreateLoadMoreDataStoreOptions = {
 };
 
 export type LoadMoreDataStore = {
-  setAutoLoadTriggerElement: Setter<HTMLDivElement | undefined>;
+  setAutoLoadTriggerElementRef: Setter<HTMLDivElement | undefined>;
   isLoading: Accessor<boolean>;
 };
 
@@ -39,7 +39,7 @@ const registerObserver = (element: Element, callback: PositionCallback) => {
 };
 
 const createLoadMoreDataStore = (options: CreateLoadMoreDataStoreOptions): LoadMoreDataStore => {
-  const [autoLoadTriggerElement, setAutoLoadTriggerElement] = createSignal<HTMLDivElement>();
+  const [autoLoadTriggerElementRef, setAutoLoadTriggerElementRef] = createSignal<HTMLDivElement>();
   const [isLoading, setIsLoading] = createSignal(false);
 
   const loadMoreData = async (): Promise<boolean> => {
@@ -48,7 +48,7 @@ const createLoadMoreDataStore = (options: CreateLoadMoreDataStoreOptions): LoadM
         return false;
       }
 
-      const currentAutoLoadTriggerElement = autoLoadTriggerElement();
+      const currentAutoLoadTriggerElement = autoLoadTriggerElementRef();
 
       if (!currentAutoLoadTriggerElement) {
         return false;
@@ -81,7 +81,7 @@ const createLoadMoreDataStore = (options: CreateLoadMoreDataStoreOptions): LoadM
   };
 
   createEffect(function registerObserverEffect() {
-    const currentAutoLoadTriggerElement = autoLoadTriggerElement();
+    const currentAutoLoadTriggerElement = autoLoadTriggerElementRef();
 
     if (!currentAutoLoadTriggerElement) {
       return;
@@ -107,7 +107,7 @@ const createLoadMoreDataStore = (options: CreateLoadMoreDataStoreOptions): LoadM
   });
 
   return {
-    setAutoLoadTriggerElement,
+    setAutoLoadTriggerElementRef,
     isLoading,
   };
 };

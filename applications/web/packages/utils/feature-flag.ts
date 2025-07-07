@@ -10,11 +10,7 @@ export type FeatureFlag = (typeof FeatureFlag)[keyof typeof FeatureFlag];
 const hasFeatureFlag = (flag: FeatureFlag): boolean => {
   const isEnabled = posthog.isFeatureEnabled(flag);
 
-  if (!isEnabled) {
-    return false;
-  }
-
-  return true;
+  return isEnabled || false;
 };
 
 export const featureFlagUtils = {

@@ -7,7 +7,7 @@ export type DroppableProps = JSX.HTMLAttributes<HTMLDivElement> & {
 };
 
 const Droppable = (props: DroppableProps) => {
-  const setupDroppable = (element: HTMLElement) => {
+  const droppableElementRef = (element: HTMLElement) => {
     const droppableCleanup = dropTargetForElements({
       element,
       getData: () => ({
@@ -31,7 +31,7 @@ const Droppable = (props: DroppableProps) => {
   };
 
   return (
-    <div ref={setupDroppable} class={props.class}>
+    <div ref={droppableElementRef} class={props.class}>
       {props.children}
     </div>
   );

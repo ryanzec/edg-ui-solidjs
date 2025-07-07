@@ -32,7 +32,9 @@
     "test:unit:coverage": "NODE_ENV=test vitest --config ./vite.test.config.ts --coverage run",
     "test:visual": "NODE_ENV=test playwright test -c playwright.visual.config.ts",
     "test:visual:update": "NODE_ENV=test playwright test --update-snapshots -c playwright.visual.config.ts",
+    "web:build": "NODE_ENV=development vite --config ./applications/web/vite.config.ts build",
     "web:dev": "NODE_ENV=development vite --config ./applications/web/vite.config.ts --port 4000",
+    "web:preview": "NODE_ENV=development vite --config ./applications/web/vite.config.ts preview",
     "web:dev:clean": "rm -rf ./node_modules/.vite && NODE_ENV=development vite --config ./applications/web/vite.config.ts --port 4000 --force"
   },
   "devDependencies": {
@@ -122,11 +124,7 @@
     "node": "20.18.1",
     "pnpm": "9.15.3"
   },
-  "files": [
-    "dist",
-    "packages",
-    "!*.spec.*"
-  ],
+  "files": ["dist", "packages", "!*.spec.*"],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
