@@ -1,5 +1,3 @@
-import { createSignal } from 'solid-js';
-
 export const DialogFooterAlignment = {
   LEFT: 'left',
   RIGHT: 'right',
@@ -7,36 +5,9 @@ export const DialogFooterAlignment = {
 
 export type DialogFooterAlignment = (typeof DialogFooterAlignment)[keyof typeof DialogFooterAlignment];
 
-export type DialogStore = {
+export type DialogComponentApi = {
   isOpened: () => boolean;
   open: () => void;
   close: () => void;
   toggle: () => void;
-};
-
-const createDialogStore = (): DialogStore => {
-  const [isOpened, setIsOpened] = createSignal<boolean>(false);
-
-  const open = () => {
-    setIsOpened(true);
-  };
-
-  const close = () => {
-    setIsOpened(false);
-  };
-
-  const toggle = () => {
-    setIsOpened(!isOpened());
-  };
-
-  return {
-    isOpened,
-    open,
-    close,
-    toggle,
-  };
-};
-
-export const dialogComponentUtils = {
-  createStore: createDialogStore,
 };

@@ -1,9 +1,9 @@
 import Button, { ButtonColor, ButtonVariant } from '$/core/components/button';
 import Dialog, { defaultDialogProps, type DialogProps } from '$/core/components/dialog/dialog';
-import type { DialogStore } from '$/core/components/dialog/utils';
+import type { DialogComponentApi } from '$/core/components/dialog/utils';
 import { mergeProps } from 'solid-js';
+
 export type DialogConfirmationProps = Omit<DialogProps, 'footerElement' | 'closeOnEscape' | 'closeOnOverlayClick'> & {
-  dialogStore: DialogStore;
   processConfirmation: () => Promise<void> | void;
   isProcessing?: boolean;
   confirmationText?: string;
@@ -17,13 +17,26 @@ const DialogConfirmation = (passedProps: DialogConfirmationProps) => {
     passedProps,
   );
 
+  let dialogComponentApi: DialogComponentApi | undefined = undefined;
+
   const handleCloseDialog = () => {
-    props.dialogStore.close();
+    dialogComponentApi?.close();
+  };
+
+  const handleReady = (componentApi: DialogComponentApi) => {
+    dialogComponentApi = componentApi;
+    props.onReady?.(componentApi);
+  };
+
+  const handleCleanup = () => {
+    dialogComponentApi = undefined;
+    props.onCleanup?.();
   };
 
   return (
     <Dialog
-      dialogStore={props.dialogStore}
+      onReady={handleReady}
+      onCleanup={handleCleanup}
       // it is only when processing do we want to override default closing functionality
       closeEnabled={props.isProcessing ? false : defaultDialogProps.closeEnabled}
       headerElement={props.headerElement}

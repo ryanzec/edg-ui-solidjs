@@ -1,6 +1,7 @@
 import Button from '$/core/components/button';
-import { dialogComponentUtils } from '$/core/components/dialog/utils';
+import type { DialogComponentApi } from '$/core/components/dialog';
 import UnsavedChangesDialog from '$/core/components/unsaved-changes-dialog';
+import { componentApiStoreUtils } from '$/core/stores/component-api.store';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 
 export default {
@@ -8,23 +9,28 @@ export default {
 };
 
 export const Default = () => {
-  const dialogStore = dialogComponentUtils.createStore();
+  const dialogComponentApiUtils = componentApiStoreUtils.createStore<DialogComponentApi>();
 
   const handleLeave = () => {
     console.log('Leave');
-    dialogStore.close();
+    dialogComponentApiUtils.api()?.close();
   };
 
   const handleStay = () => {
     console.log('Stay');
-    dialogStore.close();
+    dialogComponentApiUtils.api()?.close();
   };
 
   return (
     <>
-      <Button onclick={dialogStore.open}>Open Dialog</Button>
+      <Button onclick={() => dialogComponentApiUtils.api()?.open()}>Open Dialog</Button>
       <SandboxExamplesContainer>
-        <UnsavedChangesDialog dialogStore={dialogStore} onLeave={handleLeave} onStay={handleStay} />
+        <UnsavedChangesDialog
+          onReady={dialogComponentApiUtils.onReady}
+          onCleanup={dialogComponentApiUtils.onCleanup}
+          onLeave={handleLeave}
+          onStay={handleStay}
+        />
       </SandboxExamplesContainer>
     </>
   );

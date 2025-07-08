@@ -1,8 +1,7 @@
 import Button, { ButtonColor, ButtonVariant } from '$/core/components/button';
-import Dialog, { type DialogStore } from '$/core/components/dialog';
+import Dialog, { type DialogProps } from '$/core/components/dialog';
 
-export type UnsavedChangesDialogProps = {
-  dialogStore: DialogStore;
+export type UnsavedChangesDialogProps = Pick<DialogProps, 'onReady' | 'onCleanup'> & {
   onLeave: () => void;
   onStay: () => void;
 };
@@ -10,7 +9,8 @@ export type UnsavedChangesDialogProps = {
 const UnsavedChangesDialog = (props: UnsavedChangesDialogProps) => {
   return (
     <Dialog
-      dialogStore={props.dialogStore}
+      onReady={props.onReady}
+      onCleanup={props.onCleanup}
       headerElement="Unsaved Changes"
       footerElement={
         <Button.Group>

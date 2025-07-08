@@ -1,14 +1,14 @@
-import { type DialogStore, dialogComponentUtils } from '$/core/components/dialog';
+import type { DialogComponentApi, DialogProps } from '$/core/components/dialog';
+import { componentApiStoreUtils } from '$/core/stores/component-api.store';
 import { loggerUtils } from '$/core/utils/logger';
 import type { Navigator } from '@solidjs/router';
 import { type Accessor, createSignal } from 'solid-js';
 
-export type UnsavedChangesDialogStore = {
+export type UnsavedChangesDialogStore = Pick<DialogProps, 'onReady' | 'onCleanup'> & {
   redirectUrl: Accessor<string>;
   setRedirectUrl: (url: string) => void;
   allowLeave: Accessor<boolean>;
   setAllowLeave: (allowLeave: boolean) => void;
-  dialogStore: DialogStore;
   handleUnsavedDialogLeave: () => void;
   handleUnsavedDialogStay: () => void;
 };
@@ -20,14 +20,14 @@ export type CreateUnsavedChangesDialogOptions = {
 const createUnsavedChangesDialogStore = (options: CreateUnsavedChangesDialogOptions): UnsavedChangesDialogStore => {
   const [redirectUrl, setRedirectUrl] = createSignal<string>('');
   const [allowLeave, setAllowLeave] = createSignal<boolean>(false);
-  const dialogStore = dialogComponentUtils.createStore();
+  const dialogComponentApiUtils = componentApiStoreUtils.createStore<DialogComponentApi>();
 
   const handleUnsavedDialogLeave = () => {
     const currentLeaveUrl = redirectUrl();
 
     if (currentLeaveUrl === undefined) {
       loggerUtils.error('no attempted leave url found which should never happen');
-      dialogStore.close();
+      dialogComponentApiUtils.api()?.close();
 
       return;
     }
@@ -37,7 +37,7 @@ const createUnsavedChangesDialogStore = (options: CreateUnsavedChangesDialogOpti
   };
 
   const handleUnsavedDialogStay = () => {
-    dialogStore.close();
+    dialogComponentApiUtils.api()?.close();
   };
 
   return {
@@ -45,7 +45,6 @@ const createUnsavedChangesDialogStore = (options: CreateUnsavedChangesDialogOpti
     setRedirectUrl,
     allowLeave,
     setAllowLeave,
-    dialogStore,
     handleUnsavedDialogLeave,
     handleUnsavedDialogStay,
   };

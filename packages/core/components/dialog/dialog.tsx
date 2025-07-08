@@ -1,15 +1,16 @@
 import styles from '$/core/components/dialog/dialog.module.css';
-import { DialogFooterAlignment, type DialogStore } from '$/core/components/dialog/utils';
+import { type DialogComponentApi, DialogFooterAlignment } from '$/core/components/dialog/utils';
 import Icon from '$/core/components/icon';
 import Overlay from '$/core/components/overlay';
 import Typography, { TypographySize } from '$/core/components/typography';
 import { Key } from '$/core/types/generic';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show, mergeProps, onCleanup, splitProps } from 'solid-js';
+import { type JSX, Show, createSignal, mergeProps, onCleanup, splitProps } from 'solid-js';
 import { Portal } from 'solid-js/web';
 
 export type DialogProps = JSX.HTMLAttributes<HTMLDivElement> & {
-  dialogStore: DialogStore;
+  onReady?: (componentApi: DialogComponentApi) => void;
+  onCleanup?: () => void;
   headerElement?: JSX.Element;
   footerElement?: JSX.Element;
   footerAlignment?: DialogFooterAlignment;
@@ -29,21 +30,37 @@ const Dialog = (passedProps: DialogProps) => {
   const [props, restOfProps] = splitProps(mergeProps(defaultDialogProps, passedProps), [
     'children',
     'class',
-    'dialogStore',
     'headerElement',
     'footerElement',
     'footerAlignment',
     'closeOnClickOverlay',
     'closeOnEscape',
     'closeEnabled',
+    'onCleanup',
+    'onReady',
   ]);
+
+  const [isOpened, setIsOpened] = createSignal<boolean>(false);
+
+  const open = () => {
+    setIsOpened(true);
+  };
+
+  const close = () => {
+    setIsOpened(false);
+  };
+
+  const toggle = () => {
+    setIsOpened(!isOpened());
+  };
+
   const dialogElementRef = () => {
     const keyDownListener = (event: KeyboardEvent) => {
       if (props.closeEnabled === false || props.closeOnEscape === false || event.key !== Key.ESCAPE) {
         return;
       }
 
-      props.dialogStore.close();
+      close();
     };
 
     document.addEventListener('keydown', keyDownListener);
@@ -58,7 +75,7 @@ const Dialog = (passedProps: DialogProps) => {
       return;
     }
 
-    props.dialogStore.close();
+    close();
   };
 
   const handleCloseDialog = () => {
@@ -66,11 +83,22 @@ const Dialog = (passedProps: DialogProps) => {
       return;
     }
 
-    props.dialogStore.close();
+    close();
   };
 
+  props.onReady?.({
+    isOpened,
+    open,
+    close,
+    toggle,
+  });
+
+  onCleanup(() => {
+    props.onCleanup?.();
+  });
+
   return (
-    <Show when={props.dialogStore.isOpened()}>
+    <Show when={isOpened()}>
       <Portal>
         <div
           ref={dialogElementRef}

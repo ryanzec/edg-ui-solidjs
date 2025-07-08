@@ -1,5 +1,6 @@
 import { ButtonColor } from '$/core/components/button';
 import DialogConfirmation, { type DialogConfirmationProps } from '$/core/components/dialog/dialog-confirmation';
+import type { DialogComponentApi } from '$/core/components/dialog/utils';
 import { loggerUtils } from '$/core/utils/logger';
 import { createSignal, splitProps } from 'solid-js';
 
@@ -12,8 +13,20 @@ export type DialogDeleteConfirmationProps<TItem> = Omit<
 };
 
 const DialogDeleteConfirmation = <TItem,>(passedProps: DialogDeleteConfirmationProps<TItem>) => {
-  const [props, restOfProps] = splitProps(passedProps, ['selectedItem', 'processDelete', 'dialogStore']);
+  let dialogComponentApi: DialogComponentApi | undefined;
+
+  const [props, restOfProps] = splitProps(passedProps, ['selectedItem', 'processDelete', 'onReady', 'onCleanup']);
   const [isProcessing, setIsProcessing] = createSignal(false);
+
+  const handleReady = (componentApi: DialogComponentApi) => {
+    dialogComponentApi = componentApi;
+    props.onReady?.(componentApi);
+  };
+
+  const handleCleanup = () => {
+    dialogComponentApi = undefined;
+    props.onCleanup?.();
+  };
 
   const processDelete = async () => {
     try {
@@ -24,7 +37,7 @@ const DialogDeleteConfirmation = <TItem,>(passedProps: DialogDeleteConfirmationP
       setIsProcessing(false);
 
       if (result) {
-        props.dialogStore.close();
+        dialogComponentApi?.close();
       }
     } catch (error: unknown) {
       //@todo proper error handling
@@ -37,7 +50,8 @@ const DialogDeleteConfirmation = <TItem,>(passedProps: DialogDeleteConfirmationP
   return (
     <DialogConfirmation
       {...restOfProps}
-      dialogStore={props.dialogStore}
+      onReady={handleReady}
+      onCleanup={handleCleanup}
       processConfirmation={processDelete}
       isProcessing={isProcessing()}
       confirmationColor={ButtonColor.DANGER}

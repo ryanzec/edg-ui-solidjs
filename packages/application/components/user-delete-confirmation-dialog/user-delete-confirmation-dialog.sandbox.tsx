@@ -1,6 +1,7 @@
 import UserDeleteConfirmationDialog from '$/application/components/user-delete-confirmation-dialog';
 import Button from '$/core/components/button';
-import { dialogComponentUtils } from '$/core/components/dialog/utils';
+import type { DialogComponentApi } from '$/core/components/dialog';
+import { componentApiStoreUtils } from '$/core/stores/component-api.store';
 import { asyncUtils } from '$/core/utils/async';
 import { loggerUtils } from '$/core/utils/logger';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
@@ -10,7 +11,7 @@ export default {
 };
 
 export const Default = () => {
-  const dialogStore = dialogComponentUtils.createStore();
+  const dialogComponentApiStore = componentApiStoreUtils.createStore<DialogComponentApi>();
   const mockUser = {
     id: '123',
     name: 'Example User',
@@ -32,10 +33,11 @@ export const Default = () => {
 
   return (
     <>
-      <Button onclick={dialogStore.open}>Delete User</Button>
+      <Button onclick={dialogComponentApiStore.api()?.open}>Delete User</Button>
       <SandboxExamplesContainer>
         <UserDeleteConfirmationDialog
-          dialogStore={dialogStore}
+          onReady={dialogComponentApiStore.onReady}
+          onCleanup={dialogComponentApiStore.onCleanup}
           selectedUser={mockUser}
           onDeleted={(user) => console.log('User deleted:', user)}
           processDelete={processDelete}

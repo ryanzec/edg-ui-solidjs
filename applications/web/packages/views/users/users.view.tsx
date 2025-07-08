@@ -7,9 +7,10 @@ import { UsersList, type UsersListProps } from '$/application/components/users-l
 import { authenticationStore } from '$/application/stores/authentication.store';
 import Button from '$/core/components/button';
 import { CalloutColor } from '$/core/components/callout';
-import { dialogComponentUtils } from '$/core/components/dialog';
+import type { DialogComponentApi } from '$/core/components/dialog';
 import { peekComponentUtils } from '$/core/components/peek';
 import { Skeleton } from '$/core/components/skeleton';
+import { componentApiStoreUtils } from '$/core/stores/component-api.store';
 import { FormSaveMode } from '$/core/stores/form.store';
 import { globalNotificationsStore } from '$/core/stores/global-notifications.store';
 import { ErrorMessage } from '$/core/utils/error';
@@ -33,7 +34,7 @@ const UsersView = () => {
   });
 
   const editPeekStore = peekComponentUtils.createStore();
-  const deleteDialogStore = dialogComponentUtils.createStore();
+  const deleteDialogComponentApiStore = componentApiStoreUtils.createStore<DialogComponentApi>();
 
   const [formError, setFormError] = createSignal<string | string[] | undefined>();
   const [activeUser, setActiveUser] = createSignal<UsersListUser>();
@@ -50,7 +51,7 @@ const UsersView = () => {
 
   const handleRemoveUser = (user: UsersListUser) => {
     setActiveUser(user);
-    deleteDialogStore.open();
+    deleteDialogComponentApiStore.api()?.open();
   };
 
   const handleSubmitForm = async () => {
@@ -143,7 +144,8 @@ const UsersView = () => {
         onSubmitForm={handleSubmitForm}
       />
       <UserDeleteConfirmationDialog
-        dialogStore={deleteDialogStore}
+        onReady={deleteDialogComponentApiStore.onReady}
+        onCleanup={deleteDialogComponentApiStore.onCleanup}
         selectedUser={activeUser()}
         processDelete={processDelete}
       />

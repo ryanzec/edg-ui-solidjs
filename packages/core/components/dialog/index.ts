@@ -4,7 +4,7 @@ import DeleteConfirmation, {
   type DialogDeleteConfirmationProps,
 } from '$/core/components/dialog/dialog-delete-confirmation';
 
-export { DialogFooterAlignment, dialogComponentUtils, type DialogStore } from '$/core/components/dialog/utils';
+export type { DialogComponentApi } from '$/core/components/dialog/utils';
 export type { DialogProps, DialogDeleteConfirmationProps, DialogConfirmationProps };
 
 export const Dialog = Object.assign(BaseDialog, { DeleteConfirmation, Confirmation });

@@ -1,6 +1,7 @@
 import Button, { ButtonVariant, ButtonColor } from '$/core/components/button';
 import Dialog from '$/core/components/dialog';
-import { dialogComponentUtils } from '$/core/components/dialog/utils';
+import type { DialogComponentApi } from '$/core/components/dialog/utils';
+import { componentApiStoreUtils } from '$/core/stores/component-api.store';
 import { asyncUtils } from '$/core/utils/async';
 import { loggerUtils } from '$/core/utils/logger';
 import { createSignal } from 'solid-js';
@@ -10,17 +11,18 @@ export default {
 };
 
 export const Default = () => {
-  const dialogStore = dialogComponentUtils.createStore();
+  const dialogComponentApiStore = componentApiStoreUtils.createStore<DialogComponentApi>();
 
   return (
     <div>
-      <Button onclick={dialogStore.open}>Toggle Dialog</Button>
+      <Button onclick={dialogComponentApiStore.api()?.open}>Toggle Dialog</Button>
       <Dialog
-        dialogStore={dialogStore}
+        onReady={dialogComponentApiStore.onReady}
+        onCleanup={dialogComponentApiStore.onCleanup}
         headerElement="Header"
         footerElement={
           <Button.Group>
-            <Button variant={ButtonVariant.GHOST} onClick={() => dialogStore.close()}>
+            <Button variant={ButtonVariant.GHOST} onClick={() => dialogComponentApiStore.api()?.close()}>
               Close
             </Button>
             <Button color={ButtonColor.BRAND} onClick={() => alert('test')}>
@@ -36,18 +38,19 @@ export const Default = () => {
 };
 
 export const CloseOnClickOverlay = () => {
-  const dialogStore = dialogComponentUtils.createStore();
+  const dialogComponentApiStore = componentApiStoreUtils.createStore<DialogComponentApi>();
 
   return (
     <div>
-      <Button onclick={dialogStore.open}>Toggle Dialog</Button>
+      <Button onclick={dialogComponentApiStore.api()?.open}>Toggle Dialog</Button>
       <Dialog
-        dialogStore={dialogStore}
+        onReady={dialogComponentApiStore.onReady}
+        onCleanup={dialogComponentApiStore.onCleanup}
         headerElement="Header"
         closeOnClickOverlay
         footerElement={
           <Button.Group>
-            <Button variant={ButtonVariant.GHOST} onClick={() => dialogStore.close()}>
+            <Button variant={ButtonVariant.GHOST} onClick={() => dialogComponentApiStore.api()?.close()}>
               Close
             </Button>
             <Button color={ButtonColor.BRAND} onClick={() => alert('test')}>
@@ -73,7 +76,7 @@ const someItem: SomeItem = {
 };
 
 export const DeleteConfirmation = () => {
-  const dialogStore = dialogComponentUtils.createStore();
+  const dialogComponentApiStore = componentApiStoreUtils.createStore<DialogComponentApi>();
 
   const processDelete = async (item: SomeItem) => {
     try {
@@ -92,9 +95,10 @@ export const DeleteConfirmation = () => {
 
   return (
     <div>
-      <Button onclick={dialogStore.open}>Delete</Button>
+      <Button onclick={dialogComponentApiStore.api()?.open}>Delete</Button>
       <Dialog.DeleteConfirmation
-        dialogStore={dialogStore}
+        onReady={dialogComponentApiStore.onReady}
+        onCleanup={dialogComponentApiStore.onCleanup}
         processDelete={processDelete}
         selectedItem={someItem}
         headerElement="Really Delete?"
@@ -106,7 +110,7 @@ export const DeleteConfirmation = () => {
 };
 
 export const Confirmation = () => {
-  const dialogStore = dialogComponentUtils.createStore();
+  const dialogComponentApiStore = componentApiStoreUtils.createStore<DialogComponentApi>();
   const [isProcessing, setIsProcessing] = createSignal(false);
 
   const processConfirmation = async () => {
@@ -116,14 +120,15 @@ export const Confirmation = () => {
     await asyncUtils.sleep(1000);
     setIsProcessing(false);
 
-    dialogStore.close();
+    dialogComponentApiStore.api()?.close();
   };
 
   return (
     <div>
-      <Button onclick={dialogStore.open}>Confirm</Button>
+      <Button onclick={dialogComponentApiStore.api()?.open}>Confirm</Button>
       <Dialog.Confirmation
-        dialogStore={dialogStore}
+        onReady={dialogComponentApiStore.onReady}
+        onCleanup={dialogComponentApiStore.onCleanup}
         processConfirmation={processConfirmation}
         isProcessing={isProcessing()}
         headerElement="Confirm"
