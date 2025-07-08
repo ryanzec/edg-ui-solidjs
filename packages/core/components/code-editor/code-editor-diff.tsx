@@ -26,10 +26,25 @@ import type { CommonDataAttributes } from '$/core/types/generic';
 import { loggerUtils } from '$/core/utils/logger';
 import { tailwindUtils } from '$/core/utils/tailwind';
 import { lintGutter, linter } from '@codemirror/lint';
-import { type Chunk, MergeView, acceptChunk, getChunks, rejectChunk, unifiedMergeView } from '@codemirror/merge';
+import {
+  type Chunk,
+  MergeView,
+  acceptChunk,
+  getChunks,
+  getOriginalDoc,
+  rejectChunk,
+  unifiedMergeView,
+} from '@codemirror/merge';
 import { EditorState, type Extension } from '@codemirror/state';
 import { EditorView, type ViewUpdate } from '@codemirror/view';
 import { For, type JSX, Show, createEffect, createSignal, mergeProps, onMount, splitProps } from 'solid-js';
+
+export type CodeEditorChunkDecisionResult = {
+  index: number;
+  decision: CodeEditorChunkDecision;
+  newOriginalContent: string;
+  newModifiedContent?: string;
+};
 
 export type CodeEditorDiffProps = JSX.HTMLAttributes<HTMLDivElement> &
   CommonDataAttributes & {
@@ -40,7 +55,7 @@ export type CodeEditorDiffProps = JSX.HTMLAttributes<HTMLDivElement> &
     extensions?: Extension[];
     readonly?: boolean;
     isBorderless?: boolean;
-    onChunkDecision?: (decision: CodeEditorChunkDecision, chunkIndex: number) => void;
+    onChunkDecision?: (result: CodeEditorChunkDecisionResult) => void;
   };
 
 const CodeEditorDiff = (passedProps: CodeEditorDiffProps) => {
@@ -76,6 +91,16 @@ const CodeEditorDiff = (passedProps: CodeEditorDiffProps) => {
   const [lastDoc, setLastDoc] = createSignal<string>('');
   const [lastSuggestedDoc, setLastSuggestedDoc] = createSignal<string>('');
   const [shouldUpdatePositions, setShouldUpdatePositions] = createSignal(false);
+
+  const getDocumentVersions = (view: EditorView) => {
+    const originalDoc = getOriginalDoc(view.state);
+    const modifiedDoc = view.state.doc;
+
+    return {
+      original: originalDoc.toString(),
+      modified: modifiedDoc.toString(),
+    };
+  };
 
   const updateChunks = () => {
     const view = mergeView();
@@ -166,7 +191,14 @@ const CodeEditorDiff = (passedProps: CodeEditorDiffProps) => {
         if (chunksData?.chunks[chunkIndex]) {
           const chunk = chunksData.chunks[chunkIndex];
           acceptChunk(targetView, chunk.fromB);
-          props.onChunkDecision?.(CodeEditorChunkDecision.ACCEPT, chunkIndex);
+
+          const { original, modified } = getDocumentVersions(targetView);
+          props.onChunkDecision?.({
+            index: chunkIndex,
+            decision: CodeEditorChunkDecision.ACCEPT,
+            newOriginalContent: original,
+            newModifiedContent: modified,
+          });
         }
       } else {
         // For side-by-side view, manually accept the chunk by copying from B to A
@@ -189,7 +221,12 @@ const CodeEditorDiff = (passedProps: CodeEditorDiffProps) => {
           });
 
           sideBySideView.a.dispatch(transaction);
-          props.onChunkDecision?.(CodeEditorChunkDecision.ACCEPT, chunkIndex);
+          props.onChunkDecision?.({
+            index: chunkIndex,
+            decision: CodeEditorChunkDecision.ACCEPT,
+            newOriginalContent: sideBySideView.a.state.doc.toString(),
+            newModifiedContent: sideBySideView.b.state.doc.toString(),
+          });
         }
       }
 
@@ -215,7 +252,14 @@ const CodeEditorDiff = (passedProps: CodeEditorDiffProps) => {
         if (chunksData?.chunks[chunkIndex]) {
           const chunk = chunksData.chunks[chunkIndex];
           rejectChunk(targetView, chunk.fromB);
-          props.onChunkDecision?.(CodeEditorChunkDecision.REVERT, chunkIndex);
+
+          const { original, modified } = getDocumentVersions(targetView);
+          props.onChunkDecision?.({
+            index: chunkIndex,
+            decision: CodeEditorChunkDecision.REVERT,
+            newOriginalContent: original,
+            newModifiedContent: modified,
+          });
         }
       } else {
         // For side-by-side view, manually reject the chunk by keeping the original text in A
@@ -239,7 +283,12 @@ const CodeEditorDiff = (passedProps: CodeEditorDiffProps) => {
           });
 
           sideBySideView.b.dispatch(transaction);
-          props.onChunkDecision?.(CodeEditorChunkDecision.REVERT, chunkIndex);
+          props.onChunkDecision?.({
+            index: chunkIndex,
+            decision: CodeEditorChunkDecision.REVERT,
+            newOriginalContent: sideBySideView.a.state.doc.toString(),
+            newModifiedContent: sideBySideView.b.state.doc.toString(),
+          });
         }
       }
 

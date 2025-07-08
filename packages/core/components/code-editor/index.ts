@@ -1,5 +1,8 @@
 import { default as BaseCodeEditor, type CodeEditorProps } from '$/core/components/code-editor/code-editor';
-import Diff, { type CodeEditorDiffProps } from '$/core/components/code-editor/code-editor-diff';
+import Diff, {
+  type CodeEditorDiffProps,
+  type CodeEditorChunkDecisionResult,
+} from '$/core/components/code-editor/code-editor-diff';
 
 export { yamlLinter } from '$/core/components/code-editor/linters/yaml-linter';
 
@@ -12,7 +15,7 @@ export {
   CodeEditorChunkDecision,
 } from '$/core/components/code-editor/utils';
 
-export type { CodeEditorProps, CodeEditorDiffProps };
+export type { CodeEditorProps, CodeEditorDiffProps, CodeEditorChunkDecisionResult };
 
 export const CodeEditor = Object.assign(BaseCodeEditor, { Diff });
 

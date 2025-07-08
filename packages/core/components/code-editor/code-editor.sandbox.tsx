@@ -1,5 +1,6 @@
 import Button from '$/core/components/button';
 import CodeEditor, {
+  type CodeEditorChunkDecisionResult,
   CodeEditorDiffType,
   type CodeEditorLanguageConfiguration,
   yamlLinter,
@@ -234,8 +235,8 @@ export const ErrorMessage = () => {
 };
 
 export const DiffSideBySide = () => {
-  const handleChunkDecision = (decision: string, chunkIndex: number) => {
-    console.log(`Side-by-side chunk ${chunkIndex} ${decision}ed`);
+  const handleChunkDecision = (result: CodeEditorChunkDecisionResult) => {
+    console.log('Side-by-side chunk', result);
   };
 
   return (
@@ -254,8 +255,8 @@ export const DiffSideBySide = () => {
 };
 
 export const DiffUnified = () => {
-  const handleChunkDecision = (decision: string, chunkIndex: number) => {
-    console.log(`Chunk ${chunkIndex} ${decision}ed`);
+  const handleChunkDecision = (result: CodeEditorChunkDecisionResult) => {
+    console.log('Unified chunk', result);
   };
 
   return (
