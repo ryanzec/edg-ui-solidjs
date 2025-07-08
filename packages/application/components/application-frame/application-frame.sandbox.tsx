@@ -392,7 +392,7 @@ export const WithPageContent = () => {
         <Page>
           <Page.Header label="Users" />
           <PageContent>
-            <UsersList users={mockUsers} onEdit={handleEdit} onDelete={handleDelete} />
+            <UsersList users={mockUsers} onSelectEdit={handleEdit} onSelectDelete={handleDelete} />
           </PageContent>
         </Page>
       </ApplicationFrame>

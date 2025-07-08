@@ -1,7 +1,7 @@
-import { default as BaseMarkdown, type MarkdownProps } from '$/core/components/markdown/markdown';
+import { default as Markdown, type MarkdownProps } from '$/core/components/markdown/markdown';
 
 export type { MarkdownProps };
 
-export const Markdown = BaseMarkdown;
+export { Markdown };
 
 export default Markdown;

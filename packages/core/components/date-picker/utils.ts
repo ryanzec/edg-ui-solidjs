@@ -9,7 +9,7 @@ export const WhichDate = {
 
 export type WhichDate = (typeof WhichDate)[keyof typeof WhichDate];
 
-export type InputDateStore = {
+export type DatePickerInputDateStore = {
   date: Accessor<Date | undefined>;
   setDate: (date?: Date) => void;
   getFormattedDate: () => string;
@@ -20,7 +20,7 @@ type CreateInputDateStoreOptions = {
   includeTime?: boolean;
 };
 
-const createInputDateStore = (options: CreateInputDateStoreOptions): InputDateStore => {
+const createInputDateStore = (options: CreateInputDateStoreOptions): DatePickerInputDateStore => {
   const [date, setDate] = createSignal<Date | undefined>(options.defaultDate);
 
   const getFormattedDate = () => {
@@ -44,7 +44,7 @@ const createInputDateStore = (options: CreateInputDateStoreOptions): InputDateSt
 
 export type DateFormValue = undefined | Array<Date | undefined>;
 
-export type InputDateRangeStore = {
+export type DatePickerInputDateRangeStore = {
   startDate: Accessor<Date | undefined>;
   endDate: Accessor<Date | undefined>;
   setDate: (date?: Date, which?: WhichDate) => void;
@@ -56,7 +56,7 @@ type CreateInputDateRangeStoreOptions = {
   defaultEndDate?: Date;
 };
 
-const createInputDateRangeStore = (options: CreateInputDateRangeStoreOptions = {}): InputDateRangeStore => {
+const createInputDateRangeStore = (options: CreateInputDateRangeStoreOptions = {}): DatePickerInputDateRangeStore => {
   const [startDate, setStartDate] = createSignal<Date | undefined>(options.defaultStartDate);
   const [endDate, startEndDate] = createSignal<Date | undefined>(options.defaultEndDate);
 

@@ -10,16 +10,18 @@ type InternalUser = Pick<User, 'id' | 'email' | 'name' | 'roles'>;
 
 export type UsersListProps = {
   users: InternalUser[];
-  onEdit?: (user: InternalUser) => void;
-  onDelete?: (user: InternalUser) => void;
-  onAdd?: () => void;
+  onSelectEdit?: (user: InternalUser) => void;
+  onSelectDelete?: (user: InternalUser) => void;
+  onSelectAdd?: () => void;
 };
 
 const UsersList = (props: UsersListProps) => {
   return (
     <Show
       when={props.users.length > 0}
-      fallback={<EmptyIndicator label="No users found" actionLabel="Add User" onTriggerAction={props.onAdd} noBorder />}
+      fallback={
+        <EmptyIndicator label="No users found" actionLabel="Add User" onTriggerAction={props.onSelectAdd} noBorder />
+      }
     >
       <GridTable.Simple
         class="grid-cols-[300px_300px_1fr_auto]"
@@ -33,13 +35,13 @@ const UsersList = (props: UsersListProps) => {
           const dropDownStore = tooltipComponentUtils.createStore();
 
           const handleEdit = () => {
-            props.onEdit?.(user);
+            props.onSelectEdit?.(user);
 
             dropDownStore.hide();
           };
 
           const handleRemove = () => {
-            props.onDelete?.(user);
+            props.onSelectDelete?.(user);
 
             dropDownStore.hide();
           };

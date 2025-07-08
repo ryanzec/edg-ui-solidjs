@@ -44,7 +44,7 @@ export const Default = () => {
 
   return (
     <SandboxExamplesContainer>
-      <UsersList users={mockUsers} onEdit={handleUserEdit} onDelete={handleUserDelete} />
+      <UsersList users={mockUsers} onSelectEdit={handleUserEdit} onSelectDelete={handleUserDelete} />
     </SandboxExamplesContainer>
   );
 };
@@ -56,7 +56,7 @@ export const EmptyList = () => {
 
   return (
     <SandboxExamplesContainer>
-      <UsersList users={[]} onAdd={handleAdd} />
+      <UsersList users={[]} onSelectAdd={handleAdd} />
     </SandboxExamplesContainer>
   );
 };

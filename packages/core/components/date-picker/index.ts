@@ -5,8 +5,8 @@ export type { DatePickerProps, DatePickerInputProps };
 
 export { datePickerComponentUtils, WhichDate } from '$/core/components/date-picker/utils';
 export type {
-  InputDateRangeStore as DatePickerInputValueStore,
-  InputDateStore as DatePickerInputDateStore,
+  DatePickerInputDateRangeStore,
+  DatePickerInputDateStore,
   DateFormValue,
 } from '$/core/components/date-picker/utils';
 

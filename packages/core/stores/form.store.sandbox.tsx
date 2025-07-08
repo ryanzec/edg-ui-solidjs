@@ -13,7 +13,7 @@ import Combobox, {
 import DatePicker, {
   type DateFormValue,
   datePickerComponentUtils,
-  type DatePickerInputValueStore,
+  type DatePickerInputDateRangeStore,
   type WhichDate,
 } from '$/core/components/date-picker';
 import FormField from '$/core/components/form-field';
@@ -849,7 +849,7 @@ export const DynamicFormElements = () => {
   });
   const [addDefaultValue, setAddDefaultValue] = createSignal(true);
   const [comboboxValues, setComboboxValues] = createSignal<Record<string, ComboboxValueStore>>({});
-  const [datePickerValues, setDatePickerValues] = createSignal<Record<string, DatePickerInputValueStore>>();
+  const [datePickerValues, setDatePickerValues] = createSignal<Record<string, DatePickerInputDateRangeStore>>();
   const [randomInputs, setRandomInputs] = createSignal<RandomFormField[]>([]);
 
   const addRandomField = (randomField: RandomFormField) => {

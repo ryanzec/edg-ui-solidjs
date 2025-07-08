@@ -124,9 +124,9 @@ const UsersView = () => {
                 {(users) => (
                   <UsersList
                     users={users()}
-                    onEdit={handleEditUser}
-                    onDelete={handleRemoveUser}
-                    onAdd={handleAddUser}
+                    onSelectEdit={handleEditUser}
+                    onSelectDelete={handleRemoveUser}
+                    onSelectAdd={handleAddUser}
                   />
                 )}
               </Show>

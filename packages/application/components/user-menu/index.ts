@@ -3,3 +3,5 @@ import UserMenu, { type UserMenuProps } from '$/application/components/user-menu
 export type { UserMenuProps };
 
 export { UserMenu };
+
+export default UserMenu;
