@@ -23,6 +23,9 @@ export const ListItem = () => {
         <List.Item preElement={<Icon icon="check" />}>Item 2</List.Item>
         <List.Item isSelected>Selected Item</List.Item>
         <List.Item onClick={handleClick}>Has click handler</List.Item>
+        <List.Item onClick={handleClick} disabled>
+          disabled
+        </List.Item>
         <List.Item isClickable>Marked as clickable</List.Item>
       </List>
     </>

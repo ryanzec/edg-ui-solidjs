@@ -10,6 +10,7 @@ export type InputMultipleProps<TFormData extends object> = JSX.HTMLAttributes<HT
   fieldName: keyof TFormData;
   formStore: CreateFormStoreReturn<TFormData>;
   addLabel?: string;
+  autofocus?: boolean;
 };
 
 const InputMultiple = <TFormData extends object>(passedProps: InputMultipleProps<TFormData>) => {
@@ -18,6 +19,7 @@ const InputMultiple = <TFormData extends object>(passedProps: InputMultipleProps
     'formStore',
     'addLabel',
     'class',
+    'autofocus',
   ]);
   const values = props.formStore.getFieldValue(props.fieldName) as Accessor<TFormData[]>;
 
@@ -43,6 +45,7 @@ const InputMultiple = <TFormData extends object>(passedProps: InputMultipleProps
                   name={`${props.fieldName as string}.${index}` as keyof TFormData}
                   formData={props.formStore.data}
                   postElement={<Icon color={IconColor.DANGER} icon="trash" onClick={handleDelete} />}
+                  autofocus={props.autofocus}
                 />
               </FormField>
             </div>

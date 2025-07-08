@@ -103,7 +103,13 @@ export const ToggleOffOn = () => {
 export const ToggleValue = () => {
   return (
     <SandboxExamplesContainer>
-      <Checkbox.Toggle labelElement="value2" alternateLabelElement="value1" name="checkbox" value="1" />
+      <Checkbox.Toggle
+        labelElement="value2"
+        alternateLabelElement="value1"
+        name="checkbox"
+        value="2"
+        alternateValue="1"
+      />
     </SandboxExamplesContainer>
   );
 };

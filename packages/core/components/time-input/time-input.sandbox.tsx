@@ -14,6 +14,15 @@ export const Default = () => {
   );
 };
 
+export const Prepopulated = () => {
+  return (
+    <>
+      <TimeInput value="1:34 pm" />
+      <TimeInput value="11:34 pm" />
+    </>
+  );
+};
+
 // not exported as this is only for testing and would be caught in a `pnpm build:check`
 const NameTypingTest = () => {
   const form = formStoreUtils.createStore<{ time: string[] }>({

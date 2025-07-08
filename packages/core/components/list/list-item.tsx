@@ -11,6 +11,7 @@ export type ListItemProps = Omit<DynamicProps<'button' | 'div', JSX.HTMLAttribut
     isClickable?: boolean;
     isEndOfSection?: boolean;
     preElement?: JSX.Element;
+    disabled?: boolean;
   };
 
 const ListItem = (passedProps: ListItemProps) => {
@@ -22,6 +23,7 @@ const ListItem = (passedProps: ListItemProps) => {
     'isClickable',
     'onClick',
     'isEndOfSection',
+    'disabled',
   ]);
 
   const checkIsClickable = () => {
@@ -33,7 +35,7 @@ const ListItem = (passedProps: ListItemProps) => {
   };
 
   const extraProps = () => {
-    return checkIsClickable() ? { type: 'button' } : {};
+    return checkIsClickable() ? { type: 'button', disabled: props.disabled } : {};
   };
 
   return (
@@ -49,10 +51,16 @@ const ListItem = (passedProps: ListItemProps) => {
         [styles.endOfSection]: props.isEndOfSection,
       })}
     >
-      <Show when={props.preElement}>
-        <span class={styles.preItem}>{props.preElement}</span>
-      </Show>
-      {props.children}
+      <div
+        class={tailwindUtils.merge('flex items-center shrink-0', {
+          'opacity-disabled': props.disabled,
+        })}
+      >
+        <Show when={props.preElement}>
+          <span class={styles.preItem}>{props.preElement}</span>
+        </Show>
+        {props.children}
+      </div>
     </Dynamic>
   );
 };

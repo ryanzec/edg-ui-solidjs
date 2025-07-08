@@ -106,9 +106,28 @@ const isValidTime = (value: string) => {
   return false;
 };
 
+const getTimeFormattedForInput = (value?: string) => {
+  if (value === undefined) {
+    return DEFAULT_VALUE;
+  }
+
+  const timeRegex = /^(\d{1,2}):(\d{2}) (am|pm)$/;
+  const match = value.match(timeRegex);
+
+  if (!match) {
+    return DEFAULT_VALUE;
+  }
+
+  const [, hour, minutes, period] = match;
+  const formattedHour = hour.length === 1 ? `0${hour}` : hour;
+
+  return `${formattedHour}:${minutes} ${period}`;
+};
+
 export const timeInputComponentUtils = {
   isValidTime,
   getNewEditItemIndex,
   getEditItemStringLocations,
   getNewSteppedEditItemValue,
+  getTimeFormattedForInput,
 };

@@ -151,6 +151,23 @@ export const MultipleInput = () => {
   );
 };
 
+export const MultipleInputAutoFocus = () => {
+  const form = formStoreUtils.createStore<{ input: string[] }>({
+    onSubmit: async (values) => {
+      console.log(values);
+    },
+  });
+
+  return (
+    <FormFields>
+      <FormField>
+        <Label for="test1">Label</Label>
+        <Input.Multiple id="test1" formStore={form} fieldName="input" autofocus />
+      </FormField>
+    </FormFields>
+  );
+};
+
 export const PrePostElements = () => {
   return (
     <FormFields>

@@ -11,7 +11,10 @@ export type TimeInputProps<TFormData = DefaultFormData> = InputProps<TFormData> 
 };
 
 const TimeInput = <TFormData = DefaultFormData>(passedProps: TimeInputProps<TFormData>) => {
-  const [props, restOfProps] = splitProps(mergeProps({ placeholder: 'Time', format: '' }, passedProps), ['format']);
+  const [props, restOfProps] = splitProps(mergeProps({ placeholder: 'Time', format: '' }, passedProps), [
+    'format',
+    'value',
+  ]);
 
   const [inputElementRef, setInputElementRef] = createSignal<HTMLInputElement | undefined>();
   const [activeEditItem, setActiveEditItem] = createSignal<EditItem>(EditItem.NONE);
@@ -271,6 +274,7 @@ const TimeInput = <TFormData = DefaultFormData>(passedProps: TimeInputProps<TFor
       ref={setInputElementRef}
       data-id="time-input"
       {...restOfProps}
+      value={timeInputComponentUtils.getTimeFormattedForInput(props.value as string)}
       type="type"
       onFocus={handleFocus}
       onBlur={handleBlur}

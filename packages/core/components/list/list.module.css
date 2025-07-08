@@ -4,9 +4,6 @@
   }
 
   .list-item {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
     background-color: var(--color-surface-pure);
     padding: var(--spacing-2xs) var(--spacing-sm);
     border-bottom: 0;
@@ -16,7 +13,7 @@
       background-color: var(--list-selected-item-background-color);
     }
 
-    &:hover {
+    &:hover:not([disabled]) {
       background-color: var(--color-neutral-subtle2);
     }
   }
