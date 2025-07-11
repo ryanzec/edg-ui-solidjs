@@ -1,7 +1,6 @@
 import Button, { ButtonColor, ButtonVariant } from '$/core/components/button';
 import Dialog, { defaultDialogProps, type DialogProps } from '$/core/components/dialog/dialog';
-import type { DialogComponentApi } from '$/core/components/dialog/utils';
-import { mergeProps } from 'solid-js';
+import { mergeProps, splitProps } from 'solid-js';
 
 export type DialogConfirmationProps = Omit<DialogProps, 'footerElement' | 'closeOnEscape' | 'closeOnOverlayClick'> & {
   processConfirmation: () => Promise<void> | void;
@@ -12,34 +11,23 @@ export type DialogConfirmationProps = Omit<DialogProps, 'footerElement' | 'close
 };
 
 const DialogConfirmation = (passedProps: DialogConfirmationProps) => {
-  const props = mergeProps(
-    { isProcessing: false, confirmationText: 'Confirm', cancelText: 'Cancel', confirmationColor: ButtonColor.BRAND },
-    passedProps,
+  const [props, restOfProps] = splitProps(
+    mergeProps(
+      { isProcessing: false, confirmationText: 'Confirm', cancelText: 'Cancel', confirmationColor: ButtonColor.BRAND },
+      passedProps,
+    ),
+    ['isProcessing', 'confirmationText', 'cancelText', 'confirmationColor', 'processConfirmation'],
   );
 
-  let dialogComponentApi: DialogComponentApi | undefined = undefined;
-
   const handleCloseDialog = () => {
-    dialogComponentApi?.close();
-  };
-
-  const handleReady = (componentApi: DialogComponentApi) => {
-    dialogComponentApi = componentApi;
-    props.onReady?.(componentApi);
-  };
-
-  const handleCleanup = () => {
-    dialogComponentApi = undefined;
-    props.onCleanup?.();
+    restOfProps.dialogComponentRef.api()?.close();
   };
 
   return (
     <Dialog
-      onReady={handleReady}
-      onCleanup={handleCleanup}
       // it is only when processing do we want to override default closing functionality
+      {...restOfProps}
       closeEnabled={props.isProcessing ? false : defaultDialogProps.closeEnabled}
-      headerElement={props.headerElement}
       footerElement={
         <Button.Group>
           <Button
@@ -55,9 +43,7 @@ const DialogConfirmation = (passedProps: DialogConfirmationProps) => {
           </Button>
         </Button.Group>
       }
-    >
-      {props.children}
-    </Dialog>
+    />
   );
 };
 

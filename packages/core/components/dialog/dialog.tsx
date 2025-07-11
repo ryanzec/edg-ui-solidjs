@@ -1,16 +1,16 @@
 import styles from '$/core/components/dialog/dialog.module.css';
-import { type DialogComponentApi, DialogFooterAlignment } from '$/core/components/dialog/utils';
+import { type DialogComponentRef, DialogFooterAlignment } from '$/core/components/dialog/utils';
 import Icon from '$/core/components/icon';
 import Overlay from '$/core/components/overlay';
 import Typography, { TypographySize } from '$/core/components/typography';
+import type { ComponentRef } from '$/core/stores/component-ref';
 import { Key } from '$/core/types/generic';
 import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show, createSignal, mergeProps, onCleanup, splitProps } from 'solid-js';
 import { Portal } from 'solid-js/web';
 
 export type DialogProps = JSX.HTMLAttributes<HTMLDivElement> & {
-  onReady?: (componentApi: DialogComponentApi) => void;
-  onCleanup?: () => void;
+  dialogComponentRef: ComponentRef<DialogComponentRef>;
   headerElement?: JSX.Element;
   footerElement?: JSX.Element;
   footerAlignment?: DialogFooterAlignment;
@@ -36,8 +36,7 @@ const Dialog = (passedProps: DialogProps) => {
     'closeOnClickOverlay',
     'closeOnEscape',
     'closeEnabled',
-    'onCleanup',
-    'onReady',
+    'dialogComponentRef',
   ]);
 
   const [isOpened, setIsOpened] = createSignal<boolean>(false);
@@ -86,7 +85,7 @@ const Dialog = (passedProps: DialogProps) => {
     close();
   };
 
-  props.onReady?.({
+  props.dialogComponentRef?.onReady({
     isOpened,
     open,
     close,
@@ -94,7 +93,7 @@ const Dialog = (passedProps: DialogProps) => {
   });
 
   onCleanup(() => {
-    props.onCleanup?.();
+    props.dialogComponentRef?.onCleanup();
   });
 
   return (

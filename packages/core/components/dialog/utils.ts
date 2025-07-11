@@ -5,7 +5,7 @@ export const DialogFooterAlignment = {
 
 export type DialogFooterAlignment = (typeof DialogFooterAlignment)[keyof typeof DialogFooterAlignment];
 
-export type DialogComponentApi = {
+export type DialogComponentRef = {
   isOpened: () => boolean;
   open: () => void;
   close: () => void;

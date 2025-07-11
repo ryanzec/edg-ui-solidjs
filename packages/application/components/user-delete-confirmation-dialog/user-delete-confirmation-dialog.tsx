@@ -1,30 +1,23 @@
-import Dialog, { type DialogProps, type DialogComponentApi } from '$/core/components/dialog';
-import { componentApiStoreUtils } from '$/core/stores/component-api.store';
+import Dialog, { type DialogDeleteConfirmationProps } from '$/core/components/dialog';
 import { loggerUtils } from '$/core/utils/logger';
 import type { User } from '$api/types/user';
 
 type InternalUser = Pick<User, 'id' | 'name'>;
 
-export type UserDeleteConfirmationDialogProps = Pick<DialogProps, 'onReady' | 'onCleanup'> & {
+export type UserDeleteConfirmationDialogProps = Pick<
+  DialogDeleteConfirmationProps<InternalUser>,
+  'dialogComponentRef'
+> & {
   selectedUser?: InternalUser;
   onDeleted?: (user: InternalUser) => void;
   processDelete: (id: string) => Promise<boolean>;
 };
 
 const UserDeleteConfirmationDialog = (props: UserDeleteConfirmationDialogProps) => {
-  const dialogComponentApiStore = componentApiStoreUtils.createStore<DialogComponentApi>({
-    onReady: (componentApi) => {
-      props.onReady?.(componentApi);
-    },
-    onCleanup: () => {
-      props.onCleanup?.();
-    },
-  });
-
   const processDelete = async () => {
     try {
       if (!props.selectedUser) {
-        dialogComponentApiStore.api()?.close();
+        props.dialogComponentRef.api()?.close();
 
         return true;
       }
@@ -44,8 +37,7 @@ const UserDeleteConfirmationDialog = (props: UserDeleteConfirmationDialogProps) 
 
   return (
     <Dialog.DeleteConfirmation
-      onReady={dialogComponentApiStore.onReady}
-      onCleanup={dialogComponentApiStore.onCleanup}
+      dialogComponentRef={props.dialogComponentRef}
       processDelete={processDelete}
       selectedItem={props.selectedUser}
       headerElement="Remove User?"

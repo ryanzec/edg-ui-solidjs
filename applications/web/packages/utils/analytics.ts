@@ -4,6 +4,7 @@ import posthog, { type PostHogConfig } from 'posthog-js';
 const productionOptions: Partial<PostHogConfig> = {
   api_host: 'https://us.i.posthog.com',
   person_profiles: 'identified_only',
+  advanced_disable_feature_flags_on_first_load: true,
   autocapture: false,
   capture_pageview: true,
   capture_pageleave: true,
@@ -16,6 +17,7 @@ const productionOptions: Partial<PostHogConfig> = {
 const developmentOptions: Partial<PostHogConfig> = {
   api_host: 'https://eu.posthog.com',
   person_profiles: 'identified_only',
+  advanced_disable_feature_flags_on_first_load: true,
   autocapture: false,
   capture_pageview: false,
   capture_pageleave: false,

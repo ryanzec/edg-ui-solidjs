@@ -7,10 +7,10 @@ import { UsersList, type UsersListProps } from '$/application/components/users-l
 import { authenticationStore } from '$/application/stores/authentication.store';
 import Button from '$/core/components/button';
 import { CalloutColor } from '$/core/components/callout';
-import type { DialogComponentApi } from '$/core/components/dialog';
+import type { DialogComponentRef } from '$/core/components/dialog';
 import { peekComponentUtils } from '$/core/components/peek';
 import { Skeleton } from '$/core/components/skeleton';
-import { componentApiStoreUtils } from '$/core/stores/component-api.store';
+import { createComponentRef } from '$/core/stores/component-ref';
 import { FormSaveMode } from '$/core/stores/form.store';
 import { globalNotificationsStore } from '$/core/stores/global-notifications.store';
 import { ErrorMessage } from '$/core/utils/error';
@@ -34,7 +34,7 @@ const UsersView = () => {
   });
 
   const editPeekStore = peekComponentUtils.createStore();
-  const deleteDialogComponentApiStore = componentApiStoreUtils.createStore<DialogComponentApi>();
+  const deleteDialogComponentRef = createComponentRef<DialogComponentRef>();
 
   const [formError, setFormError] = createSignal<string | string[] | undefined>();
   const [activeUser, setActiveUser] = createSignal<UsersListUser>();
@@ -51,7 +51,7 @@ const UsersView = () => {
 
   const handleRemoveUser = (user: UsersListUser) => {
     setActiveUser(user);
-    deleteDialogComponentApiStore.api()?.open();
+    deleteDialogComponentRef.api()?.open();
   };
 
   const handleSubmitForm = async () => {
@@ -144,8 +144,7 @@ const UsersView = () => {
         onSubmitForm={handleSubmitForm}
       />
       <UserDeleteConfirmationDialog
-        onReady={deleteDialogComponentApiStore.onReady}
-        onCleanup={deleteDialogComponentApiStore.onCleanup}
+        dialogComponentRef={deleteDialogComponentRef}
         selectedUser={activeUser()}
         processDelete={processDelete}
       />
