@@ -3,21 +3,22 @@ import { type JSX, mergeProps, splitProps } from 'solid-js';
 
 import Button, { type ButtonProps } from '$/core/components/button/button';
 import DropDown from '$/core/components/drop-down';
+import type { DropDownMenuProps } from '$/core/components/drop-down/drop-down-menu';
 import Icon, { type IconName } from '$/core/components/icon';
-import type { TooltipStore, TooltipTriggerEvent } from '$/core/components/tooltip';
+import type { TooltipTriggerEvent } from '$/core/components/tooltip';
 import type { CommonDataAttributes } from '$/core/types/generic';
 
 export type ButtonDropDownProps = ButtonProps &
+  Pick<DropDownMenuProps, 'tooltipComponentRef'> &
   CommonDataAttributes & {
     label: string | JSX.Element;
     placement?: Placement;
     triggerEvent?: TooltipTriggerEvent;
     buttonClass?: string;
     contentClass?: string;
-    tooltipStore: TooltipStore;
   };
 
-const defaultProps: Omit<ButtonDropDownProps, 'label' | 'tooltipStore'> = {
+const defaultProps: Omit<ButtonDropDownProps, 'label' | 'tooltipComponentRef'> = {
   placement: 'bottom-end',
 };
 
@@ -30,16 +31,16 @@ export const ButtonDropDown = (passedProps: ButtonDropDownProps) => {
     'class',
     'buttonClass',
     'contentClass',
-    'tooltipStore',
+    'tooltipComponentRef',
   ]);
 
   const getIconName = (): IconName => {
-    return props.tooltipStore.isShowing() ? 'caret-up' : 'caret-down';
+    return props.tooltipComponentRef.api()?.isShowing() ? 'caret-up' : 'caret-down';
   };
 
   return (
     <DropDown.Menu
-      tooltipStore={props.tooltipStore}
+      tooltipComponentRef={props.tooltipComponentRef}
       placement={props.placement}
       handleElement={
         <Button

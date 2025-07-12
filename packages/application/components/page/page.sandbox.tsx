@@ -1,7 +1,6 @@
 import Page, { PageLayout } from '$/application/components/page';
 import styles from '$/application/components/page/page.sandbox.module.css';
 import Button from '$/core/components/button';
-import { tooltipComponentUtils } from '$/core/components/tooltip';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 
 export default {
@@ -46,8 +45,6 @@ export const BackLink = () => {
 };
 
 export const HeaderActions = () => {
-  const tooltipStore = tooltipComponentUtils.createStore();
-
   return (
     <SandboxExamplesContainer>
       <Page>

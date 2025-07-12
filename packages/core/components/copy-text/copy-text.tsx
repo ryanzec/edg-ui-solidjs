@@ -1,9 +1,10 @@
 import { Icon } from '$/core/components/icon';
-import Tooltip, { tooltipComponentUtils, type TooltipProps } from '$/core/components/tooltip';
+import Tooltip, { type TooltipComponentRef, type TooltipProps } from '$/core/components/tooltip';
+import { createComponentRef } from '$/core/stores/component-ref';
 import { clipboardUtils } from '$/core/utils/clipboard';
 import { createEffect, createSignal, mergeProps, splitProps } from 'solid-js';
 
-export type CopyTextProps = Omit<TooltipProps, 'tooltipStore'> & {
+export type CopyTextProps = Omit<TooltipProps, 'tooltipComponentRef'> & {
   text: string;
   copyLabel?: string;
 };
@@ -13,7 +14,7 @@ const CopyText = (passedProps: CopyTextProps) => {
     'text',
     'copyLabel',
   ]);
-  const tooltipStore = tooltipComponentUtils.createStore();
+  const tooltipComponentRef = createComponentRef<TooltipComponentRef>();
   const [hasCopied, setHasCopied] = createSignal(false);
 
   const handleCopy = () => {
@@ -22,7 +23,7 @@ const CopyText = (passedProps: CopyTextProps) => {
   };
 
   createEffect(function updateHasCopied() {
-    if (tooltipStore.isShowing()) {
+    if (tooltipComponentRef.api()?.isShowing()) {
       return;
     }
 
@@ -30,7 +31,13 @@ const CopyText = (passedProps: CopyTextProps) => {
   });
 
   return (
-    <Tooltip data-id="copy-text" {...restOfProps} triggerEvent="hover" tooltipStore={tooltipStore} placement="bottom">
+    <Tooltip
+      data-id="copy-text"
+      {...restOfProps}
+      triggerEvent="hover"
+      tooltipComponentRef={tooltipComponentRef}
+      placement="bottom"
+    >
       <Tooltip.Handle data-id="handle">
         <Icon icon="copy" onClick={handleCopy} />
       </Tooltip.Handle>

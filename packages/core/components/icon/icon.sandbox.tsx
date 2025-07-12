@@ -8,7 +8,8 @@ import { type IconName, IconVariant, supportedIconNames } from '$/core/component
 import Input from '$/core/components/input';
 import Label from '$/core/components/label';
 import Link from '$/core/components/link';
-import Tooltip, { tooltipComponentUtils, TooltipTriggerEvent } from '$/core/components/tooltip';
+import Tooltip, { type TooltipComponentRef, TooltipTriggerEvent } from '$/core/components/tooltip';
+import { createComponentRef } from '$/core/stores/component-ref';
 import { clipboardUtils } from '$/core/utils/clipboard';
 import { tailwindUtils } from '$/core/utils/tailwind';
 import { For, createEffect, createSignal } from 'solid-js';
@@ -203,11 +204,11 @@ export const AllIcons = () => {
       <div class={styles.iconsContainer}>
         <For each={shownIconNames()}>
           {(iconName) => {
-            const tooltipStore = tooltipComponentUtils.createStore();
+            const tooltipComponentRef = createComponentRef<TooltipComponentRef>();
 
             return (
               <div class={styles.iconContainer}>
-                <Tooltip tooltipStore={tooltipStore} triggerEvent={TooltipTriggerEvent.HOVER}>
+                <Tooltip tooltipComponentRef={tooltipComponentRef} triggerEvent={TooltipTriggerEvent.HOVER}>
                   <Tooltip.Handle>
                     <Icon
                       icon={iconName}

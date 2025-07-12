@@ -1,14 +1,15 @@
 import DateTime, { type DateTimeProps } from '$/core/components/date-time/date-time';
-import Tooltip, { tooltipComponentUtils } from '$/core/components/tooltip';
+import Tooltip, { type TooltipComponentRef } from '$/core/components/tooltip';
+import { createComponentRef } from '$/core/stores/component-ref';
 import { DateTimeFormat } from '$/core/utils/date';
 
 export type DateTimeTooltipProps = DateTimeProps;
 
 const DateTimeTooltip = (props: DateTimeTooltipProps) => {
-  const tooltipStore = tooltipComponentUtils.createStore();
+  const tooltipComponentRef = createComponentRef<TooltipComponentRef>();
 
   return (
-    <Tooltip tooltipStore={tooltipStore} placement="bottom">
+    <Tooltip tooltipComponentRef={tooltipComponentRef} placement="bottom">
       <Tooltip.Handle isStyled={false}>
         <DateTime {...props} />
       </Tooltip.Handle>

@@ -2,7 +2,8 @@ import EmptyIndicator from '$/core/components/empty-indicator';
 import GridTable from '$/core/components/grid-table';
 import Icon from '$/core/components/icon';
 import List from '$/core/components/list';
-import { tooltipComponentUtils } from '$/core/components/tooltip';
+import type { TooltipComponentRef } from '$/core/components/tooltip';
+import { createComponentRef } from '$/core/stores/component-ref';
 import type { User } from '$api/types/user';
 import { Show } from 'solid-js';
 
@@ -32,18 +33,18 @@ const UsersList = (props: UsersListProps) => {
       >
         {(user, index) => {
           const isLastRow = index() === props.users.length - 1;
-          const dropDownStore = tooltipComponentUtils.createStore();
+          const dropDownComponentRef = createComponentRef<TooltipComponentRef>();
 
           const handleEdit = () => {
             props.onSelectEdit?.(user);
 
-            dropDownStore.hide();
+            dropDownComponentRef.api()?.hide();
           };
 
           const handleRemove = () => {
             props.onSelectDelete?.(user);
 
-            dropDownStore.hide();
+            dropDownComponentRef.api()?.hide();
           };
 
           return (
@@ -60,7 +61,7 @@ const UsersList = (props: UsersListProps) => {
               <GridTable.DataActions
                 isLastRow={isLastRow}
                 isEndOfRow
-                actionsTooltipStore={dropDownStore}
+                actionsDropDownComponentRef={dropDownComponentRef}
                 dropDownContentElement={
                   <>
                     <List.Item onClick={handleEdit} preElement={<Icon icon="pencil" />}>

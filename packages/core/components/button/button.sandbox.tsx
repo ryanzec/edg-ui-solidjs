@@ -2,7 +2,8 @@ import Button, { ButtonColor, ButtonShape, ButtonSize, ButtonVariant } from '$/c
 import { ButtonState } from '$/core/components/button/utils';
 import Icon from '$/core/components/icon';
 import List from '$/core/components/list';
-import { tooltipComponentUtils } from '$/core/components/tooltip';
+import type { TooltipComponentRef } from '$/core/components/tooltip';
+import { createComponentRef } from '$/core/stores/component-ref';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 
 export default {
@@ -811,16 +812,16 @@ export const Loading = () => {
 };
 
 export const DropDown = () => {
-  const tooltipStore1 = tooltipComponentUtils.createStore();
-  const tooltipStore2 = tooltipComponentUtils.createStore();
-  const tooltipStore3 = tooltipComponentUtils.createStore();
+  const tooltipComponentRef1 = createComponentRef<TooltipComponentRef>();
+  const tooltipComponentRef2 = createComponentRef<TooltipComponentRef>();
+  const tooltipComponentRef3 = createComponentRef<TooltipComponentRef>();
 
   const handleAction = () => {
     console.log('action');
 
-    tooltipStore1.hide();
-    tooltipStore2.hide();
-    tooltipStore3.hide();
+    tooltipComponentRef1.api()?.hide();
+    tooltipComponentRef2.api()?.hide();
+    tooltipComponentRef3.api()?.hide();
   };
 
   return (
@@ -907,7 +908,7 @@ export const DropDown = () => {
       <br />
       <br />
       <br />
-      <Button.DropDown label="Drop Down" tooltipStore={tooltipStore1}>
+      <Button.DropDown label="Drop Down" tooltipComponentRef={tooltipComponentRef1}>
         <>
           <List.Item onClick={handleAction}>Logout</List.Item>
           <List.Item onClick={handleAction}>Logout</List.Item>
@@ -915,7 +916,7 @@ export const DropDown = () => {
           <List.Item onClick={handleAction}>Logout</List.Item>
         </>
       </Button.DropDown>
-      <Button.DropDown label="Drop Down" tooltipStore={tooltipStore2}>
+      <Button.DropDown label="Drop Down" tooltipComponentRef={tooltipComponentRef2}>
         <>
           <List.Item onClick={handleAction}>a</List.Item>
           <List.Item onClick={handleAction}>Logout</List.Item>
@@ -931,7 +932,7 @@ export const DropDown = () => {
         variant={ButtonVariant.WEAK}
         color={ButtonColor.NEUTRAL}
         label="Extra Long Drop Down"
-        tooltipStore={tooltipStore3}
+        tooltipComponentRef={tooltipComponentRef3}
       >
         <>
           <List.Item onClick={handleAction}>Logout</List.Item>

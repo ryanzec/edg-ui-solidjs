@@ -3,7 +3,8 @@ import GridTable from '$/core/components/grid-table';
 import { GridTableSortDirection } from '$/core/components/grid-table/grid-table-header-data';
 import List from '$/core/components/list';
 import PaginationComponent, { type PaginationCursorProps } from '$/core/components/pagination';
-import { tooltipComponentUtils } from '$/core/components/tooltip';
+import type { TooltipComponentRef } from '$/core/components/tooltip';
+import { createComponentRef } from '$/core/stores/component-ref';
 import { paginationStoreUtils } from '$/core/stores/pagination.store';
 import { asyncUtils } from '$/core/utils/async';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
@@ -263,13 +264,13 @@ export const Linked = () => {
           {(item, index) => {
             const isFirstRow = index() === 0;
             const isLastRow = index() === gridData.length - 1;
-            const dropDownStore = tooltipComponentUtils.createStore();
+            const dropDownComponentRef = createComponentRef<TooltipComponentRef>();
 
             // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
             const handleEdit = (data: any) => {
               console.log('edit', data);
 
-              dropDownStore.hide();
+              dropDownComponentRef.api()?.hide();
             };
 
             return (
@@ -289,7 +290,7 @@ export const Linked = () => {
                 <GridTable.DataActions
                   isFirstRow={isFirstRow}
                   isLastRow={isLastRow}
-                  actionsTooltipStore={dropDownStore}
+                  actionsDropDownComponentRef={dropDownComponentRef}
                   dropDownContentElement={<List.Item onClick={() => handleEdit(item)}>Edit</List.Item>}
                   isEndOfRow
                 />
@@ -317,19 +318,19 @@ export const ExtraContent = () => {
             const isFirstRow = index() === 0;
             const isLastRow = index() === gridData.length - 1;
             const [isExpanded, setIsExpanded] = createSignal(false);
-            const dropDownStore = tooltipComponentUtils.createStore();
+            const dropDownComponentRef = createComponentRef<TooltipComponentRef>();
 
             // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
             const handleEdit = (data: any) => {
               console.log('edit', data);
 
-              dropDownStore.hide();
+              dropDownComponentRef.api()?.hide();
             };
 
             const handleExpand = () => {
               setIsExpanded(!isExpanded());
 
-              dropDownStore.hide();
+              dropDownComponentRef.api()?.hide();
             };
 
             return (
@@ -371,7 +372,7 @@ export const ExtraContent = () => {
                   isFirstRow={isFirstRow}
                   isLastRow={isLastRow}
                   isExpanded={isExpanded()}
-                  actionsTooltipStore={dropDownStore}
+                  actionsDropDownComponentRef={dropDownComponentRef}
                   dropDownContentElement={
                     <>
                       <List.Item onClick={() => handleEdit(item)}>Edit</List.Item>
@@ -839,13 +840,13 @@ export const Virtualized = () => {
             const isLastRow = index === newLargeData.length - 1;
             const [isExpanded, setIsExpanded] = createSignal(false);
             const [elementRef, setElementRef] = createSignal<Element>();
-            const dropDownStore = tooltipComponentUtils.createStore();
+            const dropDownComponentRef = createComponentRef<TooltipComponentRef>();
 
             // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
             const handleEdit = (data: any) => {
               console.log('edit', data);
 
-              dropDownStore.hide();
+              dropDownComponentRef.api()?.hide();
             };
 
             return (
@@ -894,13 +895,13 @@ export const VirtualizedEmpty = () => {
             const isLastRow = index === newLargeData.length - 1;
             const [isExpanded, setIsExpanded] = createSignal(false);
             const [elementRef, setElementRef] = createSignal<Element>();
-            const dropDownStore = tooltipComponentUtils.createStore();
+            const dropDownComponentRef = createComponentRef<TooltipComponentRef>();
 
             // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
             const handleEdit = (data: any) => {
               console.log('edit', data);
 
-              dropDownStore.hide();
+              dropDownComponentRef.api()?.hide();
             };
 
             return (
@@ -1045,19 +1046,19 @@ export const SortableVirtualized = () => {
             const isLastRow = index === newLargeData.length - 1;
             const [isExpanded, setIsExpanded] = createSignal(false);
             const [elementRef, setElementRef] = createSignal<Element>();
-            const dropDownStore = tooltipComponentUtils.createStore();
+            const dropDownComponentRef = createComponentRef<TooltipComponentRef>();
 
             // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
             const handleEdit = (data: any) => {
               console.log('edit', data);
 
-              dropDownStore.hide();
+              dropDownComponentRef.api()?.hide();
             };
 
             const handleExpand = () => {
               setIsExpanded(!isExpanded());
 
-              dropDownStore.hide();
+              dropDownComponentRef.api()?.hide();
             };
 
             createEffect(function recalculateItemSize() {

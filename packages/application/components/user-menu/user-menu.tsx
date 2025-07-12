@@ -4,10 +4,10 @@ import Avatar, { AvatarSize } from '$/core/components/avatar';
 import Checkbox from '$/core/components/checkbox';
 import { checkboxComponentsUtils } from '$/core/components/checkbox/utils';
 import DropDown from '$/core/components/drop-down';
+import type { DropDownMenuProps } from '$/core/components/drop-down/drop-down-menu';
 import FormField from '$/core/components/form-field';
 import Icon, { IconColor } from '$/core/components/icon';
 import List from '$/core/components/list';
-import type { TooltipStore } from '$/core/components/tooltip';
 import { themeManagerStore } from '$/core/stores/theme-manager.store';
 import { ThemeName } from '$/core/utils/styles';
 import { tailwindUtils } from '$/core/utils/tailwind';
@@ -16,7 +16,7 @@ import { useNavigate } from '@solidjs/router';
 import { Show, mergeProps } from 'solid-js';
 
 export type UserMenuProps = {
-  userMenuTooltipStore: TooltipStore;
+  userMenuTooltipComponentRef: DropDownMenuProps['tooltipComponentRef'];
   user: Pick<User, 'name' | 'email'>;
   features: ApplicationFeature[];
   showName?: boolean;
@@ -36,19 +36,19 @@ const UserMenu = (passedProps: UserMenuProps) => {
   const handleSettings = () => {
     navigate(UiRouteName.USERS);
 
-    props.userMenuTooltipStore.hide();
+    props.userMenuTooltipComponentRef.api()?.hide();
   };
 
   const handleInternalTools = () => {
     navigate(UiRouteName.HOME);
 
-    props.userMenuTooltipStore.hide();
+    props.userMenuTooltipComponentRef.api()?.hide();
   };
 
   const handleLogout = () => {
     authenticationStore.logout();
 
-    props.userMenuTooltipStore.hide();
+    props.userMenuTooltipComponentRef.api()?.hide();
   };
 
   const handleThemeChange = (event: Event) => {
@@ -63,7 +63,7 @@ const UserMenu = (passedProps: UserMenuProps) => {
     <button type="button" class="w-full">
       <DropDown.Menu
         class="w-full"
-        tooltipStore={props.userMenuTooltipStore}
+        tooltipComponentRef={props.userMenuTooltipComponentRef}
         placement="right-end"
         handleClass="w-full"
         offset={{ mainAxis: -5, crossAxis: -5 }}
