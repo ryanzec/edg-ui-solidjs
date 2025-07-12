@@ -45,7 +45,7 @@ const TreeItem = <TItem extends TreeItemData>(passedProps: TreeItemProps<TItem>)
   };
 
   return (
-    <div data-id="tree-item" data-value={props['data-value']} {...restOfProps} class="flex flex-col">
+    <div data-id="item" data-value={props['data-value']} {...restOfProps} class="flex flex-col">
       <button
         class={tailwindUtils.merge(
           'cursor-pointer hover:bg-surface-tertiary',

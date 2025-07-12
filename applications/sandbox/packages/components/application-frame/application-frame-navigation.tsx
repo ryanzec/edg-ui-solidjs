@@ -23,7 +23,7 @@ const ApplicationFrameNavigation = (passedProps: ApplicationFrameNavigationProps
   };
 
   return (
-    <div data-id="navigation" class={tailwindUtils.merge(styles.navigation, props.class)} {...restOfProps}>
+    <div class={tailwindUtils.merge(styles.navigation, props.class)} {...restOfProps}>
       {/*<ScrollArea>*/}
       <Button
         shape={ButtonShape.CIRCLE}

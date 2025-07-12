@@ -18,13 +18,11 @@ const ApplicationFrame = (passedProps: ApplicationFrameProps) => {
   const [props, restOfProps] = splitProps(passedProps, ['isLoading', 'navigation', 'class', 'children']);
 
   return (
-    <div data-id="application-frame" class={tailwindUtils.merge(styles.applicationFrame, props.class)} {...restOfProps}>
+    <div class={tailwindUtils.merge(styles.applicationFrame, props.class)} {...restOfProps}>
       <Show when={props.isLoading === false} fallback={<div>Loading</div>}>
         <ApplicationFrameNavigation routes={props.navigation} />
         <div class={tailwindUtils.merge(styles.subContainer)}>
-          <div data-id="sandbox-main-content" class={tailwindUtils.merge(styles.mainContent)}>
-            {props.children}
-          </div>
+          <div class={tailwindUtils.merge(styles.mainContent)}>{props.children}</div>
         </div>
       </Show>
     </div>

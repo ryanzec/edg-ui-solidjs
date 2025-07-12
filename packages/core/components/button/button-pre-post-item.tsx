@@ -17,7 +17,7 @@ const ButtonPrePostItem = (passedProps: ButtonIconProps) => {
 
   return (
     <div
-      data-id="button-icon"
+      data-id={`${props.position}-icon`}
       {...restOfProps}
       class={tailwindUtils.merge(styles.prePostItem, props.class, {
         [styles.preItem]: props.position === ButtonItemPosition.PRE,

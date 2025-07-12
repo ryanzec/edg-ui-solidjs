@@ -19,7 +19,7 @@ const GlobalNotificationsItem = (passedProps: GlobalNotificationsListItemProps) 
 
   return (
     <Callout
-      data-id="global-notifications-item"
+      data-id="item"
       {...restOfProps}
       class={tailwindUtils.merge(styles.notification, props.class, {
         [styles.isRemoving]: props.notification.isRemoving || false,

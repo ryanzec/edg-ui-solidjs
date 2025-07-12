@@ -40,7 +40,7 @@ const ListItem = (passedProps: ListItemProps) => {
 
   return (
     <Dynamic
-      data-id="list-item"
+      data-id="item"
       {...extraProps()}
       {...restOfProps}
       component={elementType()}

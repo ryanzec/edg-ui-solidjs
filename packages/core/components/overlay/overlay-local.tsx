@@ -9,7 +9,7 @@ const OverlayLocal = (passedProps: OverlayProps) => {
 
   return (
     <button
-      data-id="overlay-local"
+      data-id="overlay"
       {...restOfProps}
       type="button"
       class={tailwindUtils.merge(

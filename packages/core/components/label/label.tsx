@@ -21,7 +21,7 @@ const Label = (passedProps: LabelProps) => {
   ]);
 
   return (
-    <div data-id="label" class={tailwindUtils.merge(styles.container, props.class)}>
+    <div data-id="label-container" class={tailwindUtils.merge(styles.container, props.class)}>
       {/* biome-ignore lint/a11y/noLabelWithoutControl: provided by ...restOfProps */}
       <label data-id="label" {...restOfProps} class={tailwindUtils.merge(styles.label, props.class)}>
         {props.children}

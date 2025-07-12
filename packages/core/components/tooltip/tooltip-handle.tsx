@@ -22,7 +22,7 @@ const TooltipHandle = (passedProps: TooltipHandleProps) => {
 
   return (
     <span
-      data-id="tooltip-handle"
+      data-id="handle"
       data-tooltip-handle={context.id()}
       class={tailwindUtils.merge(props.class, {
         [styles.handle]: props.isStyled,

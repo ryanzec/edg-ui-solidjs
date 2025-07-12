@@ -8,7 +8,7 @@ const OverlayContent = (passedProps: JSX.HTMLAttributes<HTMLDivElement>) => {
 
   return (
     <Portal>
-      <div data-id="overlay-content" {...restOfProps} class={tailwindUtils.merge(styles.content, props.class)} />
+      <div data-id="content" {...restOfProps} class={tailwindUtils.merge(styles.content, props.class)} />
     </Portal>
   );
 };

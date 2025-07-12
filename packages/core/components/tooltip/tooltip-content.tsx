@@ -24,7 +24,7 @@ const TooltipContent = (passedProps: TooltipContentProps) => {
   return (
     <Portal>
       <div
-        data-id="tooltip-content"
+        data-id="content"
         data-tooltip-content={context.id()}
         class={tailwindUtils.merge(styles.content, props.class, {
           [styles.contentIsEnabled]: context.isShowing(),

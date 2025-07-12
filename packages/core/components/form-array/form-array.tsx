@@ -15,7 +15,7 @@ export type FormArrayProps = {
 
 const FormArray = (props: FormArrayProps) => {
   return (
-    <div data-id="form-array-container" class={tailwindUtils.merge(styles.container, props.class)}>
+    <div data-id="form-array" class={tailwindUtils.merge(styles.container, props.class)}>
       {props.children}
       <Show when={!props.hideAddButton}>
         <Button

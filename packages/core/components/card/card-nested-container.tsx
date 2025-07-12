@@ -9,7 +9,7 @@ const CardNestedContainer = (passedProps: CardNestedContainerProps) => {
   const [props, restOfProps] = splitProps(passedProps, ['children', 'class']);
 
   return (
-    <div data-id="content" class={tailwindUtils.merge(styles.nestedContainer, props.class)} {...restOfProps}>
+    <div data-id="nested-container" class={tailwindUtils.merge(styles.nestedContainer, props.class)} {...restOfProps}>
       {props.children}
     </div>
   );

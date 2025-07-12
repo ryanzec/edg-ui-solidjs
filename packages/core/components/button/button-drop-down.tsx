@@ -40,15 +40,11 @@ export const ButtonDropDown = (passedProps: ButtonDropDownProps) => {
 
   return (
     <DropDown.Menu
+      data-id="button-drop-down"
       tooltipComponentRef={props.tooltipComponentRef}
       placement={props.placement}
       handleElement={
-        <Button
-          data-id="button-drop-down-trigger"
-          {...restOfProps}
-          class={props.class}
-          postElement={<Icon icon={getIconName()} />}
-        >
+        <Button data-id="handle" {...restOfProps} class={props.class} postElement={<Icon icon={getIconName()} />}>
           {props.label}
         </Button>
       }

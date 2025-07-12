@@ -12,7 +12,7 @@ const OverlayContentLocal = (passedProps: OverlayContentLocalProps) => {
 
   return (
     <div
-      data-id="overlay-content-local"
+      data-id="content"
       {...restOfProps}
       class={tailwindUtils.merge(styles.content, styles.contentLocal, props.class)}
     />
