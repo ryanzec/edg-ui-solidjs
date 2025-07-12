@@ -34,13 +34,13 @@ const TreeItem = <TItem extends TreeItemData>(passedProps: TreeItemProps<TItem>)
 
   const handleItemSelect = (event: MouseEvent) => {
     event.stopPropagation();
-    treeContext?.setActiveItem(() => props.item);
+    treeContext?.setActiveItem(props.item);
     props.onSelectItem?.(props.item);
   };
 
   const handleClick = (event: MouseEvent) => {
     event.stopPropagation();
-    treeContext?.setActiveItem(() => props.item);
+    treeContext?.setActiveItem(props.item);
     props.onClick?.(event);
   };
 

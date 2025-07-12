@@ -1,7 +1,7 @@
 import Button from '$/core/components/button';
 import ScrollArea from '$/core/components/scroll-area';
-import Tree, { TreeSize } from '$/core/components/tree';
-import { treeComponentUtils } from '$/core/components/tree';
+import Tree, { TreeSize, type TreeComponentRef } from '$/core/components/tree';
+import { createComponentRef } from '$/core/stores/component-ref';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 import { For, createSignal } from 'solid-js';
 
@@ -33,11 +33,11 @@ const handleSelectItem = (item: Item) => {
 };
 
 export const Basic = () => {
-  const treeStore = treeComponentUtils.createStore();
+  const treeComponentRef = createComponentRef<TreeComponentRef>();
 
   return (
     <SandboxExamplesContainer>
-      <Tree treeStore={treeStore}>
+      <Tree treeComponentRef={treeComponentRef}>
         <Tree.Group label="Documents" item={groupItem} onSelectGroup={handleSelectGroup}>
           <Tree.Group label="Work" item={groupItem} onSelectGroup={handleSelectGroup}>
             <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} />
@@ -67,11 +67,11 @@ export const Basic = () => {
 };
 
 export const CustomIcons = () => {
-  const treeStore = treeComponentUtils.createStore();
+  const treeComponentRef = createComponentRef<TreeComponentRef>();
 
   return (
     <SandboxExamplesContainer>
-      <Tree treeStore={treeStore}>
+      <Tree treeComponentRef={treeComponentRef}>
         <Tree.Group label="Documents" item={groupItem} onSelectGroup={handleSelectGroup}>
           <Tree.Group label="Work" item={groupItem} onSelectGroup={handleSelectGroup}>
             <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} icon="x" />
@@ -101,14 +101,14 @@ export const CustomIcons = () => {
 };
 
 export const Sizes = () => {
-  const treeStore = treeComponentUtils.createStore();
-  const smallTreeStore = treeComponentUtils.createStore({ initialSize: TreeSize.SMALL });
+  const treeComponentRef = createComponentRef<TreeComponentRef>();
+  const smallTreeComponentRef = createComponentRef<TreeComponentRef>();
 
   return (
     <>
       <SandboxExamplesContainer>
         <div>Default</div>
-        <Tree treeStore={treeStore}>
+        <Tree treeComponentRef={treeComponentRef} initialSize={TreeSize.DEFAULT}>
           <Tree.Group label="Documents" item={groupItem} onSelectGroup={handleSelectGroup}>
             <Tree.Group label="Work" item={groupItem} onSelectGroup={handleSelectGroup}>
               <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} />
@@ -134,7 +134,7 @@ export const Sizes = () => {
           </Tree.Group>
         </Tree>
         <div>Small</div>
-        <Tree treeStore={smallTreeStore}>
+        <Tree treeComponentRef={smallTreeComponentRef} initialSize={TreeSize.SMALL}>
           <Tree.Group label="Documents" item={groupItem} onSelectGroup={handleSelectGroup}>
             <Tree.Group label="Work" item={groupItem} onSelectGroup={handleSelectGroup}>
               <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} />
@@ -165,11 +165,11 @@ export const Sizes = () => {
 };
 
 export const DeepNesting = () => {
-  const treeStore = treeComponentUtils.createStore();
+  const treeComponentRef = createComponentRef<TreeComponentRef>();
 
   return (
     <SandboxExamplesContainer>
-      <Tree treeStore={treeStore}>
+      <Tree treeComponentRef={treeComponentRef}>
         <Tree.Group label="Documents" item={groupItem} onSelectGroup={handleSelectGroup}>
           <Tree.Group label="Work" item={groupItem} onSelectGroup={handleSelectGroup}>
             <Tree.Group label="More Work" item={groupItem} onSelectGroup={handleSelectGroup}>
@@ -207,11 +207,11 @@ export const DeepNesting = () => {
 };
 
 export const Active = () => {
-  const treeStore = treeComponentUtils.createStore();
+  const treeComponentRef = createComponentRef<TreeComponentRef>();
 
   return (
     <SandboxExamplesContainer>
-      <Tree treeStore={treeStore}>
+      <Tree treeComponentRef={treeComponentRef}>
         <Tree.Group label="Documents" item={groupItem} defaultIsExpanded onSelectGroup={handleSelectGroup}>
           <Tree.Group label="Work" item={groupItem} defaultIsExpanded onSelectGroup={handleSelectGroup}>
             <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} />
@@ -241,13 +241,13 @@ export const Active = () => {
 };
 
 export const Scrolling = () => {
-  const treeStore = treeComponentUtils.createStore();
+  const treeComponentRef = createComponentRef<TreeComponentRef>();
 
   return (
     <SandboxExamplesContainer>
       <div style={{ height: '200px', width: '200px' }}>
         <ScrollArea>
-          <Tree treeStore={treeStore}>
+          <Tree treeComponentRef={treeComponentRef}>
             <Tree.Group label="Documents" item={groupItem} onSelectGroup={handleSelectGroup}>
               <Tree.Group
                 label="Work that has a very long name in order to test the scrolling functionality"
@@ -322,17 +322,17 @@ export const ScrollToItem = () => {
 
   const [items, setItems] = createSignal<Item[]>(startingItemData);
 
-  const treeStore = treeComponentUtils.createStore();
+  const treeComponentRef = createComponentRef<TreeComponentRef>();
 
   const handleScrollToItem = () => {
-    treeStore.scrollToItem('report100.pdf');
+    treeComponentRef.api()?.scrollToItem('report100.pdf');
   };
 
   return (
     <>
       <Button onClick={handleScrollToItem}>Scroll to Item 100</Button>
       <SandboxExamplesContainer>
-        <Tree treeStore={treeStore}>
+        <Tree treeComponentRef={treeComponentRef}>
           <For each={items()}>
             {(item) => (
               <Tree.Item label={item.test} data-value={item.test} item={item} onSelectItem={handleSelectItem} />
@@ -356,7 +356,7 @@ export const UpdatingItems = () => {
 
   const [items, setItems] = createSignal<Item[]>(startingItemData);
 
-  const treeStore = treeComponentUtils.createStore();
+  const treeComponentRef = createComponentRef<TreeComponentRef>();
 
   const handleAddItem = () => {
     setItems((prev) => [
@@ -387,7 +387,7 @@ export const UpdatingItems = () => {
       <Button onClick={handleRemoveItem}>Remove Item</Button>
       <Button onClick={handleUpdateRandomItem}>Update Random Item</Button>
       <SandboxExamplesContainer>
-        <Tree treeStore={treeStore}>
+        <Tree treeComponentRef={treeComponentRef}>
           <For each={items()}>
             {(item) => (
               <Tree.Item onSelectItem={handleSelectItem} data-value={item.test} item={item} label={item.test} />
