@@ -20,6 +20,16 @@ const getMessage = (type: ValidationMessageType, replace: string[] = []) => {
   return message;
 };
 
+const isValidDate = (value: string) => {
+  return !!value && !!value[0];
+};
+
+const isValidDateRange = (value: string) => {
+  return !!value && !!value[0] && !!value[1];
+};
+
 export const validationUtils = {
   getMessage,
+  isValidDate,
+  isValidDateRange,
 };

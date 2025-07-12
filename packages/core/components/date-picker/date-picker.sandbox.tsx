@@ -1,7 +1,8 @@
 import { Show, createSignal } from 'solid-js';
 
-import DatePicker, { type WhichDate } from '$/core/components/date-picker';
+import DatePicker from '$/core/components/date-picker';
 import FormField from '$/core/components/form-field';
+import type { WhichDate } from '$/core/stores/date.store';
 import { formStoreUtils } from '$/core/stores/form.store';
 import { DateTimeFormat, dateUtils } from '$/core/utils/date';
 

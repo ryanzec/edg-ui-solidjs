@@ -10,12 +10,7 @@ import Combobox, {
   type ComboboxOption,
   type ComboboxValueStore,
 } from '$/core/components/combobox';
-import DatePicker, {
-  type DateFormValue,
-  datePickerComponentUtils,
-  type DatePickerInputDateRangeStore,
-  type WhichDate,
-} from '$/core/components/date-picker';
+import DatePicker from '$/core/components/date-picker';
 import FormField from '$/core/components/form-field';
 import FormFields from '$/core/components/form-fields';
 import Input from '$/core/components/input';
@@ -23,6 +18,7 @@ import Label from '$/core/components/label';
 import Radio from '$/core/components/radio';
 import Textarea from '$/core/components/textarea';
 import TimeInput, { timeInputComponentUtils } from '$/core/components/time-input';
+import { type DateRangeStore, type WhichDate, dateStoreUtils } from '$/core/stores/date.store';
 import { formStoreUtils } from '$/core/stores/form.store';
 import { FormInputValidationState } from '$/core/stores/form.store';
 import type { CommonDataType } from '$/core/types/generic';
@@ -805,7 +801,7 @@ export const DynamicFormElements = () => {
       name: 'date',
       type: RandomFormFieldType.DATE,
       // @todo(!!!) date specific validation
-      validation: zod.custom((value) => datePickerComponentUtils.isValidDate(value as DateFormValue), {
+      validation: zod.custom((value) => validationUtils.isValidDate(value), {
         message: 'must select a date',
       }),
     },
@@ -813,7 +809,7 @@ export const DynamicFormElements = () => {
       name: 'date-range',
       type: RandomFormFieldType.DATE_RANGE,
       // @todo(!!!) date specific validation
-      validation: zod.custom((value) => datePickerComponentUtils.isValidDateRange(value as DateFormValue), {
+      validation: zod.custom((value) => validationUtils.isValidDateRange(value), {
         message: 'must select a date',
       }),
     },
@@ -849,7 +845,7 @@ export const DynamicFormElements = () => {
   });
   const [addDefaultValue, setAddDefaultValue] = createSignal(true);
   const [comboboxValues, setComboboxValues] = createSignal<Record<string, ComboboxValueStore>>({});
-  const [datePickerValues, setDatePickerValues] = createSignal<Record<string, DatePickerInputDateRangeStore>>();
+  const [datePickerValues, setDatePickerValues] = createSignal<Record<string, DateRangeStore>>();
   const [randomInputs, setRandomInputs] = createSignal<RandomFormField[]>([]);
 
   const addRandomField = (randomField: RandomFormField) => {
@@ -866,7 +862,7 @@ export const DynamicFormElements = () => {
     if (randomField.type === RandomFormFieldType.DATE || randomField.type === RandomFormFieldType.DATE_RANGE) {
       setDatePickerValues({
         ...datePickerValues(),
-        [randomFieldName]: datePickerComponentUtils.createInputDateRangeStore(),
+        [randomFieldName]: dateStoreUtils.createDateRangeStore(),
       });
     }
 

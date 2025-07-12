@@ -1,6 +1,5 @@
-import { type Accessor, createSignal } from 'solid-js';
-
 import { DateTimeFormat, dateUtils } from '$/core/utils/date';
+import { type Accessor, createSignal } from 'solid-js';
 
 export const WhichDate = {
   FIRST: 'first',
@@ -9,18 +8,20 @@ export const WhichDate = {
 
 export type WhichDate = (typeof WhichDate)[keyof typeof WhichDate];
 
-export type DatePickerInputDateStore = {
+export type DateFormValue = undefined | Array<Date | undefined>;
+
+export type DateStore = {
   date: Accessor<Date | undefined>;
   setDate: (date?: Date) => void;
   getFormattedDate: () => string;
 };
 
-type CreateInputDateStoreOptions = {
+type CreateDateStoreOptions = {
   defaultDate?: Date;
   includeTime?: boolean;
 };
 
-const createInputDateStore = (options: CreateInputDateStoreOptions): DatePickerInputDateStore => {
+const createDateStore = (options: CreateDateStoreOptions): DateStore => {
   const [date, setDate] = createSignal<Date | undefined>(options.defaultDate);
 
   const getFormattedDate = () => {
@@ -42,21 +43,19 @@ const createInputDateStore = (options: CreateInputDateStoreOptions): DatePickerI
   };
 };
 
-export type DateFormValue = undefined | Array<Date | undefined>;
-
-export type DatePickerInputDateRangeStore = {
+export type DateRangeStore = {
   startDate: Accessor<Date | undefined>;
   endDate: Accessor<Date | undefined>;
   setDate: (date?: Date, which?: WhichDate) => void;
   getFormValue: () => DateFormValue;
 };
 
-type CreateInputDateRangeStoreOptions = {
+type CreateDateRangeStoreOptions = {
   defaultStartDate?: Date;
   defaultEndDate?: Date;
 };
 
-const createInputDateRangeStore = (options: CreateInputDateRangeStoreOptions = {}): DatePickerInputDateRangeStore => {
+const createDateRangeStore = (options: CreateDateRangeStoreOptions = {}): DateRangeStore => {
   const [startDate, setStartDate] = createSignal<Date | undefined>(options.defaultStartDate);
   const [endDate, startEndDate] = createSignal<Date | undefined>(options.defaultEndDate);
 
@@ -84,17 +83,7 @@ const createInputDateRangeStore = (options: CreateInputDateRangeStoreOptions = {
   return { startDate, endDate, setDate, getFormValue };
 };
 
-const isValidDate = (value: DateFormValue) => {
-  return !!value && !!value[0];
-};
-
-const isValidDateRange = (value: DateFormValue) => {
-  return !!value && !!value[0] && !!value[1];
-};
-
-export const datePickerComponentUtils = {
-  createInputDateStore,
-  createInputDateRangeStore,
-  isValidDate,
-  isValidDateRange,
+export const dateStoreUtils = {
+  createDateStore,
+  createDateRangeStore,
 };

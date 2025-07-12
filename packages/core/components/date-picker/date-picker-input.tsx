@@ -4,9 +4,9 @@ import { Show, createEffect, createSignal, mergeProps, onCleanup, splitProps } f
 
 import DatePicker, { type DatePickerProps } from '$/core/components/date-picker/date-picker';
 import styles from '$/core/components/date-picker/date-picker.module.css';
-import { WhichDate, datePickerComponentUtils } from '$/core/components/date-picker/utils';
 import Input, { type InputProps } from '$/core/components/input';
 import { clickOutsideDirective } from '$/core/directives/click-outside-directive';
+import { WhichDate, dateStoreUtils } from '$/core/stores/date.store';
 import { type DefaultFormData, formDataAttribute } from '$/core/stores/form.store';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import { loggerUtils } from '$/core/utils/logger';
@@ -61,11 +61,11 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
   const [containerElementRef, setContainerElementRef] = createSignal<HTMLDivElement>();
   const [inputElementRef, setInputElementRef] = createSignal<HTMLInputElement>();
   const [isDatePickerVisible, setIsDatePickerVisible] = createSignal(false);
-  const startDate = datePickerComponentUtils.createInputDateStore({
+  const startDate = dateStoreUtils.createDateStore({
     includeTime: datePickerProps.includeTime,
     defaultDate: props.defaultStartSelectedDate,
   });
-  const endDate = datePickerComponentUtils.createInputDateStore({
+  const endDate = dateStoreUtils.createDateStore({
     includeTime: datePickerProps.includeTime,
     defaultDate: props.defaultEndSelectedDate,
   });

@@ -805,13 +805,13 @@ will result in a typescript error and the check in `<Show />` is not something t
 
 Something you might need more complex checking in which case the pattern is slightly different.
 
-For example, you might need to explicitly check for `undefined` because `0` might be a valid reason to render something (if it is an index for example) and `!myIndex` would result in not working for the first index. In that case you want to do the explicit check and just ignore the ts error with a comment like this: 
+For example, you might need to explicitly check for `undefined` because `0` might be a valid reason to render something (if it is an index for example) and `!myIndex` would result in not working for the first index. In that case you want to do the explicit check and just ignore the ts error with a comment like this:
 
 ```tsx
-<Show when={chartStore.selectedDataIndex() !== undefined}>
+<Show when={chartComponentRef.api().selectedDataIndex() !== undefined}>
     {/* since the check returns true (since we need 0 to also render this), just ignoring the error */}
     {/* @ts-expect-error */}
-    <SelectedDataPointDetails dataPoint={rawData[chartStore.selectedDataIndex()]} />
+    <SelectedDataPointDetails dataPoint={rawData[chartComponentRef.api().selectedDataIndex()]} />
 </Show>
 ```
 

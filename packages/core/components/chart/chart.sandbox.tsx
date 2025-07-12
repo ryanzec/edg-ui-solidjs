@@ -102,7 +102,7 @@ export const Bar = () => {
       <Show when={chartComponentRef.api()?.selectedDataIndex() !== undefined}>
         {/* since the check returns true (since we need 0 to also render this), just ignoring the error */}
         {/* @ts-expect-error */}
-        <SelectedDataPointDetails dataPoint={rawData[chartStore.selectedDataIndex()]} />
+        <SelectedDataPointDetails dataPoint={rawData[chartComponentRef.api()?.selectedDataIndex()]} />
       </Show>
     </>
   );
@@ -164,7 +164,7 @@ export const Line = () => {
       <Show when={chartComponentRef.api()?.selectedDataIndex() !== undefined}>
         {/* since the check returns true (since we need 0 to also render this), just ignoring the error */}
         {/* @ts-expect-error */}
-        <SelectedDataPointDetails dataPoint={rawData[chartStore.selectedDataIndex()]} />
+        <SelectedDataPointDetails dataPoint={rawData[chartComponentRef.api().selectedDataIndex()]} />
       </Show>
     </>
   );
@@ -231,7 +231,7 @@ export const Radar = () => {
       <Show when={chartComponentRef.api()?.selectedDataIndex() !== undefined}>
         {/* since the check returns true (since we need 0 to also render this), just ignoring the error */}
         {/* @ts-expect-error */}
-        <SelectedDataPointDetails dataPoint={rawData[chartStore.selectedDataIndex()]} />
+        <SelectedDataPointDetails dataPoint={rawData[chartComponentRef.api().selectedDataIndex()]} />
       </Show>
     </>
   );

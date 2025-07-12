@@ -3,13 +3,6 @@ import Input, { type DatePickerInputProps } from '$/core/components/date-picker/
 
 export type { DatePickerProps, DatePickerInputProps };
 
-export { datePickerComponentUtils, WhichDate } from '$/core/components/date-picker/utils';
-export type {
-  DatePickerInputDateRangeStore,
-  DatePickerInputDateStore,
-  DateFormValue,
-} from '$/core/components/date-picker/utils';
-
 export const DatePicker = Object.assign(BaseDatePicker, { Input });
 
 export default DatePicker;
