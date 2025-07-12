@@ -16,6 +16,6 @@ const createFineGrainedObjectStore = <T extends Record<string, any>>(objectAcces
   return store;
 };
 
-export const storeUtils = {
-  createFineGrainedObjectStore,
+export const fineGrainedObjectStoreUtils = {
+  createStore: createFineGrainedObjectStore,
 };
