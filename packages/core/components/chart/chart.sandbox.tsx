@@ -1,6 +1,8 @@
 import Button from '$/core/components/button';
 import Chart, { chartComponentUtils } from '$/core/components/chart';
+import type { ChartComponentRef } from '$/core/components/chart';
 import styles from '$/core/components/chart/chart.sandbox.module.css';
+import { componentRefUtils } from '$/core/stores/component-ref';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 import type { ChartOptions } from 'chart.js';
 import type { ChartData } from 'chart.js/dist/types';
@@ -47,8 +49,7 @@ const buildData = (count: number): DataPoint[] => {
 export const Bar = () => {
   const rawData = buildData(30);
   const rawData2 = buildData(60);
-
-  const chartStore = chartComponentUtils.createStore();
+  const chartComponentRef = componentRefUtils.createRef<ChartComponentRef>();
 
   const [chartOptions, setChartOptions] = createSignal<ChartOptions<'bar'>>({
     scales: chartComponentUtils.buildScalesOptions({
@@ -60,12 +61,12 @@ export const Bar = () => {
       const updateData = chartComponentUtils.updateBarDataForSelected(
         chartData(),
         clickedIndex,
-        chartStore.selectedDataIndex(),
+        chartComponentRef.api()?.selectedDataIndex(),
       );
 
       setChartData(updateData.chartData);
-      chartStore.setSelectedDataIndex(updateData.newSelectedIndex);
-      chartStore.chartInstance()?.update();
+      chartComponentRef.api()?.setSelectedDataIndex(updateData.newSelectedIndex);
+      chartComponentRef.api()?.chartInstance()?.update();
     },
   });
   const [chartData, setChartData] = createSignal<ChartData<'bar'>>({
@@ -96,9 +97,9 @@ export const Bar = () => {
     <>
       <Button onClick={handleLoadSecondaryData}>Load Secondary Data</Button>
       <SandboxExamplesContainer>
-        <Chart.Bar chartStore={chartStore} data={chartData()} options={chartOptions()} />
+        <Chart.Bar chartComponentRef={chartComponentRef} data={chartData()} options={chartOptions()} />
       </SandboxExamplesContainer>
-      <Show when={chartStore.selectedDataIndex() !== undefined}>
+      <Show when={chartComponentRef.api()?.selectedDataIndex() !== undefined}>
         {/* since the check returns true (since we need 0 to also render this), just ignoring the error */}
         {/* @ts-expect-error */}
         <SelectedDataPointDetails dataPoint={rawData[chartStore.selectedDataIndex()]} />
@@ -110,8 +111,7 @@ export const Bar = () => {
 export const Line = () => {
   const rawData = buildData(16);
   const rawData2 = buildData(32);
-
-  const chartStore = chartComponentUtils.createStore();
+  const chartComponentRef = componentRefUtils.createRef<ChartComponentRef>();
 
   const [chartOptions, setChartOptions] = createSignal<ChartOptions<'line'>>({
     scales: chartComponentUtils.buildScalesOptions({
@@ -123,12 +123,12 @@ export const Line = () => {
       const updateData = chartComponentUtils.updateLineDataForSelected(
         chartData(),
         clickedIndex,
-        chartStore.selectedDataIndex(),
+        chartComponentRef.api()?.selectedDataIndex(),
       );
 
       setChartData(updateData.chartData);
-      chartStore.setSelectedDataIndex(updateData.newSelectedIndex);
-      chartStore.chartInstance()?.update();
+      chartComponentRef.api()?.setSelectedDataIndex(updateData.newSelectedIndex);
+      chartComponentRef.api()?.chartInstance()?.update();
     },
   });
   const [chartData, setChartData] = createSignal<ChartData<'line'>>({
@@ -159,9 +159,9 @@ export const Line = () => {
     <>
       <Button onClick={handleLoadSecondaryData}>Load Secondary Data</Button>
       <SandboxExamplesContainer>
-        <Chart.Line chartStore={chartStore} data={chartData()} options={chartOptions()} />
+        <Chart.Line chartComponentRef={chartComponentRef} data={chartData()} options={chartOptions()} />
       </SandboxExamplesContainer>
-      <Show when={chartStore.selectedDataIndex() !== undefined}>
+      <Show when={chartComponentRef.api()?.selectedDataIndex() !== undefined}>
         {/* since the check returns true (since we need 0 to also render this), just ignoring the error */}
         {/* @ts-expect-error */}
         <SelectedDataPointDetails dataPoint={rawData[chartStore.selectedDataIndex()]} />
@@ -173,11 +173,9 @@ export const Line = () => {
 export const Radar = () => {
   const rawData = buildData(20);
   const rawData2 = buildData(30);
+  const chartComponentRef = componentRefUtils.createRef<ChartComponentRef>();
 
   const [currentRawData, setCurrentRawData] = createSignal(rawData);
-
-  const chartStore = chartComponentUtils.createStore();
-
   const [chartOptions, setChartOptions] = createSignal<ChartOptions<'radar'>>({
     ...chartComponentUtils.buildDefaultRadarOptions({
       pointLabelsCallback: (_label, index) => {
@@ -191,12 +189,12 @@ export const Radar = () => {
       const updateData = chartComponentUtils.updateRadarDataForSelected(
         chartData(),
         clickedIndex,
-        chartStore.selectedDataIndex(),
+        chartComponentRef.api()?.selectedDataIndex(),
       );
 
       setChartData(updateData.chartData);
-      chartStore.setSelectedDataIndex(updateData.newSelectedIndex);
-      chartStore.chartInstance()?.update();
+      chartComponentRef.api()?.setSelectedDataIndex(updateData.newSelectedIndex);
+      chartComponentRef.api()?.chartInstance()?.update();
     },
   });
   const [chartData, setChartData] = createSignal<ChartData<'radar'>>({
@@ -228,9 +226,9 @@ export const Radar = () => {
     <>
       <Button onClick={handleLoadSecondaryData}>Load Secondary Data</Button>
       <SandboxExamplesContainer class={styles.radarChart}>
-        <Chart.Radar chartStore={chartStore} data={chartData()} options={chartOptions()} />
+        <Chart.Radar chartComponentRef={chartComponentRef} data={chartData()} options={chartOptions()} />
       </SandboxExamplesContainer>
-      <Show when={chartStore.selectedDataIndex() !== undefined}>
+      <Show when={chartComponentRef.api()?.selectedDataIndex() !== undefined}>
         {/* since the check returns true (since we need 0 to also render this), just ignoring the error */}
         {/* @ts-expect-error */}
         <SelectedDataPointDetails dataPoint={rawData[chartStore.selectedDataIndex()]} />

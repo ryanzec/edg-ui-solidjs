@@ -4,8 +4,8 @@ import {
   updateBarDataForSelected,
 } from '$/core/components/chart/utils/bar';
 import {
+  type ChartComponentRef,
   buildScalesOptions,
-  createChartStore,
   createCustomTicks,
   limitTickCount,
   transformDataValueForCustomTicks,
@@ -22,11 +22,10 @@ import {
   updateRadarDataForSelected,
 } from '$/core/components/chart/utils/radar';
 
-export type { BuildDefaultRadarOptionsOptions };
+export type { BuildDefaultRadarOptionsOptions, ChartComponentRef };
 
 export const chartComponentUtils = {
   // general
-  createStore: createChartStore,
   buildScalesOptions,
   createCustomTicks,
   limitTickCount,

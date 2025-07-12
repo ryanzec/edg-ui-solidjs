@@ -1,6 +1,6 @@
+import type { ComponentRef } from '$/core/stores/component-ref';
 import { loggerUtils } from '$/core/utils/logger';
 import type { Chart, ChartData, ChartOptions, ChartTypeRegistry } from 'chart.js';
-import { createEffect, createSignal, onCleanup } from 'solid-js';
 
 const defaultPointRadius = 3;
 const selectedPointRadius = 8;
@@ -8,7 +8,7 @@ const defaultColor = 'rgb(54, 162, 235)';
 const selectedColor = 'rgb(35,86,121)';
 
 export type ChartCommonProps = {
-  chartStore: ChartStore;
+  chartComponentRef: ComponentRef<ChartComponentRef>;
 };
 
 type RegisterUpdateEffectProps<TChartType extends keyof ChartTypeRegistry> = {
@@ -16,55 +16,11 @@ type RegisterUpdateEffectProps<TChartType extends keyof ChartTypeRegistry> = {
   options?: ChartOptions<TChartType>;
 };
 
-export type ChartStore = {
+export type ChartComponentRef = {
   chartInstance: () => Chart | undefined;
   setChartInstance: (chartInstance: Chart) => void;
   selectedDataIndex: () => number | undefined;
   setSelectedDataIndex: (index: number | undefined) => void;
-  registerUpdateEffect: <TChartType extends keyof ChartTypeRegistry>(
-    props: RegisterUpdateEffectProps<TChartType>,
-  ) => void;
-};
-
-const createChartStore = (): ChartStore => {
-  const [chartInstance, setChartInstance] = createSignal<Chart>();
-  const [selectedDataIndex, setSelectedDataIndex] = createSignal<number>();
-
-  const registerUpdateEffect = <TChartType extends keyof ChartTypeRegistry>(
-    props: RegisterUpdateEffectProps<TChartType>,
-  ) => {
-    createEffect(function updateChartData() {
-      const currentChartInstance = chartInstance();
-
-      if (!currentChartInstance) {
-        return;
-      }
-
-      // @ts-ignore not sure why this errors, but it is correct
-      currentChartInstance.data.labels = props.data.labels;
-      // @ts-ignore not sure why this errors, but it is correct
-      currentChartInstance.data.datasets = props.data.datasets;
-
-      if (props.options) {
-        // @ts-ignore not sure why this errors, but it is correct
-        currentChartInstance.options = props.options;
-      }
-
-      currentChartInstance.update();
-    });
-  };
-
-  onCleanup(() => {
-    chartInstance()?.destroy();
-  });
-
-  return {
-    chartInstance,
-    setChartInstance,
-    selectedDataIndex,
-    setSelectedDataIndex,
-    registerUpdateEffect,
-  };
 };
 
 type BuildScalesOptionsReturn = {
@@ -232,7 +188,6 @@ export {
   selectedColor,
   defaultPointRadius,
   selectedPointRadius,
-  createChartStore,
   buildScalesOptions,
   createCustomTicks,
   limitTickCount,

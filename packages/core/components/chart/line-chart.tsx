@@ -1,10 +1,10 @@
 import { chartComponentUtils } from '$/core/components/chart/utils';
-import type { ChartCommonProps } from '$/core/components/chart/utils/core';
+import type { ChartCommonProps, ChartComponentRef } from '$/core/components/chart/utils/core';
 import type { CommonDataAttributes } from '$/core/types/generic';
-import type { ChartConfiguration, ChartOptions } from 'chart.js';
+import type { Chart, ChartConfiguration, ChartOptions } from 'chart.js';
 import ChartJS from 'chart.js/auto';
 import type { ChartData } from 'chart.js/dist/types';
-import { createSignal, onMount } from 'solid-js';
+import { createEffect, createSignal, onCleanup, onMount } from 'solid-js';
 
 export type LineChartProps = CommonDataAttributes &
   ChartCommonProps & {
@@ -17,8 +17,28 @@ const defaultOption = chartComponentUtils.buildDefaultLineOptions();
 
 const LineChart = (props: LineChartProps) => {
   const [containerElementRef, setContainerElementRef] = createSignal<HTMLCanvasElement | undefined>();
+  const [chartInstance, setChartInstance] = createSignal<Chart>();
+  const [selectedDataIndex, setSelectedDataIndex] = createSignal<number>();
 
-  props.chartStore.registerUpdateEffect(props);
+  createEffect(function updateChartData() {
+    const currentChartInstance = chartInstance();
+
+    if (!currentChartInstance) {
+      return;
+    }
+
+    // @ts-ignore not sure why this errors, but it is correct
+    currentChartInstance.data.labels = props.data.labels;
+    // @ts-ignore not sure why this errors, but it is correct
+    currentChartInstance.data.datasets = props.data.datasets;
+
+    if (props.options) {
+      // @ts-ignore not sure why this errors, but it is correct
+      currentChartInstance.options = props.options;
+    }
+
+    currentChartInstance.update();
+  });
 
   onMount(() => {
     const currentContainerElementRef = containerElementRef();
@@ -27,7 +47,7 @@ const LineChart = (props: LineChartProps) => {
       return;
     }
 
-    props.chartStore.setChartInstance(
+    setChartInstance(
       new ChartJS<'line'>(currentContainerElementRef, {
         type: 'line',
         data: props.data,
@@ -35,6 +55,20 @@ const LineChart = (props: LineChartProps) => {
         plugins: props.plugins,
       }),
     );
+  });
+
+  const chartComponentRef: ChartComponentRef = {
+    chartInstance,
+    setChartInstance,
+    selectedDataIndex,
+    setSelectedDataIndex,
+  };
+
+  props.chartComponentRef?.onReady(chartComponentRef);
+
+  onCleanup(() => {
+    chartInstance()?.destroy();
+    props.chartComponentRef?.onCleanup();
   });
 
   return <canvas ref={setContainerElementRef} />;

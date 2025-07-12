@@ -1,8 +1,9 @@
-import Chart, { chartComponentUtils } from '$/core/components/chart';
+import Chart, { chartComponentUtils, type ChartComponentRef } from '$/core/components/chart';
 import { dragDropComponentUtils } from '$/core/components/drag-drop';
 import DragDropLayout from '$/core/components/drag-drop-layout';
 import styles from '$/core/components/drag-drop-layout/drag-drop-layout.sandbox.module.css';
 import Icon, { IconSize } from '$/core/components/icon';
+import { componentRefUtils } from '$/core/stores/component-ref';
 import { tailwindUtils } from '$/core/utils/tailwind';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 import type { ChartData } from 'chart.js';
@@ -34,9 +35,9 @@ export const Default = () => {
   const lineRawData = buildChartData(16);
   const radarRawData = buildChartData(16);
 
-  const barChartStore = chartComponentUtils.createStore();
-  const lineChartStore = chartComponentUtils.createStore();
-  const radarChartStore = chartComponentUtils.createStore();
+  const barChartComponentRef = componentRefUtils.createRef<ChartComponentRef>();
+  const lineChartComponentRef = componentRefUtils.createRef<ChartComponentRef>();
+  const radarChartComponentRef = componentRefUtils.createRef<ChartComponentRef>();
 
   const [barChartData] = createSignal<ChartData<'bar'>>({
     labels: barRawData.map((row) => row.label),
@@ -75,15 +76,15 @@ export const Default = () => {
     defaultElements: [
       {
         id: '1',
-        element: () => <Chart.Bar chartStore={barChartStore} data={barChartData()} />,
+        element: () => <Chart.Bar chartComponentRef={barChartComponentRef} data={barChartData()} />,
       },
       {
         id: '2',
-        element: () => <Chart.Line chartStore={lineChartStore} data={lineChartData()} />,
+        element: () => <Chart.Line chartComponentRef={lineChartComponentRef} data={lineChartData()} />,
       },
       {
         id: '3',
-        element: () => <Chart.Radar chartStore={radarChartStore} data={radarChartData()} />,
+        element: () => <Chart.Radar chartComponentRef={radarChartComponentRef} data={radarChartData()} />,
       },
       {
         id: '4',
@@ -141,9 +142,9 @@ export const MultipleSamePage = () => {
   const lineRawData = buildChartData(16);
   const radarRawData = buildChartData(16);
 
-  const barChartStore = chartComponentUtils.createStore();
-  const lineChartStore = chartComponentUtils.createStore();
-  const radarChartStore = chartComponentUtils.createStore();
+  const barChartComponentRef = componentRefUtils.createRef<ChartComponentRef>();
+  const lineChartComponentRef = componentRefUtils.createRef<ChartComponentRef>();
+  const radarChartComponentRef = componentRefUtils.createRef<ChartComponentRef>();
 
   const [barChartData] = createSignal<ChartData<'bar'>>({
     labels: barRawData.map((row) => row.label),
@@ -182,15 +183,15 @@ export const MultipleSamePage = () => {
     defaultElements: [
       {
         id: '1',
-        element: () => <Chart.Bar chartStore={barChartStore} data={barChartData()} />,
+        element: () => <Chart.Bar chartComponentRef={barChartComponentRef} data={barChartData()} />,
       },
       {
         id: '2',
-        element: () => <Chart.Line chartStore={lineChartStore} data={lineChartData()} />,
+        element: () => <Chart.Line chartComponentRef={lineChartComponentRef} data={lineChartData()} />,
       },
       {
         id: '3',
-        element: () => <Chart.Radar chartStore={radarChartStore} data={radarChartData()} />,
+        element: () => <Chart.Radar chartComponentRef={radarChartComponentRef} data={radarChartData()} />,
       },
       {
         id: '4',
@@ -203,15 +204,15 @@ export const MultipleSamePage = () => {
     defaultElements: [
       {
         id: '1',
-        element: () => <Chart.Bar chartStore={barChartStore} data={barChartData()} />,
+        element: () => <Chart.Bar chartComponentRef={barChartComponentRef} data={barChartData()} />,
       },
       {
         id: '2',
-        element: () => <Chart.Line chartStore={lineChartStore} data={lineChartData()} />,
+        element: () => <Chart.Line chartComponentRef={lineChartComponentRef} data={lineChartData()} />,
       },
       {
         id: '3',
-        element: () => <Chart.Radar chartStore={radarChartStore} data={radarChartData()} />,
+        element: () => <Chart.Radar chartComponentRef={radarChartComponentRef} data={radarChartData()} />,
       },
       {
         id: '4',
@@ -306,8 +307,8 @@ export const WithEmptySlot = () => {
   const barRawData = buildChartData(160);
   const radarRawData = buildChartData(16);
 
-  const barChartStore = chartComponentUtils.createStore();
-  const radarChartStore = chartComponentUtils.createStore();
+  const barChartComponentRef = componentRefUtils.createRef<ChartComponentRef>();
+  const radarChartComponentRef = componentRefUtils.createRef<ChartComponentRef>();
 
   const [barChartData] = createSignal<ChartData<'bar'>>({
     labels: barRawData.map((row) => row.label),
@@ -335,7 +336,7 @@ export const WithEmptySlot = () => {
     defaultElements: [
       {
         id: '1',
-        element: () => <Chart.Bar chartStore={barChartStore} data={barChartData()} />,
+        element: () => <Chart.Bar chartComponentRef={barChartComponentRef} data={barChartData()} />,
       },
       {
         id: '2',
@@ -343,7 +344,7 @@ export const WithEmptySlot = () => {
       },
       {
         id: '3',
-        element: () => <Chart.Radar chartStore={radarChartStore} data={radarChartData()} />,
+        element: () => <Chart.Radar chartComponentRef={radarChartComponentRef} data={radarChartData()} />,
       },
       {
         id: '4',
@@ -400,8 +401,8 @@ export const WithHandles = () => {
   const barRawData = buildChartData(160);
   const radarRawData = buildChartData(16);
 
-  const barChartStore = chartComponentUtils.createStore();
-  const radarChartStore = chartComponentUtils.createStore();
+  const barChartComponentRef = componentRefUtils.createRef<ChartComponentRef>();
+  const radarChartComponentRef = componentRefUtils.createRef<ChartComponentRef>();
 
   const [barChartData] = createSignal<ChartData<'bar'>>({
     labels: barRawData.map((row) => row.label),
@@ -438,7 +439,7 @@ export const WithHandles = () => {
               size={IconSize.BASE}
             />
             <div class={styles.chartContainer}>
-              <Chart.Bar chartStore={barChartStore} data={barChartData()} />
+              <Chart.Bar chartComponentRef={barChartComponentRef} data={barChartData()} />
             </div>
           </div>
         ),
@@ -458,7 +459,7 @@ export const WithHandles = () => {
               size={IconSize.BASE}
             />
             <div class={styles.chartContainer}>
-              <Chart.Radar chartStore={radarChartStore} data={radarChartData()} />
+              <Chart.Radar chartComponentRef={radarChartComponentRef} data={radarChartData()} />
             </div>
           </div>
         ),
