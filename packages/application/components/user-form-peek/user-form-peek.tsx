@@ -2,7 +2,7 @@ import UserForm, { type UserFormProps } from '$/application/components/user-form
 import Button from '$/core/components/button';
 import Loading from '$/core/components/loading';
 import Peek, { type PeekComponentRef } from '$/core/components/peek';
-import { type ComponentRef, createComponentRef } from '$/core/stores/component-ref';
+import { type ComponentRef, componentRefUtils } from '$/core/stores/component-ref';
 import { Show, createSignal, splitProps } from 'solid-js';
 
 export type UserFormPeekProps<TCreateInput, TUpdateInput> = Omit<
@@ -15,7 +15,7 @@ export type UserFormPeekProps<TCreateInput, TUpdateInput> = Omit<
 const UserFormPeek = <TCreateInput, TUpdateInput>(passedProps: UserFormPeekProps<TCreateInput, TUpdateInput>) => {
   const [props, restOfProps] = splitProps(passedProps, ['peekComponentRef']);
   const [submitButtonElementRef, setSubmitButtonElementRef] = createSignal<HTMLButtonElement | undefined>();
-  const peekComponentRef = createComponentRef<PeekComponentRef>({
+  const peekComponentRef = componentRefUtils.createRef<PeekComponentRef>({
     onReady: (componentRef) => {
       props.peekComponentRef?.onReady(componentRef);
     },

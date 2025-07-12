@@ -11,7 +11,7 @@ export type CreateComponentRefOptions<TComponentRef> = {
   onCleanup?: () => void;
 };
 
-export const createComponentRef = <TComponentRef>(
+const createComponentRef = <TComponentRef>(
   options: CreateComponentRefOptions<TComponentRef> = {},
 ): ComponentRef<TComponentRef> => {
   const [componentRef, setComponentRef] = createSignal<TComponentRef>();
@@ -31,4 +31,9 @@ export const createComponentRef = <TComponentRef>(
     onReady,
     onCleanup,
   };
+};
+
+// this does not follow the naming convention as this is a specific type of store
+export const componentRefUtils = {
+  createRef: createComponentRef,
 };

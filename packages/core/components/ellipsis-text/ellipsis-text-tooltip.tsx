@@ -1,5 +1,5 @@
 import Tooltip, { type TooltipComponentRef } from '$/core/components/tooltip';
-import { createComponentRef } from '$/core/stores/component-ref';
+import { componentRefUtils } from '$/core/stores/component-ref';
 import { tailwindUtils } from '$/core/utils/tailwind';
 import type { JSX } from 'solid-js';
 
@@ -11,7 +11,7 @@ export type EllipsisTextTooltipProps = {
 };
 
 const EllipsisTextTooltip = (props: EllipsisTextTooltipProps) => {
-  const tooltipComponentRef = createComponentRef<TooltipComponentRef>();
+  const tooltipComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
 
   const isSingleLine = () => props.class?.includes('line-clamp-1');
 

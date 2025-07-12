@@ -6,7 +6,7 @@ import Input from '$/core/components/input';
 import Label from '$/core/components/label';
 import Peek, { type PeekComponentRef } from '$/core/components/peek';
 import Typography from '$/core/components/typography';
-import { createComponentRef } from '$/core/stores/component-ref';
+import { componentRefUtils } from '$/core/stores/component-ref';
 import { formStoreUtils } from '$/core/stores/form.store';
 
 export default {
@@ -100,7 +100,7 @@ export const Default = () => {
 };
 
 export const AutoFocus = () => {
-  const peekComponentRef = createComponentRef<PeekComponentRef>();
+  const peekComponentRef = componentRefUtils.createRef<PeekComponentRef>();
 
   return (
     <>

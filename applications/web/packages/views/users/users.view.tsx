@@ -10,7 +10,7 @@ import { CalloutColor } from '$/core/components/callout';
 import type { DialogComponentRef } from '$/core/components/dialog';
 import type { PeekComponentRef } from '$/core/components/peek';
 import { Skeleton } from '$/core/components/skeleton';
-import { createComponentRef } from '$/core/stores/component-ref';
+import { componentRefUtils } from '$/core/stores/component-ref';
 import { FormSaveMode } from '$/core/stores/form.store';
 import { globalNotificationsStore } from '$/core/stores/global-notifications.store';
 import { ErrorMessage } from '$/core/utils/error';
@@ -33,8 +33,8 @@ const UsersView = () => {
     },
   });
 
-  const formPeekComponentRef = createComponentRef<PeekComponentRef>();
-  const deleteDialogComponentRef = createComponentRef<DialogComponentRef>();
+  const formPeekComponentRef = componentRefUtils.createRef<PeekComponentRef>();
+  const deleteDialogComponentRef = componentRefUtils.createRef<DialogComponentRef>();
 
   const [formError, setFormError] = createSignal<string | string[] | undefined>();
   const [activeUser, setActiveUser] = createSignal<UsersListUser>();

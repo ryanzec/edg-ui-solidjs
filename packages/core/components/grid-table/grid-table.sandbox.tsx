@@ -4,7 +4,7 @@ import { GridTableSortDirection } from '$/core/components/grid-table/grid-table-
 import List from '$/core/components/list';
 import PaginationComponent, { type PaginationCursorProps } from '$/core/components/pagination';
 import type { TooltipComponentRef } from '$/core/components/tooltip';
-import { createComponentRef } from '$/core/stores/component-ref';
+import { componentRefUtils } from '$/core/stores/component-ref';
 import { paginationStoreUtils } from '$/core/stores/pagination.store';
 import { asyncUtils } from '$/core/utils/async';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
@@ -264,7 +264,7 @@ export const Linked = () => {
           {(item, index) => {
             const isFirstRow = index() === 0;
             const isLastRow = index() === gridData.length - 1;
-            const dropDownComponentRef = createComponentRef<TooltipComponentRef>();
+            const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
 
             // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
             const handleEdit = (data: any) => {
@@ -318,7 +318,7 @@ export const ExtraContent = () => {
             const isFirstRow = index() === 0;
             const isLastRow = index() === gridData.length - 1;
             const [isExpanded, setIsExpanded] = createSignal(false);
-            const dropDownComponentRef = createComponentRef<TooltipComponentRef>();
+            const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
 
             // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
             const handleEdit = (data: any) => {
@@ -840,7 +840,7 @@ export const Virtualized = () => {
             const isLastRow = index === newLargeData.length - 1;
             const [isExpanded, setIsExpanded] = createSignal(false);
             const [elementRef, setElementRef] = createSignal<Element>();
-            const dropDownComponentRef = createComponentRef<TooltipComponentRef>();
+            const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
 
             // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
             const handleEdit = (data: any) => {
@@ -895,7 +895,7 @@ export const VirtualizedEmpty = () => {
             const isLastRow = index === newLargeData.length - 1;
             const [isExpanded, setIsExpanded] = createSignal(false);
             const [elementRef, setElementRef] = createSignal<Element>();
-            const dropDownComponentRef = createComponentRef<TooltipComponentRef>();
+            const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
 
             // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
             const handleEdit = (data: any) => {
@@ -1046,7 +1046,7 @@ export const SortableVirtualized = () => {
             const isLastRow = index === newLargeData.length - 1;
             const [isExpanded, setIsExpanded] = createSignal(false);
             const [elementRef, setElementRef] = createSignal<Element>();
-            const dropDownComponentRef = createComponentRef<TooltipComponentRef>();
+            const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
 
             // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
             const handleEdit = (data: any) => {

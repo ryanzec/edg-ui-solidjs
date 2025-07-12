@@ -1,6 +1,6 @@
 import { Icon } from '$/core/components/icon';
 import Tooltip, { type TooltipComponentRef, type TooltipProps } from '$/core/components/tooltip';
-import { createComponentRef } from '$/core/stores/component-ref';
+import { componentRefUtils } from '$/core/stores/component-ref';
 import { clipboardUtils } from '$/core/utils/clipboard';
 import { createEffect, createSignal, mergeProps, splitProps } from 'solid-js';
 
@@ -14,7 +14,7 @@ const CopyText = (passedProps: CopyTextProps) => {
     'text',
     'copyLabel',
   ]);
-  const tooltipComponentRef = createComponentRef<TooltipComponentRef>();
+  const tooltipComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
   const [hasCopied, setHasCopied] = createSignal(false);
 
   const handleCopy = () => {

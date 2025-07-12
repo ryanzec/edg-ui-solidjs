@@ -1,14 +1,14 @@
 import Button from '$/core/components/button';
 import Peek from '$/core/components/peek';
 import type { PeekComponentRef } from '$/core/components/peek/utils';
-import { createComponentRef } from '$/core/stores/component-ref';
+import { componentRefUtils } from '$/core/stores/component-ref';
 
 export default {
   title: 'Components/Peek',
 };
 
 export const Default = () => {
-  const peekComponentRef = createComponentRef<PeekComponentRef>();
+  const peekComponentRef = componentRefUtils.createRef<PeekComponentRef>();
 
   return (
     <>
@@ -28,7 +28,7 @@ export const Default = () => {
 };
 
 export const Resizeable = () => {
-  const peekComponentRef = createComponentRef<PeekComponentRef>();
+  const peekComponentRef = componentRefUtils.createRef<PeekComponentRef>();
 
   return (
     <>
@@ -48,7 +48,7 @@ export const Resizeable = () => {
 };
 
 export const Scrollable = () => {
-  const peekComponentRef = createComponentRef<PeekComponentRef>();
+  const peekComponentRef = componentRefUtils.createRef<PeekComponentRef>();
 
   return (
     <>

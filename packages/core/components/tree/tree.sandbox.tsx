@@ -1,7 +1,7 @@
 import Button from '$/core/components/button';
 import ScrollArea from '$/core/components/scroll-area';
 import Tree, { TreeSize, type TreeComponentRef } from '$/core/components/tree';
-import { createComponentRef } from '$/core/stores/component-ref';
+import { componentRefUtils } from '$/core/stores/component-ref';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 import { For, createSignal } from 'solid-js';
 
@@ -33,7 +33,7 @@ const handleSelectItem = (item: Item) => {
 };
 
 export const Basic = () => {
-  const treeComponentRef = createComponentRef<TreeComponentRef>();
+  const treeComponentRef = componentRefUtils.createRef<TreeComponentRef>();
 
   return (
     <SandboxExamplesContainer>
@@ -67,7 +67,7 @@ export const Basic = () => {
 };
 
 export const CustomIcons = () => {
-  const treeComponentRef = createComponentRef<TreeComponentRef>();
+  const treeComponentRef = componentRefUtils.createRef<TreeComponentRef>();
 
   return (
     <SandboxExamplesContainer>
@@ -101,8 +101,8 @@ export const CustomIcons = () => {
 };
 
 export const Sizes = () => {
-  const treeComponentRef = createComponentRef<TreeComponentRef>();
-  const smallTreeComponentRef = createComponentRef<TreeComponentRef>();
+  const treeComponentRef = componentRefUtils.createRef<TreeComponentRef>();
+  const smallTreeComponentRef = componentRefUtils.createRef<TreeComponentRef>();
 
   return (
     <>
@@ -165,7 +165,7 @@ export const Sizes = () => {
 };
 
 export const DeepNesting = () => {
-  const treeComponentRef = createComponentRef<TreeComponentRef>();
+  const treeComponentRef = componentRefUtils.createRef<TreeComponentRef>();
 
   return (
     <SandboxExamplesContainer>
@@ -207,7 +207,7 @@ export const DeepNesting = () => {
 };
 
 export const Active = () => {
-  const treeComponentRef = createComponentRef<TreeComponentRef>();
+  const treeComponentRef = componentRefUtils.createRef<TreeComponentRef>();
 
   return (
     <SandboxExamplesContainer>
@@ -241,7 +241,7 @@ export const Active = () => {
 };
 
 export const Scrolling = () => {
-  const treeComponentRef = createComponentRef<TreeComponentRef>();
+  const treeComponentRef = componentRefUtils.createRef<TreeComponentRef>();
 
   return (
     <SandboxExamplesContainer>
@@ -322,7 +322,7 @@ export const ScrollToItem = () => {
 
   const [items, setItems] = createSignal<Item[]>(startingItemData);
 
-  const treeComponentRef = createComponentRef<TreeComponentRef>();
+  const treeComponentRef = componentRefUtils.createRef<TreeComponentRef>();
 
   const handleScrollToItem = () => {
     treeComponentRef.api()?.scrollToItem('report100.pdf');
@@ -356,7 +356,7 @@ export const UpdatingItems = () => {
 
   const [items, setItems] = createSignal<Item[]>(startingItemData);
 
-  const treeComponentRef = createComponentRef<TreeComponentRef>();
+  const treeComponentRef = componentRefUtils.createRef<TreeComponentRef>();
 
   const handleAddItem = () => {
     setItems((prev) => [

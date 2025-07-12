@@ -2,7 +2,7 @@ import DropDown from '$/core/components/drop-down';
 import Icon from '$/core/components/icon';
 import List from '$/core/components/list';
 import type { TooltipComponentRef } from '$/core/components/tooltip';
-import { createComponentRef } from '$/core/stores/component-ref';
+import { componentRefUtils } from '$/core/stores/component-ref';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 
 export default {
@@ -10,7 +10,7 @@ export default {
 };
 
 export const Default = () => {
-  const dropDownComponentRef = createComponentRef<TooltipComponentRef>();
+  const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
 
   const handleLogout = () => {
     console.log('Logout');
@@ -30,8 +30,8 @@ export const Default = () => {
 };
 
 export const UnstyledContent = () => {
-  const dropDownComponentRef1 = createComponentRef<TooltipComponentRef>();
-  const dropDownComponentRef2 = createComponentRef<TooltipComponentRef>();
+  const dropDownComponentRef1 = componentRefUtils.createRef<TooltipComponentRef>();
+  const dropDownComponentRef2 = componentRefUtils.createRef<TooltipComponentRef>();
 
   const handleLogout = () => {
     console.log('Logout');
@@ -63,7 +63,7 @@ export const UnstyledContent = () => {
 };
 
 export const Menu = () => {
-  const dropDownComponentRef = createComponentRef<TooltipComponentRef>();
+  const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
 
   const handleLogout = () => {
     console.log('Logout');
@@ -88,7 +88,7 @@ export const Menu = () => {
 };
 
 export const ExtraLong = () => {
-  const dropDownComponentRef = createComponentRef<TooltipComponentRef>();
+  const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
 
   const handleLogout = () => {
     console.log('Logout');

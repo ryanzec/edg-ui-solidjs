@@ -1,7 +1,7 @@
 import Button, { ButtonVariant, ButtonColor } from '$/core/components/button';
 import Dialog from '$/core/components/dialog';
 import type { DialogComponentRef } from '$/core/components/dialog/utils';
-import { createComponentRef } from '$/core/stores/component-ref';
+import { componentRefUtils } from '$/core/stores/component-ref';
 import { asyncUtils } from '$/core/utils/async';
 import { loggerUtils } from '$/core/utils/logger';
 import { createSignal } from 'solid-js';
@@ -11,7 +11,7 @@ export default {
 };
 
 export const Default = () => {
-  const dialogComponentRef = createComponentRef<DialogComponentRef>();
+  const dialogComponentRef = componentRefUtils.createRef<DialogComponentRef>();
 
   return (
     <div>
@@ -37,7 +37,7 @@ export const Default = () => {
 };
 
 export const CloseOnClickOverlay = () => {
-  const dialogComponentRef = createComponentRef<DialogComponentRef>();
+  const dialogComponentRef = componentRefUtils.createRef<DialogComponentRef>();
 
   return (
     <div>
@@ -74,7 +74,7 @@ const someItem: SomeItem = {
 };
 
 export const DeleteConfirmation = () => {
-  const dialogComponentRef = createComponentRef<DialogComponentRef>();
+  const dialogComponentRef = componentRefUtils.createRef<DialogComponentRef>();
 
   const processDelete = async (item: SomeItem) => {
     try {
@@ -107,7 +107,7 @@ export const DeleteConfirmation = () => {
 };
 
 export const Confirmation = () => {
-  const dialogComponentRef = createComponentRef<DialogComponentRef>();
+  const dialogComponentRef = componentRefUtils.createRef<DialogComponentRef>();
   const [isProcessing, setIsProcessing] = createSignal(false);
 
   const processConfirmation = async () => {

@@ -1,7 +1,7 @@
 import UserDeleteConfirmationDialog from '$/application/components/user-delete-confirmation-dialog';
 import Button from '$/core/components/button';
 import type { DialogComponentRef } from '$/core/components/dialog';
-import { createComponentRef } from '$/core/stores/component-ref';
+import { componentRefUtils } from '$/core/stores/component-ref';
 import { asyncUtils } from '$/core/utils/async';
 import { loggerUtils } from '$/core/utils/logger';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
@@ -11,7 +11,7 @@ export default {
 };
 
 export const Default = () => {
-  const dialogComponentRef = createComponentRef<DialogComponentRef>();
+  const dialogComponentRef = componentRefUtils.createRef<DialogComponentRef>();
   const mockUser = {
     id: '123',
     name: 'Example User',

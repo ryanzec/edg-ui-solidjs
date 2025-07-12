@@ -3,7 +3,7 @@ import GridTable from '$/core/components/grid-table';
 import Icon from '$/core/components/icon';
 import List from '$/core/components/list';
 import type { TooltipComponentRef } from '$/core/components/tooltip';
-import { createComponentRef } from '$/core/stores/component-ref';
+import { componentRefUtils } from '$/core/stores/component-ref';
 import type { User } from '$api/types/user';
 import { Show } from 'solid-js';
 
@@ -33,7 +33,7 @@ const UsersList = (props: UsersListProps) => {
       >
         {(user, index) => {
           const isLastRow = index() === props.users.length - 1;
-          const dropDownComponentRef = createComponentRef<TooltipComponentRef>();
+          const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
 
           const handleEdit = () => {
             props.onSelectEdit?.(user);

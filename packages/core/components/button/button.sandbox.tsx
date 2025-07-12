@@ -3,7 +3,7 @@ import { ButtonState } from '$/core/components/button/utils';
 import Icon from '$/core/components/icon';
 import List from '$/core/components/list';
 import type { TooltipComponentRef } from '$/core/components/tooltip';
-import { createComponentRef } from '$/core/stores/component-ref';
+import { componentRefUtils } from '$/core/stores/component-ref';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 
 export default {
@@ -812,9 +812,9 @@ export const Loading = () => {
 };
 
 export const DropDown = () => {
-  const tooltipComponentRef1 = createComponentRef<TooltipComponentRef>();
-  const tooltipComponentRef2 = createComponentRef<TooltipComponentRef>();
-  const tooltipComponentRef3 = createComponentRef<TooltipComponentRef>();
+  const tooltipComponentRef1 = componentRefUtils.createRef<TooltipComponentRef>();
+  const tooltipComponentRef2 = componentRefUtils.createRef<TooltipComponentRef>();
+  const tooltipComponentRef3 = componentRefUtils.createRef<TooltipComponentRef>();
 
   const handleAction = () => {
     console.log('action');

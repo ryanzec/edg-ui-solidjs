@@ -1,7 +1,7 @@
 import Button from '$/core/components/button';
 import type { DialogComponentRef } from '$/core/components/dialog';
 import UnsavedChangesDialog, { type UnsavedChangesDialogComponentRef } from '$/core/components/unsaved-changes-dialog';
-import { createComponentRef } from '$/core/stores/component-ref';
+import { componentRefUtils } from '$/core/stores/component-ref';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 
 export default {
@@ -13,8 +13,8 @@ const mockNavigate = (url: string | number) => {
 };
 
 export const Default = () => {
-  const dialogComponentRef = createComponentRef<DialogComponentRef>();
-  const unsavedChangesDialogComponentRef = createComponentRef<UnsavedChangesDialogComponentRef>({
+  const dialogComponentRef = componentRefUtils.createRef<DialogComponentRef>();
+  const unsavedChangesDialogComponentRef = componentRefUtils.createRef<UnsavedChangesDialogComponentRef>({
     onReady: (componentRef) => {
       componentRef.setRedirectUrl('/home');
     },

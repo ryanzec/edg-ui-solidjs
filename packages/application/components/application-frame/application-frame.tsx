@@ -5,7 +5,7 @@ import Icon, { IconColor, IconSize } from '$/core/components/icon';
 import Loading from '$/core/components/loading';
 import ScrollArea from '$/core/components/scroll-area';
 import type { TooltipComponentRef } from '$/core/components/tooltip';
-import { createComponentRef } from '$/core/stores/component-ref';
+import { componentRefUtils } from '$/core/stores/component-ref';
 import { sizerStoreUtils } from '$/core/stores/sizer.store';
 import { themeManagerStore } from '$/core/stores/theme-manager.store';
 import { toggleStoreUtils } from '$/core/stores/toggle.store';
@@ -77,7 +77,7 @@ const ApplicationFrame = (passedProps: ApplicationFrameProps) => {
       setIsResizingSidebar(false);
     },
   });
-  const userDropDownComponentRef = createComponentRef<TooltipComponentRef>();
+  const userDropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
   const sidebarOpenedToggleStore = toggleStoreUtils.createStore({
     defaultIsToggled: true,
   });
