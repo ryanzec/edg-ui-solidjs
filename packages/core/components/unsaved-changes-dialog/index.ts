@@ -2,13 +2,10 @@ import {
   default as UnsavedChangesDialog,
   type UnsavedChangesDialogProps,
 } from '$/core/components/unsaved-changes-dialog/unsaved-changes-dialog';
-import {
-  type UnsavedChangesDialogStore,
-  unsavedChangesDialogComponentUtils,
-} from '$/core/components/unsaved-changes-dialog/utils';
+import type { UnsavedChangesDialogComponentRef } from '$/core/components/unsaved-changes-dialog/utils';
 
-export type { UnsavedChangesDialogProps, UnsavedChangesDialogStore };
+export type { UnsavedChangesDialogProps, UnsavedChangesDialogComponentRef };
 
-export { UnsavedChangesDialog, unsavedChangesDialogComponentUtils };
+export { UnsavedChangesDialog };
 
 export default UnsavedChangesDialog;

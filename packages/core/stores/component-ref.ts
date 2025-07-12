@@ -2,12 +2,12 @@ import { type Accessor, createSignal } from 'solid-js';
 
 export type ComponentRef<TComponentRef> = {
   api: Accessor<TComponentRef | undefined>;
-  onReady: (componentApi: TComponentRef) => void;
+  onReady: (componentRef: TComponentRef) => void;
   onCleanup: () => void;
 };
 
 export type CreateComponentRefOptions<TComponentRef> = {
-  onReady?: (componentApi: TComponentRef) => void;
+  onReady?: (componentRef: TComponentRef) => void;
   onCleanup?: () => void;
 };
 
@@ -16,9 +16,9 @@ export const createComponentRef = <TComponentRef>(
 ): ComponentRef<TComponentRef> => {
   const [componentRef, setComponentRef] = createSignal<TComponentRef>();
 
-  const onReady = (componentApi: TComponentRef) => {
-    options.onReady?.(componentApi);
-    setComponentRef(() => componentApi);
+  const onReady = (componentRef: TComponentRef) => {
+    options.onReady?.(componentRef);
+    setComponentRef(() => componentRef);
   };
 
   const onCleanup = () => {
