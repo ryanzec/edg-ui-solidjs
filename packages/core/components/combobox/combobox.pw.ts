@@ -73,20 +73,24 @@ class ComboboxPage {
     this.comboboxInput = page.locator('[data-id="combobox"] [data-id="input"]');
     this.resetSelectedButton = page.locator('[data-id="reset-selected-button"]');
     this.setSelectedButton = page.locator('[data-id="set-selected-button"]');
-    this.comboboxOptionsContainer = page.locator('[data-id="combobox-selectable-options"]');
-    this.comboboxOption = page.locator('[data-id="combobox-selectable-option"]');
-    this.firstComboboxOption = page.locator('[data-id="combobox-selectable-option"]:nth-child(1)');
+    this.comboboxOptionsContainer = page.locator('[data-id="combobox"] [data-id="selectable-options"]');
+    this.comboboxOption = page.locator(
+      '[data-id="combobox"] [data-id="selectable-options"] [data-id="selectable-option"]',
+    );
+    this.firstComboboxOption = page.locator(
+      '[data-id="combobox"] [data-id="selectable-options"] [data-id="selectable-option"]:nth-child(1)',
+    );
     this.comboboxHighlightedOption = page.locator(
-      `[data-id="combobox-selectable-options"] [${comboboxDataAttribute.HIGHLIGHTED_OPTION}="true"]`,
+      `[data-id="combobox"] [data-id="selectable-options"] [${comboboxDataAttribute.HIGHLIGHTED_OPTION}="true"]`,
     );
     this.checkSelectedComboboxValue = page.locator('[data-id="check-selected-combobox-value"]');
     this.checkFormValue = page.locator('[data-id="check-form-value"]');
-    this.selectedOption = page.locator('[data-id="combobox-selected-option"]');
+    this.selectedOption = page.locator('[data-id="combobox"] [data-id="selected-option"]');
     this.secondSelectedOptionDeleteIndicator = page.locator(
-      '[data-id="combobox-selected-option"]:nth-child(2) [data-id="combobox-delete-indicator"]',
+      '[data-id="combobox"] [data-id="selected-option"]:nth-child(2) [data-id="delete-indicator"]',
     );
-    this.asyncDataLoadingIndicator = page.locator('[data-id="combobox-async-options-loading"]');
-    this.asyncDataBeforeThreshold = page.locator('[data-id="combobox-async-options-before-threshold"]');
+    this.asyncDataLoadingIndicator = page.locator('[data-id="combobox"] [data-id="async-options-loading"]');
+    this.asyncDataBeforeThreshold = page.locator('[data-id="combobox"] [data-id="async-options-before-threshold"]');
     this.noOptionsFound = page.locator('[data-id="combobox"] [data-id*="no-options-found"]');
     this.inputIconIndicator = page.locator('[data-id="combobox"] [data-id="input-icon-indicator"]');
     this.clearIconTrigger = page.locator('[data-id="combobox"] [data-id="clear-icon-trigger"]');
