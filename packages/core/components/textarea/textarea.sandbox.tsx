@@ -2,9 +2,10 @@ import Button from '$/core/components/button';
 import FormField from '$/core/components/form-field';
 import FormFields from '$/core/components/form-fields';
 import Label from '$/core/components/label';
-import Peek, { peekComponentUtils } from '$/core/components/peek';
+import Peek, { type PeekComponentRef } from '$/core/components/peek';
 import Textarea from '$/core/components/textarea';
 import TextareaInnerActions from '$/core/components/textarea/textarea-inner-actions';
+import { createComponentRef } from '$/core/stores/component-ref';
 import { formStoreUtils } from '$/core/stores/form.store';
 import { createSignal } from 'solid-js';
 
@@ -44,14 +45,15 @@ export const Default = () => {
 };
 
 export const AutoFocus = () => {
-  const peekStore = peekComponentUtils.createStore();
+  const peekComponentRef = createComponentRef<PeekComponentRef>();
+
   return (
     <>
       <FormField>
         <Textarea autofocus />
       </FormField>
-      <Button onClick={() => peekStore.open()}>open peek</Button>
-      <Peek peekStore={peekStore}>
+      <Button onClick={() => peekComponentRef.api()?.open()}>open peek</Button>
+      <Peek peekComponentRef={peekComponentRef}>
         <Peek.Header title="Peek Header" />
         <Peek.Content>
           <FormField>

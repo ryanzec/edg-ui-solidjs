@@ -1,21 +1,23 @@
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show, mergeProps, onCleanup, splitProps } from 'solid-js';
+import { type JSX, Show, createSignal, mergeProps, onCleanup, splitProps } from 'solid-js';
 
 import Overlay from '$/core/components/overlay';
 import styles from '$/core/components/peek/peek.module.css';
-import type { PeekStore } from '$/core/components/peek/utils';
+import type { PeekComponentRef } from '$/core/components/peek/utils';
+import type { ComponentRef } from '$/core/stores/component-ref';
 import { sizerStoreUtils } from '$/core/stores/sizer.store';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import { Portal } from 'solid-js/web';
 
 export type PeekProps = JSX.HTMLAttributes<HTMLDivElement> &
   CommonDataAttributes & {
-    peekStore: PeekStore;
+    peekComponentRef?: ComponentRef<PeekComponentRef>;
     hasOverlay?: boolean;
     closeOnClickOverlay?: boolean;
     closeOnEscape?: boolean;
     closeEnabled?: boolean;
     isResizable?: boolean;
+    initialIsOpened?: boolean;
   };
 
 const Peek = (passedProps: PeekProps) => {
@@ -29,21 +31,41 @@ const Peek = (passedProps: PeekProps) => {
       'class',
       'hasOverlay',
       'closeOnClickOverlay',
-      'peekStore',
+      'peekComponentRef',
       'isResizable',
       'closeOnEscape',
       'closeEnabled',
+      'initialIsOpened',
     ],
   );
 
+  const [isOpened, setIsOpened] = createSignal(props.initialIsOpened ?? false);
+
   const sizerStore = sizerStoreUtils.createStore();
+
+  const toggle = (overrideIsEnabled?: boolean) => {
+    if (overrideIsEnabled === true || overrideIsEnabled === false) {
+      setIsOpened(overrideIsEnabled);
+      return;
+    }
+
+    setIsOpened(!isOpened());
+  };
+
+  const open = () => {
+    setIsOpened(true);
+  };
+
+  const close = () => {
+    setIsOpened(false);
+  };
 
   const handleClickOverlay = () => {
     if (props.closeEnabled === false || props.closeOnClickOverlay === false) {
       return;
     }
 
-    props.peekStore.close();
+    close();
   };
 
   const handleKeyUp = (event: KeyboardEvent) => {
@@ -51,7 +73,7 @@ const Peek = (passedProps: PeekProps) => {
       return;
     }
 
-    props.peekStore.close();
+    close();
   };
 
   const handlePeekClose = () => {
@@ -59,38 +81,56 @@ const Peek = (passedProps: PeekProps) => {
       return;
     }
 
-    props.peekStore.close();
+    close();
   };
 
   const setupCloseEvents = (element: HTMLElement) => {
+    console.log(element);
     const closeElements = element.querySelectorAll('[data-peek-close="true"]');
+    console.log(closeElements);
 
     for (const closeElement of closeElements) {
       closeElement.addEventListener('click', handlePeekClose);
     }
   };
 
-  const peekRef = (element: HTMLDivElement) => {
+  const setPeekElementRef = (element: HTMLDivElement) => {
     sizerStore.setElementRef(element);
 
     document.addEventListener('keydown', handleKeyUp);
 
-    setupCloseEvents(element);
+    // microtask need to to make the the children content is available
+    queueMicrotask(() => {
+      setupCloseEvents(element);
 
-    if (props.isResizable === true) {
-      sizerStore.setupResizeEvents();
-    }
+      if (props.isResizable === true) {
+        sizerStore.setupResizeEvents();
+      }
+    });
 
     onCleanup(() => {
       document.removeEventListener('keydown', handleKeyUp);
     });
   };
 
+  const peekComponentRef: PeekComponentRef = {
+    isOpened,
+    toggle,
+    open,
+    close,
+  };
+
+  props.peekComponentRef?.onReady(peekComponentRef);
+
+  onCleanup(() => {
+    props.peekComponentRef?.onCleanup();
+  });
+
   return (
-    <Show when={props.peekStore.isOpened()}>
+    <Show when={isOpened()}>
       <Portal>
         <div data-id="peek">
-          <div ref={peekRef} {...restOfProps} class={tailwindUtils.merge(styles.peek, props.class)}>
+          <div ref={setPeekElementRef} {...restOfProps} class={tailwindUtils.merge(styles.peek, props.class)}>
             {props.children}
           </div>
           <Show when={props.hasOverlay}>

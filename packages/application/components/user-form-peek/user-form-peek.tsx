@@ -1,19 +1,25 @@
 import UserForm, { type UserFormProps } from '$/application/components/user-form';
 import Button from '$/core/components/button';
 import Loading from '$/core/components/loading';
-import Peek, { type PeekStore } from '$/core/components/peek';
+import Peek, { type PeekComponentRef } from '$/core/components/peek';
+import { type ComponentRef, createComponentRef } from '$/core/stores/component-ref';
 import { Show, createSignal, splitProps } from 'solid-js';
 
 export type UserFormPeekProps<TCreateInput, TUpdateInput> = Omit<
   UserFormProps<TCreateInput, TUpdateInput>,
   'submitButtonRef' | 'onFormSubmitted'
 > & {
-  peekStore: PeekStore;
+  peekComponentRef?: ComponentRef<PeekComponentRef>;
 };
 
 const UserFormPeek = <TCreateInput, TUpdateInput>(passedProps: UserFormPeekProps<TCreateInput, TUpdateInput>) => {
-  const [props, restOfProps] = splitProps(passedProps, ['peekStore']);
+  const [props, restOfProps] = splitProps(passedProps, ['peekComponentRef']);
   const [submitButtonElementRef, setSubmitButtonElementRef] = createSignal<HTMLButtonElement | undefined>();
+  const peekComponentRef = createComponentRef<PeekComponentRef>({
+    onReady: (componentRef) => {
+      props.peekComponentRef?.onReady(componentRef);
+    },
+  });
 
   const handleSubmitForm = () => {
     const button = submitButtonElementRef();
@@ -26,11 +32,11 @@ const UserFormPeek = <TCreateInput, TUpdateInput>(passedProps: UserFormPeekProps
   };
 
   const handleFormSubmitted = () => {
-    props.peekStore.close();
+    peekComponentRef.api()?.close();
   };
 
   return (
-    <Peek peekStore={props.peekStore}>
+    <Peek peekComponentRef={peekComponentRef}>
       <Show when={restOfProps.isProcessingForm}>
         <Loading.Section>{restOfProps.editingUser ? 'Updating' : 'Creating'}...</Loading.Section>
       </Show>

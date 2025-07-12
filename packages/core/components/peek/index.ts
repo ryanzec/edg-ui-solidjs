@@ -4,7 +4,7 @@ import Content, { type PeekContentProps } from '$/core/components/peek/peek-cont
 import Footer, { type PeekFooterProps } from '$/core/components/peek/peek-footer';
 import Header, { type PeekHeaderProps } from '$/core/components/peek/peek-header';
 
-export { peekComponentUtils, type PeekStore } from '$/core/components/peek/utils';
+export type { PeekComponentRef } from '$/core/components/peek/utils';
 
 export type { PeekProps, PeekHeaderProps, PeekContentProps, PeekFooterProps };
 

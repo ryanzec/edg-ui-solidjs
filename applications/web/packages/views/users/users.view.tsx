@@ -8,7 +8,7 @@ import { authenticationStore } from '$/application/stores/authentication.store';
 import Button from '$/core/components/button';
 import { CalloutColor } from '$/core/components/callout';
 import type { DialogComponentRef } from '$/core/components/dialog';
-import { peekComponentUtils } from '$/core/components/peek';
+import type { PeekComponentRef } from '$/core/components/peek';
 import { Skeleton } from '$/core/components/skeleton';
 import { createComponentRef } from '$/core/stores/component-ref';
 import { FormSaveMode } from '$/core/stores/form.store';
@@ -33,7 +33,7 @@ const UsersView = () => {
     },
   });
 
-  const editPeekStore = peekComponentUtils.createStore();
+  const formPeekComponentRef = createComponentRef<PeekComponentRef>();
   const deleteDialogComponentRef = createComponentRef<DialogComponentRef>();
 
   const [formError, setFormError] = createSignal<string | string[] | undefined>();
@@ -41,12 +41,12 @@ const UsersView = () => {
 
   const handleAddUser = () => {
     setActiveUser(undefined);
-    editPeekStore.open();
+    formPeekComponentRef.api()?.open();
   };
 
   const handleEditUser = (user: UsersListUser) => {
     setActiveUser(user);
-    editPeekStore.open();
+    formPeekComponentRef.api()?.open();
   };
 
   const handleRemoveUser = (user: UsersListUser) => {
@@ -136,7 +136,7 @@ const UsersView = () => {
         </Page.Content>
       </Page>
       <UserFormPeek
-        peekStore={editPeekStore}
+        peekComponentRef={formPeekComponentRef}
         editingUser={activeUser()}
         formError={formError()}
         processForm={processForm}

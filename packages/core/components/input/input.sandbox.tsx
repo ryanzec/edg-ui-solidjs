@@ -4,8 +4,9 @@ import FormFields from '$/core/components/form-fields';
 import Icon from '$/core/components/icon';
 import Input from '$/core/components/input';
 import Label from '$/core/components/label';
-import Peek, { peekComponentUtils } from '$/core/components/peek';
+import Peek, { type PeekComponentRef } from '$/core/components/peek';
 import Typography from '$/core/components/typography';
+import { createComponentRef } from '$/core/stores/component-ref';
 import { formStoreUtils } from '$/core/stores/form.store';
 
 export default {
@@ -99,14 +100,15 @@ export const Default = () => {
 };
 
 export const AutoFocus = () => {
-  const peekStore = peekComponentUtils.createStore();
+  const peekComponentRef = createComponentRef<PeekComponentRef>();
+
   return (
     <>
       <FormField>
         <Input autofocus />
       </FormField>
-      <Button onClick={() => peekStore.open()}>open peek</Button>
-      <Peek peekStore={peekStore}>
+      <Button onClick={() => peekComponentRef.api()?.open()}>open peek</Button>
+      <Peek peekComponentRef={peekComponentRef}>
         <Peek.Header title="Peek Header" />
         <Peek.Content>
           <FormField>

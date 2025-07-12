@@ -1,17 +1,19 @@
 import Button from '$/core/components/button';
-import Peek, { peekComponentUtils } from '$/core/components/peek';
+import Peek from '$/core/components/peek';
+import type { PeekComponentRef } from '$/core/components/peek/utils';
+import { createComponentRef } from '$/core/stores/component-ref';
 
 export default {
   title: 'Components/Peek',
 };
 
 export const Default = () => {
-  const peekStore = peekComponentUtils.createStore();
+  const peekComponentRef = createComponentRef<PeekComponentRef>();
 
   return (
     <>
-      <Button onClick={() => peekStore.open()}>open peek</Button>
-      <Peek peekStore={peekStore}>
+      <Button onClick={() => peekComponentRef.api()?.open()}>open peek</Button>
+      <Peek peekComponentRef={peekComponentRef}>
         <Peek.Header title="Peek Header" />
         <Peek.Content>Content</Peek.Content>
         <Peek.Footer>
@@ -26,12 +28,12 @@ export const Default = () => {
 };
 
 export const Resizeable = () => {
-  const peekStore = peekComponentUtils.createStore();
+  const peekComponentRef = createComponentRef<PeekComponentRef>();
 
   return (
     <>
-      <Button onClick={() => peekStore.open()}>open peek</Button>
-      <Peek peekStore={peekStore} isResizable>
+      <Button onClick={() => peekComponentRef.api()?.open()}>open peek</Button>
+      <Peek peekComponentRef={peekComponentRef} isResizable>
         <Peek.Header title="Peek Header" />
         <Peek.Content>Content</Peek.Content>
         <Peek.Footer>
@@ -46,12 +48,12 @@ export const Resizeable = () => {
 };
 
 export const Scrollable = () => {
-  const peekStore = peekComponentUtils.createStore();
+  const peekComponentRef = createComponentRef<PeekComponentRef>();
 
   return (
     <>
-      <Button onClick={() => peekStore.open()}>open peek</Button>
-      <Peek peekStore={peekStore} isResizable>
+      <Button onClick={() => peekComponentRef.api()?.open()}>open peek</Button>
+      <Peek peekComponentRef={peekComponentRef} isResizable>
         <Peek.Header title="Peek Header" />
         <Peek.Content>
           <div>Content</div>
