@@ -1,14 +1,30 @@
+import { TreeSize } from '$/core/components/tree/tree';
 import { domUtils } from '$/core/utils/dom';
 import { type Accessor, type Setter, createSignal } from 'solid-js';
+
+export type TreeItemData = {
+  id: string;
+  [key: string]: unknown;
+};
 
 export type TreeStore = {
   parentElementRef: Accessor<HTMLDivElement | undefined>;
   setParentElementRef: Setter<HTMLDivElement | undefined>;
   scrollToItem: (value: string) => void;
+  activeItem: Accessor<TreeItemData | undefined>;
+  setActiveItem: Setter<TreeItemData | undefined>;
+  size: Accessor<TreeSize>;
+  setSize: Setter<TreeSize>;
 };
 
-const createTreeStore = (): TreeStore => {
+export type CreateTreeStoreOptions = {
+  initialSize?: TreeSize;
+};
+
+const createTreeStore = (options: CreateTreeStoreOptions = {}): TreeStore => {
   const [parentElementRef, setParentElementRef] = createSignal<HTMLDivElement | undefined>();
+  const [activeItem, setActiveItem] = createSignal<TreeItemData>();
+  const [size, setSize] = createSignal(options.initialSize ?? TreeSize.DEFAULT);
 
   const scrollToItem = (value: string) => {
     const currentParentElement = parentElementRef();
@@ -23,6 +39,8 @@ const createTreeStore = (): TreeStore => {
       return;
     }
 
+    setActiveItem(activeItem());
+
     domUtils.scrollToElement(itemElement);
   };
 
@@ -30,6 +48,10 @@ const createTreeStore = (): TreeStore => {
     parentElementRef,
     setParentElementRef,
     scrollToItem,
+    activeItem,
+    setActiveItem,
+    size,
+    setSize,
   };
 };
 

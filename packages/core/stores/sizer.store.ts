@@ -112,7 +112,7 @@ export const createSizerStore = (options: CreateSizerStoreOptions = {}): SizerSt
     }
 
     if (isDragging) {
-      document.body.style.cursor = 'ew-resize';
+      document.body.style.cursor = 'col-resize';
 
       return;
     }
@@ -135,7 +135,7 @@ export const createSizerStore = (options: CreateSizerStoreOptions = {}): SizerSt
     }
 
     callbacks.onMouseEnterResizeArea?.();
-    document.body.style.cursor = 'ew-resize';
+    document.body.style.cursor = 'col-resize';
   };
 
   const handleElementMouseLeave = () => {

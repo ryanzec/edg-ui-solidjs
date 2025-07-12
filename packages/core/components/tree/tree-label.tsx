@@ -21,8 +21,8 @@ const TreeLabel = (passedProps: TreeLabelProps) => {
       <Icon icon={props.icon || 'floppy-disk'} />
       <span
         class={tailwindUtils.merge('text-sm min-w-[1px]  inline-flex', {
-          'text-base': context?.size === TreeSize.DEFAULT,
-          'text-sm': context?.size === TreeSize.SMALL,
+          'text-base': context?.size() === TreeSize.DEFAULT,
+          'text-sm': context?.size() === TreeSize.SMALL,
           'text-bold': props.isActive,
         })}
       >

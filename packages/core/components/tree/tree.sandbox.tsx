@@ -10,14 +10,17 @@ export default {
 };
 
 type Item = {
+  id: string;
   test: string;
 };
 
 const groupItem: Item = {
+  id: 'group',
   test: 'group',
 };
 
 const item: Item = {
+  id: 'item',
   test: 'item',
 };
 
@@ -99,6 +102,7 @@ export const CustomIcons = () => {
 
 export const Sizes = () => {
   const treeStore = treeComponentUtils.createStore();
+  const smallTreeStore = treeComponentUtils.createStore({ initialSize: TreeSize.SMALL });
 
   return (
     <>
@@ -130,7 +134,7 @@ export const Sizes = () => {
           </Tree.Group>
         </Tree>
         <div>Small</div>
-        <Tree size={TreeSize.SMALL} treeStore={treeStore}>
+        <Tree treeStore={smallTreeStore}>
           <Tree.Group label="Documents" item={groupItem} onSelectGroup={handleSelectGroup}>
             <Tree.Group label="Work" item={groupItem} onSelectGroup={handleSelectGroup}>
               <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} />
@@ -210,7 +214,7 @@ export const Active = () => {
       <Tree treeStore={treeStore}>
         <Tree.Group label="Documents" item={groupItem} defaultIsExpanded onSelectGroup={handleSelectGroup}>
           <Tree.Group label="Work" item={groupItem} defaultIsExpanded onSelectGroup={handleSelectGroup}>
-            <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} isActive />
+            <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} />
             <Tree.Item label="presentation.pptx" item={item} onSelectItem={handleSelectItem} />
             <Tree.Item label="data.xlsx" item={item} onSelectItem={handleSelectItem} />
           </Tree.Group>
@@ -254,32 +258,31 @@ export const Scrolling = () => {
                   label="report-that-has-a-very-long-name-in-order-to-test-the-scrolling-functionality.pdf"
                   item={item}
                   onSelectItem={handleSelectItem}
-                  isActive
                 />
                 <Tree.Item label="presentation.pptx" item={item} onSelectItem={handleSelectItem} />
                 <Tree.Item label="data.xlsx" item={item} onSelectItem={handleSelectItem} />
-                <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} isActive />
+                <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} />
                 <Tree.Item label="presentation.pptx" item={item} onSelectItem={handleSelectItem} />
                 <Tree.Item label="data.xlsx" item={item} onSelectItem={handleSelectItem} />
-                <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} isActive />
+                <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} />
                 <Tree.Item label="presentation.pptx" item={item} onSelectItem={handleSelectItem} />
                 <Tree.Item label="data.xlsx" item={item} onSelectItem={handleSelectItem} />
-                <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} isActive />
+                <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} />
                 <Tree.Item label="presentation.pptx" item={item} onSelectItem={handleSelectItem} />
                 <Tree.Item label="data.xlsx" item={item} onSelectItem={handleSelectItem} />
-                <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} isActive />
+                <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} />
                 <Tree.Item label="presentation.pptx" item={item} onSelectItem={handleSelectItem} />
                 <Tree.Item label="data.xlsx" item={item} onSelectItem={handleSelectItem} />
-                <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} isActive />
+                <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} />
                 <Tree.Item label="presentation.pptx" item={item} onSelectItem={handleSelectItem} />
                 <Tree.Item label="data.xlsx" item={item} onSelectItem={handleSelectItem} />
-                <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} isActive />
+                <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} />
                 <Tree.Item label="presentation.pptx" item={item} onSelectItem={handleSelectItem} />
                 <Tree.Item label="data.xlsx" item={item} onSelectItem={handleSelectItem} />
-                <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} isActive />
+                <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} />
                 <Tree.Item label="presentation.pptx" item={item} onSelectItem={handleSelectItem} />
                 <Tree.Item label="data.xlsx" item={item} onSelectItem={handleSelectItem} />
-                <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} isActive />
+                <Tree.Item label="report.pdf" item={item} onSelectItem={handleSelectItem} />
                 <Tree.Item label="presentation.pptx" item={item} onSelectItem={handleSelectItem} />
                 <Tree.Item label="data.xlsx" item={item} onSelectItem={handleSelectItem} />
               </Tree.Group>
@@ -312,6 +315,7 @@ export const ScrollToItem = () => {
 
   for (let i = 0; i < 200; i++) {
     startingItemData.push({
+      id: `report${i + 1}.pdf`,
       test: `report${i + 1}.pdf`,
     });
   }
@@ -345,6 +349,7 @@ export const UpdatingItems = () => {
 
   for (let i = 0; i < 9; i++) {
     startingItemData.push({
+      id: `report${i + 1}.pdf`,
       test: `report${i + 1}.pdf`,
     });
   }
@@ -357,6 +362,7 @@ export const UpdatingItems = () => {
     setItems((prev) => [
       ...prev,
       {
+        id: `report${prev.length + 1}.pdf`,
         test: `report${prev.length + 1}.pdf`,
       },
     ]);

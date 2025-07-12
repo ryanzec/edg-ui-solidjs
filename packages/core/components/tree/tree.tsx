@@ -1,4 +1,4 @@
-import { type JSX, createContext, mergeProps, splitProps } from 'solid-js';
+import { type JSX, createContext, splitProps } from 'solid-js';
 
 import type { TreeStore } from '$/core/components/tree/utils';
 import type { CommonDataAttributes } from '$/core/types/generic';
@@ -11,25 +11,18 @@ export const TreeSize = {
 
 export type TreeSize = (typeof TreeSize)[keyof typeof TreeSize];
 
-type TreeCustomProps = JSX.HTMLAttributes<HTMLDivElement> &
+export const TreeContext = createContext<TreeStore>();
+
+export type TreeProps = JSX.HTMLAttributes<HTMLDivElement> &
   CommonDataAttributes & {
-    size?: TreeSize;
     treeStore: TreeStore;
   };
 
-export const TreeContext = createContext<TreeCustomProps>();
-
-export type TreeProps = JSX.HTMLAttributes<HTMLDivElement> & CommonDataAttributes & TreeCustomProps;
-
 const Tree = (passedProps: TreeProps) => {
-  const [props, restOfProps] = splitProps(mergeProps({ size: TreeSize.DEFAULT }, passedProps), [
-    'class',
-    'size',
-    'treeStore',
-  ]);
+  const [props, restOfProps] = splitProps(passedProps, ['class', 'treeStore']);
 
   return (
-    <TreeContext.Provider value={props}>
+    <TreeContext.Provider value={props.treeStore}>
       <div
         ref={props.treeStore.setParentElementRef}
         data-id="tree"
