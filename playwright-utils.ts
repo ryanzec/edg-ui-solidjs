@@ -7,6 +7,11 @@ const baseConfiguration: PlaywrightTestConfig = {
   testMatch: ['*.pw.ts', '*.pw.tsx'],
   testDir: './',
   snapshotDir: './__snapshots__',
+  expect: {
+    toHaveScreenshot: {
+      threshold: 0.2,
+    },
+  },
   timeout: 15 * 1000,
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
@@ -38,13 +43,15 @@ const baseConfiguration: PlaywrightTestConfig = {
       url: DEV_SERVER_URL,
     },
   ],
-
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
+        launchOptions: {
+          args: ['--font-render-hinting=none', '--disable-font-subpixel-positioning', '--disable-skia-runtime-opts'],
+        },
       },
     } /*,
     {
