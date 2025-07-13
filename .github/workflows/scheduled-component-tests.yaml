@@ -25,10 +25,10 @@ jobs:
       - name: Run visual tests
         run: pnpm test:components:ci
       # if we want to upload the tests results however this can be large and therefore cost m
-      # - name: Upload test results
-      #   uses: actions/upload-artifact@v4
-      #   if: failure()
-      #   with:
-      #     name: playwright-report
-      #     path: playwright-report/
-      #     retention-days: 3
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 3
