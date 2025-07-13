@@ -18,7 +18,7 @@ jobs:
         with:
           version: 9.15.3
       - name: Install dependencies
-        run: pnpm ci
+        run: pnpm install --frozen-lockfile
       - name: Run visual tests
         run: pnpm test:visual
       # if we want to upload the tests results however this can be large and therefore cost m
