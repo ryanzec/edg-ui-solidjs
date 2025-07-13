@@ -37,7 +37,7 @@ const Avatar = (passedProps: AvatarProps) => {
       class={tailwindUtils.merge(
         'flex items-center justify-center rounded-full bg-brand text-on-brand font-medium',
         {
-          'cursor-pointer': props.isClickable,
+          'cursor-pointer': props.isClickable || !!restOfProps.onClick,
           'h-base w-base': avatarSize() === AvatarSize.SMALL,
           'h-3xl w-3xl': avatarSize() === AvatarSize.BASE,
           'h-full w-full': avatarSize() === AvatarSize.FILL,

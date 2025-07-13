@@ -1,16 +1,9 @@
-import type { PlaywrightTestConfig } from '@playwright/test';
-
-import { devices } from '@playwright/test';
-
+import { type PlaywrightTestConfig, devices } from '@playwright/test';
 import { viteUtils } from './vite-utils';
 
 const DEV_SERVER_URL = 'https://localhost:6006';
 
-/**
- * See https://playwright.dev/docs/test-configuration.
- */
-const config: PlaywrightTestConfig = {
-  grep: /@flaky/,
+const baseConfiguration: PlaywrightTestConfig = {
   testMatch: ['*.pw.ts', '*.pw.tsx'],
   testDir: './',
   snapshotDir: './__snapshots__',
@@ -69,4 +62,6 @@ const config: PlaywrightTestConfig = {
   ],
 };
 
-export default config;
+export const playwrightUtils = {
+  baseConfiguration,
+};

@@ -1,7 +1,7 @@
 import { type Locator, type Page, expect, test } from '@playwright/test';
 
 import { comboboxDataAttribute } from '$/core/components/combobox/utils';
-import { playwrightUtils } from '$/core/utils/playwright';
+import { BasePage, playwrightUtils } from '$/core/utils/playwright';
 
 const urls = {
   single: '/components/combobox/single',
@@ -30,45 +30,27 @@ const urls = {
   multiWithMissingData: '/components/combobox/multi-with-missing-data',
 };
 
-class ComboboxPage {
-  readonly page: Page;
-
+class ComboboxPage extends BasePage {
   readonly comboboxInput: Locator;
-
   readonly resetSelectedButton: Locator;
-
   readonly setSelectedButton: Locator;
-
   readonly comboboxOptionsContainer: Locator;
-
   readonly comboboxOption: Locator;
-
   readonly firstComboboxOption: Locator;
-
   readonly comboboxHighlightedOption: Locator;
-
   readonly checkSelectedComboboxValue: Locator;
-
   readonly checkFormValue: Locator;
-
   readonly selectedOption: Locator;
-
   readonly secondSelectedOptionDeleteIndicator: Locator;
-
   readonly asyncDataLoadingIndicator: Locator;
-
   readonly asyncDataBeforeThreshold: Locator;
-
   readonly noOptionsFound: Locator;
-
   readonly inputIconIndicator: Locator;
-
   readonly clearIconTrigger: Locator;
-
   readonly manualSelectedOptions: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
 
     this.comboboxInput = page.locator('[data-id="combobox"] [data-id="input"]');
     this.resetSelectedButton = page.locator('[data-id="reset-selected-button"]');
@@ -279,7 +261,7 @@ class ComboboxPage {
 
 test.describe('combobox @combobox-component', () => {
   test.describe('core functionality', () => {
-    test('focusing the input should not show the list when not configured @component', async ({ page }) => {
+    test('focusing the input should not show the list when not configured', async ({ page }) => {
       const testUrls = [urls.single, urls.multi];
       const componentPage = new ComboboxPage(page);
 
@@ -294,7 +276,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('focusing the input shows the list when configured @component', async ({ page }) => {
+    test('focusing the input shows the list when configured', async ({ page }) => {
       const testUrls = [urls.singleAutoShowOptions, urls.multiAutoShowOptions];
       const componentPage = new ComboboxPage(page);
 
@@ -309,7 +291,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('typing filters the list @component', async ({ page }) => {
+    test('typing filters the list', async ({ page }) => {
       const testUrls = [urls.single, urls.multi];
       const componentPage = new ComboboxPage(page);
 
@@ -326,7 +308,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('using keyboard highlights item @component', async ({ page }) => {
+    test('using keyboard highlights item', async ({ page }) => {
       const testUrls = [urls.single, urls.multi];
       const componentPage = new ComboboxPage(page);
 
@@ -344,7 +326,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('using mouse highlights item @component', async ({ page }) => {
+    test('using mouse highlights item', async ({ page }) => {
       const testUrls = [urls.single, urls.multi];
       const componentPage = new ComboboxPage(page);
 
@@ -361,7 +343,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('selecting an item hides the list @component', async ({ page }) => {
+    test('selecting an item hides the list', async ({ page }) => {
       const testUrls = [urls.single, urls.multi];
       const componentPage = new ComboboxPage(page);
 
@@ -380,7 +362,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('the escape key hides the list @component', async ({ page }) => {
+    test('the escape key hides the list', async ({ page }) => {
       const testUrls = [urls.single, urls.multi];
       const componentPage = new ComboboxPage(page);
 
@@ -398,7 +380,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('the escape key works properly when showing items on focus @component', async ({ page }) => {
+    test('the escape key works properly when showing items on focus', async ({ page }) => {
       const testUrls = [urls.singleAutoShowOptions, urls.multiAutoShowOptions];
       const componentPage = new ComboboxPage(page);
 
@@ -423,7 +405,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('preselection works @component', async ({ page }) => {
+    test('preselection works', async ({ page }) => {
       const testUrls = [urls.singlePreselected, urls.multiPreselected];
       const componentPage = new ComboboxPage(page);
 
@@ -441,7 +423,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('escape clears selection @component', async ({ page }) => {
+    test('escape clears selection', async ({ page }) => {
       const testUrls = [urls.singlePreselected, urls.multiPreselected];
       const componentPage = new ComboboxPage(page);
 
@@ -462,7 +444,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('tab hides the list @component', async ({ page }) => {
+    test('tab hides the list', async ({ page }) => {
       const testUrls = [urls.single, urls.multi];
       const componentPage = new ComboboxPage(page);
 
@@ -481,7 +463,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('tab with nothing selected does nothing @component', async ({ page }) => {
+    test('tab with nothing selected does nothing', async ({ page }) => {
       const testUrls = [urls.single, urls.multi];
       const componentPage = new ComboboxPage(page);
 
@@ -501,7 +483,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('tab with selection should do nothing @component', async ({ page }) => {
+    test('tab with selection should do nothing', async ({ page }) => {
       const testUrls = [urls.single, urls.multi];
       const componentPage = new ComboboxPage(page);
 
@@ -522,7 +504,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('blurring hides the list @component', async ({ page }) => {
+    test('blurring hides the list', async ({ page }) => {
       const testUrls = [urls.single, urls.multi];
       const componentPage = new ComboboxPage(page);
 
@@ -541,9 +523,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('blurring with input value and nothing selected does nothing with force selection @component', async ({
-      page,
-    }) => {
+    test('blurring with input value and nothing selected does nothing with force selection', async ({ page }) => {
       const testUrls = [urls.single, urls.multi];
       const componentPage = new ComboboxPage(page);
 
@@ -563,7 +543,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('blurring with nothing selected but with previously selected value should keep previous value @component', async ({
+    test('blurring with nothing selected but with previously selected value should keep previous value', async ({
       page,
     }) => {
       const testUrls = [urls.singlePreselected, urls.multiPreselected];
@@ -585,7 +565,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('blurring with nothing selected but with previously selected value should keep previous value with show items on focused enabled @component', async ({
+    test('blurring with nothing selected but with previously selected value should keep previous value with show items on focused enabled', async ({
       page,
     }) => {
       const testUrls = [urls.singleAutoShowOptions, urls.multiAutoShowOptions];
@@ -610,7 +590,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('placeholder works @component', async ({ page }) => {
+    test('placeholder works', async ({ page }) => {
       const testUrls = [urls.singlePlaceholder, urls.multiPlaceholder];
       const componentPage = new ComboboxPage(page);
 
@@ -624,9 +604,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('setting the selected value form outside the component is reflected in the component @component', async ({
-      page,
-    }) => {
+    test('setting the selected value form outside the component is reflected in the component', async ({ page }) => {
       // multi select does not display anything in the input when something is selected
       const testUrls = [urls.single];
       const componentPage = new ComboboxPage(page);
@@ -644,9 +622,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('clearing the selected value form outside the component is reflected in the component @component', async ({
-      page,
-    }) => {
+    test('clearing the selected value form outside the component is reflected in the component', async ({ page }) => {
       // multi select does not display anything in the input when something is selected
       const testUrls = [urls.single];
       const componentPage = new ComboboxPage(page);
@@ -665,7 +641,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('highlight option and then clearing the input and blur should not select that last highlighted option @component', async ({
+    test('highlight option and then clearing the input and blur should not select that last highlighted option', async ({
       page,
     }) => {
       // multi select does not display anything in the input when something is selected
@@ -691,7 +667,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('input icon indicator works @component', async ({ page }) => {
+    test('input icon indicator works', async ({ page }) => {
       // multi select does not display anything in the input when something is selected
       const testUrls = [urls.single, urls.multi];
       const componentPage = new ComboboxPage(page);
@@ -709,9 +685,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('using the keyboard to select when list is not visible should make list visible @component', async ({
-      page,
-    }) => {
+    test('using the keyboard to select when list is not visible should make list visible', async ({ page }) => {
       // multi select does not display anything in the input when something is selected
       const testUrls = [urls.single, urls.multi];
       const componentPage = new ComboboxPage(page);
@@ -730,7 +704,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('disabled @component', async ({ page }) => {
+    test('disabled', async ({ page }) => {
       const testUrls = [urls.singleDisabled, urls.multiDisabled];
       const componentPage = new ComboboxPage(page);
 
@@ -743,7 +717,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('if an option has missing data, those options are not displayed @component', async ({ page }) => {
+    test('if an option has missing data, those options are not displayed', async ({ page }) => {
       // we need a higher timeout for this test because we are testing code that has a built-in delay of 1 second
       // for each iteration to test the async functionality
       test.setTimeout(30000);
@@ -766,7 +740,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('no options show properly @component', async ({ page }) => {
+    test('no options show properly', async ({ page }) => {
       const testUrls = [urls.single, urls.multi];
       const componentPage = new ComboboxPage(page);
 
@@ -784,7 +758,7 @@ test.describe('combobox @combobox-component', () => {
   });
 
   test.describe('single-select mode', () => {
-    test('selecting a value should not filter that value out @component', async ({ page }) => {
+    test('selecting a value should not filter that value out', async ({ page }) => {
       // multi select does not display anything in the input when something is selected
       const testUrls = [urls.singleAutoShowOptions];
       const componentPage = new ComboboxPage(page);
@@ -806,7 +780,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('input icon indicator should work when there is a selected value @component', async ({ page }) => {
+    test('input icon indicator should work when there is a selected value', async ({ page }) => {
       // multi select does not display anything in the input when something is selected
       const testUrls = [urls.singleNoForceSelection];
       const componentPage = new ComboboxPage(page);
@@ -834,7 +808,7 @@ test.describe('combobox @combobox-component', () => {
   });
 
   test.describe('multi-select mode core functionality', () => {
-    test('does not show previously selected items @component', async ({ page }) => {
+    test('does not show previously selected items', async ({ page }) => {
       const testUrls = [urls.multi];
       const componentPage = new ComboboxPage(page);
 
@@ -856,7 +830,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('can selected multiple items @component', async ({ page }) => {
+    test('can selected multiple items', async ({ page }) => {
       const testUrls = [urls.multi];
       const componentPage = new ComboboxPage(page);
 
@@ -881,7 +855,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('delete selected item works @component', async ({ page }) => {
+    test('delete selected item works', async ({ page }) => {
       const testUrls = [urls.multi];
       const componentPage = new ComboboxPage(page);
 
@@ -904,7 +878,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('delete selected item does not show menu @component', async ({ page }) => {
+    test('delete selected item does not show menu', async ({ page }) => {
       const testUrls = [urls.multi];
       const componentPage = new ComboboxPage(page);
 
@@ -926,7 +900,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('delete selected item shows back in list @component', async ({ page }) => {
+    test('delete selected item shows back in list', async ({ page }) => {
       const testUrls = [urls.multi];
       const componentPage = new ComboboxPage(page);
 
@@ -953,9 +927,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('available items remain shown after selecting item with clicking when configured @component', async ({
-      page,
-    }) => {
+    test('available items remain shown after selecting item with clicking when configured', async ({ page }) => {
       const testUrls = [urls.multiAutoShowOptions];
       const componentPage = new ComboboxPage(page);
 
@@ -973,9 +945,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('available items remain shown after selecting item with enter when configured @component', async ({
-      page,
-    }) => {
+    test('available items remain shown after selecting item with enter when configured', async ({ page }) => {
       const testUrls = [urls.multiAutoShowOptions];
       const componentPage = new ComboboxPage(page);
 
@@ -993,7 +963,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('input icon indicator should work when there is a selected value @component', async ({ page }) => {
+    test('input icon indicator should work when there is a selected value', async ({ page }) => {
       // multi select does not display anything in the input when something is selected
       const testUrls = [urls.multiNoForceSelection];
       const componentPage = new ComboboxPage(page);
@@ -1017,7 +987,7 @@ test.describe('combobox @combobox-component', () => {
   });
 
   test.describe('show selected option in list of options', () => {
-    test('selected value still show up in list of options @component', async ({ page }) => {
+    test('selected value still show up in list of options', async ({ page }) => {
       const testUrls = [urls.multiFormattedSelectables];
       const componentPage = new ComboboxPage(page);
 
@@ -1040,7 +1010,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('selecting an already selected value removes that value from being selected in multi-select mode @component', async ({
+    test('selecting an already selected value removes that value from being selected in multi-select mode', async ({
       page,
     }) => {
       const testUrls = [urls.multiFormattedSelectables];
@@ -1065,7 +1035,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('selecting an already selected value removes that value from being selected in single-select mode @component', async ({
+    test('selecting an already selected value removes that value from being selected in single-select mode', async ({
       page,
     }) => {
       const testUrls = [urls.singleFormattedSelectablesRemoveDuplicateSelect];
@@ -1092,7 +1062,7 @@ test.describe('combobox @combobox-component', () => {
   });
 
   test.describe('async item retrieval', () => {
-    test('no option does not show up while the debounce is wait to be processed @component', async ({ page }) => {
+    test('no option does not show up while the debounce is wait to be processed', async ({ page }) => {
       const testUrls = [urls.singleAsync, urls.multiAsync];
       const componentPage = new ComboboxPage(page);
 
@@ -1108,7 +1078,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('shows before threshold option @component @slow', async ({ page }) => {
+    test('shows before threshold option @slow', async ({ page }) => {
       // we need a higher timeout for this test because we are testing code that has a built-in delay of 1 second
       // for each iteration to test the async functionality
       test.setTimeout(30000);
@@ -1133,7 +1103,7 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test('shows async data after threshold is meet @component @slow', async ({ page }) => {
+    test('shows async data after threshold is meet @slow', async ({ page }) => {
       // we need a higher timeout for this test because we are testing code that has a built-in delay of 1 second
       // for each iteration to test the async functionality
       test.setTimeout(30000);
@@ -1157,7 +1127,7 @@ test.describe('combobox @combobox-component', () => {
 
   test.describe('in form', () => {
     // this needs to be testing in a form context as Enter has special meaning for an input when in a form
-    test('multi select selects item with enter and keeps input focused without typing @component', async ({ page }) => {
+    test('multi select selects item with enter and keeps input focused without typing', async ({ page }) => {
       const testUrls = [urls.multiInForm, urls.multiInFormAutoShowOptions];
       const componentPage = new ComboboxPage(page);
 

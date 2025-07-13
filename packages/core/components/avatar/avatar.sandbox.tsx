@@ -1,6 +1,7 @@
 import Avatar from '$/core/components/avatar';
 import { AvatarSize } from '$/core/components/avatar';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
+import { createSignal } from 'solid-js';
 
 export default {
   title: 'Components/Avatar',
@@ -96,10 +97,18 @@ export const UserHideName = () => {
 };
 
 export const Clickable = () => {
+  const [clickCount, setClickCount] = createSignal(0);
+
   return (
     <SandboxExamplesContainer>
-      <Avatar.User name="John Doe" email="ryan@example.com" showName={false} isClickable />
-      <Avatar label="SJ" isClickable />
+      <Avatar.User
+        name="John Doe"
+        email="ryan@example.com"
+        showName={false}
+        onClick={() => setClickCount(clickCount() + 1)}
+      />
+      <Avatar label="SJ" onClick={() => setClickCount(clickCount() + 1)} />
+      <div data-id="sandbox-click-count">{clickCount()}</div>
     </SandboxExamplesContainer>
   );
 };

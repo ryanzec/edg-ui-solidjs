@@ -1,4 +1,4 @@
-import { type Locator, type Page, test } from '@playwright/test';
+import { type Locator, type Page, type TestInfo, expect, test } from '@playwright/test';
 
 // @todo generic
 // biome-ignore lint/suspicious/noExplicitAny: response can be anything
@@ -76,6 +76,51 @@ const buildUrl = (baseUrl: string, optionOverrides: BuildUrlOptions = {}) => {
 const goto = async (page: Page, url: string) => {
   await page.goto(url);
 };
+
+export type PageTakeScreenshotOptions = {
+  locator?: Locator;
+  fileNameAppend?: string;
+};
+
+export class BasePage {
+  readonly page: Page;
+
+  readonly sandboxMainContent: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+
+    this.sandboxMainContent = page.locator('[data-id="sandbox-main-content"]');
+  }
+
+  async goto(url: string) {
+    return await goto(this.page, url);
+  }
+
+  async takeScreenshot(testInfo: TestInfo, options?: PageTakeScreenshotOptions) {
+    const finalOptions = Object.assign({}, options);
+    const testName = testInfo.titlePath.slice(1).join('-').replace(/\s+/g, '-').toLowerCase();
+    const fileName = `${testName}${finalOptions.fileNameAppend}`;
+
+    if (!finalOptions.locator) {
+      await expect(this.sandboxMainContent).toHaveScreenshot(fileName);
+
+      return;
+    }
+
+    const count = await finalOptions.locator.count();
+
+    if (count === 1) {
+      await expect(finalOptions.locator).toHaveScreenshot(fileName);
+
+      return;
+    }
+
+    for (let i = 0; i < count; i++) {
+      await expect(finalOptions.locator.nth(i)).toHaveScreenshot(`${fileName}-${i}.png`);
+    }
+  }
+}
 
 export const playwrightUtils = {
   mockApi,
