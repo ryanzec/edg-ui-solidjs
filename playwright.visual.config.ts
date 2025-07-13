@@ -1,4 +1,4 @@
-// Force consistent platform for screenshot naming
+// force consistent platform for screenshot naming
 Object.defineProperty(process, 'platform', { value: 'linux' });
 
 import type { PlaywrightTestConfig } from '@playwright/test';
