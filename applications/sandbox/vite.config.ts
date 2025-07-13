@@ -12,4 +12,8 @@ export default defineConfig({
     outDir: path.join(__dirname, '..', '..', 'dist', 'sandbox'),
     emptyOutDir: true,
   },
+  server: {
+    ...viteUtils.baseConfiguration.server,
+    https: undefined,
+  },
 });

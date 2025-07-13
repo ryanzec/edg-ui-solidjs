@@ -100,10 +100,10 @@ export class BasePage {
   async takeScreenshot(testInfo: TestInfo, options?: PageTakeScreenshotOptions) {
     const finalOptions = Object.assign({}, options);
     const testName = testInfo.titlePath.slice(1).join('-').replace(/\s+/g, '-').toLowerCase();
-    const fileName = `${testName}${finalOptions.fileNameAppend}`;
+    const fileName = `${testName}${finalOptions.fileNameAppend || ''}`;
 
     if (!finalOptions.locator) {
-      await expect(this.sandboxMainContent).toHaveScreenshot(fileName);
+      await expect(this.sandboxMainContent).toHaveScreenshot(`${fileName}.png`);
 
       return;
     }
@@ -111,7 +111,7 @@ export class BasePage {
     const count = await finalOptions.locator.count();
 
     if (count === 1) {
-      await expect(finalOptions.locator).toHaveScreenshot(fileName);
+      await expect(finalOptions.locator).toHaveScreenshot(`${fileName}.png`);
 
       return;
     }
