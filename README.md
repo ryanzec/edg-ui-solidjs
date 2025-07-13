@@ -16,22 +16,31 @@ This library is not in the state where I want it to be to write out the basic re
 - have mkcert installed (homebrew easiest for mac)
 
 
+CRITICAL TODOS
+- file tabs scrolling should have scrollbar that does not overlap when scroll enabled
+- update marker to use badge component
+- typography white space / prewrap variant
+- add border effect to peek panel
 
-
-QUICK THINGS TODO
-- add `local` for node environment in api
-- remove `hasPassword`
+HIGH TODOS
+- add disabled to form context (applies to all input under it)
+- add arrows for to file tabs when it is scrolling
 - ellipsis text update on resize of element
 - add shift + click to submit for text area component
-- file tabs scrolling should have scrollbar that does not overlap when scroll enabled
-- add arrows for to file tabs when it is scrolling
-- add tooltip for icons when sidebar is collapsed
 - disabled grid header sort when no items available
 - move the border to the container instead of each row (avoid not seeing side border when scrolling fast for vituralized data)
-- typography white space / prewrap variant
-- update marker to use badge component
-- add disabled to form context (applies to all input under it)
 - make copy button for code editor to be sticky / fixed
+- initial* -> default* property / store / ref
+- add selectability to grid table
+- add tooltip for icons when sidebar is collapsed
+- standardize api -> frontend error passed pattern
+
+LOW TODO
+- remove `hasPassword`
+- add `local` for node environment in api
+
+WOULD BE NICE
+- N/A
 
 REVIEW COMPONENTS:
 - avatar
