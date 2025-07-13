@@ -102,6 +102,8 @@ export class BasePage {
     const testName = testInfo.titlePath.slice(1).join('-').replace(/\s+/g, '-').toLowerCase();
     const fileName = `${testName}${finalOptions.fileNameAppend || ''}`;
 
+    console.log(fileName);
+
     if (!finalOptions.locator) {
       await expect(this.sandboxMainContent).toHaveScreenshot(`${fileName}.png`);
 
