@@ -11,7 +11,7 @@ export const CodeBlockVariant = {
 
 export type CodeBlockVariant = (typeof CodeBlockVariant)[keyof typeof CodeBlockVariant];
 
-export type CodeBlockProps = TypographyProps & {
+export type CodeBlockProps = Omit<TypographyProps, 'variant'> & {
   code: string;
   variant?: CodeBlockVariant;
   showCopyButton?: boolean;

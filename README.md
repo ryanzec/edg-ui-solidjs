@@ -18,7 +18,6 @@ This library is not in the state where I want it to be to write out the basic re
 
 CRITICAL TODOS
 - update marker to use badge component
-- typography white space / prewrap variant
 - add border effect to peek panel
 
 HIGH TODOS

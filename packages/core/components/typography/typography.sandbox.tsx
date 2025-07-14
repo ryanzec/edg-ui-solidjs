@@ -1,4 +1,5 @@
 import Typography, { TypographySize, TypographyColor } from '$/core/components/typography';
+import { TypographyVariant } from '$/core/components/typography/typography';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 
 export default {
@@ -256,6 +257,20 @@ export const GeistMono = () => {
       <Typography size={TypographySize.EXTRA_LARGE4} class="font-bold font-family-geist-mono">
         Four extra large typography
       </Typography>
+    </SandboxExamplesContainer>
+  );
+};
+
+export const PreserveWhitespace = () => {
+  const text = `This is content\n\nthat has both\t\texplicit whitespace character
+
+    like \\n or \\t
+as well as natural whitespace characters
+
+    in the text itself`;
+  return (
+    <SandboxExamplesContainer>
+      <Typography variant={TypographyVariant.PRESERVE_WHITESPACE}>{text}</Typography>
     </SandboxExamplesContainer>
   );
 };

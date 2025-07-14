@@ -5,7 +5,7 @@ import Typography, { TypographySize, type TypographyProps } from '$/core/compone
 import { tailwindUtils } from '$/core/utils/tailwind';
 import { mergeProps, splitProps } from 'solid-js';
 
-export type BadgeProps = Omit<TypographyProps, 'size' | 'color'> & {
+export type BadgeProps = Omit<TypographyProps, 'size' | 'color' | 'variant'> & {
   color?: BadgeColor;
   variant?: BadgeVariant;
   shape?: BadgeShape;

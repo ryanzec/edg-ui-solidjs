@@ -37,20 +37,33 @@ export const TypographyLayout = {
 
 export type TypographyLayout = (typeof TypographyLayout)[keyof typeof TypographyLayout];
 
+export const TypographyVariant = {
+  DEFAULT: '',
+  PRESERVE_WHITESPACE: 'preserve-whitespace',
+} as const;
+
+export type TypographyVariants = (typeof TypographyVariant)[keyof typeof TypographyVariant];
+
 export type TypographyProps = JSX.HTMLAttributes<HTMLDivElement> & {
   size?: TypographySize;
   color?: TypographyColor;
   class?: string;
   layout?: TypographyLayout;
+  variant?: TypographyVariants;
 };
 
 const Typography = (passedProps: TypographyProps) => {
   const [props, restOfProps] = splitProps(
     mergeProps(
-      { size: TypographySize.BASE, color: TypographyColor.INHERIT, layout: TypographyLayout.BLOCK },
+      {
+        size: TypographySize.BASE,
+        color: TypographyColor.INHERIT,
+        layout: TypographyLayout.BLOCK,
+        variant: TypographyVariant.DEFAULT,
+      },
       passedProps,
     ),
-    ['children', 'class', 'size', 'color', 'layout'],
+    ['children', 'class', 'size', 'color', 'layout', 'variant'],
   );
 
   return (
@@ -74,10 +87,11 @@ const Typography = (passedProps: TypographyProps) => {
           [styles.warningHigh]: props.color === TypographyColor.WARNING_HIGH,
           [styles.danger]: props.color === TypographyColor.DANGER,
           [styles.inheritColor]: props.color === TypographyColor.INHERIT,
+          flex: props.layout === TypographyLayout.BLOCK,
+          'whitespace-pre-wrap wrap-anywhere': props.variant === TypographyVariant.PRESERVE_WHITESPACE,
 
           // using flex will prevent extra space that can appear at the bottom
           'inline-flex': props.layout === TypographyLayout.INLINE,
-          flex: props.layout === TypographyLayout.BLOCK,
         },
         props.class,
       )}
