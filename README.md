@@ -17,7 +17,6 @@ This library is not in the state where I want it to be to write out the basic re
 
 
 CRITICAL TODOS
-- file tabs scrolling should have scrollbar that does not overlap when scroll enabled
 - update marker to use badge component
 - typography white space / prewrap variant
 - add border effect to peek panel

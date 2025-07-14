@@ -1,6 +1,7 @@
 import Button from '$/core/components/button/button';
 import ScrollArea from '$/core/components/scroll-area';
 import { tailwindUtils } from '$/core/utils/tailwind';
+import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container';
 import { createEffect, createSignal, on } from 'solid-js';
 
 export default {
@@ -73,6 +74,150 @@ export const Default = () => {
         </div>
       </ScrollArea>
     </div>
+  );
+};
+
+export const DontOverlapContent = () => {
+  return (
+    <SandboxExamplesContainer>
+      <div class="w-[200px] h-[200px]">
+        <ScrollArea overlapContent={false}>
+          <div>
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+          </div>
+        </ScrollArea>
+      </div>
+      <div class="w-[200px]">
+        <ScrollArea overlapContent={false}>
+          <div>
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+          </div>
+        </ScrollArea>
+      </div>
+      <div class="h-[200px]">
+        <ScrollArea overlapContent={false}>
+          <div>
+            t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+            t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+            t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+            t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+            t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+            t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
+            t t t t t t t t t t t t t t t t t t t t t t t t
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+            TestingTestingTestingTestingTestingTesting
+            <br />
+          </div>
+        </ScrollArea>
+      </div>
+    </SandboxExamplesContainer>
   );
 };
 

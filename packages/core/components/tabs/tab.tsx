@@ -1,6 +1,6 @@
 import { type JSX, Show, createSignal, mergeProps, splitProps, useContext } from 'solid-js';
 
-import Icon, { type IconName } from '$/core/components/icon';
+import Icon, { IconVariant, type IconName } from '$/core/components/icon';
 import Link from '$/core/components/link';
 import { TabSize, TabVariant, TabsContext } from '$/core/components/tabs/tabs';
 import type { CommonDataAttributes } from '$/core/types/generic';
@@ -61,7 +61,8 @@ const Tab = (passedProps: TabProps) => {
           <Icon
             onMouseEnter={() => setIsHoveringIcon(true)}
             onMouseLeave={() => setIsHoveringIcon(false)}
-            icon={!isHoveringIcon() && props.hasUnsavedChanges ? 'warning' : 'x'}
+            variant={!isHoveringIcon() && props.hasUnsavedChanges ? IconVariant.BOLD : IconVariant.REGULAR}
+            icon={!isHoveringIcon() && props.hasUnsavedChanges ? 'dot-outline' : 'x'}
           />
         </Link>
       </Show>
