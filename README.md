@@ -17,7 +17,6 @@ This library is not in the state where I want it to be to write out the basic re
 
 
 CRITICAL TODOS
-- update marker to use badge component
 - add border effect to peek panel
 
 HIGH TODOS
@@ -30,6 +29,7 @@ HIGH TODOS
 - make copy button for code editor to be sticky / fixed
 - initial* -> default* property / store / ref
 - add selectability to grid table
+- add marker (using badge) for tabs
 - add tooltip for icons when sidebar is collapsed
 - standardize api -> frontend error passed pattern
 

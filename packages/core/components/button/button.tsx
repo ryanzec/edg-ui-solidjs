@@ -1,6 +1,7 @@
 import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
 
+import { Badge, BadgeColor, BadgeSize, BadgeVariant } from '$/core/components/badge';
 import ButtonPrePostItem from '$/core/components/button/button-pre-post-item';
 import styles from '$/core/components/button/button.module.css';
 import {
@@ -28,6 +29,7 @@ export type ButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> &
     size?: ButtonSize;
     icon?: IconName;
     marker?: string;
+    markerColor?: BadgeColor;
   };
 
 export const Button = (passedProps: ButtonProps) => {
@@ -40,6 +42,7 @@ export const Button = (passedProps: ButtonProps) => {
         shape: ButtonShape.ROUNDED,
         loadingIconPosition: ButtonItemPosition.PRE,
         size: ButtonSize.BASE,
+        markerColor: BadgeColor.DANGER,
       },
       passedProps,
     ),
@@ -57,6 +60,7 @@ export const Button = (passedProps: ButtonProps) => {
       'size',
       'icon',
       'marker',
+      'markerColor',
     ],
   );
 
@@ -89,9 +93,14 @@ export const Button = (passedProps: ButtonProps) => {
       disabled={props.disabled || isLoading()}
     >
       <Show when={props.marker}>
-        <span class="absolute -top-2xs right-4xs bg-danger3 px-4xs text-xs leading-xs rounded-sm">
+        <Badge
+          class="absolute -top-xs right-4xs"
+          color={props.markerColor}
+          variant={BadgeVariant.STRONG}
+          size={BadgeSize.SMALL}
+        >
           <Typography size={TypographySize.EXTRA_SMALL}>{props.marker}</Typography>
-        </span>
+        </Badge>
       </Show>
       <span class={styles.buttonContent}>
         {isLoading() && (
