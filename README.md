@@ -17,7 +17,7 @@ This library is not in the state where I want it to be to write out the basic re
 
 
 CRITICAL TODOS
-- add border effect to peek panel
+- N/A
 
 HIGH TODOS
 - add disabled to form context (applies to all input under it)

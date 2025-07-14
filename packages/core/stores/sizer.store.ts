@@ -5,6 +5,8 @@ const CURSOR_CHANGE_OFFSET = 10;
 export type SizerStore = {
   elementRef: Accessor<HTMLDivElement | undefined>;
   setElementRef: Setter<HTMLDivElement | undefined>;
+  isResizing: Accessor<boolean>;
+  isInResizeArea: Accessor<boolean>;
   handleWindowMouseMove: (event: MouseEvent) => void;
   handleWindowMouseUp: () => void;
   setupResizeEvents: () => void;
@@ -36,11 +38,12 @@ export const createSizerStore = (options: CreateSizerStoreOptions = {}): SizerSt
 
   let xResizeLeft = 0;
   let xResizeRight = 0;
-  let isDragging = false;
   let dragXStart = 0;
   let dragWidthStart = 0;
 
   const [elementRef, setElementRef] = createSignal<HTMLDivElement>();
+  const [isResizing, setIsResizing] = createSignal<boolean>(false);
+  const [isInResizeArea, setIsInResizeArea] = createSignal<boolean>(false);
 
   const handleWindowMouseMove = (event: MouseEvent) => {
     const currentElementRef = elementRef();
@@ -63,7 +66,7 @@ export const createSizerStore = (options: CreateSizerStoreOptions = {}): SizerSt
   };
 
   const handleWindowMouseUp = () => {
-    isDragging = false;
+    setIsResizing(false);
     document.body.style.userSelect = 'initial';
     document.body.style.cursor = 'auto';
 
@@ -85,12 +88,14 @@ export const createSizerStore = (options: CreateSizerStoreOptions = {}): SizerSt
     xResizeLeft = elementBoundingRect.x;
     xResizeRight = elementBoundingRect.x + elementBoundingRect.width;
 
-    isDragging =
+    const newIsResizing =
       finalOptions.resizeFromSide === 'right'
         ? event.pageX >= xResizeRight - CURSOR_CHANGE_OFFSET && event.pageX <= xResizeRight
         : event.pageX >= xResizeLeft && event.pageX <= xResizeLeft + CURSOR_CHANGE_OFFSET;
 
-    if (!isDragging) {
+    setIsResizing(newIsResizing);
+
+    if (!newIsResizing) {
       return;
     }
 
@@ -111,7 +116,7 @@ export const createSizerStore = (options: CreateSizerStoreOptions = {}): SizerSt
       return;
     }
 
-    if (isDragging) {
+    if (isResizing()) {
       document.body.style.cursor = 'col-resize';
 
       return;
@@ -128,18 +133,22 @@ export const createSizerStore = (options: CreateSizerStoreOptions = {}): SizerSt
         : event.pageX >= xResizeLeft && event.pageX <= xResizeLeft + CURSOR_CHANGE_OFFSET;
 
     if (!isDraggingArea) {
+      setIsInResizeArea(false);
       callbacks.onMouseLeaveResizeArea?.();
       document.body.style.cursor = 'auto';
 
       return;
     }
 
+    setIsInResizeArea(true);
     callbacks.onMouseEnterResizeArea?.();
     document.body.style.cursor = 'col-resize';
   };
 
   const handleElementMouseLeave = () => {
-    if (isDragging) {
+    setIsInResizeArea(false);
+
+    if (isResizing()) {
       return;
     }
 
@@ -165,6 +174,8 @@ export const createSizerStore = (options: CreateSizerStoreOptions = {}): SizerSt
     setupResizeEvents,
     elementRef,
     setElementRef,
+    isResizing,
+    isInResizeArea: () => isResizing() || isInResizeArea(),
   };
 };
 

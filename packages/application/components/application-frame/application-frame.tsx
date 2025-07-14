@@ -13,7 +13,7 @@ import type { CommonDataAttributes } from '$/core/types/generic';
 import { routeUtils } from '$/core/utils/route';
 import { tailwindUtils } from '$/core/utils/tailwind';
 import { useLocation, useNavigate } from '@solidjs/router';
-import { type JSX, Show, createSignal, mergeProps } from 'solid-js';
+import { type JSX, Show, mergeProps } from 'solid-js';
 import UserMenu from '../user-menu/user-menu';
 
 export type ApplicationFrameTopNavigationItem = {
@@ -42,8 +42,6 @@ const ApplicationFrame = (passedProps: ApplicationFrameProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [isResizingSidebar, setIsResizingSidebar] = createSignal(false);
-
   const sizerStore = sizerStoreUtils.createStore({
     resizeFromSide: 'right',
     syncSizeWithMovement: false,
@@ -63,18 +61,6 @@ const ApplicationFrame = (passedProps: ApplicationFrameProps) => {
       }
 
       sidebarOpenedToggleStore.setIsToggled(initialToggleState);
-    },
-    onMouseEnterResizeArea: () => {
-      setIsResizingSidebar(true);
-    },
-    onMouseLeaveResizeArea: () => {
-      setIsResizingSidebar(false);
-    },
-    onResizeStarted: () => {
-      setIsResizingSidebar(true);
-    },
-    onResizeEnded: () => {
-      setIsResizingSidebar(false);
     },
   });
   const userDropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
@@ -108,7 +94,7 @@ const ApplicationFrame = (passedProps: ApplicationFrameProps) => {
                 {
                   'w-[250px]': sidebarOpenedToggleStore.isToggled(),
                   'w-[60px]': sidebarOpenedToggleStore.isToggled() === false,
-                  'shadow-[inset_-4px_0_0_0_var(--color-brand-subtle4)]': isResizingSidebar(),
+                  'shadow-[inset_-4px_0_0_0_var(--color-brand-subtle4)]': sizerStore.isInResizeArea(),
                 },
               )}
             >

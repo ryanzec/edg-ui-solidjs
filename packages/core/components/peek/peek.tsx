@@ -130,7 +130,18 @@ const Peek = (passedProps: PeekProps) => {
     <Show when={isOpened()}>
       <Portal>
         <div data-id="peek">
-          <div ref={setPeekElementRef} {...restOfProps} class={tailwindUtils.merge(styles.peek, props.class)}>
+          <div
+            ref={setPeekElementRef}
+            {...restOfProps}
+            class={tailwindUtils.merge(
+              'transition-shadow duration-150 ease-in-out',
+              styles.peek,
+              {
+                'shadow-[inset_4px_0_0_0_var(--color-brand-subtle4)]': sizerStore.isInResizeArea(),
+              },
+              props.class,
+            )}
+          >
             {props.children}
           </div>
           <Show when={props.hasOverlay}>
