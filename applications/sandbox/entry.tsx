@@ -14,7 +14,7 @@ import '@phosphor-icons/web/regular/style.css';
 import '@phosphor-icons/web/bold/style.css';
 import '@phosphor-icons/web/fill/style.css';
 
-import '$/core/styles/variables.css';
+import '$sandbox/styles/tailwind.css';
 import '$/core/styles/animation.css';
 import '$/core/styles/keyframes.css';
 import '$/core/styles/base.css';

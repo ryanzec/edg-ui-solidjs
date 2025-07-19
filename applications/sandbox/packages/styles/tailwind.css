@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+/* in order for tailwind to merge multiple @theme, they all have to be included with css and not typescript */
+@import "../../../../packages/core/styles/variables.css";
+@import "../../../../packages/core/styles/manual-variables.css";
+@import "./manual-variables.css";
+
+/* this is the code for tailwind to parse for what to include in the built css */
+@source '../../../../packages/**/*{.js,.jsx,.ts,.tsx}';
+@source '../../../../applications/**/*{.js,.jsx,.ts,.tsx}';
