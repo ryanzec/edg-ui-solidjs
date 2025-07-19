@@ -1,4 +1,4 @@
-import getScrollParent from 'scrollparent';
+import scrollParent from 'scrollparent';
 
 const inputNodeNames = ['INPUT', 'SELECT', 'TEXTAREA'];
 
@@ -12,6 +12,14 @@ export const InputType = {
 } as const;
 
 export type InputType = (typeof InputType)[keyof typeof InputType];
+
+const getScrollParent = (element: HTMLElement, inOverlayScrollbars = false): HTMLElement | null => {
+  if (inOverlayScrollbars === false) {
+    return scrollParent(element);
+  }
+
+  return element.closest('[data-overlayscrollbars-contents]');
+};
 
 const isFormInputElement = (element?: Element) => {
   if (!element) {
@@ -86,6 +94,21 @@ export const ViewCutoffLocation = {
 
 export type ViewCutoffLocation = (typeof ViewCutoffLocation)[keyof typeof ViewCutoffLocation];
 
+const getTopOffsetFromBottom = (parent?: HTMLElement, element?: HTMLElement): number => {
+  if (!parent || !element) {
+    return 0;
+  }
+
+  const elementRect = element.getBoundingClientRect();
+  const parentRect = parent.getBoundingClientRect();
+  const scrollAreaTop = parent.scrollTop;
+  const scrollAreaBottom = scrollAreaTop + parent.clientHeight;
+  const elementTop = elementRect.top - parentRect.top + parent.scrollTop;
+  const elementBottom = elementTop + element.clientHeight;
+
+  return scrollAreaBottom - elementTop;
+};
+
 const elementInView = (parent: HTMLElement, element: HTMLElement, completelyViewable = true): ViewCutoffLocation => {
   const elementRect = element.getBoundingClientRect();
   const parentRect = parent.getBoundingClientRect();
@@ -157,4 +180,6 @@ export const domUtils = {
   elementInView,
   scrollToElement,
   isElementChildOf,
+  getTopOffsetFromBottom,
+  getScrollParent,
 };
