@@ -85,9 +85,7 @@ const Peek = (passedProps: PeekProps) => {
   };
 
   const setupCloseEvents = (element: HTMLElement) => {
-    console.log(element);
     const closeElements = element.querySelectorAll('[data-peek-close="true"]');
-    console.log(closeElements);
 
     for (const closeElement of closeElements) {
       closeElement.addEventListener('click', handlePeekClose);

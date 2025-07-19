@@ -20,6 +20,7 @@ CRITICAL TODOS
 - N/A
 
 HIGH TODOS
+- tooltip content color
 - add disabled to form context (applies to all input under it)
 - add arrows for to file tabs when it is scrolling
 - ellipsis text update on resize of element
@@ -38,7 +39,7 @@ LOW TODO
 - add `local` for node environment in api
 
 WOULD BE NICE
-- N/A
+- have a secret concepts for the dynamic form builder that also allows the validation check to be skip (in the cae of update the record but wanting to keep the secret the same).
 
 REVIEW COMPONENTS:
 - avatar
