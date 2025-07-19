@@ -49,10 +49,10 @@ const AutoScrollArea = (passedProps: AutoScrollAreaProps) => {
       return;
     }
 
-    const topOffset = domUtils.getTopOffsetFromBottom(parentScrollElement, checkElement());
-    const topOffsetChange = currentPreviousTop === undefined ? 0 : topOffset - currentPreviousTop;
+    const offsets = domUtils.getAllOffsets(parentScrollElement, checkElement());
+    const topOffsetChange = currentPreviousTop === undefined ? 0 : offsets.bottom - currentPreviousTop;
 
-    setPreviousTopOffset(topOffset);
+    setPreviousTopOffset(offsets.bottom);
 
     if (topOffsetChange <= 0) {
       setAutoScrollState(AutoScrollState.DISABLED);
@@ -61,7 +61,7 @@ const AutoScrollArea = (passedProps: AutoScrollAreaProps) => {
     }
 
     // since the check element is not in view, we don't re-enable the auto scroll
-    if (topOffset < 0 || autoScrollState() === AutoScrollState.ENABLED) {
+    if (offsets.bottom < 0 || autoScrollState() === AutoScrollState.ENABLED) {
       return;
     }
     // @todo(research) the reason this works is because while it get disabled when new content is added, the scroll

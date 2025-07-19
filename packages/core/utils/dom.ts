@@ -94,19 +94,35 @@ export const ViewCutoffLocation = {
 
 export type ViewCutoffLocation = (typeof ViewCutoffLocation)[keyof typeof ViewCutoffLocation];
 
-const getTopOffsetFromBottom = (parent?: HTMLElement, element?: HTMLElement): number => {
+export type ElementOffsets = {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+const getAllOffsets = (parent?: HTMLElement, element?: HTMLElement): ElementOffsets => {
   if (!parent || !element) {
-    return 0;
+    return { top: 0, bottom: 0, left: 0, right: 0 };
   }
 
   const elementRect = element.getBoundingClientRect();
   const parentRect = parent.getBoundingClientRect();
   const scrollAreaTop = parent.scrollTop;
+  const scrollAreaLeft = parent.scrollLeft;
   const scrollAreaBottom = scrollAreaTop + parent.clientHeight;
+  const scrollAreaRight = scrollAreaLeft + parent.clientWidth;
   const elementTop = elementRect.top - parentRect.top + parent.scrollTop;
   const elementBottom = elementTop + element.clientHeight;
+  const elementLeft = elementRect.left - parentRect.left + parent.scrollLeft;
+  const elementRight = elementLeft + element.clientWidth;
 
-  return scrollAreaBottom - elementTop;
+  return {
+    top: elementTop - scrollAreaTop,
+    bottom: scrollAreaBottom - elementBottom,
+    left: elementLeft - scrollAreaLeft,
+    right: scrollAreaRight - elementRight,
+  };
 };
 
 const elementInView = (parent: HTMLElement, element: HTMLElement, completelyViewable = true): ViewCutoffLocation => {
@@ -180,6 +196,6 @@ export const domUtils = {
   elementInView,
   scrollToElement,
   isElementChildOf,
-  getTopOffsetFromBottom,
+  getAllOffsets,
   getScrollParent,
 };
