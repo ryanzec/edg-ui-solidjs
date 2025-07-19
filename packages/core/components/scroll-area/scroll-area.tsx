@@ -3,10 +3,16 @@ import 'overlayscrollbars/overlayscrollbars.css';
 import type { OverlayScrollbars, PartialOptions } from 'overlayscrollbars';
 
 import { OverlayScrollbarsComponent, type OverlayScrollbarsComponentProps } from 'overlayscrollbars-solid';
-import { type Setter, children, mergeProps, splitProps } from 'solid-js';
+import { type Accessor, type Setter, children, createContext, createSignal, mergeProps, splitProps } from 'solid-js';
 
 import styles from '$/core/components/scroll-area/scroll-area.module.css';
 import { tailwindUtils } from '$/core/utils/tailwind';
+
+export type ScrollAreaContextData = {
+  isReady: Accessor<boolean>;
+};
+
+export const ScrollAreaContext = createContext<ScrollAreaContextData>();
 
 const defaultScrollbarOptions: PartialOptions = {
   scrollbars: {
@@ -27,12 +33,17 @@ const ScrollArea = (
     'ref',
     'overlapContent',
   ]);
+  // don't doing this in the mergeProps as this way it needed to avoid typescript errors (to the best of my knowledg)
   const options = props.options || {};
+
+  const [isReady, setIsReady] = createSignal(false);
 
   // @todo(refactor) this is to work around a bug in OverlayScrollbars that cause a double render of content
   // @todo(refactor) depending if the top element wrapped uses a signal
   // @todo(refactor) reference: https://github.com/KingSora/OverlayScrollbars/issues/700
-  const contentAsVariable = children(() => props.children);
+  const contentAsVariable = children(() => (
+    <ScrollAreaContext.Provider value={{ isReady }}>{props.children}</ScrollAreaContext.Provider>
+  ));
 
   return (
     <OverlayScrollbarsComponent
@@ -61,6 +72,10 @@ const ScrollArea = (
           }
 
           props.ref(instance);
+        },
+        updated: (instance: OverlayScrollbars) => {
+          // we do this is the updated as only after this event do we know the styles are correct
+          setIsReady(true);
         },
         destroyed: () => {
           if (!props.ref) {
