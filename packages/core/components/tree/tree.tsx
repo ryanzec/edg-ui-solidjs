@@ -46,10 +46,15 @@ const Tree = (passedProps: TreeProps) => {
     domUtils.scrollToElement(itemElement);
   };
 
+  const clearActiveItem = () => {
+    setActiveItem(undefined);
+  };
+
   const treeComponentRef: TreeComponentRef = {
     scrollToItem,
     activeItem,
     setActiveItem,
+    clearActiveItem,
     size,
     setSize,
   };
