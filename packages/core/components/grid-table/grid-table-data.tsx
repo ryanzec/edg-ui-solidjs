@@ -44,7 +44,7 @@ const GridTableData = (passedProps: GridTableDataProps) => {
       role="cell"
       component={getMainComponentName()}
       class={tailwindUtils.merge(
-        'px-sm py-2xs inline-flex items-center min-w-[1px] border-t border-outline',
+        'px-grid-table-x py-grid-table-y inline-flex items-center min-w-[1px] border-t border-outline',
         {
           'border-l': props.isStartOfRow,
           'border-r': props.isEndOfRow,

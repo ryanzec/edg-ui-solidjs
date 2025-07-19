@@ -102,7 +102,7 @@ const GridTableHeaderData = (passedProps: GridTableHeaderDataProps) => {
       // biome-ignore lint/a11y/useSemanticElements: we use div for grid styling compatibility
       role="columnheader"
       class={tailwindUtils.merge(
-        'px-sm py-2xs font-medium uppercase min-w-[1px] flex items-center gap-3xs border-t border-outline border-b mb-[-1px]',
+        'px-grid-table-x py-grid-table-y font-medium uppercase min-w-[1px] flex items-center gap-3xs border-t border-outline border-b mb-[-1px]',
         {
           'cursor-pointer': isSortable(),
           'hover:bg-neutral-subtle': isSortable(),
