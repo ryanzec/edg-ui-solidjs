@@ -30,31 +30,15 @@ const AutoScrollArea = (passedProps: AutoScrollAreaProps) => {
   const [checkElement, setCheckElement] = createSignal<HTMLElement>();
   const [scrollElement, setScrollElement] = createSignal<HTMLElement>();
   const [autoScrollState, setAutoScrollState] = createSignal<AutoScrollState>(props.defaultState);
+  const [programmaticallyScrolling, setProgrammaticallyScrolling] = createSignal(false);
+  const [pendingScroll, setPendingScroll] = createSignal(false);
+
   const scrollAreaContext = useContext(ScrollAreaContext);
 
   const handleScroll = debounce(() => {
-    if (autoScrollState() === AutoScrollState.FORCE_DISABLED) {
-      return;
-    }
-
-    const currentScrollElement = scrollElement();
-    const currentCheckElement = checkElement();
-
-    if (!currentScrollElement || !currentCheckElement) {
-      return;
-    }
-
-    const parentScrollElement = domUtils.getScrollParent(currentScrollElement, scrollAreaContext !== undefined);
-
-    if (!parentScrollElement) {
-      return;
-    }
-
-    const checkElementInView =
-      domUtils.elementInView(parentScrollElement, currentCheckElement) === ViewCutoffLocation.NONE;
-
-    setAutoScrollState(checkElementInView ? AutoScrollState.ENABLED : AutoScrollState.DISABLED);
-  }, 0);
+    // if our programmatic method to triggering scrolling was used, we need to make sure we clear that state
+    setProgrammaticallyScrolling(false);
+  }, 150);
 
   const scrollToBottom = () => {
     const currentCheckElement = checkElement();
@@ -76,7 +60,14 @@ const AutoScrollArea = (passedProps: AutoScrollAreaProps) => {
       return;
     }
 
-    currentCheckElement.scrollIntoView({ behavior: 'smooth' });
+    // this allow use to tell the difference between an automatic scrolling effect and a user scrolling effect
+    setProgrammaticallyScrolling(true);
+    setPendingScroll(true);
+
+    // it is usefult o do this in an animation frame to help ensure the dom is fully updated
+    requestAnimationFrame(() => {
+      currentCheckElement.scrollIntoView({ behavior: 'smooth' });
+    });
   };
 
   createEffect(function toggleAutoScroll() {
@@ -104,28 +95,56 @@ const AutoScrollArea = (passedProps: AutoScrollAreaProps) => {
 
   onMount(() => {
     const currentScrollElement = scrollElement();
+    const currentCheckElement = checkElement();
 
-    if (!currentScrollElement) {
+    if (!currentScrollElement || !currentCheckElement) {
       return;
     }
 
-    const observer = new ResizeObserver((entries) => {
-      const currentAutoScrollState = autoScrollState();
-      console.log('current: ', currentAutoScrollState);
+    const scrollParentElement = domUtils.getScrollParent(currentScrollElement, scrollAreaContext !== undefined);
 
-      if (
-        currentAutoScrollState === AutoScrollState.DISABLED ||
-        currentAutoScrollState === AutoScrollState.FORCE_DISABLED
-      ) {
-        return;
+    const intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        if (autoScrollState() === AutoScrollState.FORCE_DISABLED) {
+          return;
+        }
+
+        const entry = entries[0];
+        const startingAutoScrollEnabled = autoScrollState() === AutoScrollState.ENABLED;
+        const currentProgrammaticallyScroll = programmaticallyScrolling();
+
+        if (currentProgrammaticallyScroll === false) {
+          setAutoScrollState(entry.isIntersecting ? AutoScrollState.ENABLED : AutoScrollState.DISABLED);
+        }
+
+        const currentAutoScrollEnabled = autoScrollState() === AutoScrollState.ENABLED;
+
+        if (startingAutoScrollEnabled === false && currentAutoScrollEnabled && pendingScroll()) {
+          setPendingScroll(false);
+          scrollToBottom();
+        }
+      },
+      {
+        root: scrollParentElement,
+        // considered in view threshold
+        threshold: 0.1,
+        // this add a small buffer around the "viewport" (the root element) to avoid any edge case issue with proper
+        // detection
+        rootMargin: '0px 0px -10px 0px',
+      },
+    );
+
+    intersectionObserver.observe(currentCheckElement);
+
+    const resizeObserver = new ResizeObserver(() => {
+      if (autoScrollState() === AutoScrollState.ENABLED) {
+        scrollToBottom();
+      } else {
+        setPendingScroll(true);
       }
-
-      scrollToBottom();
-
-      console.log('auto scroll', currentAutoScrollState);
     });
 
-    observer.observe(currentScrollElement);
+    resizeObserver.observe(currentScrollElement);
 
     props.autoScrollAreaComponentRef?.onReady({
       setAutoScrollState,
@@ -133,7 +152,7 @@ const AutoScrollArea = (passedProps: AutoScrollAreaProps) => {
     });
 
     onCleanup(() => {
-      observer.disconnect();
+      intersectionObserver.disconnect();
       props.autoScrollAreaComponentRef?.onCleanup();
     });
   });
@@ -142,7 +161,7 @@ const AutoScrollArea = (passedProps: AutoScrollAreaProps) => {
     <>
       <div ref={setScrollElement}>
         {props.children}
-        <div ref={setCheckElement} />
+        <div ref={setCheckElement} class="h-[1px] opacity-0 pointer-events-none" />
       </div>
     </>
   );
