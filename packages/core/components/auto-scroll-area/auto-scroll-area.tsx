@@ -1,6 +1,7 @@
 import { ScrollAreaContext } from '$/core/components/scroll-area';
 import type { ComponentRef } from '$/core/stores/component-ref';
 import { ViewCutoffLocation, domUtils } from '$/core/utils/dom';
+import { debounce } from 'lodash';
 import type { JSX } from 'solid-js';
 import { createEffect, createSignal, mergeProps, onCleanup, onMount, useContext } from 'solid-js';
 
@@ -14,6 +15,7 @@ export type AutoScrollState = (typeof AutoScrollState)[keyof typeof AutoScrollSt
 
 export type AutoScrollAreaComponentRef = {
   setAutoScrollState: (state: AutoScrollState) => void;
+  scrollToBottom: () => void;
 };
 
 export type AutoScrollAreaProps = {
@@ -28,18 +30,17 @@ const AutoScrollArea = (passedProps: AutoScrollAreaProps) => {
   const [checkElement, setCheckElement] = createSignal<HTMLElement>();
   const [scrollElement, setScrollElement] = createSignal<HTMLElement>();
   const [autoScrollState, setAutoScrollState] = createSignal<AutoScrollState>(props.defaultState);
-  const [previousTopOffset, setPreviousTopOffset] = createSignal<number>();
   const scrollAreaContext = useContext(ScrollAreaContext);
 
-  const handleScroll = () => {
+  const handleScroll = debounce(() => {
     if (autoScrollState() === AutoScrollState.FORCE_DISABLED) {
       return;
     }
 
     const currentScrollElement = scrollElement();
-    const currentPreviousTop = previousTopOffset();
+    const currentCheckElement = checkElement();
 
-    if (!currentScrollElement) {
+    if (!currentScrollElement || !currentCheckElement) {
       return;
     }
 
@@ -49,25 +50,33 @@ const AutoScrollArea = (passedProps: AutoScrollAreaProps) => {
       return;
     }
 
-    const offsets = domUtils.getAllOffsets(parentScrollElement, checkElement());
-    const topOffsetChange = currentPreviousTop === undefined ? 0 : offsets.bottom - currentPreviousTop;
+    const checkElementInView =
+      domUtils.elementInView(parentScrollElement, currentCheckElement) === ViewCutoffLocation.NONE;
 
-    setPreviousTopOffset(offsets.bottom);
+    setAutoScrollState(checkElementInView ? AutoScrollState.ENABLED : AutoScrollState.DISABLED);
+  }, 0);
 
-    if (topOffsetChange <= 0) {
-      setAutoScrollState(AutoScrollState.DISABLED);
+  const scrollToBottom = () => {
+    const currentCheckElement = checkElement();
+    const currentScrollElement = scrollElement();
 
+    if (!currentCheckElement || !currentScrollElement) {
       return;
     }
 
-    // since the check element is not in view, we don't re-enable the auto scroll
-    if (offsets.bottom < 0 || autoScrollState() === AutoScrollState.ENABLED) {
+    const scrollParentElement = domUtils.getScrollParent(currentScrollElement, scrollAreaContext !== undefined);
+
+    if (!scrollParentElement) {
       return;
     }
-    // @todo(research) the reason this works is because while it get disabled when new content is added, the scroll
-    // @todo(research) into view is trigger which scrolls back to the bottom re-enabling it. It feels that might be a
-    // @todo(research) flacky solution but it seems to work and I don't know of an alternative
-    setAutoScrollState(AutoScrollState.ENABLED);
+
+    const elementInView = domUtils.elementInView(scrollParentElement, currentCheckElement);
+
+    if (elementInView === ViewCutoffLocation.NONE) {
+      return;
+    }
+
+    currentCheckElement.scrollIntoView({ behavior: 'smooth' });
   };
 
   createEffect(function toggleAutoScroll() {
@@ -102,6 +111,7 @@ const AutoScrollArea = (passedProps: AutoScrollAreaProps) => {
 
     const observer = new ResizeObserver((entries) => {
       const currentAutoScrollState = autoScrollState();
+      console.log('current: ', currentAutoScrollState);
 
       if (
         currentAutoScrollState === AutoScrollState.DISABLED ||
@@ -110,32 +120,16 @@ const AutoScrollArea = (passedProps: AutoScrollAreaProps) => {
         return;
       }
 
-      const currentCheckElement = checkElement();
-      const currentScrollElement = scrollElement();
+      scrollToBottom();
 
-      if (!currentCheckElement || !currentScrollElement) {
-        return;
-      }
-
-      const scrollParentElement = domUtils.getScrollParent(currentScrollElement, scrollAreaContext !== undefined);
-
-      if (!scrollParentElement) {
-        return;
-      }
-
-      const elementInView = domUtils.elementInView(scrollParentElement, currentCheckElement);
-
-      if (elementInView === ViewCutoffLocation.NONE) {
-        return;
-      }
-
-      currentCheckElement.scrollIntoView({ behavior: 'smooth' });
+      console.log('auto scroll', currentAutoScrollState);
     });
 
     observer.observe(currentScrollElement);
 
     props.autoScrollAreaComponentRef?.onReady({
       setAutoScrollState,
+      scrollToBottom,
     });
 
     onCleanup(() => {

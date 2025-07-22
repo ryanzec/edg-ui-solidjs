@@ -29,7 +29,7 @@ export const TextareaInnerActions = <TFormData = DefaultFormData>(
     <>
       <FormField errors={props.errors}>
         <div class="relative">
-          <Textarea {...resetOfProps} />
+          <Textarea {...resetOfProps} disabled={props.isProcessing} />
           <Button.Group class="absolute bottom-2xs w-[calc(100%-2*var(--spacing-2xs))] mx-2xs">
             <For each={props.extraButtonElements}>
               {(buttonElement) => {
@@ -40,6 +40,7 @@ export const TextareaInnerActions = <TFormData = DefaultFormData>(
               type="submit"
               state={props.isProcessing ? ButtonState.IS_LOADING : undefined}
               class="shrink-0 !ml-auto"
+              disabled={props.isProcessing}
             >
               {props.mainButtonLabelElement}
             </Button>

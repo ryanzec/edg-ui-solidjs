@@ -74,7 +74,7 @@ export const Default = () => {
 
     addingTimeoutId = setTimeout(() => {
       addData();
-    }, 1000);
+    }, 2000);
   };
 
   const handleStopAdding = () => {
@@ -98,6 +98,7 @@ export const Default = () => {
       <Button onClick={() => autoScrollAreaComponentRef.api()?.setAutoScrollState(AutoScrollState.FORCE_DISABLED)}>
         Force Disabled Auto Scroll
       </Button>
+      <Button onClick={() => autoScrollAreaComponentRef.api()?.scrollToBottom()}>Scroll To Bottom</Button>
       <SandboxExamplesContainer>
         <Page.ContentSection>
           <GridTable.Simple
@@ -148,6 +149,10 @@ export const ScrollInScroll = () => {
     }, 1000);
   };
 
+  const addSingleData = () => {
+    setData((prevData) => [...prevData, gridData[0]]);
+  };
+
   const handleStopAdding = () => {
     clearTimeout(addingTimeoutId);
   };
@@ -160,6 +165,7 @@ export const ScrollInScroll = () => {
     <>
       <Button onClick={handleStartAdding}>Start Adding</Button>
       <Button onClick={handleStopAdding}>Stop Adding</Button>
+      <Button onClick={addSingleData}>Add Single Data</Button>
       <Button onClick={() => autoScrollAreaComponentRef.api()?.setAutoScrollState(AutoScrollState.ENABLED)}>
         Enable Auto Scroll
       </Button>
