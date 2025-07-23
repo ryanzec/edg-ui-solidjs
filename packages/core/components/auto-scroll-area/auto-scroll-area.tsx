@@ -1,6 +1,7 @@
 import { ScrollAreaContext } from '$/core/components/scroll-area';
 import type { ComponentRef } from '$/core/stores/component-ref';
 import { ViewCutoffLocation, domUtils } from '$/core/utils/dom';
+import { loggerUtils } from '$/core/utils/logger';
 import { debounce } from 'lodash';
 import type { JSX } from 'solid-js';
 import { createEffect, createSignal, mergeProps, onCleanup, onMount, useContext } from 'solid-js';
@@ -13,9 +14,13 @@ export const AutoScrollState = {
 
 export type AutoScrollState = (typeof AutoScrollState)[keyof typeof AutoScrollState];
 
+export type AutoScrollScrollToBottomOptions = {
+  onlyIfEnabled?: boolean;
+};
+
 export type AutoScrollAreaComponentRef = {
   setAutoScrollState: (state: AutoScrollState) => void;
-  scrollToBottom: () => void;
+  scrollToBottom: (option?: AutoScrollScrollToBottomOptions) => void;
 };
 
 export type AutoScrollAreaProps = {
@@ -35,12 +40,11 @@ const AutoScrollArea = (passedProps: AutoScrollAreaProps) => {
 
   const scrollAreaContext = useContext(ScrollAreaContext);
 
-  const handleScroll = debounce(() => {
-    // if our programmatic method to triggering scrolling was used, we need to make sure we clear that state
-    setProgrammaticallyScrolling(false);
-  }, 150);
+  const scrollToBottom = (options: AutoScrollScrollToBottomOptions = {}) => {
+    if (options.onlyIfEnabled === true && autoScrollState() !== AutoScrollState.ENABLED) {
+      return;
+    }
 
-  const scrollToBottom = () => {
     const currentCheckElement = checkElement();
     const currentScrollElement = scrollElement();
 
@@ -70,6 +74,11 @@ const AutoScrollArea = (passedProps: AutoScrollAreaProps) => {
     });
   };
 
+  const handleScroll = debounce(() => {
+    // if our programmatic method to triggering scrolling was used, we need to make sure we clear that state
+    setProgrammaticallyScrolling(false);
+  }, 150);
+
   createEffect(function toggleAutoScroll() {
     if (scrollAreaContext && scrollAreaContext.isReady() === false) {
       return;
@@ -98,10 +107,18 @@ const AutoScrollArea = (passedProps: AutoScrollAreaProps) => {
     const currentCheckElement = checkElement();
 
     if (!currentScrollElement || !currentCheckElement) {
+      loggerUtils.log('there is no scroll element or check element so cant setup auto scroll');
+
       return;
     }
 
     const scrollParentElement = domUtils.getScrollParent(currentScrollElement, scrollAreaContext !== undefined);
+
+    if (!scrollParentElement) {
+      loggerUtils.log('the scroll element has not scrollable parent so cant setup auto scroll');
+
+      return;
+    }
 
     const intersectionObserver = new IntersectionObserver(
       (entries) => {
@@ -126,11 +143,8 @@ const AutoScrollArea = (passedProps: AutoScrollAreaProps) => {
       },
       {
         root: scrollParentElement,
-        // considered in view threshold
-        threshold: 0.1,
-        // this add a small buffer around the "viewport" (the root element) to avoid any edge case issue with proper
-        // detection
-        rootMargin: '0px 0px -10px 0px',
+        // a smaller buffer
+        rootMargin: '10px',
       },
     );
 

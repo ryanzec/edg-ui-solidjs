@@ -14,6 +14,7 @@ export type TabProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> &
     'data-value'?: string;
     onClose?: (value?: string) => void;
     hasUnsavedChanges?: boolean;
+    disabled?: boolean;
   };
 
 const Tab = (passedProps: TabProps) => {
@@ -25,6 +26,7 @@ const Tab = (passedProps: TabProps) => {
     'onClose',
     'data-value',
     'hasUnsavedChanges',
+    'disabled',
   ]);
 
   const context = useContext(TabsContext);
@@ -32,6 +34,10 @@ const Tab = (passedProps: TabProps) => {
   const [isHoveringIcon, setIsHoveringIcon] = createSignal(false);
 
   const handleOnClose = () => {
+    if (props.disabled) {
+      return;
+    }
+
     if (!props['data-value']) {
       loggerUtils.warn('you must configure data-value for onClose to work properly');
     }
@@ -50,9 +56,11 @@ const Tab = (passedProps: TabProps) => {
           'text-text-inverse border-0': context?.onInverse,
           'text-sm leading-sm tracking-sm': context?.size === TabSize.SMALL,
           'bg-brand text-on-brand border-brand': props.isActive,
+          'opacity-disabled': props.disabled,
         },
         props.class,
       )}
+      disabled={props.disabled}
     >
       <Show when={props.icon}>{(icon) => <Icon icon={icon()} />}</Show>
       {props.children}

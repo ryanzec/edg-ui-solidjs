@@ -3,6 +3,8 @@ import Tabs, { TabSize } from '$/core/components/tabs';
 import { TabOrientation } from '$/core/components/tabs';
 import { TabVariant } from '$/core/components/tabs/tabs';
 import styles from '$/core/components/tabs/tabs.sandbox.module.css';
+import Tooltip, { type TooltipComponentRef } from '$/core/components/tooltip';
+import { componentRefUtils } from '$/core/stores/component-ref';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 
 export default {
@@ -253,6 +255,59 @@ export const FilesScrolling = () => {
             </Tabs.Tab>
           </Tabs>
         </ScrollArea>
+      </div>
+    </SandboxExamplesContainer>
+  );
+};
+
+export const Disabled = () => {
+  const tooltipComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
+
+  const handleOnClose = (value?: string) => {
+    console.log('onClose', value);
+  };
+
+  return (
+    <SandboxExamplesContainer>
+      <Tabs variant={TabVariant.FILES}>
+        <Tabs.Tab data-value="1" onClose={handleOnClose} hasUnsavedChanges>
+          Tab 1
+        </Tabs.Tab>
+        <Tabs.Tab data-value="2" onClose={handleOnClose} isActive disabled>
+          Tab 2
+        </Tabs.Tab>
+        <Tabs.Tab data-value="3" onClose={handleOnClose} disabled>
+          Tab 3
+        </Tabs.Tab>
+        <Tooltip triggerEvent="hover" tooltipComponentRef={tooltipComponentRef} placement="bottom">
+          <Tooltip.Handle data-id="handle">
+            <Tabs.Tab data-value="4" onClose={handleOnClose} disabled>
+              Tab 4
+            </Tabs.Tab>
+          </Tooltip.Handle>
+          <Tooltip.Content data-id="content">This tab is disabled</Tooltip.Content>
+        </Tooltip>
+      </Tabs>
+      <div class={styles.darkBackground}>
+        <Tabs variant={TabVariant.FILES} onInverse orientation={TabOrientation.VERTICAL}>
+          <Tabs.Tab data-value="1" onClose={handleOnClose}>
+            Tab 1
+          </Tabs.Tab>
+          <Tabs.Tab data-value="2" onClose={handleOnClose} hasUnsavedChanges disabled>
+            Tab 2
+          </Tabs.Tab>
+          <Tabs.Tab data-value="3" onClose={handleOnClose} isActive disabled>
+            Tab 3
+          </Tabs.Tab>
+          <Tooltip triggerEvent="hover" tooltipComponentRef={tooltipComponentRef} placement="bottom">
+            <Tooltip.Handle data-id="handle">
+              <Tabs.Tab data-value="4" onClose={handleOnClose} disabled>
+                Tab 4
+              </Tabs.Tab>
+            </Tooltip.Handle>
+            <Tooltip.Content data-id="content">This tab is disabled</Tooltip.Content>
+          </Tooltip>
+        </Tabs>
       </div>
     </SandboxExamplesContainer>
   );
