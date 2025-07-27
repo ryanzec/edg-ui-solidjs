@@ -1,9 +1,9 @@
+import { mergeProps, splitProps } from 'solid-js';
 import styles from '$/core/components/badge/badge.module.css';
 import { BadgeColor, BadgeShape, BadgeSize, BadgeVariant } from '$/core/components/badge/utils';
-import Icon, { IconSize, type IconName } from '$/core/components/icon';
-import Typography, { TypographySize, type TypographyProps } from '$/core/components/typography';
+import Icon, { type IconName, IconSize } from '$/core/components/icon';
+import Typography, { TypographyColor, type TypographyProps, TypographySize } from '$/core/components/typography';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { mergeProps, splitProps } from 'solid-js';
 
 export type BadgeProps = Omit<TypographyProps, 'size' | 'color' | 'variant'> & {
   color?: BadgeColor;
@@ -41,6 +41,7 @@ const Badge = (passedProps: BadgeProps) => {
       data-id="badge"
       {...restOfProps}
       size={badgeSizeTypographySizeMap[props.size]}
+      color={TypographyColor.NONE}
       class={tailwindUtils.merge(
         styles.badge,
         {

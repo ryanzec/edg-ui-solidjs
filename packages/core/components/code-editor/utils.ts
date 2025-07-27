@@ -12,10 +12,10 @@ import { type LintSource, lintKeymap } from '@codemirror/lint';
 import { search, searchKeymap } from '@codemirror/search';
 import { EditorState, type Extension, type StateEffectType, type StateField } from '@codemirror/state';
 import {
-  type EditorView,
   crosshairCursor,
   drawSelection,
   dropCursor,
+  type EditorView,
   highlightActiveLine,
   highlightActiveLineGutter,
   highlightSpecialChars,

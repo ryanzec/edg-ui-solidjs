@@ -1,3 +1,5 @@
+import { createSignal, type JSX, mergeProps, onCleanup, Show, splitProps } from 'solid-js';
+import { Portal } from 'solid-js/web';
 import styles from '$/core/components/dialog/dialog.module.css';
 import { type DialogComponentRef, DialogFooterAlignment } from '$/core/components/dialog/utils';
 import Icon from '$/core/components/icon';
@@ -6,8 +8,6 @@ import Typography, { TypographySize } from '$/core/components/typography';
 import type { ComponentRef } from '$/core/stores/component-ref';
 import { Key } from '$/core/types/generic';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show, createSignal, mergeProps, onCleanup, splitProps } from 'solid-js';
-import { Portal } from 'solid-js/web';
 
 export type DialogProps = JSX.HTMLAttributes<HTMLDivElement> & {
   dialogComponentRef: ComponentRef<DialogComponentRef>;

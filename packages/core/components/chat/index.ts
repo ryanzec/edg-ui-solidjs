@@ -1,7 +1,7 @@
 import Message, {
+  type ChatMessageData,
   type ChatMessageProps,
   ChatMessageSource,
-  type ChatMessageData,
 } from '$/core/components/chat/chat-message';
 import Messages, { type ChatMessagesProps } from '$/core/components/chat/chat-messages';
 

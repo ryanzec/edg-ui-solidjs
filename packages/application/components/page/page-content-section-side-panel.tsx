@@ -1,6 +1,6 @@
+import { type JSX, splitProps } from 'solid-js';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, splitProps } from 'solid-js';
 
 export type PageContentSectionSidePanelProps = JSX.HTMLAttributes<HTMLDivElement> & CommonDataAttributes;
 

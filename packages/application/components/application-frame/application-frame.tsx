@@ -1,5 +1,7 @@
-import CompanyLogoSmall from '$/application/assets/svgs/company-logo-small.svg?raw';
+import { useLocation, useNavigate } from '@solidjs/router';
+import { type JSX, mergeProps, Show } from 'solid-js';
 import CompanyLogo from '$/application/assets/svgs/company-logo.svg?raw';
+import CompanyLogoSmall from '$/application/assets/svgs/company-logo-small.svg?raw';
 import { type ApplicationFeature, UiRouteName } from '$/application/utils/application';
 import Icon, { IconColor, IconSize } from '$/core/components/icon';
 import Loading from '$/core/components/loading';
@@ -12,8 +14,6 @@ import { toggleStoreUtils } from '$/core/stores/toggle.store';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import { routeUtils } from '$/core/utils/route';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { useLocation, useNavigate } from '@solidjs/router';
-import { type JSX, Show, mergeProps } from 'solid-js';
 import UserMenu from '../user-menu/user-menu';
 
 export type ApplicationFrameTopNavigationItem = {

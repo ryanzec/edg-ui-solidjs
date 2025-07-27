@@ -1,5 +1,5 @@
 import { useNavigate } from '@solidjs/router';
-import { type JSX, Show, onCleanup, onMount } from 'solid-js';
+import { type JSX, onCleanup, onMount, Show } from 'solid-js';
 
 import ApplicationFrame from '$/application/components/application-frame';
 import { authenticationStore } from '$/application/stores/authentication.store';

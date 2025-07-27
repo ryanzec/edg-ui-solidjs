@@ -1,10 +1,9 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
-import { type Accessor, type JSX, Show, createSignal, mergeProps, onMount, splitProps, useContext } from 'solid-js';
-
+import { type Accessor, createSignal, type JSX, mergeProps, onMount, Show, splitProps, useContext } from 'solid-js';
 import { FormFieldContext } from '$/core/components/form-field';
 import styles from '$/core/components/input/input.module.css';
 import { type DefaultFormData, FormInputValidationState } from '$/core/stores/form.store';
 import { loggerUtils } from '$/core/utils/logger';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type InputProps<TFormData = DefaultFormData> = Omit<JSX.InputHTMLAttributes<HTMLInputElement>, 'name'> & {
   preElement?: JSX.Element;

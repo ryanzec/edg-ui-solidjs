@@ -1,7 +1,7 @@
-import ScrollArea from '$/core/components/scroll-area/scroll-area';
-import { type Virtualizer, type VirtualizerOptions, createVirtualizer } from '@tanstack/solid-virtual';
+import { createVirtualizer, type Virtualizer, type VirtualizerOptions } from '@tanstack/solid-virtual';
 import type { OverlayScrollbars } from 'overlayscrollbars';
-import { For, type JSX, createEffect, createSignal, mergeProps, onCleanup } from 'solid-js';
+import { createEffect, createSignal, For, type JSX, mergeProps, onCleanup } from 'solid-js';
+import ScrollArea from '$/core/components/scroll-area/scroll-area';
 
 export type ScrollAreaVirtualProps<TData> = {
   class?: string;

@@ -1,3 +1,6 @@
+import { useNavigate } from '@solidjs/router';
+import { createEffect, onCleanup } from 'solid-js';
+import * as zod from 'zod';
 import Page from '$/application/components/page';
 import { PageLayout } from '$/application/components/page/page';
 import { authenticationStore } from '$/application/stores/authentication.store';
@@ -10,9 +13,6 @@ import Label from '$/core/components/label';
 import { formStoreUtils } from '$/core/stores/form.store';
 import { ValidationMessageType, validationUtils } from '$/core/utils/validation';
 import { zodUtils } from '$/core/utils/zod';
-import { useNavigate } from '@solidjs/router';
-import { createEffect, onCleanup } from 'solid-js';
-import * as zod from 'zod';
 
 export type LoginFormData = {
   email: string;

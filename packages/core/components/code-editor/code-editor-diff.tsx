@@ -14,6 +14,20 @@
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
+
+import { linter, lintGutter } from '@codemirror/lint';
+import {
+  acceptChunk,
+  type Chunk,
+  getChunks,
+  getOriginalDoc,
+  MergeView,
+  rejectChunk,
+  unifiedMergeView,
+} from '@codemirror/merge';
+import { EditorState, type Extension } from '@codemirror/state';
+import { EditorView, type ViewUpdate } from '@codemirror/view';
+import { createEffect, createSignal, For, type JSX, mergeProps, onMount, Show, splitProps } from 'solid-js';
 import Button, { ButtonColor, ButtonSize } from '$/core/components/button';
 import styles from '$/core/components/code-editor/code-editor.module.css';
 import {
@@ -25,19 +39,6 @@ import {
 import type { CommonDataAttributes } from '$/core/types/generic';
 import { loggerUtils } from '$/core/utils/logger';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { lintGutter, linter } from '@codemirror/lint';
-import {
-  type Chunk,
-  MergeView,
-  acceptChunk,
-  getChunks,
-  getOriginalDoc,
-  rejectChunk,
-  unifiedMergeView,
-} from '@codemirror/merge';
-import { EditorState, type Extension } from '@codemirror/state';
-import { EditorView, type ViewUpdate } from '@codemirror/view';
-import { For, type JSX, Show, createEffect, createSignal, mergeProps, onMount, splitProps } from 'solid-js';
 
 export type CodeEditorChunkDecisionResult = {
   index: number;

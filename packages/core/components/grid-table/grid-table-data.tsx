@@ -1,6 +1,6 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, mergeProps, splitProps } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type GridTableDataProps = JSX.HTMLAttributes<HTMLDivElement> & {
   isStartOfRow?: boolean;

@@ -1,5 +1,5 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, mergeProps, splitProps } from 'solid-js';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type LinkProps = JSX.AnchorHTMLAttributes<HTMLAnchorElement> & {
   isUnstyled?: boolean;

@@ -3,7 +3,7 @@ import 'overlayscrollbars/overlayscrollbars.css';
 import type { OverlayScrollbars, PartialOptions } from 'overlayscrollbars';
 
 import { OverlayScrollbarsComponent, type OverlayScrollbarsComponentProps } from 'overlayscrollbars-solid';
-import { type Accessor, type Setter, children, createContext, createSignal, mergeProps, splitProps } from 'solid-js';
+import { type Accessor, children, createContext, createSignal, mergeProps, type Setter, splitProps } from 'solid-js';
 
 import styles from '$/core/components/scroll-area/scroll-area.module.css';
 import { tailwindUtils } from '$/core/utils/tailwind';

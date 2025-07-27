@@ -1,4 +1,3 @@
-import type { QueryKey } from '$/application/utils/application';
 import type {
   InfiniteData,
   UseInfiniteQueryOptions,
@@ -6,6 +5,7 @@ import type {
   UseQueryOptions,
   UseQueryResult,
 } from '@tanstack/solid-query';
+import type { QueryKey } from '$/application/utils/application';
 
 // generic type for tanstack query options to reduce verbosity in api implementations
 export type QueryOptionsType<

@@ -1,8 +1,8 @@
+import { type JSX, splitProps } from 'solid-js';
 import DropDown from '$/core/components/drop-down';
 import type { DropDownMenuProps } from '$/core/components/drop-down/drop-down-menu';
 import GridTableData, { type GridTableDataProps } from '$/core/components/grid-table/grid-table-data';
 import { Icon } from '$/core/components/icon';
-import { type JSX, splitProps } from 'solid-js';
 
 export type GridTableDataActionsProps = GridTableDataProps & {
   dropDownContentElement: JSX.Element;

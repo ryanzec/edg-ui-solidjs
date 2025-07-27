@@ -1,4 +1,4 @@
-import { type Accessor, type Setter, createRoot, createSignal } from 'solid-js';
+import { type Accessor, createRoot, createSignal, type Setter } from 'solid-js';
 
 import { ThemeName } from '$/core/utils/styles';
 

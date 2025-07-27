@@ -1,9 +1,9 @@
+import { createSignal, Show, splitProps } from 'solid-js';
 import UserForm, { type UserFormProps } from '$/application/components/user-form';
 import Button from '$/core/components/button';
 import Loading from '$/core/components/loading';
 import Peek, { type PeekComponentRef } from '$/core/components/peek';
 import { type ComponentRef, componentRefUtils } from '$/core/stores/component-ref';
-import { Show, createSignal, splitProps } from 'solid-js';
 
 export type UserFormPeekProps<TCreateInput, TUpdateInput> = Omit<
   UserFormProps<TCreateInput, TUpdateInput>,

@@ -1,5 +1,5 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, splitProps } from 'solid-js';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type GridTableFooterProps = JSX.HTMLAttributes<HTMLDivElement>;
 

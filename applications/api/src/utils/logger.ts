@@ -1,6 +1,6 @@
-import { applicationConfiguration } from '$api/utils/application-configuration';
 import type { FastifyBaseLogger } from 'fastify';
 import type { LoggerOptions } from 'pino';
+import { applicationConfiguration } from '$api/utils/application-configuration';
 
 const loggerConfiguration: LoggerOptions = {
   level: process.env.LOG_LEVEL || 'info',

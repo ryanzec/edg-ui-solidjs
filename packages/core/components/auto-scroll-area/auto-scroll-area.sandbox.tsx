@@ -1,3 +1,4 @@
+import { createSignal } from 'solid-js';
 import Page from '$/application/components/page';
 import AutoScrollArea, { type AutoScrollAreaComponentRef, AutoScrollState } from '$/core/components/auto-scroll-area';
 import Button from '$/core/components/button';
@@ -5,7 +6,6 @@ import GridTable from '$/core/components/grid-table';
 import ScrollArea from '$/core/components/scroll-area';
 import { componentRefUtils } from '$/core/stores/component-ref';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container';
-import { createSignal } from 'solid-js';
 
 export default {
   title: 'Components/AutoScrollArea',

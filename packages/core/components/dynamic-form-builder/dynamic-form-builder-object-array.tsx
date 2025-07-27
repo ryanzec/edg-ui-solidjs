@@ -1,6 +1,6 @@
+import { type Accessor, type Component, Index } from 'solid-js';
 import type { DynamicFormBuilderProps } from '$/core/components/dynamic-form-builder/utils';
 import FormArrayAddContainer, { FormArray } from '$/core/components/form-array';
-import { type Accessor, type Component, Index } from 'solid-js';
 
 type DynamicFormBuilderObjectArrayProps<TFormData extends object> = {
   fieldName: keyof TFormData;

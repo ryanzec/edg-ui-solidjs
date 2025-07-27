@@ -1,4 +1,4 @@
-import { type CipherGCM, type DecipherGCM, createCipheriv, createDecipheriv, randomBytes } from 'node:crypto';
+import { type CipherGCM, createCipheriv, createDecipheriv, type DecipherGCM, randomBytes } from 'node:crypto';
 
 export type EncryptedData = {
   encrypted: string;

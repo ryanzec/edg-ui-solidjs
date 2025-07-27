@@ -1,7 +1,7 @@
+import { type Accessor, For, type JSX, mergeProps, Show, splitProps } from 'solid-js';
 import GridTable, { type GridTableProps } from '$/core/components/grid-table/grid-table';
 import GridTableHeaderData from '$/core/components/grid-table/grid-table-header-data';
 import type { GridTableHeaderDataOptions } from '$/core/components/grid-table/utils';
-import { type Accessor, For, type JSX, Show, mergeProps, splitProps } from 'solid-js';
 import GridEmptyData from './grid-empty-data';
 
 export type SimpleGridTableProps<TRowData> = Omit<GridTableProps, 'children'> & {

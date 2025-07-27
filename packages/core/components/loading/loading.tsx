@@ -1,8 +1,7 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, mergeProps, splitProps } from 'solid-js';
-
-import Icon, { type IconProps, IconColor, IconSize } from '$/core/components/icon';
+import Icon, { IconColor, type IconProps, IconSize } from '$/core/components/icon';
 import styles from '$/core/components/loading/loading.module.css';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type LoadingProps = JSX.HTMLAttributes<HTMLDivElement> & {
   iconSize?: IconProps['size'];

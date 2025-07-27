@@ -1,8 +1,8 @@
+import { mergeProps, splitProps } from 'solid-js';
 import styles from '$/core/components/code-block/code-block.module.css';
 import CopyText from '$/core/components/copy-text';
 import Typography, { type TypographyProps, TypographySize } from '$/core/components/typography';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { mergeProps, splitProps } from 'solid-js';
 
 export const CodeBlockVariant = {
   BLOCK: 'block',

@@ -1,7 +1,7 @@
+import { createSignal, splitProps } from 'solid-js';
 import { ButtonColor } from '$/core/components/button';
 import DialogConfirmation, { type DialogConfirmationProps } from '$/core/components/dialog/dialog-confirmation';
 import { loggerUtils } from '$/core/utils/logger';
-import { createSignal, splitProps } from 'solid-js';
 
 export type DialogDeleteConfirmationProps<TItem> = Omit<
   DialogConfirmationProps,

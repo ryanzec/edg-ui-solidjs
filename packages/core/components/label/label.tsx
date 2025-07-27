@@ -1,10 +1,9 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
-
+import { type JSX, mergeProps, Show, splitProps } from 'solid-js';
 import type { IconSize } from '$/core/components/icon';
 import iconStyles from '$/core/components/icon/icon.module.css';
 import styles from '$/core/components/label/label.module.css';
 import Loading from '$/core/components/loading';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type LabelProps = JSX.LabelHTMLAttributes<HTMLLabelElement> & {
   isLoading?: boolean;

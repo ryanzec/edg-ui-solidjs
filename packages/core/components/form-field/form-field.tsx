@@ -1,20 +1,19 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import {
   type Accessor,
-  For,
-  type JSX,
-  Show,
   createContext,
   createEffect,
   createSignal,
+  For,
+  type JSX,
   mergeProps,
+  Show,
   splitProps,
 } from 'solid-js';
-
 import styles from '$/core/components/form-field/form-field.module.css';
 import { Typography, TypographyColor, TypographySize } from '$/core/components/typography';
 import { FormInputValidationState } from '$/core/stores/form.store';
 import type { CommonDataAttributes } from '$/core/types/generic';
+import { tailwindUtils } from '$/core/utils/tailwind';
 export type FormFieldProps = JSX.HTMLAttributes<HTMLDivElement> &
   CommonDataAttributes & {
     errors?: string[];

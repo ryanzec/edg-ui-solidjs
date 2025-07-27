@@ -1,6 +1,6 @@
-import Button, { ButtonColor, ButtonVariant } from '$/core/components/button';
-import Dialog, { defaultDialogProps, type DialogProps } from '$/core/components/dialog/dialog';
 import { mergeProps, splitProps } from 'solid-js';
+import Button, { ButtonColor, ButtonVariant } from '$/core/components/button';
+import Dialog, { type DialogProps, defaultDialogProps } from '$/core/components/dialog/dialog';
 
 export type DialogConfirmationProps = Omit<DialogProps, 'footerElement' | 'closeOnEscape' | 'closeOnOverlayClick'> & {
   processConfirmation: () => Promise<void> | void;

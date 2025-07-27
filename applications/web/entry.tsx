@@ -19,12 +19,12 @@ import '$/core/styles/animation.css';
 import '$/core/styles/keyframes.css';
 import '$/core/styles/base.css';
 
-import { dateUtils } from '$/core/utils/date';
-import { analyticsUtils } from '$web/utils/analytics';
+import { QueryClient, QueryClientProvider } from '@tanstack/solid-query';
 import { render } from 'solid-js/web';
+import { dateUtils } from '$/core/utils/date';
 
 import Application from '$web/components/application';
-import { QueryClient, QueryClientProvider } from '@tanstack/solid-query';
+import { analyticsUtils } from '$web/utils/analytics';
 
 dateUtils.configureTimezone('UTC');
 

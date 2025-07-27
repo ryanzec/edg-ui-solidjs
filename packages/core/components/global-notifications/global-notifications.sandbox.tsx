@@ -1,4 +1,4 @@
-import { type JSX, createSignal } from 'solid-js';
+import { createSignal, type JSX } from 'solid-js';
 
 import Button from '$/core/components/button';
 import { CalloutColor } from '$/core/components/callout';

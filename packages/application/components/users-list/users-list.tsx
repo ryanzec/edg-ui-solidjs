@@ -1,3 +1,4 @@
+import { Show } from 'solid-js';
 import EmptyIndicator from '$/core/components/empty-indicator';
 import GridTable from '$/core/components/grid-table';
 import Icon from '$/core/components/icon';
@@ -5,7 +6,6 @@ import List from '$/core/components/list';
 import type { TooltipComponentRef } from '$/core/components/tooltip';
 import { componentRefUtils } from '$/core/stores/component-ref';
 import type { User } from '$api/types/user';
-import { Show } from 'solid-js';
 
 type InternalUser = Pick<User, 'id' | 'email' | 'name' | 'roles'>;
 

@@ -1,10 +1,9 @@
 import { type JSX, mergeProps, splitProps, useContext } from 'solid-js';
-
+import { Portal } from 'solid-js/web';
 import { TooltipContext } from '$/core/components/tooltip/tooltip';
 import styles from '$/core/components/tooltip/tooltip.module.css';
 import { loggerUtils } from '$/core/utils/logger';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { Portal } from 'solid-js/web';
 
 export type TooltipContentProps = JSX.HTMLAttributes<HTMLDivElement> & {
   isStyled?: boolean;

@@ -1,4 +1,4 @@
-import { type JSX, createContext, mergeProps, splitProps } from 'solid-js';
+import { createContext, type JSX, mergeProps, splitProps } from 'solid-js';
 
 import type { CommonDataAttributes } from '$/core/types/generic';
 import { tailwindUtils } from '$/core/utils/tailwind';

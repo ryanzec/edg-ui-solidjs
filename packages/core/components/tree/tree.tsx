@@ -1,4 +1,4 @@
-import { type JSX, createContext, createSignal, onCleanup, splitProps } from 'solid-js';
+import { createContext, createSignal, type JSX, onCleanup, splitProps } from 'solid-js';
 
 import type { TreeComponentRef, TreeItemData } from '$/core/components/tree/utils';
 import type { ComponentRef } from '$/core/stores/component-ref';

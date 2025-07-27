@@ -1,6 +1,6 @@
+import { mergeProps, splitProps } from 'solid-js';
 import Button, { ButtonVariant } from '$/core/components/button';
 import Callout, { CalloutColor, type CalloutProps, CalloutVariant } from '$/core/components/callout';
-import { mergeProps, splitProps } from 'solid-js';
 
 export type ErrorIndicatorProps = CalloutProps & {
   label: string;

@@ -1,8 +1,8 @@
+import { type JSX, Show } from 'solid-js';
 import Button, { ButtonColor, ButtonVariant } from '$/core/components/button';
 import styles from '$/core/components/form-array/form-array.module.css';
 import Icon from '$/core/components/icon';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show } from 'solid-js';
 
 export type FormArrayProps = {
   onAdd: () => void;

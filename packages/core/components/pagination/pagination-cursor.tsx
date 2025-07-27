@@ -1,11 +1,10 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { splitProps } from 'solid-js';
-
 import Button, { ButtonVariant } from '$/core/components/button';
 import Icon from '$/core/components/icon';
 import styles from '$/core/components/pagination/pagination.module.css';
 import type { CursorPaginationStore } from '$/core/stores/pagination.store';
 import type { CommonDataAttributes } from '$/core/types/generic';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 type PageChangeReturn = {
   newPreviousCursor: string | undefined;

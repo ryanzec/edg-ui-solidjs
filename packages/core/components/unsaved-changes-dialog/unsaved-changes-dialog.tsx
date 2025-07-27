@@ -1,10 +1,10 @@
+import type { Navigator } from '@solidjs/router';
+import { createSignal, onCleanup } from 'solid-js';
 import Button, { ButtonColor, ButtonVariant } from '$/core/components/button';
 import Dialog, { type DialogProps } from '$/core/components/dialog';
 import type { UnsavedChangesDialogComponentRef } from '$/core/components/unsaved-changes-dialog/utils';
 import type { ComponentRef } from '$/core/stores/component-ref';
 import { loggerUtils } from '$/core/utils/logger';
-import type { Navigator } from '@solidjs/router';
-import { createSignal, onCleanup } from 'solid-js';
 
 export type UnsavedChangesDialogProps = Pick<DialogProps, 'dialogComponentRef'> & {
   unsavedChangesDialogComponentRef: ComponentRef<UnsavedChangesDialogComponentRef>;

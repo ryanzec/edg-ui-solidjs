@@ -1,8 +1,7 @@
-import Icon from '$/core/components/icon';
-import { IconVariant } from '$/core/components/icon';
+import { mergeProps } from 'solid-js';
+import Icon, { IconVariant } from '$/core/components/icon';
 import styles from '$/core/components/thumbs-rating/thumbs-rating.module.css';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { mergeProps } from 'solid-js';
 
 export type ThumbsRatingProps = {
   onRate: (rating: number) => void;

@@ -1,3 +1,4 @@
+import { type Accessor, createRoot, createSignal } from 'solid-js';
 import { authenticationApi } from '$/application/apis/authentication';
 import { globalsStore } from '$/application/stores/globals.store';
 import { LocalStorageKey } from '$/application/utils/application';
@@ -8,7 +9,6 @@ import { userUtils } from '$api/data-models/user';
 import type { AuthenticationAuthenticateRequest } from '$api/types/authentication';
 import type { User, UserRoleName } from '$api/types/user';
 import { analyticsUtils } from '$web/utils/analytics';
-import { type Accessor, createRoot, createSignal } from 'solid-js';
 
 export type SessionUser = {
   user: User;

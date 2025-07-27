@@ -1,6 +1,6 @@
 import { type JSX, mergeProps, splitProps } from 'solid-js';
 
-import Callout, { type CalloutProps, CalloutColor } from '$/core/components/callout';
+import Callout, { CalloutColor, type CalloutProps } from '$/core/components/callout';
 import { IconColor, IconSize } from '$/core/components/icon';
 import Loading from '$/core/components/loading/loading';
 import Overlay from '$/core/components/overlay';

@@ -1,6 +1,10 @@
-import { type Accessor, For, Show, batch, createEffect, createSignal, mergeProps, splitProps } from 'solid-js';
+import * as _ from 'lodash';
+import { type Accessor, batch, createEffect, createSignal, For, mergeProps, Show, splitProps } from 'solid-js';
+import { createStore, produce, reconcile } from 'solid-js/store';
 import { Dynamic } from 'solid-js/web';
-
+import styles from '$/core/components/combobox/combobox.module.css';
+import Options from '$/core/components/combobox/options';
+import SelectableOption from '$/core/components/combobox/selectable-option';
 import {
   AsyncOptionsState,
   type ComboboxExtraData,
@@ -13,15 +17,9 @@ import Icon from '$/core/components/icon';
 import iconStyles from '$/core/components/icon/icon.module.css';
 import Input from '$/core/components/input';
 import List from '$/core/components/list';
-import type { DefaultFormData } from '$/core/stores/form.store';
-import * as _ from 'lodash';
-
-import styles from '$/core/components/combobox/combobox.module.css';
-import Options from '$/core/components/combobox/options';
-import SelectableOption from '$/core/components/combobox/selectable-option';
 import ScrollArea from '$/core/components/scroll-area';
+import type { DefaultFormData } from '$/core/stores/form.store';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { createStore, produce, reconcile } from 'solid-js/store';
 
 type ComboboxGroupedOptions<TData extends ComboboxExtraData> = {
   options: Record<string, ComboboxOption<TData>[]>;

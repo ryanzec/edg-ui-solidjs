@@ -1,4 +1,4 @@
-import { type Accessor, type Setter, createSignal, splitProps } from 'solid-js';
+import { type Accessor, createSignal, type Setter, splitProps } from 'solid-js';
 
 const CURSOR_CHANGE_OFFSET = 10;
 

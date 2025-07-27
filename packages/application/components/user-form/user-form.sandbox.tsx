@@ -1,8 +1,8 @@
+import { createSignal } from 'solid-js';
 import UserForm from '$/application/components/user-form';
 import type { FormSaveMode } from '$/core/stores/form.store';
 import { UserRoleName } from '$api/types/user';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
-import { createSignal } from 'solid-js';
 
 export default {
   title: 'Application/UserForm',

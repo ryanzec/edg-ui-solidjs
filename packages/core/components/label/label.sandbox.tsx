@@ -1,8 +1,8 @@
+import { createSignal } from 'solid-js';
 import Button from '$/core/components/button';
 import FormField from '$/core/components/form-field';
 import Input from '$/core/components/input';
 import Label from '$/core/components/label';
-import { createSignal } from 'solid-js';
 
 export default {
   title: 'Components/Label',

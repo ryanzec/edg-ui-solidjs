@@ -1,5 +1,5 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show, createSignal, mergeProps, onCleanup, splitProps } from 'solid-js';
+import { createSignal, type JSX, mergeProps, onCleanup, Show, splitProps } from 'solid-js';
+import { Portal } from 'solid-js/web';
 
 import Overlay from '$/core/components/overlay';
 import styles from '$/core/components/peek/peek.module.css';
@@ -7,7 +7,7 @@ import type { PeekComponentRef } from '$/core/components/peek/utils';
 import type { ComponentRef } from '$/core/stores/component-ref';
 import { sizerStoreUtils } from '$/core/stores/sizer.store';
 import type { CommonDataAttributes } from '$/core/types/generic';
-import { Portal } from 'solid-js/web';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type PeekProps = JSX.HTMLAttributes<HTMLDivElement> &
   CommonDataAttributes & {

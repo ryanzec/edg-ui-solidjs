@@ -4,22 +4,22 @@ import SelectableOption from '$/core/components/combobox/selectable-option';
 import SelectedOption from '$/core/components/combobox/selected-option';
 
 export type {
-  ComboboxOptionValue,
   ComboboxExtraData,
   ComboboxOption,
+  ComboboxOptionValue,
   ComboboxProps,
-  ComboboxValueStore,
-  ComboboxStore,
   ComboboxSelectableOptionProps,
   ComboboxSelectedOptionProps,
+  ComboboxStore,
+  ComboboxValueStore,
   GetInputPropsReturns,
   GetSelectableOptionPropsReturns,
   GetSelectedOptionPropsReturns,
 } from '$/core/components/combobox/utils';
 
 export {
-  comboboxComponentUtils,
   AsyncOptionsState,
+  comboboxComponentUtils,
 } from '$/core/components/combobox/utils';
 
 export const Combobox = Object.assign(BaseCombobox, {

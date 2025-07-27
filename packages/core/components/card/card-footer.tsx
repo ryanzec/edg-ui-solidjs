@@ -1,8 +1,7 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, mergeProps, splitProps } from 'solid-js';
-
 import styles from '$/core/components/card/card.module.css';
 import { CardFooterAlignment } from '$/core/components/card/utils';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type CardFooterProps = JSX.HTMLAttributes<HTMLDivElement> & {
   alignment?: CardFooterAlignment;

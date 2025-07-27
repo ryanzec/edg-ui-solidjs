@@ -1,4 +1,4 @@
-import { type JSX, createReaction, createSignal, mergeProps, splitProps } from 'solid-js';
+import { createReaction, createSignal, type JSX, mergeProps, splitProps } from 'solid-js';
 
 import Input, { type InputProps } from '$/core/components/input';
 import { DEFAULT_VALUE, EditItem, editItemsOrder, timeInputComponentUtils } from '$/core/components/time-input/utils';

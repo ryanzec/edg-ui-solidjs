@@ -1,3 +1,5 @@
+import { useNavigate } from '@solidjs/router';
+import { mergeProps, Show } from 'solid-js';
 import { authenticationStore } from '$/application/stores/authentication.store';
 import { ApplicationFeature, UiRouteName } from '$/application/utils/application';
 import Avatar, { AvatarSize } from '$/core/components/avatar';
@@ -12,8 +14,6 @@ import { themeManagerStore } from '$/core/stores/theme-manager.store';
 import { ThemeName } from '$/core/utils/styles';
 import { tailwindUtils } from '$/core/utils/tailwind';
 import type { User } from '$api/types/user';
-import { useNavigate } from '@solidjs/router';
-import { Show, mergeProps } from 'solid-js';
 
 export type UserMenuProps = {
   userMenuTooltipComponentRef: DropDownMenuProps['tooltipComponentRef'];

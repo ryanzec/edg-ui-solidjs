@@ -1,5 +1,5 @@
 import { debounce } from '@solid-primitives/scheduled';
-import { type Accessor, type JSX, createEffect, createSignal, onCleanup } from 'solid-js';
+import { type Accessor, createEffect, createSignal, type JSX, onCleanup } from 'solid-js';
 import { createStore, produce } from 'solid-js/store';
 
 import type { DefaultFormData } from '$/core/stores/form.store';
@@ -16,8 +16,8 @@ export type ComboboxOptionValue = string | number;
 
 // we use the as the default for extending the auto complete option to allow any data
 export type ComboboxExtraData = {
-  // biome-ignore lint/suspicious/noExplicitAny: to make this be easier to be used as a generic type, we need to
-  // biome-ignore lint/suspicious/noExplicitAny: allow any extra data for auto complete options
+  // to make this be easier to be used as a generic type, we need to allow any extra data for auto complete options
+  // biome-ignore lint/suspicious/noExplicitAny: see above
   [key: string]: any;
 };
 

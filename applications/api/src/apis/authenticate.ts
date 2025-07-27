@@ -1,3 +1,4 @@
+import type { FastifyInstance } from 'fastify';
 import { ApiRoute } from '$api/types/api';
 import type {
   AuthenticationAuthenticateRequest,
@@ -11,7 +12,6 @@ import type { PocketBaseUser } from '$api/types/user';
 import { apiUtils } from '$api/utils/api';
 import { authenticationUtils } from '$api/utils/authentication';
 import { pocketBaseUtils } from '$api/utils/pocketbase';
-import type { FastifyInstance } from 'fastify';
 
 export const registerAuthenticateApi = (api: FastifyInstance) => {
   type DeleteLogout = {

@@ -1,3 +1,4 @@
+import { createSignal, Show, Suspense } from 'solid-js';
 import { usersApi } from '$/application/apis/users';
 import Page from '$/application/components/page';
 import UserDeleteConfirmationDialog from '$/application/components/user-delete-confirmation-dialog';
@@ -16,7 +17,6 @@ import { globalNotificationsStore } from '$/core/stores/global-notifications.sto
 import { ErrorMessage } from '$/core/utils/error';
 import { loggerUtils } from '$/core/utils/logger';
 import type { User } from '$api/types/user';
-import { Show, Suspense, createSignal } from 'solid-js';
 
 type UsersListUser = UsersListProps['users'][0];
 

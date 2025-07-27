@@ -1,9 +1,8 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
-import { type Accessor, type JSX, createSignal, splitProps } from 'solid-js';
-
+import { type Accessor, createSignal, type JSX, splitProps } from 'solid-js';
 import Icon from '$/core/components/icon';
 import styles from '$/core/components/radio/radio.module.css';
 import type { DefaultFormData } from '$/core/stores/form.store';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type RadioProps<TFormData = DefaultFormData> = Omit<JSX.InputHTMLAttributes<HTMLInputElement>, 'name'> & {
   labelElement: JSX.Element;

@@ -1,9 +1,9 @@
+import { useQuery } from '@tanstack/solid-query';
 import type { QueryOptionsType, QueryResultTuple } from '$/application/apis/utils';
-import { QueryKey, applicationConfiguration } from '$/application/utils/application';
+import { applicationConfiguration, QueryKey } from '$/application/utils/application';
 import { HttpMethod, httpUtils } from '$/core/utils/http';
 import { ApiRoute } from '$api/types/api';
 import type { GetUsersResponse } from '$api/types/user';
-import { useQuery } from '@tanstack/solid-query';
 
 const getListRaw = async (): Promise<GetUsersResponse> => {
   return await httpUtils.http(`${applicationConfiguration.baseApiUrl}${ApiRoute.USERS}`, {

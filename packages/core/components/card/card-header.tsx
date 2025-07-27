@@ -1,8 +1,7 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show, splitProps } from 'solid-js';
-
 import styles from '$/core/components/card/card.module.css';
 import Typography, { TypographySize } from '$/core/components/typography';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type CardHeaderProps = JSX.HTMLAttributes<HTMLDivElement> & {
   preElement?: JSX.Element;

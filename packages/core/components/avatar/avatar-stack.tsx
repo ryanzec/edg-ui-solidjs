@@ -1,8 +1,7 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, mergeProps, splitProps } from 'solid-js';
-
 import { AvatarSize, AvatarStackContext, type AvatarStackContextData } from '$/core/components/avatar/utils';
 import type { CommonDataAttributes } from '$/core/types/generic';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type AvatarStackProps = JSX.HTMLAttributes<HTMLDivElement> & CommonDataAttributes & AvatarStackContextData;
 

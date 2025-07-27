@@ -1,9 +1,9 @@
+import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import { batch, For, onCleanup, onMount } from 'solid-js';
 import DragDrop, { dragDropComponentUtils } from '$/core/components/drag-drop';
 import styles from '$/core/components/drag-drop/drag-drop.sandbox.module.css';
 import Icon, { IconSize } from '$/core/components/icon';
 import { loggerUtils } from '$/core/utils/logger';
-import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
-import { For, batch, onCleanup, onMount } from 'solid-js';
 
 export default {
   title: 'Components/DragDrop',

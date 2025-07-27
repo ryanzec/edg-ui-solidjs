@@ -1,4 +1,4 @@
-import Typography, { TypographySize, TypographyColor } from '$/core/components/typography';
+import Typography, { TypographyColor, TypographySize } from '$/core/components/typography';
 import { TypographyVariant } from '$/core/components/typography/typography';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 

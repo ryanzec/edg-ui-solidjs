@@ -1,6 +1,6 @@
+import type { Chart } from 'chart.js';
 import type { ComponentRef } from '$/core/stores/component-ref';
 import { loggerUtils } from '$/core/utils/logger';
-import type { Chart, ChartData, ChartOptions, ChartTypeRegistry } from 'chart.js';
 
 const defaultPointRadius = 3;
 const selectedPointRadius = 8;
@@ -9,11 +9,6 @@ const selectedColor = 'rgb(35,86,121)';
 
 export type ChartCommonProps = {
   chartComponentRef: ComponentRef<ChartComponentRef>;
-};
-
-type RegisterUpdateEffectProps<TChartType extends keyof ChartTypeRegistry> = {
-  data: ChartData<TChartType>;
-  options?: ChartOptions<TChartType>;
 };
 
 export type ChartComponentRef = {

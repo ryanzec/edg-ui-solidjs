@@ -1,12 +1,12 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, children, createEffect, createSignal, mergeProps, splitProps } from 'solid-js';
+import { children, createEffect, createSignal, type JSX, mergeProps, splitProps } from 'solid-js';
+import { Dynamic } from 'solid-js/web';
 
 import Icon, { IconColor, IconSize } from '$/core/components/icon';
 import { type IconName, IconVariant } from '$/core/components/icon/utils';
 import styles from '$/core/components/side-navgiation/side-navigation.module.css';
 import { type ToggleStore, toggleStoreUtils } from '$/core/stores/toggle.store';
 import { loggerUtils } from '$/core/utils/logger';
-import { Dynamic } from 'solid-js/web';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type SideNavigationItemProps = JSX.HTMLAttributes<HTMLDivElement> & {
   headerElement: JSX.Element;

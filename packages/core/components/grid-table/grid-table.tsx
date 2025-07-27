@@ -1,6 +1,6 @@
+import { type JSX, mergeProps, Show, splitProps } from 'solid-js';
 import GridTableFooter from '$/core/components/grid-table/grid-table-footer';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
 
 export type GridTableProps = Omit<JSX.HTMLAttributes<HTMLDivElement>, 'role'> & {
   class?: string;

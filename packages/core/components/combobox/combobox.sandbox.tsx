@@ -1,20 +1,19 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
-import { For, Show, createSignal } from 'solid-js';
+import { createSignal, For, Show } from 'solid-js';
 import * as zod from 'zod';
-
 import Button from '$/core/components/button';
 import Combobox, {
-  comboboxComponentUtils,
   type ComboboxOption,
   type ComboboxProps,
   type ComboboxSelectableOptionProps,
   type ComboboxSelectedOptionProps,
+  comboboxComponentUtils,
 } from '$/core/components/combobox';
 import styles from '$/core/components/combobox/combobox.module.css';
 import FormField from '$/core/components/form-field';
 import Label from '$/core/components/label';
 import List from '$/core/components/list';
 import { type FormInputValidationState, formStoreUtils } from '$/core/stores/form.store';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import { ValidationMessageType, validationUtils } from '$/core/utils/validation';
 import { zodUtils } from '$/core/utils/zod';
 

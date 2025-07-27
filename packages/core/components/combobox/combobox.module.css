@@ -15,6 +15,10 @@
     border-bottom-right-radius: 0;
   }
 
+  .selectable-option {
+    cursor: pointer;
+  }
+
   .combobox[data-combobox-grouped="true"] {
     .selectable-option {
       padding-left: var(--spacing-lg);
@@ -78,10 +82,6 @@
 
   .selectable-group-header {
     font-weight: var(--font-weight-medium);
-  }
-
-  .selectable-option {
-    cursor: pointer;
   }
 
   .remove-selected-option {

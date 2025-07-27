@@ -1,10 +1,10 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
-import { For, type JSX, Show, mergeProps, splitProps } from 'solid-js';
+import { For, type JSX, mergeProps, Show, splitProps } from 'solid-js';
+import styles from '$/core/components/global-notifications/global-notifications.module.css';
 
 import GlobalNotificationsItem from '$/core/components/global-notifications/global-notifications-item';
-import styles from '$/core/components/global-notifications/global-notifications.module.css';
 import { GlobalNotificationPosition } from '$/core/components/global-notifications/utils';
 import type { GlobalNotification } from '$/core/stores/global-notifications.store';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type GlobalNotificationsListProps = JSX.HTMLAttributes<HTMLDivElement> & {
   notifications?: GlobalNotification[];

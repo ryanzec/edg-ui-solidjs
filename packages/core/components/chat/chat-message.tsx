@@ -1,9 +1,9 @@
-import { Typography, TypographyColor } from '../typography';
+import { type JSX, Show } from 'solid-js';
 
 import { Avatar } from '$/core/components/avatar';
 import Icon from '$/core/components/icon';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show } from 'solid-js';
+import { Typography, TypographyColor } from '../typography';
 
 export const ChatMessageSource = {
   USER: 'user',

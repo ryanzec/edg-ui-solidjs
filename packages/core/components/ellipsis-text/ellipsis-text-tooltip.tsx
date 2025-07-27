@@ -1,7 +1,7 @@
+import type { JSX } from 'solid-js';
 import Tooltip, { type TooltipComponentRef } from '$/core/components/tooltip';
 import { componentRefUtils } from '$/core/stores/component-ref';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import type { JSX } from 'solid-js';
 
 export type EllipsisTextTooltipProps = {
   text: string;

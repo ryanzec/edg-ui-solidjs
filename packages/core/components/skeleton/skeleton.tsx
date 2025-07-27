@@ -1,6 +1,6 @@
+import { For, type JSX, mergeProps, splitProps } from 'solid-js';
 import styles from '$/core/components/skeleton/skeleton.module.css';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { For, type JSX, mergeProps, splitProps } from 'solid-js';
 
 export type SkeletonProps = JSX.HTMLAttributes<HTMLDivElement> & {
   barCount?: number;

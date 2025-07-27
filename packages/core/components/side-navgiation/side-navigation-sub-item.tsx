@@ -1,9 +1,9 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, createEffect, createSignal } from 'solid-js';
+import { createEffect, createSignal, type JSX } from 'solid-js';
+import { Dynamic } from 'solid-js/web';
 
 import styles from '$/core/components/side-navgiation/side-navigation.module.css';
 import type { CommonDataAttributes } from '$/core/types/generic';
-import { Dynamic } from 'solid-js/web';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type SideNavigationSubItemProps = CommonDataAttributes & {
   children: JSX.Element;

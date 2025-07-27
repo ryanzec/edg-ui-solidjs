@@ -1,3 +1,4 @@
+import { createResource, mergeProps, Show, splitProps } from 'solid-js';
 import Avatar from '$/core/components/avatar/avatar';
 import { type AvatarProps, AvatarSize } from '$/core/components/avatar/utils';
 import EllipsisText from '$/core/components/ellipsis-text';
@@ -6,7 +7,6 @@ import { cryptoUtils } from '$/core/utils/crypto';
 import { imageUtils } from '$/core/utils/image';
 import { stringUtils } from '$/core/utils/string';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { Show, createResource, mergeProps, splitProps } from 'solid-js';
 
 export type AvatarUserProps = Omit<AvatarProps, 'class'> & {
   name: string;

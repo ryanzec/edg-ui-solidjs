@@ -1,4 +1,11 @@
 @layer components {
+  /* @todo hiding until chunk updating can be fully implemented */
+  :global {
+    .cm-chunkButtons {
+      display: none;
+    }
+  }
+
   .code-editor {
     height: 100%;
     border: 1px solid var(--color-outline);
@@ -45,12 +52,5 @@
     .cm-merge-a .cm-mergeSpacer {
       background-color: var(--color-success-subtle3);
     }
-  }
-}
-
-/* @todo hiding until chunk updating can be fully implemented */
-:global {
-  .cm-chunkButtons {
-    display: none;
   }
 }

@@ -1,3 +1,4 @@
+import { createEffect, createMemo, createSignal } from 'solid-js';
 import { Page } from '$/application/components/page';
 import GridTable from '$/core/components/grid-table';
 import { GridTableSortDirection } from '$/core/components/grid-table/grid-table-header-data';
@@ -8,7 +9,6 @@ import { componentRefUtils } from '$/core/stores/component-ref';
 import { paginationStoreUtils } from '$/core/stores/pagination.store';
 import { asyncUtils } from '$/core/utils/async';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
-import { createEffect, createMemo, createSignal } from 'solid-js';
 
 export default {
   title: 'Components/GridTable',

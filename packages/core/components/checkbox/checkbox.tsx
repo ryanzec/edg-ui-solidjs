@@ -1,12 +1,11 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
-import { type Accessor, type JSX, Show, createEffect, createSignal, splitProps, useContext } from 'solid-js';
-
+import { type Accessor, createEffect, createSignal, type JSX, Show, splitProps, useContext } from 'solid-js';
 import styles from '$/core/components/checkbox/checkbox.module.css';
 import { FormFieldContext } from '$/core/components/form-field';
 import Icon from '$/core/components/icon';
 import type { IconName } from '$/core/components/icon/utils';
 import type { DefaultFormData } from '$/core/stores/form.store';
 import { loggerUtils } from '$/core/utils/logger';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type CheckboxProps<TFormData = DefaultFormData> = Omit<JSX.InputHTMLAttributes<HTMLInputElement>, 'name'> & {
   labelElement?: JSX.Element;

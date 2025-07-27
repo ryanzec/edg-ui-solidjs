@@ -1,7 +1,6 @@
-import Avatar from '$/core/components/avatar';
-import { AvatarSize } from '$/core/components/avatar';
-import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 import { createSignal } from 'solid-js';
+import Avatar, { AvatarSize } from '$/core/components/avatar';
+import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 
 export default {
   title: 'Components/Avatar',

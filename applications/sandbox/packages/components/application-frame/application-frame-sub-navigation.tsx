@@ -1,13 +1,12 @@
 import { For, Match, Switch } from 'solid-js';
-
-import type { DynamicRouteNavigation } from '$sandbox/stores/dynamic-routes';
+import { Dynamic } from 'solid-js/web';
 
 import NoWrapper from '$/core/components/no-wrapper';
 import SideNavigation from '$/core/components/side-navgiation';
 import { stringUtils } from '$/core/utils/string';
 import ApplicationFrameExpandableItem from '$sandbox/components/application-frame/application-frame-expandable-item';
 import ApplicationFrameNavigationItem from '$sandbox/components/application-frame/application-frame-navigation-item';
-import { Dynamic } from 'solid-js/web';
+import type { DynamicRouteNavigation } from '$sandbox/stores/dynamic-routes';
 
 type ApplicationFrameSubNavigationProps = {
   routes: DynamicRouteNavigation;

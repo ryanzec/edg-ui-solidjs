@@ -1,8 +1,7 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, mergeProps, splitProps } from 'solid-js';
-
 import styles from '$/core/components/icon/icon.module.css';
 import { IconColor, type IconName, IconSize, IconVariant } from '$/core/components/icon/utils';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type IconProps = JSX.HTMLAttributes<HTMLElement> & {
   icon: IconName;

@@ -1,9 +1,9 @@
+import { splitProps } from 'solid-js';
 import Icon from '$/core/components/icon';
 import styles from '$/core/components/peek/peek.module.css';
 import Typography, { type TypographyProps, TypographySize } from '$/core/components/typography';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { splitProps } from 'solid-js';
 
 export type PeekHeaderProps = TypographyProps &
   CommonDataAttributes & {

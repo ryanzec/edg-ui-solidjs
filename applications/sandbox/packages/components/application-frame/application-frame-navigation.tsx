@@ -1,13 +1,12 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, splitProps } from 'solid-js';
+import Button, { ButtonShape } from '$/core/components/button';
 
 import type { CommonDataAttributes } from '$/core/types/generic';
-import styles from '$sandbox/components/application-frame/application-frame.module.css';
-import type { DynamicRouteNavigation } from '$sandbox/stores/dynamic-routes';
-
-import Button, { ButtonShape } from '$/core/components/button';
 import { ThemeName } from '$/core/utils/styles';
+import { tailwindUtils } from '$/core/utils/tailwind';
+import styles from '$sandbox/components/application-frame/application-frame.module.css';
 import { applicationStore } from '$sandbox/stores/application-store';
+import type { DynamicRouteNavigation } from '$sandbox/stores/dynamic-routes';
 import ApplicationFrameSubNavigation from './application-frame-sub-navigation';
 
 type ApplicationFrameNavigationProps = JSX.HTMLAttributes<HTMLDivElement> &

@@ -1,8 +1,8 @@
+import type { Dayjs } from 'dayjs';
+import { type JSX, mergeProps, Show, splitProps } from 'solid-js';
 import styles from '$/core/components/date-time/date-time.module.css';
 import { DateFormat, type TimeFormat, TimezoneFormat } from '$/core/utils/date';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import type { Dayjs } from 'dayjs';
-import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
 
 export type DateTimeProps = JSX.HTMLAttributes<HTMLDivElement> & {
   date: Dayjs;

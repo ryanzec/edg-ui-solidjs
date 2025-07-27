@@ -1,6 +1,6 @@
+import type { JSX } from 'solid-js';
 import DragDrop from '$/core/components/drag-drop';
 import type { CommonDataAttributes } from '$/core/types/generic';
-import type { JSX } from 'solid-js';
 
 export type DragDropLayoutSlotProps = JSX.HTMLAttributes<HTMLDivElement> &
   CommonDataAttributes & {

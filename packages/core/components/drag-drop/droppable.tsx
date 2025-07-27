@@ -1,6 +1,6 @@
-import { dragDropDataAttribute } from '$/core/components/drag-drop/utils';
 import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { type JSX, onCleanup } from 'solid-js';
+import { dragDropDataAttribute } from '$/core/components/drag-drop/utils';
 
 export type DroppableProps = JSX.HTMLAttributes<HTMLDivElement> & {
   id: string;

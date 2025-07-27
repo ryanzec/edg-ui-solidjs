@@ -1,7 +1,7 @@
 import { mergeProps, splitProps } from 'solid-js';
 
 import styles from '$/core/components/overlay/overlay.module.css';
-import { type OverlayProps, OverlayVariant, defaultOverlayProps } from '$/core/components/overlay/utils';
+import { defaultOverlayProps, type OverlayProps, OverlayVariant } from '$/core/components/overlay/utils';
 import { tailwindUtils } from '$/core/utils/tailwind';
 
 const OverlayLocal = (passedProps: OverlayProps) => {

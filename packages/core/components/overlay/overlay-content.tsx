@@ -1,7 +1,7 @@
-import styles from '$/core/components/overlay/overlay.module.css';
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, splitProps } from 'solid-js';
 import { Portal } from 'solid-js/web';
+import styles from '$/core/components/overlay/overlay.module.css';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 const OverlayContent = (passedProps: JSX.HTMLAttributes<HTMLDivElement>) => {
   const [props, restOfProps] = splitProps(passedProps, ['class']);

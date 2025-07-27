@@ -1,3 +1,7 @@
+import { linter, lintGutter } from '@codemirror/lint';
+import { EditorState, type Extension } from '@codemirror/state';
+import { EditorView } from '@codemirror/view';
+import { createEffect, createSignal, type JSX, mergeProps, onMount, Show, splitProps } from 'solid-js';
 import styles from '$/core/components/code-editor/code-editor.module.css';
 import { buildErrorPanelExtension } from '$/core/components/code-editor/extensions/error-panel';
 import { type CodeEditorLanguageConfiguration, defaultExtensions } from '$/core/components/code-editor/utils';
@@ -5,10 +9,6 @@ import CopyText from '$/core/components/copy-text';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import { loggerUtils } from '$/core/utils/logger';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { lintGutter, linter } from '@codemirror/lint';
-import { EditorState, type Extension } from '@codemirror/state';
-import { EditorView } from '@codemirror/view';
-import { type JSX, Show, createEffect, createSignal, mergeProps, onMount, splitProps } from 'solid-js';
 
 export type CodeEditorProps = JSX.HTMLAttributes<HTMLDivElement> &
   CommonDataAttributes & {

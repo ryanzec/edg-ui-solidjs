@@ -1,19 +1,17 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import * as process from 'node:process';
 import url from 'node:url';
-
-import { loggerUtils } from '$api/utils/logger';
 import fastifyCookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import fastify from 'fastify';
-
-import * as process from 'node:process';
 import { registerAuthenticateApi } from '$api/apis/authenticate';
 import { registerHealthApi } from '$api/apis/health';
 import { registerUsersApi } from '$api/apis/users';
 import { delayerHook } from '$api/middleware/delayer';
 import { mockerrorHook } from '$api/middleware/mockerror';
 import { applicationConfiguration } from '$api/utils/application-configuration';
+import { loggerUtils } from '$api/utils/logger';
 import { authenticationUtils } from './utils/authentication';
 import { pocketBaseUtils } from './utils/pocketbase';
 

@@ -1,13 +1,13 @@
+import { type JSX, splitProps } from 'solid-js';
 import Callout, { CalloutColor, CalloutVariant } from '$/core/components/callout';
 import styles from '$/core/components/global-notifications/global-notifications.module.css';
 import Icon from '$/core/components/icon';
 import {
   type GlobalNotification,
-  REMOVE_ANIMATION_DURATION,
   globalNotificationsStore,
+  REMOVE_ANIMATION_DURATION,
 } from '$/core/stores/global-notifications.store';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, splitProps } from 'solid-js';
 
 export type GlobalNotificationsListItemProps = JSX.HTMLAttributes<HTMLDivElement> & {
   notification: GlobalNotification;

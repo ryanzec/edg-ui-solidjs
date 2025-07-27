@@ -1,11 +1,10 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { Match, Switch } from 'solid-js';
-
 import styles from '$/core/components/combobox/combobox.module.css';
 import type { ComboboxExtraData, ComboboxSelectableOptionProps } from '$/core/components/combobox/utils';
 import Icon, { IconColor } from '$/core/components/icon';
 import iconStyles from '$/core/components/icon/icon.module.css';
 import List from '$/core/components/list';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 const FormattedSelectableOption = <TData extends ComboboxExtraData>(props: ComboboxSelectableOptionProps<TData>) => {
   return (

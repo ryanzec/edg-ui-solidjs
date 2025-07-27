@@ -1,9 +1,8 @@
-import { DateTime, type DateTimeProps } from '$/core/components/date-time';
-import Icon, { IconColor } from '$/core/components/icon';
-import { IconVariant } from '$/core/components/icon';
-import { DateFormat, TimeFormat, dateUtils } from '$/core/utils/date';
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { mergeProps, splitProps } from 'solid-js';
+import { DateTime, type DateTimeProps } from '$/core/components/date-time';
+import Icon, { IconColor, IconVariant } from '$/core/components/icon';
+import { DateFormat, dateUtils, TimeFormat } from '$/core/utils/date';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type DataUpdatedIndicatorProps = Omit<DateTimeProps, 'date'> & {
   lastUpdatedAt: string;

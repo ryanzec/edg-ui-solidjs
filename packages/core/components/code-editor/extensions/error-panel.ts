@@ -1,7 +1,7 @@
-import styles from '$/core/components/code-editor/code-editor.module.css';
-import type { CodeEditorStateBasedExtension } from '$/core/components/code-editor/utils';
 import { StateEffect, StateField } from '@codemirror/state';
 import { type EditorView, showPanel } from '@codemirror/view';
+import styles from '$/core/components/code-editor/code-editor.module.css';
+import type { CodeEditorStateBasedExtension } from '$/core/components/code-editor/utils';
 
 export const buildErrorPanelExtension = (): CodeEditorStateBasedExtension<string[]> => {
   const effect = StateEffect.define<string[]>();

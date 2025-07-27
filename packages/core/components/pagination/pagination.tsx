@@ -1,11 +1,10 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { For, Show, splitProps } from 'solid-js';
-
 import Button, { ButtonVariant } from '$/core/components/button';
 import Icon from '$/core/components/icon';
 import styles from '$/core/components/pagination/pagination.module.css';
 import type { PaginationStore } from '$/core/stores/pagination.store';
 import type { CommonDataAttributes } from '$/core/types/generic';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type PaginationProps = CommonDataAttributes & {
   paginationStore: PaginationStore;

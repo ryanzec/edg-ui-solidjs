@@ -1,13 +1,13 @@
+import type { ChartOptions } from 'chart.js';
+import type { ChartData } from 'chart.js/dist/types';
+import { createSignal, Show } from 'solid-js';
+import * as uuid from 'uuid';
 import Button from '$/core/components/button';
-import Chart, { chartComponentUtils } from '$/core/components/chart';
 import type { ChartComponentRef } from '$/core/components/chart';
+import Chart, { chartComponentUtils } from '$/core/components/chart';
 import styles from '$/core/components/chart/chart.sandbox.module.css';
 import { componentRefUtils } from '$/core/stores/component-ref';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
-import type { ChartOptions } from 'chart.js';
-import type { ChartData } from 'chart.js/dist/types';
-import { Show, createSignal } from 'solid-js';
-import * as uuid from 'uuid';
 
 export default {
   title: 'Components/Chart',

@@ -1,4 +1,4 @@
-import { Show, createSignal } from 'solid-js';
+import { createSignal, Show } from 'solid-js';
 
 import Button, { ButtonColor } from '$/core/components/button';
 import Overlay from '$/core/components/overlay';

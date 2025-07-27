@@ -1,10 +1,10 @@
-import { ScrollAreaContext } from '$/core/components/scroll-area';
-import type { ComponentRef } from '$/core/stores/component-ref';
-import { ViewCutoffLocation, domUtils } from '$/core/utils/dom';
-import { loggerUtils } from '$/core/utils/logger';
 import { debounce } from 'lodash';
 import type { JSX } from 'solid-js';
 import { createEffect, createSignal, mergeProps, onCleanup, onMount, useContext } from 'solid-js';
+import { ScrollAreaContext } from '$/core/components/scroll-area';
+import type { ComponentRef } from '$/core/stores/component-ref';
+import { domUtils, ViewCutoffLocation } from '$/core/utils/dom';
+import { loggerUtils } from '$/core/utils/logger';
 
 export const AutoScrollState = {
   ENABLED: 'enabled',

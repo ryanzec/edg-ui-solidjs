@@ -1,7 +1,6 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, splitProps } from 'solid-js';
-
 import styles from '$/core/components/radio/radio.module.css';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type RadioGroupProps = JSX.HTMLAttributes<HTMLDivElement>;
 

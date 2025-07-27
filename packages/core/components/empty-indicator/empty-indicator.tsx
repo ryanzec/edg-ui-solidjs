@@ -1,8 +1,8 @@
+import { type JSX, mergeProps, Show, splitProps } from 'solid-js';
 import Button from '$/core/components/button';
 import styles from '$/core/components/empty-indicator/empty-indicator.module.css';
 import Typography, { TypographySize } from '$/core/components/typography';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
 
 export type EmptyIndicatorProps = JSX.HTMLAttributes<HTMLDivElement> & {
   label: string;

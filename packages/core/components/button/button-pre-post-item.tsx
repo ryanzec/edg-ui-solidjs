@@ -1,8 +1,7 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, mergeProps, splitProps } from 'solid-js';
-
 import styles from '$/core/components/button/button.module.css';
 import { ButtonItemPosition } from '$/core/components/button/utils';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type ButtonIconProps = JSX.HTMLAttributes<HTMLDivElement> & {
   position?: ButtonItemPosition;

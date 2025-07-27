@@ -1,12 +1,6 @@
 import type { Diagnostic } from '@codemirror/lint';
-import type { Extension } from '@codemirror/state';
 import type { EditorView } from '@codemirror/view';
-import { type YAMLError, parse } from 'yaml';
-
-interface EditorConfig {
-  doc: string;
-  extensions: Extension[];
-}
+import { parse, type YAMLError } from 'yaml';
 
 interface YAMLErrorWithSource extends YAMLError {
   source?: {

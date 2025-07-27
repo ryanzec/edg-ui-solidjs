@@ -1,9 +1,9 @@
+import { createSignal, For } from 'solid-js';
 import Button from '$/core/components/button';
 import ScrollArea from '$/core/components/scroll-area';
-import Tree, { TreeSize, type TreeComponentRef } from '$/core/components/tree';
+import Tree, { type TreeComponentRef, TreeSize } from '$/core/components/tree';
 import { componentRefUtils } from '$/core/stores/component-ref';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
-import { For, createSignal } from 'solid-js';
 
 export default {
   title: 'Components/Tree',

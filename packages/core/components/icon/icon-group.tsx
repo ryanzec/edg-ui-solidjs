@@ -1,7 +1,7 @@
+import { type JSX, splitProps } from 'solid-js';
 import styles from '$/core/components/icon/icon.module.css';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, splitProps } from 'solid-js';
 
 export type IconGroupProps = JSX.HTMLAttributes<HTMLDivElement> & CommonDataAttributes;
 

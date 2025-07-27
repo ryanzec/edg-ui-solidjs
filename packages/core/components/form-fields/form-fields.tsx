@@ -1,6 +1,6 @@
+import { type JSX, splitProps } from 'solid-js';
 import styles from '$/core/components/form-fields/form-fields.module.css';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, splitProps } from 'solid-js';
 
 export type FormFieldsProps = JSX.HTMLAttributes<HTMLDivElement>;
 

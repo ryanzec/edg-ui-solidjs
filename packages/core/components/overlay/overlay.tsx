@@ -1,9 +1,8 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { mergeProps, splitProps } from 'solid-js';
 import { Portal } from 'solid-js/web';
-
 import styles from '$/core/components/overlay/overlay.module.css';
-import { type OverlayProps, OverlayVariant, defaultOverlayProps } from '$/core/components/overlay/utils';
+import { defaultOverlayProps, type OverlayProps, OverlayVariant } from '$/core/components/overlay/utils';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 const Overlay = (passedProps: OverlayProps) => {
   const [props, restOfProps] = splitProps(mergeProps(defaultOverlayProps, passedProps), ['class', 'variant']);

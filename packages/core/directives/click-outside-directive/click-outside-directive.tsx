@@ -1,6 +1,6 @@
-import { domUtils } from '$/core/utils/dom';
 import { type Accessor, onCleanup } from 'solid-js';
 import * as uuid from 'uuid';
+import { domUtils } from '$/core/utils/dom';
 
 export const clickOutsideDirectiveDataAttribute = {
   IGNORE_CLICK_OUTSIDE: 'data-click-outside-ignore',

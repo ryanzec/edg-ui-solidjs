@@ -1,3 +1,5 @@
+import { type Accessor, createEffect, createMemo, For, mergeProps, Show } from 'solid-js';
+import * as zod from 'zod';
 import styles from '$/application/components/user-form/user-form.module.css';
 import Button from '$/core/components/button';
 import Checkbox from '$/core/components/checkbox';
@@ -9,9 +11,7 @@ import Label from '$/core/components/label';
 import { FormSaveMode, formStoreUtils } from '$/core/stores/form.store';
 import { ValidationMessageType, validationUtils } from '$/core/utils/validation';
 import { zodUtils } from '$/core/utils/zod';
-import { type User, UserRoleName, assignableUserRoles } from '$api/types/user';
-import { type Accessor, For, Show, createEffect, createMemo, mergeProps } from 'solid-js';
-import * as zod from 'zod';
+import { assignableUserRoles, type User, UserRoleName } from '$api/types/user';
 
 export type CreateUserFormData = {
   name: string;

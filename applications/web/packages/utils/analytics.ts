@@ -1,5 +1,5 @@
-import { applicationConfiguration } from '$/application/utils/application';
 import posthog, { type PostHogConfig } from 'posthog-js';
+import { applicationConfiguration } from '$/application/utils/application';
 
 const productionOptions: Partial<PostHogConfig> = {
   api_host: 'https://us.i.posthog.com',

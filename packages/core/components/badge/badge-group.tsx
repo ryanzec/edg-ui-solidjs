@@ -1,6 +1,6 @@
+import type { JSX } from 'solid-js';
 import styles from '$/core/components/badge/badge.module.css';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import type { JSX } from 'solid-js';
 
 export type BadgeGroupProps = {
   children: JSX.Element;

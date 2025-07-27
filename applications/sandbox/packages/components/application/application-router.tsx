@@ -1,5 +1,5 @@
 import { Navigate, Route, Router } from '@solidjs/router';
-import { For, createEffect } from 'solid-js';
+import { createEffect, For } from 'solid-js';
 
 import { applicationDataAttribute } from '$/application/utils/application';
 import ApplicationWrapper from '$sandbox/components/application/application-wrapper';

@@ -1,7 +1,6 @@
-import { domUtils } from '$/core/utils/dom';
-import { ViewCutoffLocation } from '$/core/utils/dom';
 import getScrollParent from 'scrollparent';
-import { type Accessor, type Setter, createEffect, createSignal, onCleanup } from 'solid-js';
+import { type Accessor, createEffect, createSignal, onCleanup, type Setter } from 'solid-js';
+import { domUtils, ViewCutoffLocation } from '$/core/utils/dom';
 
 type CreateLoadMoreDataStoreOptions = {
   loadMoreData?: () => Promise<void>;

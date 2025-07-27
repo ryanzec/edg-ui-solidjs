@@ -1,5 +1,5 @@
-import { type OffsetOptions, type Placement, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
-import { type JSX, createContext, createEffect, createSignal, mergeProps, onCleanup, splitProps } from 'solid-js';
+import { autoUpdate, computePosition, flip, type OffsetOptions, offset, type Placement, shift } from '@floating-ui/dom';
+import { createContext, createEffect, createSignal, type JSX, mergeProps, onCleanup, splitProps } from 'solid-js';
 import * as uuid from 'uuid';
 
 import styles from '$/core/components/tooltip/tooltip.module.css';

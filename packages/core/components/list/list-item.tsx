@@ -1,9 +1,9 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
+import { type JSX, mergeProps, Show, splitProps } from 'solid-js';
+import { Dynamic, type DynamicProps } from 'solid-js/web';
 
 import styles from '$/core/components/list/list.module.css';
 import type { CommonDataAttributes } from '$/core/types/generic';
-import { Dynamic, type DynamicProps } from 'solid-js/web';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type ListItemProps = Omit<DynamicProps<'button' | 'div', JSX.HTMLAttributes<HTMLDivElement>>, 'component'> &
   CommonDataAttributes & {

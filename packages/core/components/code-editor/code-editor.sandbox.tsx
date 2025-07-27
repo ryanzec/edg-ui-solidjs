@@ -1,3 +1,5 @@
+import { yaml } from '@codemirror/lang-yaml';
+import { createSignal } from 'solid-js';
 import Button from '$/core/components/button';
 import CodeEditor, {
   type CodeEditorChunkDecisionResult,
@@ -7,8 +9,6 @@ import CodeEditor, {
 } from '$/core/components/code-editor';
 import styles from '$/core/components/code-editor/code-editor.sandbox.module.css';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
-import { yaml } from '@codemirror/lang-yaml';
-import { createSignal } from 'solid-js';
 
 export default {
   title: 'Components/CodeEditor',

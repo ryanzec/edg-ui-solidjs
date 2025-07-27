@@ -4,13 +4,12 @@ import { default as Radar, type RadarChartProps } from '$/core/components/chart/
 
 export type { BarChartProps, LineChartProps, RadarChartProps };
 
-export type { ChartCommonProps } from '$/core/components/chart/utils/core';
-
 export {
-  chartComponentUtils,
   type BuildDefaultRadarOptionsOptions,
   type ChartComponentRef,
+  chartComponentUtils,
 } from '$/core/components/chart/utils';
+export type { ChartCommonProps } from '$/core/components/chart/utils/core';
 
 export const Chart = Object.assign({}, { Bar, Line, Radar });
 

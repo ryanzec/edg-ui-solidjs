@@ -1,10 +1,10 @@
+import { type Accessor, Index, type JSX, mergeProps, splitProps } from 'solid-js';
 import FormArrayAddContainer from '$/core/components/form-array';
 import FormField from '$/core/components/form-field';
 import Icon, { IconColor } from '$/core/components/icon';
 import Input from '$/core/components/input/input';
 import styles from '$/core/components/input/input.module.css';
 import type { CreateFormStoreReturn } from '$/core/stores/form.store';
-import { type Accessor, Index, type JSX, mergeProps, splitProps } from 'solid-js';
 
 export type InputMultipleProps<TFormData extends object> = JSX.HTMLAttributes<HTMLDivElement> & {
   fieldName: keyof TFormData;

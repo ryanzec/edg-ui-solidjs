@@ -1,18 +1,18 @@
 import { default as BaseCodeEditor, type CodeEditorProps } from '$/core/components/code-editor/code-editor';
 import Diff, {
-  type CodeEditorDiffProps,
   type CodeEditorChunkDecisionResult,
+  type CodeEditorDiffProps,
 } from '$/core/components/code-editor/code-editor-diff';
 
 export { yamlLinter } from '$/core/components/code-editor/linters/yaml-linter';
 
 export type {
-  CodeEditorStateBasedExtension,
   CodeEditorLanguageConfiguration,
+  CodeEditorStateBasedExtension,
 } from '$/core/components/code-editor/utils';
 export {
-  CodeEditorDiffType,
   CodeEditorChunkDecision,
+  CodeEditorDiffType,
 } from '$/core/components/code-editor/utils';
 
 export type { CodeEditorProps, CodeEditorDiffProps, CodeEditorChunkDecisionResult };

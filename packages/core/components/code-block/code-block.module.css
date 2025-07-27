@@ -1,4 +1,11 @@
 @layer components {
+  .copy-button {
+    position: absolute;
+    right: var(--spacing-4xs);
+    top: var(--spacing-4xs);
+    opacity: var(--opacity-non-hovered-overlay-item);
+  }
+
   .code-block {
     --code-block-background-color: var(--color-brand-subtle);
 
@@ -21,12 +28,5 @@
 
   .inline {
     display: inline;
-  }
-
-  .copy-button {
-    position: absolute;
-    right: var(--spacing-4xs);
-    top: var(--spacing-4xs);
-    opacity: var(--opacity-non-hovered-overlay-item);
   }
 }

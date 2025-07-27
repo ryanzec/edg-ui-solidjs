@@ -1,10 +1,10 @@
-import Button, { ButtonVariant, ButtonColor } from '$/core/components/button';
+import { createSignal } from 'solid-js';
+import Button, { ButtonColor, ButtonVariant } from '$/core/components/button';
 import Dialog from '$/core/components/dialog';
 import type { DialogComponentRef } from '$/core/components/dialog/utils';
 import { componentRefUtils } from '$/core/stores/component-ref';
 import { asyncUtils } from '$/core/utils/async';
 import { loggerUtils } from '$/core/utils/logger';
-import { createSignal } from 'solid-js';
 
 export default {
   title: 'Components/Dialog',

@@ -1,4 +1,4 @@
-import { type Accessor, type JSX, Show, createSignal, splitProps, useContext } from 'solid-js';
+import { type Accessor, createSignal, type JSX, Show, splitProps, useContext } from 'solid-js';
 
 import styles from '$/core/components/checkbox/checkbox.module.css';
 import { type DefaultFormData, formDataAttribute } from '$/core/stores/form.store';

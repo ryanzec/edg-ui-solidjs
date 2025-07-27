@@ -1,5 +1,5 @@
 import DateTime from '$/core/components/date-time';
-import { TimeFormat, dateUtils } from '$/core/utils/date';
+import { dateUtils, TimeFormat } from '$/core/utils/date';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 export default {
   title: 'Components/DateTime',

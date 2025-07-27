@@ -1,7 +1,7 @@
-import styles from '$/core/components/typography/typography.module.css';
-import { tailwindUtils } from '$/core/utils/tailwind';
 import type { JSX } from 'solid-js';
 import { mergeProps, splitProps } from 'solid-js';
+import styles from '$/core/components/typography/typography.module.css';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export const TypographySize = {
   EXTRA_SMALL: 'extra-small',

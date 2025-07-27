@@ -1,7 +1,6 @@
 import type { ParentProps } from 'solid-js';
-
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { mergeProps, splitProps } from 'solid-js';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 type SandboxExamplesContainerProps = ParentProps<{
   asRow?: boolean;

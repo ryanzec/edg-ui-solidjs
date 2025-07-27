@@ -1,8 +1,8 @@
+import { createEffect, createSignal, on } from 'solid-js';
 import Button from '$/core/components/button/button';
 import ScrollArea from '$/core/components/scroll-area';
 import { tailwindUtils } from '$/core/utils/tailwind';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container';
-import { createEffect, createSignal, on } from 'solid-js';
 
 export default {
   title: 'Components/ScrollArea',

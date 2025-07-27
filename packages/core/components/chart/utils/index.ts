@@ -4,8 +4,8 @@ import {
   updateBarDataForSelected,
 } from '$/core/components/chart/utils/bar';
 import {
-  type ChartComponentRef,
   buildScalesOptions,
+  type ChartComponentRef,
   createCustomTicks,
   limitTickCount,
   transformDataValueForCustomTicks,

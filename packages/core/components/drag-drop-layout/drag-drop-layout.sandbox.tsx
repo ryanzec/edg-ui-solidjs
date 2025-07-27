@@ -1,4 +1,7 @@
-import Chart, { chartComponentUtils, type ChartComponentRef } from '$/core/components/chart';
+import type { ChartData } from 'chart.js';
+import { createSignal } from 'solid-js';
+import * as uuid from 'uuid';
+import Chart, { type ChartComponentRef, chartComponentUtils } from '$/core/components/chart';
 import { dragDropComponentUtils } from '$/core/components/drag-drop';
 import DragDropLayout from '$/core/components/drag-drop-layout';
 import styles from '$/core/components/drag-drop-layout/drag-drop-layout.sandbox.module.css';
@@ -6,9 +9,6 @@ import Icon, { IconSize } from '$/core/components/icon';
 import { componentRefUtils } from '$/core/stores/component-ref';
 import { tailwindUtils } from '$/core/utils/tailwind';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
-import type { ChartData } from 'chart.js';
-import { createSignal } from 'solid-js';
-import * as uuid from 'uuid';
 
 export default {
   title: 'Components/DragDropLayout',

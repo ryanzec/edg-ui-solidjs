@@ -1,8 +1,7 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
-
+import { type JSX, mergeProps, Show, splitProps } from 'solid-js';
 import styles from '$/core/components/callout/callout.module.css';
 import { CalloutColor, CalloutVariant } from '$/core/components/callout/utils';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type CalloutProps = JSX.HTMLAttributes<HTMLDivElement> & {
   color?: CalloutColor;

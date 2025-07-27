@@ -1,8 +1,7 @@
-import { TypographySize } from '$/core/components/typography';
-import Typography from '$/core/components/typography';
+import { For, type JSX, mergeProps, splitProps } from 'solid-js';
+import Typography, { TypographySize } from '$/core/components/typography';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { For, type JSX, mergeProps, splitProps } from 'solid-js';
 
 export type PageHeaderProps = Omit<JSX.HTMLAttributes<HTMLDivElement>, 'children>'> &
   CommonDataAttributes & {

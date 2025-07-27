@@ -1,8 +1,8 @@
+import { createEffect, createSignal, mergeProps, splitProps } from 'solid-js';
 import { Icon } from '$/core/components/icon';
 import Tooltip, { type TooltipComponentRef, type TooltipProps } from '$/core/components/tooltip';
 import { componentRefUtils } from '$/core/stores/component-ref';
 import { clipboardUtils } from '$/core/utils/clipboard';
-import { createEffect, createSignal, mergeProps, splitProps } from 'solid-js';
 
 export type CopyTextProps = Omit<TooltipProps, 'tooltipComponentRef'> & {
   text: string;

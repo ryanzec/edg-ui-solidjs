@@ -1,8 +1,7 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { For, type JSX, Show, splitProps } from 'solid-js';
-
 import styles from '$/core/components/supporting-text/supporting-text.module.css';
 import { SupportingTextColor } from '$/core/components/supporting-text/utils';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type SupportingTextProps = JSX.HTMLAttributes<HTMLDivElement> & {
   color?: SupportingTextColor;

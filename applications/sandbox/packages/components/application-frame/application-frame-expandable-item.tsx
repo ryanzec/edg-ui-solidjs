@@ -1,15 +1,12 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
-import { Show, createEffect, createSignal, splitProps } from 'solid-js';
-
-import styles from '$sandbox/components/application-frame/application-frame.module.css';
-
+import { useLocation } from '@solidjs/router';
+import { createEffect, createSignal, Show, splitProps } from 'solid-js';
 import SideNavigation from '$/core/components/side-navgiation';
-import type { DynamicRouteNavigation } from '$sandbox/stores/dynamic-routes';
-
 import { toggleStoreUtils } from '$/core/stores/toggle.store';
 import { stringUtils } from '$/core/utils/string';
+import { tailwindUtils } from '$/core/utils/tailwind';
+import styles from '$sandbox/components/application-frame/application-frame.module.css';
 import ApplicationFrameSubNavigation from '$sandbox/components/application-frame/application-frame-sub-navigation';
-import { useLocation } from '@solidjs/router';
+import type { DynamicRouteNavigation } from '$sandbox/stores/dynamic-routes';
 
 type ApplicationFrameExpandableItemProps = {
   routes: DynamicRouteNavigation;

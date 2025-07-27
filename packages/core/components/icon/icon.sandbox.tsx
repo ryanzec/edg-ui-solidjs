@@ -1,3 +1,4 @@
+import { createEffect, createSignal, For } from 'solid-js';
 import Checkbox from '$/core/components/checkbox';
 import Combobox, { type ComboboxOption, comboboxComponentUtils } from '$/core/components/combobox';
 import FormField from '$/core/components/form-field';
@@ -12,7 +13,6 @@ import Tooltip, { type TooltipComponentRef, TooltipTriggerEvent } from '$/core/c
 import { componentRefUtils } from '$/core/stores/component-ref';
 import { clipboardUtils } from '$/core/utils/clipboard';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { For, createEffect, createSignal } from 'solid-js';
 
 export default {
   title: 'Components/Icon',

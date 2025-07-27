@@ -1,9 +1,9 @@
+import { For, mergeProps, Show, splitProps } from 'solid-js';
 import GridTable, { type GridTableProps } from '$/core/components/grid-table/grid-table';
 import GridTableHeaderData from '$/core/components/grid-table/grid-table-header-data';
 import type { GridTableHeaderDataOptions } from '$/core/components/grid-table/utils';
 import { ScrollArea, type ScrollAreaVirtualProps } from '$/core/components/scroll-area';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { For, Show, mergeProps, splitProps } from 'solid-js';
 import GridEmptyData from './grid-empty-data';
 
 export type VirtualGridTableProps<TRowData> = Omit<GridTableProps, 'children'> & {

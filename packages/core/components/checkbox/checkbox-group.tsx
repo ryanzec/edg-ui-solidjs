@@ -1,7 +1,6 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, splitProps } from 'solid-js';
-
 import styles from '$/core/components/checkbox/checkbox.module.css';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type CheckboxGroupProps = JSX.HTMLAttributes<HTMLDivElement>;
 

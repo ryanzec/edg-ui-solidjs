@@ -1,9 +1,7 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
-
+import { type JSX, mergeProps, Show, splitProps } from 'solid-js';
 import { Badge, BadgeColor, BadgeSize, BadgeVariant } from '$/core/components/badge';
-import ButtonPrePostItem from '$/core/components/button/button-pre-post-item';
 import styles from '$/core/components/button/button.module.css';
+import ButtonPrePostItem from '$/core/components/button/button-pre-post-item';
 import {
   ButtonColor,
   ButtonItemPosition,
@@ -16,6 +14,7 @@ import Icon from '$/core/components/icon';
 import type { IconName } from '$/core/components/icon/utils';
 import Typography, { TypographySize } from '$/core/components/typography';
 import type { CommonDataAttributes } from '$/core/types/generic';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type ButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> &
   CommonDataAttributes & {

@@ -1,5 +1,5 @@
-import { defaultColor, selectedColor } from '$/core/components/chart/utils/core';
 import type { ChartData, ChartDataset, ChartOptions } from 'chart.js';
+import { defaultColor, selectedColor } from '$/core/components/chart/utils/core';
 
 const buildDefaultBarDatasetOptions = (count: number): Partial<ChartDataset<'bar'>> => {
   return {

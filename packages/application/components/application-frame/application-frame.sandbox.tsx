@@ -1,3 +1,4 @@
+import type { Navigator } from '@solidjs/router';
 import ApplicationFrame from '$/application/components/application-frame';
 import Page from '$/application/components/page';
 import PageContent from '$/application/components/page/page-content';
@@ -5,7 +6,6 @@ import UsersList, { type UsersListProps } from '$/application/components/users-l
 import { ApplicationFeature } from '$/application/utils/application';
 import { UserRoleName } from '$api/types/user';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
-import type { Navigator } from '@solidjs/router';
 
 export default {
   title: 'Application/ApplicationFrame',

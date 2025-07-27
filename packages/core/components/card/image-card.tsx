@@ -1,7 +1,7 @@
+import { type JSX, Show, splitProps } from 'solid-js';
 import Card, { type CardProps } from '$/core/components/card/card';
 import styles from '$/core/components/card/card.module.css';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show, splitProps } from 'solid-js';
 
 export type ImageCardProps = CardProps & {
   imageSrc?: string;

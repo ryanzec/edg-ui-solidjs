@@ -1,4 +1,4 @@
-import { type Locator, type Page, expect, test } from '@playwright/test';
+import { expect, type Locator, type Page, test } from '@playwright/test';
 
 import { comboboxDataAttribute } from '$/core/components/combobox/utils';
 import { BasePage, playwrightUtils } from '$/core/utils/playwright';
@@ -802,9 +802,9 @@ test.describe('combobox @combobox-component', () => {
       }
     });
 
-    test.skip('auto scroll functionality works properly', async ({ page }) => {});
+    test.skip('auto scroll functionality works properly', async () => {});
 
-    test.skip('changing local options works properly', async ({ page }) => {});
+    test.skip('changing local options works properly', async () => {});
   });
 
   test.describe('multi-select mode core functionality', () => {

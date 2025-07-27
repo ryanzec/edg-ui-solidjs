@@ -1,9 +1,8 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import getScrollParent from 'scrollparent';
-import { For, Show, createEffect, createSignal, mergeProps, splitProps } from 'solid-js';
-
+import { createEffect, createSignal, For, mergeProps, Show, splitProps } from 'solid-js';
 import Callout, { CalloutColor, type CalloutProps } from '$/core/components/callout';
 import styles from '$/core/components/form-error/form-error.module.css';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type FormErrorProps = CalloutProps & {
   errorMessage?: string | string[];

@@ -1,5 +1,5 @@
-import { asyncUtils } from '$/core/utils/async';
 import type { Page } from '@playwright/test';
+import { asyncUtils } from '$/core/utils/async';
 
 export type PlaywrightMockEndpointOptions = {
   delay?: number;

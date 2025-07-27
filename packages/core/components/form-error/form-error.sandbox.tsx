@@ -1,4 +1,4 @@
-import { Show, createSignal } from 'solid-js';
+import { createSignal, Show } from 'solid-js';
 
 import Button from '$/core/components/button';
 import FormError from '$/core/components/form-error/form-error';

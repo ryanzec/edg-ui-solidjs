@@ -1,6 +1,6 @@
-import Tooltip, { type TooltipProps } from '$/core/components/tooltip';
 import type { Placement } from '@floating-ui/dom';
 import { type JSX, mergeProps, splitProps } from 'solid-js';
+import Tooltip, { type TooltipProps } from '$/core/components/tooltip';
 
 export type DropDownProps = Omit<TooltipProps, 'triggerEvent'> & {
   handleElement: JSX.Element;

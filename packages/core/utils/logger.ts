@@ -1,5 +1,5 @@
-import { HttpError } from '$/core/utils/http';
 import posthog from 'posthog-js';
+import { HttpError } from '$/core/utils/http';
 
 export const LogMode = {
   PRODUCTION: 'production',

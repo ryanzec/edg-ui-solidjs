@@ -1,4 +1,4 @@
-import { type Accessor, type JSX, createRoot, createSignal } from 'solid-js';
+import { type Accessor, createRoot, createSignal, type JSX } from 'solid-js';
 
 import { stringUtils } from '$/core/utils/string';
 

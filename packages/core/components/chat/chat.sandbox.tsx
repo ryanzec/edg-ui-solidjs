@@ -1,12 +1,12 @@
+import { createSignal, For } from 'solid-js';
+import { createStore } from 'solid-js/store';
 import Button from '$/core/components/button';
-import Chat, { ChatMessageSource, type ChatMessageData } from '$/core/components/chat';
+import Chat, { type ChatMessageData, ChatMessageSource } from '$/core/components/chat';
 import CodeBlock from '$/core/components/code-block';
 import Markdown from '$/core/components/markdown';
 import ScrollArea from '$/core/components/scroll-area';
 import { asyncUtils } from '$/core/utils/async';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
-import { For, createSignal } from 'solid-js';
-import { createStore } from 'solid-js/store';
 
 export default {
   title: 'Components/Chat',

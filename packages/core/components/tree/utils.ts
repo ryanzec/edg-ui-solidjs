@@ -1,5 +1,5 @@
-import type { TreeSize } from '$/core/components/tree/tree';
 import type { Accessor } from 'solid-js';
+import type { TreeSize } from '$/core/components/tree/tree';
 
 export type TreeItemData = {
   id: string;

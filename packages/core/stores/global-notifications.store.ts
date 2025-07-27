@@ -1,8 +1,8 @@
-import type { CalloutColor } from '$/core/components/callout';
 import { produce } from 'immer';
 import { pullAt } from 'lodash';
-import { type Accessor, type JSX, createRoot, createSignal, untrack } from 'solid-js';
+import { type Accessor, createRoot, createSignal, type JSX, untrack } from 'solid-js';
 import * as uuid from 'uuid';
+import type { CalloutColor } from '$/core/components/callout';
 
 export type GlobalNotification = {
   id: string;

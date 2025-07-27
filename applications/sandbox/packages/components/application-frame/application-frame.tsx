@@ -1,7 +1,6 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, Show, splitProps } from 'solid-js';
-
 import type { CommonDataAttributes } from '$/core/types/generic';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import styles from '$sandbox/components/application-frame/application-frame.module.css';
 // @todo(refactor) replace with sandbox specific store
 import type { DynamicRouteNavigation } from '$sandbox/stores/dynamic-routes';

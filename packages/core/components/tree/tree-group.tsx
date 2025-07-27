@@ -1,4 +1,4 @@
-import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
+import { type JSX, mergeProps, Show, splitProps } from 'solid-js';
 
 import type { IconName } from '$/core/components/icon';
 import TreeLabel from '$/core/components/tree/tree-label';

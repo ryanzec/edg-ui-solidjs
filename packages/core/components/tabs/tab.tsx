@@ -1,8 +1,8 @@
-import { type JSX, Show, createSignal, mergeProps, splitProps, useContext } from 'solid-js';
+import { createSignal, type JSX, mergeProps, Show, splitProps, useContext } from 'solid-js';
 
-import Icon, { IconVariant, type IconName } from '$/core/components/icon';
+import Icon, { type IconName, IconVariant } from '$/core/components/icon';
 import Link from '$/core/components/link';
-import { TabSize, TabVariant, TabsContext } from '$/core/components/tabs/tabs';
+import { TabSize, TabsContext, TabVariant } from '$/core/components/tabs/tabs';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import { loggerUtils } from '$/core/utils/logger';
 import { tailwindUtils } from '$/core/utils/tailwind';

@@ -1,3 +1,4 @@
+import { createSignal } from 'solid-js';
 import Button from '$/core/components/button';
 import FormField from '$/core/components/form-field';
 import FormFields from '$/core/components/form-fields';
@@ -7,7 +8,6 @@ import Textarea from '$/core/components/textarea';
 import TextareaInnerActions from '$/core/components/textarea/textarea-inner-actions';
 import { componentRefUtils } from '$/core/stores/component-ref';
 import { formStoreUtils } from '$/core/stores/form.store';
-import { createSignal } from 'solid-js';
 
 export default {
   title: 'Components/Textarea',

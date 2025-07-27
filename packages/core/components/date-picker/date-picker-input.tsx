@@ -1,15 +1,14 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
-import { Show, createEffect, createSignal, mergeProps, onCleanup, splitProps } from 'solid-js';
-
+import { createEffect, createSignal, mergeProps, onCleanup, Show, splitProps } from 'solid-js';
 import DatePicker, { type DatePickerProps } from '$/core/components/date-picker/date-picker';
 import styles from '$/core/components/date-picker/date-picker.module.css';
 import Input, { type InputProps } from '$/core/components/input';
 import { clickOutsideDirective } from '$/core/directives/click-outside-directive';
-import { WhichDate, dateStoreUtils } from '$/core/stores/date.store';
+import { dateStoreUtils, WhichDate } from '$/core/stores/date.store';
 import { type DefaultFormData, formDataAttribute } from '$/core/stores/form.store';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import { loggerUtils } from '$/core/utils/logger';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 // this is needed to avoid this code being stripped in compilation because of the way directive work in SolidJS
 clickOutsideDirective;

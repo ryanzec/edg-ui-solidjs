@@ -1,8 +1,8 @@
+import type { Accessor } from 'solid-js';
 import type { PaginationProps } from '$/core/components/pagination/pagination';
 import type { PaginationCursorProps } from '$/core/components/pagination/pagination-cursor';
 import type { CursorPaginationStore, PaginationStore } from '$/core/stores/pagination.store';
 import { loggerUtils } from '$/core/utils/logger';
-import type { Accessor } from 'solid-js';
 
 type BuildHandleCursorPageChangeOptions = {
   cursorPaginationStore: CursorPaginationStore;

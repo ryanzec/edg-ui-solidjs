@@ -1,7 +1,6 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { type JSX, splitProps } from 'solid-js';
-
 import styles from '$/core/components/side-navgiation/side-navigation.module.css';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type SideNavigationProps = JSX.HTMLAttributes<HTMLDivElement>;
 

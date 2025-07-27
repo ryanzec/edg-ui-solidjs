@@ -1,9 +1,8 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { splitProps } from 'solid-js';
-
 import Button, { type ButtonProps } from '$/core/components/button/button';
 import styles from '$/core/components/button/button.module.css';
 import { ButtonColor, ButtonVariant } from '$/core/components/button/utils';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type ButtonToggleProps = Omit<ButtonProps, 'variant' | 'color'> & {
   isSelected?: boolean;

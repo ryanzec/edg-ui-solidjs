@@ -1,8 +1,8 @@
+import { type JSX, mergeProps, Show, splitProps } from 'solid-js';
 import Button, { ButtonVariant } from '$/core/components/button';
 import Icon from '$/core/components/icon/icon';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
 
 export const PageLayout = {
   DEFAULT: 'default',

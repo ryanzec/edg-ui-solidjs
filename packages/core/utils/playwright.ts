@@ -1,4 +1,4 @@
-import { type Locator, type Page, type TestInfo, expect, test } from '@playwright/test';
+import { expect, type Locator, type Page, type TestInfo, test } from '@playwright/test';
 
 // @todo generic
 // biome-ignore lint/suspicious/noExplicitAny: response can be anything

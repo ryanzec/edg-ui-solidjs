@@ -1,9 +1,9 @@
-import { QueryKey, applicationConfiguration } from '$/application/utils/application';
+import type { SolidMutationOptions } from '@tanstack/solid-query';
+import { useMutation, useQueryClient } from '@tanstack/solid-query';
+import { applicationConfiguration, QueryKey } from '$/application/utils/application';
 import { HttpMethod, httpUtils } from '$/core/utils/http';
 import { ApiRoute } from '$api/types/api';
 import type { GetUsersResponse, PatchUserRequest, PatchUserResponse } from '$api/types/user';
-import type { SolidMutationOptions } from '@tanstack/solid-query';
-import { useMutation, useQueryClient } from '@tanstack/solid-query';
 
 const mutate = async (requestData: PatchUserRequest): Promise<PatchUserResponse> => {
   const { id, ...payload } = requestData;

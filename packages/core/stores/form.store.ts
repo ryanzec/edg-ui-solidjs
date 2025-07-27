@@ -12,7 +12,7 @@ import * as lodash from 'lodash';
 import { type Accessor, createMemo, createSignal, onCleanup, untrack } from 'solid-js';
 import * as zod from 'zod';
 
-import { InputType, domUtils } from '$/core/utils/dom';
+import { domUtils, InputType } from '$/core/utils/dom';
 import { immerUtils } from '$/core/utils/immer';
 import { zodUtils } from '$/core/utils/zod';
 

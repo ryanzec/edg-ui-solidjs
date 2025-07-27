@@ -1,8 +1,7 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
-import { Show, mergeProps, splitProps, useContext } from 'solid-js';
-
+import { mergeProps, Show, splitProps, useContext } from 'solid-js';
 import { type AvatarProps, AvatarSize, AvatarStackContext } from '$/core/components/avatar/utils';
 import Typography, { TypographyColor, TypographySize } from '$/core/components/typography';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 const Avatar = (passedProps: AvatarProps) => {
   const [props, restOfProps] = splitProps(mergeProps({ count: 0, avatarSize: AvatarSize.BASE }, passedProps), [

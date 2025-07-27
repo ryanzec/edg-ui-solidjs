@@ -1,9 +1,8 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
+import { type JSX, mergeProps, Show, splitProps } from 'solid-js';
 import { Dynamic, type DynamicProps } from 'solid-js/web';
-
 import styles from '$/core/components/card/card.module.css';
 import Icon from '$/core/components/icon';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type CardProps = Omit<DynamicProps<'button' | 'div', JSX.HTMLAttributes<HTMLDivElement>>, 'component'> & {
   link?: string;

@@ -1,13 +1,15 @@
+import type { FastifyInstance } from 'fastify';
 import { HttpError } from '$/core/utils/http';
 import { ApiRoute } from '$api/types/api';
-import type { DeleteUserRequest, PocketBaseUser } from '$api/types/user';
 import type {
+  DeleteUserRequest,
   DeleteUserResponse,
   GetUserRequest,
   GetUserResponse,
   GetUsersResponse,
   PatchUserRequest,
   PatchUserResponse,
+  PocketBaseUser,
   PostUserRequest,
   PostUserResponse,
 } from '$api/types/user';
@@ -15,7 +17,6 @@ import { apiUtils } from '$api/utils/api';
 import { applicationConfiguration } from '$api/utils/application-configuration';
 import { authenticationUtils } from '$api/utils/authentication';
 import { pocketBaseUtils } from '$api/utils/pocketbase';
-import type { FastifyInstance } from 'fastify';
 
 export const registerUsersApi = (api: FastifyInstance) => {
   type GetUsers = { Reply: GetUsersResponse };

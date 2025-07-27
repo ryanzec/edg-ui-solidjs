@@ -1,9 +1,9 @@
+import { mergeProps } from 'solid-js';
 import DropDown, { type DropDownProps } from '$/core/components/drop-down/drop-down';
 import styles from '$/core/components/drop-down/drop-down.module.css';
 import List from '$/core/components/list';
 import ScrollArea from '$/core/components/scroll-area';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { mergeProps } from 'solid-js';
 
 export type DropDownMenuProps = Pick<
   DropDownProps,

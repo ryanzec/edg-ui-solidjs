@@ -1,6 +1,5 @@
 import ScrollArea from '$/core/components/scroll-area';
-import Tabs, { TabSize } from '$/core/components/tabs';
-import { TabOrientation } from '$/core/components/tabs';
+import Tabs, { TabOrientation, TabSize } from '$/core/components/tabs';
 import { TabVariant } from '$/core/components/tabs/tabs';
 import styles from '$/core/components/tabs/tabs.sandbox.module.css';
 import Tooltip, { type TooltipComponentRef } from '$/core/components/tooltip';

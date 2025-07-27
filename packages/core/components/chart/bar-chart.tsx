@@ -1,10 +1,10 @@
-import { chartComponentUtils } from '$/core/components/chart/utils';
-import type { ChartCommonProps, ChartComponentRef } from '$/core/components/chart/utils/core';
-import type { CommonDataAttributes } from '$/core/types/generic';
 import type { Chart, ChartOptions } from 'chart.js';
 import ChartJS from 'chart.js/auto';
 import type { ChartConfiguration, ChartData } from 'chart.js/dist/types';
 import { createEffect, createSignal, onCleanup, onMount } from 'solid-js';
+import { chartComponentUtils } from '$/core/components/chart/utils';
+import type { ChartCommonProps, ChartComponentRef } from '$/core/components/chart/utils/core';
+import type { CommonDataAttributes } from '$/core/types/generic';
 
 export type BarChartProps = CommonDataAttributes &
   ChartCommonProps & {

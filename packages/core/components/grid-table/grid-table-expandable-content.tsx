@@ -1,5 +1,5 @@
+import { type JSX, mergeProps, Show } from 'solid-js';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show, mergeProps } from 'solid-js';
 
 export type GridTableExpandableRowContentProps = {
   isExpanded: boolean;

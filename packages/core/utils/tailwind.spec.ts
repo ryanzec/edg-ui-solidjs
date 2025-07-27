@@ -1,5 +1,5 @@
-import { tailwindUtils } from '$/core/utils/tailwind';
 import { describe, expect, it } from 'vitest';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 describe('tailwind utils', () => {
   it('color works', () => {

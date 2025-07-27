@@ -1,8 +1,8 @@
+import { type JSX, mergeProps, Show, splitProps } from 'solid-js';
+import { Dynamic } from 'solid-js/web';
 import Icon, { IconColor, type IconName } from '$/core/components/icon';
 import { loggerUtils } from '$/core/utils/logger';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { type JSX, Show, mergeProps, splitProps } from 'solid-js';
-import { Dynamic } from 'solid-js/web';
 
 export const GridTableSortDirection = {
   NONE: 'none',
@@ -97,9 +97,9 @@ const GridTableHeaderData = (passedProps: GridTableHeaderDataProps) => {
   };
 
   return (
+    // biome-ignore lint(a11y/useSemanticElements): we use div for grid styling compatibility
     <Dynamic
       component={elementType()}
-      // biome-ignore lint/a11y/useSemanticElements: we use div for grid styling compatibility
       role="columnheader"
       class={tailwindUtils.merge(
         'px-grid-table-x py-grid-table-y font-medium uppercase min-w-[1px] flex items-center gap-3xs border-t border-outline border-b mb-[-1px]',

@@ -1,7 +1,7 @@
-import { dragDropDataAttribute } from '$/core/components/drag-drop/utils';
 import { draggable, dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import type { CleanupFn } from '@atlaskit/pragmatic-drag-and-drop/types';
-import { type JSX, createSignal, onCleanup, onMount } from 'solid-js';
+import { createSignal, type JSX, onCleanup, onMount } from 'solid-js';
+import { dragDropDataAttribute } from '$/core/components/drag-drop/utils';
 
 export type DraggableProps = JSX.HTMLAttributes<HTMLDivElement> & {
   draggableId: string;
@@ -39,7 +39,7 @@ const Draggable = (props: DraggableProps) => {
     }
 
     let cleanupDraggable: CleanupFn | undefined = setupDraggable(currentElement);
-    let cleanupDroppable: CleanupFn | undefined = undefined;
+    let cleanupDroppable: CleanupFn | undefined;
 
     if (props.isDroppable) {
       cleanupDroppable = dropTargetForElements({
