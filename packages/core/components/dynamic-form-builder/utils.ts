@@ -31,6 +31,9 @@ export type DynamicFormBuilderField = {
   required?: boolean;
   placeholder?: string;
   readonly?: boolean;
+  isSecret?: boolean;
+  requiredGroup?: string;
+  requiredGroupValidationMessage?: string;
   options?: {
     value: string | number;
     label: string;
@@ -51,6 +54,8 @@ export type DynamicFormBuilderProps<TFormData extends object> = {
   staticFormSchema?: Record<string, zod.ZodType>;
   namePrefix?: string;
   encloseForm?: boolean;
+  skipSecretValidation?: boolean;
+  groupedFields?: Record<string, string[]>;
 };
 
 type ConvertDataOptions = {
@@ -77,6 +82,12 @@ const convertData = (
     }
 
     if (options.onlyIncludeStructuredData && !fieldStructure) {
+      continue;
+    }
+
+    // a required secret should be allowed to be empty in the context of updating in which case an empty value means
+    // keep the existing value as it (without forcing the user to fill it in again)
+    if (fieldStructure?.required && fieldStructure.isSecret && data[key] === '') {
       continue;
     }
 

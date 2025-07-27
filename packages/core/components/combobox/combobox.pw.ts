@@ -31,131 +31,77 @@ const urls = {
 };
 
 class ComboboxPage extends BasePage {
-  readonly comboboxInput: Locator;
-  readonly resetSelectedButton: Locator;
-  readonly setSelectedButton: Locator;
-  readonly comboboxOptionsContainer: Locator;
-  readonly comboboxOption: Locator;
-  readonly firstComboboxOption: Locator;
-  readonly comboboxHighlightedOption: Locator;
-  readonly checkSelectedComboboxValue: Locator;
-  readonly checkFormValue: Locator;
-  readonly selectedOption: Locator;
-  readonly secondSelectedOptionDeleteIndicator: Locator;
-  readonly asyncDataLoadingIndicator: Locator;
-  readonly asyncDataBeforeThreshold: Locator;
-  readonly noOptionsFound: Locator;
-  readonly inputIconIndicator: Locator;
-  readonly clearIconTrigger: Locator;
-  readonly manualSelectedOptions: Locator;
+  readonly comboboxInputLocator: Locator;
+  readonly resetSelectedButtonLocator: Locator;
+  readonly setSelectedButtonLocator: Locator;
+  readonly comboboxOptionsContainerLocator: Locator;
+  readonly comboboxOptionLocator: Locator;
+  readonly comboboxHighlightedOptionLocator: Locator;
+  readonly checkSelectedComboboxValueLocator: Locator;
+  readonly checkFormValueLocator: Locator;
+  readonly selectedOptionLocator: Locator;
+  readonly secondSelectedOptionDeleteLocator: Locator;
+  readonly asyncDataLoadingLocator: Locator;
+  readonly asyncDataBeforeThresholdLocator: Locator;
+  readonly noOptionsFoundLocator: Locator;
+  readonly inputIconLocator: Locator;
+  readonly clearIconTriggerLocator: Locator;
+  readonly manualSelectedOptionsLocator: Locator;
+  readonly optionLocator: Locator;
+  readonly deleteButtonLocator: Locator;
+
+  // @todo should just be a selector based on comboboxOptionLocator
+  readonly firstComboboxOptionLocator: Locator;
 
   constructor(page: Page) {
     super(page);
 
-    this.comboboxInput = page.locator('[data-id="combobox"] [data-id="input"]');
-    this.resetSelectedButton = page.locator('[data-id="reset-selected-button"]');
-    this.setSelectedButton = page.locator('[data-id="set-selected-button"]');
-    this.comboboxOptionsContainer = page.locator('[data-id="combobox"] [data-id="selectable-options"]');
-    this.comboboxOption = page.locator(
+    this.comboboxInputLocator = page.locator('[data-id="combobox"] [data-id="input"]');
+    this.resetSelectedButtonLocator = page.locator('[data-id="reset-selected-button"]');
+    this.setSelectedButtonLocator = page.locator('[data-id="set-selected-button"]');
+    this.comboboxOptionsContainerLocator = page.locator('[data-id="combobox"] [data-id="selectable-options"]');
+    this.comboboxOptionLocator = page.locator(
       '[data-id="combobox"] [data-id="selectable-options"] [data-id="selectable-option"]',
     );
-    this.firstComboboxOption = page.locator(
+    this.firstComboboxOptionLocator = page.locator(
       '[data-id="combobox"] [data-id="selectable-options"] [data-id="selectable-option"]:nth-child(1)',
     );
-    this.comboboxHighlightedOption = page.locator(
+    this.comboboxHighlightedOptionLocator = page.locator(
       `[data-id="combobox"] [data-id="selectable-options"] [${comboboxDataAttribute.HIGHLIGHTED_OPTION}="true"]`,
     );
-    this.checkSelectedComboboxValue = page.locator('[data-id="check-selected-combobox-value"]');
-    this.checkFormValue = page.locator('[data-id="check-form-value"]');
-    this.selectedOption = page.locator('[data-id="combobox"] [data-id="selected-option"]');
-    this.secondSelectedOptionDeleteIndicator = page.locator(
+    this.checkSelectedComboboxValueLocator = page.locator('[data-id="check-selected-combobox-value"]');
+    this.checkFormValueLocator = page.locator('[data-id="check-form-value"]');
+    this.selectedOptionLocator = page.locator('[data-id="combobox"] [data-id="selected-option"]');
+    this.secondSelectedOptionDeleteLocator = page.locator(
       '[data-id="combobox"] [data-id="selected-option"]:nth-child(2) [data-id="delete-indicator"]',
     );
-    this.asyncDataLoadingIndicator = page.locator('[data-id="combobox"] [data-id="async-options-loading"]');
-    this.asyncDataBeforeThreshold = page.locator('[data-id="combobox"] [data-id="async-options-before-threshold"]');
-    this.noOptionsFound = page.locator('[data-id="combobox"] [data-id*="no-options-found"]');
-    this.inputIconIndicator = page.locator('[data-id="combobox"] [data-id="input-icon-indicator"]');
-    this.clearIconTrigger = page.locator('[data-id="combobox"] [data-id="clear-icon-trigger"]');
-    this.manualSelectedOptions = page.locator('[data-id="manual-selected-options"]');
-  }
-
-  async goto(url: string) {
-    return await playwrightUtils.goto(this.page, url);
-  }
-
-  // selectors
-  getSelectedOptionDeleteIndicator(index: number) {
-    return this.page.locator(
-      `[data-id="combobox"] [data-id="selected-option"]:nth-child(${index}) [data-id="delete-indicator"]`,
+    this.asyncDataLoadingLocator = page.locator('[data-id="combobox"] [data-id="async-options-loading"]');
+    this.asyncDataBeforeThresholdLocator = page.locator(
+      '[data-id="combobox"] [data-id="async-options-before-threshold"]',
+    );
+    this.noOptionsFoundLocator = page.locator('[data-id="combobox"] [data-id*="no-options-found"]');
+    this.inputIconLocator = page.locator('[data-id="combobox"] [data-id="input-icon-indicator"]');
+    this.clearIconTriggerLocator = page.locator('[data-id="combobox"] [data-id="clear-icon-trigger"]');
+    this.manualSelectedOptionsLocator = page.locator('[data-id="manual-selected-options"]');
+    this.optionLocator = page.locator(
+      '[data-id="combobox"] [data-id="selectable-options"] [data-id="selectable-option"]',
+    );
+    this.deleteButtonLocator = page.locator(
+      '[data-id="combobox"] [data-id="selected-option"] [data-id="delete-indicator"]',
     );
   }
 
-  getOption(index: number) {
-    return this.page.locator(
-      `[data-id="combobox"] [data-id="selectable-options"] [data-id="selectable-option"]:nth-child(${index})`,
-    );
-  }
-
-  // actions
-  async clickInput() {
-    await this.comboboxInput.click();
-  }
-
-  async fillInput(value: string) {
-    await this.comboboxInput.fill(value);
-  }
-
-  async pressInput(value: string) {
-    await this.comboboxInput.press(value);
-  }
-
-  async blurInput() {
-    await this.comboboxInput.blur();
-  }
-
-  async focusInput() {
-    await this.comboboxInput.focus();
-  }
-
-  async clickOption(index: number) {
-    await this.getOption(index).click();
-  }
-
-  async hoverOverOption(index: number) {
-    await this.getOption(index).hover();
-  }
-
-  async clickSetSelectedButton() {
-    await this.setSelectedButton.click();
-  }
-
-  async clickResetSelectedButton() {
-    await this.resetSelectedButton.click();
-  }
-
-  async clickInputIconIndicator() {
-    await this.inputIconIndicator.click();
-  }
-
-  async clickClearIconIndicator() {
-    await this.clearIconTrigger.click();
-  }
-
-  async clickSelectedOptionDeleteIndicator(index: number) {
-    await this.getSelectedOptionDeleteIndicator(index).click();
-  }
-
-  // validations
+  // expects
   async expectOptionsContainerToBeVisible(errorMessage: string) {
-    await expect(this.comboboxOptionsContainer, errorMessage).toBeVisible();
+    await expect(this.comboboxOptionsContainerLocator, errorMessage).toBeVisible();
   }
 
   async expectOptionsContainerNotToBeVisible(errorMessage: string) {
-    await expect(this.comboboxOptionsContainer, errorMessage).not.toBeVisible();
+    await expect(this.comboboxOptionsContainerLocator, errorMessage).not.toBeVisible();
   }
 
   async expectOptionsCount(count: number, errorMessage: string) {
-    await expect(this.comboboxOption, errorMessage).toHaveCount(count);
+    await expect(this.comboboxOptionLocator, errorMessage).toHaveCount(count);
   }
 
   async expectOptionToHaveText(text: string, errorMessage: string, count = 1) {
@@ -175,39 +121,39 @@ class ComboboxPage extends BasePage {
   }
 
   async expectSelectedOptionsCount(count: number, errorMessage: string) {
-    await expect(this.selectedOption, errorMessage).toHaveCount(count);
+    await expect(this.selectedOptionLocator, errorMessage).toHaveCount(count);
   }
 
   async expectHighlightedOptionsCount(count: number, errorMessage: string) {
-    await expect(this.comboboxHighlightedOption, errorMessage).toHaveCount(count);
+    await expect(this.comboboxHighlightedOptionLocator, errorMessage).toHaveCount(count);
   }
 
   async expectHighlightedOptionDisplay(text: string, errorMessage: string) {
-    await expect(this.comboboxHighlightedOption, errorMessage).toHaveText(text);
+    await expect(this.comboboxHighlightedOptionLocator, errorMessage).toHaveText(text);
   }
 
   async expectOptionsNotToBeVisible(errorMessage: string) {
-    await expect(this.comboboxOption, errorMessage).not.toBeVisible();
+    await expect(this.comboboxOptionLocator, errorMessage).not.toBeVisible();
   }
 
   async expectInputToBeFocused(errorMessage: string) {
-    await expect(this.comboboxInput, errorMessage).toBeFocused();
+    await expect(this.comboboxInputLocator, errorMessage).toBeFocused();
   }
 
   async expectInputNotToBeFocused(errorMessage: string) {
-    await expect(this.comboboxInput, errorMessage).not.toBeFocused();
+    await expect(this.comboboxInputLocator, errorMessage).not.toBeFocused();
   }
 
   async expectInputValue(inputValue: string, errorMessage: string) {
-    expect(await this.comboboxInput.inputValue(), errorMessage).toBe(inputValue);
+    expect(await this.comboboxInputLocator.inputValue(), errorMessage).toBe(inputValue);
   }
 
   async expectInputAttribute(attribute: string, value: string, errorMessage: string) {
-    await expect(this.comboboxInput, errorMessage).toHaveAttribute(attribute, value);
+    await expect(this.comboboxInputLocator, errorMessage).toHaveAttribute(attribute, value);
   }
 
   async expectInputToBeDisabled(errorMessage: string) {
-    await expect(this.comboboxInput, errorMessage).toBeDisabled();
+    await expect(this.comboboxInputLocator, errorMessage).toBeDisabled();
   }
 
   async expectManualSelectedOptionToHaveText(text: string, errorMessage: string, count = 1) {
@@ -219,43 +165,43 @@ class ComboboxPage extends BasePage {
   async expectNoOptionsFoundNotToBeVisible(errorMessage: string) {
     // we need to limit the timeout in the case as the no options found would go away when the debounce
     // async call is executed so we want to make sure the no options is not visible before then
-    await expect(this.noOptionsFound, errorMessage).toHaveCount(0, { timeout: 50 });
+    await expect(this.noOptionsFoundLocator, errorMessage).toHaveCount(0, { timeout: 50 });
   }
 
   async expectNoOptionsFoundToBeVisible(errorMessage: string) {
-    await expect(this.noOptionsFound, errorMessage).toHaveCount(1);
+    await expect(this.noOptionsFoundLocator, errorMessage).toHaveCount(1);
   }
 
   async expectAsyncDataLoadingIndicatorNotToBeVisible(errorMessage: string) {
-    await expect(this.asyncDataLoadingIndicator, errorMessage).toHaveCount(0);
+    await expect(this.asyncDataLoadingLocator, errorMessage).toHaveCount(0);
   }
 
   async expectAsyncDataLoadingIndicatorToBeVisible(errorMessage: string) {
-    await expect(this.asyncDataLoadingIndicator, errorMessage).toHaveCount(1);
+    await expect(this.asyncDataLoadingLocator, errorMessage).toHaveCount(1);
   }
 
   async expectAsyncDataBeforeThresholdIndicatorToBeVisible(errorMessage: string) {
-    await expect(this.asyncDataBeforeThreshold, errorMessage).toHaveCount(1);
+    await expect(this.asyncDataBeforeThresholdLocator, errorMessage).toHaveCount(1);
   }
 
   async testSelectedValue(checkValue: string, isMultiSelect: boolean, errorContext?: string) {
     if (isMultiSelect) {
-      await expect(this.selectedOption, errorContext).toContainText(checkValue);
+      await expect(this.selectedOptionLocator, errorContext).toContainText(checkValue);
 
       return;
     }
 
-    await expect(this.checkSelectedComboboxValue, errorContext).toContainText(checkValue);
+    await expect(this.checkSelectedComboboxValueLocator, errorContext).toContainText(checkValue);
   }
 
   async testNoSelectedValue(isMultiSelect: boolean, errorContext?: string) {
     if (isMultiSelect) {
-      await expect(this.selectedOption, errorContext).toHaveCount(0);
+      await expect(this.selectedOptionLocator, errorContext).toHaveCount(0);
 
       return;
     }
 
-    await expect(this.checkSelectedComboboxValue, errorContext).toHaveCount(0);
+    await expect(this.checkSelectedComboboxValueLocator, errorContext).toHaveCount(0);
   }
 }
 
@@ -270,7 +216,7 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
+        await componentPage.comboboxInputLocator.click();
 
         await componentPage.expectOptionsCount(0, loopErrorContext);
       }
@@ -285,7 +231,7 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
+        await componentPage.comboboxInputLocator.click();
 
         await componentPage.expectOptionsCount(4, loopErrorContext);
       }
@@ -300,8 +246,8 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('1');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('1');
 
         await componentPage.expectOptionsCount(1, loopErrorContext);
         await componentPage.expectHighlightedOptionsCount(0, loopErrorContext);
@@ -317,10 +263,10 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('t');
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('ArrowDown');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('t');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
 
         await componentPage.expectHighlightedOptionDisplay('test2', loopErrorContext);
       }
@@ -335,9 +281,9 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('t');
-        await componentPage.hoverOverOption(1);
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('t');
+        await componentPage.optionLocator.nth(0).hover();
 
         await componentPage.expectHighlightedOptionDisplay('test1', loopErrorContext);
       }
@@ -352,11 +298,11 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('t');
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('t');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
 
         await componentPage.expectOptionsCount(0, loopErrorContext);
       }
@@ -372,9 +318,9 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('t');
-        await componentPage.pressInput('Escape');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('t');
+        await componentPage.comboboxInputLocator.press('Escape');
 
         await componentPage.expectOptionsNotToBeVisible(loopErrorContext);
       }
@@ -390,15 +336,15 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('t');
-        await componentPage.pressInput('Escape');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('t');
+        await componentPage.comboboxInputLocator.press('Escape');
 
         await componentPage.expectInputToBeFocused(loopErrorContext);
         await componentPage.expectInputValue('', loopErrorContext);
         await componentPage.expectOptionsContainerToBeVisible(loopErrorContext);
 
-        await componentPage.pressInput('Escape');
+        await componentPage.comboboxInputLocator.press('Escape');
 
         await componentPage.expectInputNotToBeFocused(loopErrorContext);
         await componentPage.expectOptionsNotToBeVisible(loopErrorContext);
@@ -433,8 +379,8 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.pressInput('Escape');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.press('Escape');
 
         await componentPage.expectInputValue('', loopErrorContext);
 
@@ -454,9 +400,9 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('t');
-        await componentPage.pressInput('Tab');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('t');
+        await componentPage.comboboxInputLocator.press('Tab');
 
         await componentPage.expectInputNotToBeFocused(loopErrorContext);
         await componentPage.expectOptionsContainerNotToBeVisible(loopErrorContext);
@@ -473,9 +419,9 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('t');
-        await componentPage.pressInput('Tab');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('t');
+        await componentPage.comboboxInputLocator.press('Tab');
 
         await componentPage.expectInputValue('', loopErrorContext);
 
@@ -493,10 +439,10 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('t');
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Tab');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('t');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Tab');
 
         await componentPage.expectInputValue('', loopErrorContext);
 
@@ -514,9 +460,9 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('t');
-        await componentPage.blurInput();
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('t');
+        await componentPage.comboboxInputLocator.blur();
 
         await componentPage.expectInputNotToBeFocused(loopErrorContext);
         await componentPage.expectOptionsNotToBeVisible(loopErrorContext);
@@ -533,9 +479,9 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('t');
-        await componentPage.blurInput();
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('t');
+        await componentPage.comboboxInputLocator.blur();
 
         await componentPage.expectInputValue('', loopErrorContext);
 
@@ -555,9 +501,9 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('Backspace');
-        await componentPage.blurInput();
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.press('Backspace');
+        await componentPage.comboboxInputLocator.blur();
 
         await componentPage.expectInputValue(isMultiMode ? '' : 'test1', loopErrorContext);
 
@@ -577,12 +523,12 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('t');
-        await componentPage.clickOption(1);
-        await componentPage.clickInput();
-        await componentPage.pressInput('Backspace');
-        await componentPage.blurInput();
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('t');
+        await componentPage.optionLocator.nth(0).click();
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.press('Backspace');
+        await componentPage.comboboxInputLocator.blur();
 
         await componentPage.expectInputValue(isMultiMode ? '' : 'test1', loopErrorContext);
 
@@ -615,7 +561,7 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickSetSelectedButton();
+        await componentPage.setSelectedButtonLocator.click();
 
         await componentPage.expectInputValue('tes4', loopErrorContext);
         await componentPage.testSelectedValue('tes4', isMultiMode, loopErrorContext);
@@ -633,8 +579,8 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickSetSelectedButton();
-        await componentPage.clickResetSelectedButton();
+        await componentPage.setSelectedButtonLocator.click();
+        await componentPage.resetSelectedButtonLocator.click();
 
         await componentPage.expectInputValue('', loopErrorContext);
         await componentPage.testNoSelectedValue(isMultiMode, loopErrorContext);
@@ -654,14 +600,14 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('t');
-        await componentPage.pressInput('Backspace');
-        await componentPage.pressInput('Backspace');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('t');
+        await componentPage.comboboxInputLocator.press('Backspace');
+        await componentPage.comboboxInputLocator.press('Backspace');
 
         await componentPage.expectOptionsCount(0, loopErrorContext);
 
-        await componentPage.blurInput();
+        await componentPage.comboboxInputLocator.blur();
 
         await componentPage.expectInputValue('', loopErrorContext);
       }
@@ -678,7 +624,7 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInputIconIndicator();
+        await componentPage.inputIconLocator.click();
 
         await componentPage.expectInputToBeFocused(loopErrorContext);
         await componentPage.expectOptionsContainerToBeVisible(loopErrorContext);
@@ -696,8 +642,8 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.pressInput('ArrowDown');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.press('ArrowDown');
 
         await componentPage.expectInputToBeFocused(loopErrorContext);
         await componentPage.expectOptionsContainerToBeVisible(loopErrorContext);
@@ -730,7 +676,7 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
+        await componentPage.comboboxInputLocator.click();
 
         await componentPage.expectOptionsCount(4, loopErrorContext);
         await componentPage.expectOptionToHaveText('test1', loopErrorContext);
@@ -749,8 +695,8 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('testing');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('testing');
 
         await componentPage.expectNoOptionsFoundToBeVisible(loopErrorContext);
       }
@@ -769,12 +715,12 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
-        await componentPage.blurInput();
-        await componentPage.focusInput();
-        await componentPage.pressInput('Backspace');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
+        await componentPage.comboboxInputLocator.blur();
+        await componentPage.comboboxInputLocator.focus();
+        await componentPage.comboboxInputLocator.press('Backspace');
 
         await componentPage.expectOptionsCount(2, loopErrorContext);
       }
@@ -791,11 +737,11 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('t');
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.blurInput();
-        await componentPage.clickClearIconIndicator();
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('t');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.blur();
+        await componentPage.clearIconTriggerLocator.click();
 
         await componentPage.testNoSelectedValue(isMultiMode, loopErrorContext);
         await componentPage.expectInputNotToBeFocused(loopErrorContext);
@@ -817,14 +763,14 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
+        await componentPage.comboboxInputLocator.click();
 
         await componentPage.expectOptionsCount(0, loopErrorContext);
 
-        await componentPage.clickInput();
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
-        await componentPage.pressInput('ArrowDown');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
 
         await componentPage.expectSelectedOptionToHaveText('test1', loopErrorContext);
       }
@@ -839,15 +785,15 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
+        await componentPage.comboboxInputLocator.click();
 
         await componentPage.expectOptionsCount(0, loopErrorContext);
 
-        await componentPage.clickInput();
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
 
         await componentPage.expectSelectedOptionsCount(2, loopErrorContext);
         await componentPage.expectSelectedOptionToHaveText('test1', loopErrorContext);
@@ -866,12 +812,12 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.expectOptionsCount(0, loopErrorContext);
 
-        await componentPage.clickInput();
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
-        await componentPage.clickSelectedOptionDeleteIndicator(2);
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
+        await componentPage.deleteButtonLocator.nth(1).click();
 
         await componentPage.expectSelectedOptionsCount(1, loopErrorContext);
         await componentPage.expectSelectedOptionToHaveText('test1', loopErrorContext);
@@ -889,12 +835,12 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.expectOptionsCount(0, loopErrorContext);
 
-        await componentPage.clickInput();
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
-        await componentPage.clickSelectedOptionDeleteIndicator(2);
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
+        await componentPage.deleteButtonLocator.nth(1).click();
 
         await componentPage.expectOptionsContainerNotToBeVisible(loopErrorContext);
       }
@@ -909,18 +855,18 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
+        await componentPage.comboboxInputLocator.click();
 
         await componentPage.expectOptionsCount(0, loopErrorContext);
 
-        await componentPage.clickInput();
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
-        await componentPage.clickSelectedOptionDeleteIndicator(2);
-        await componentPage.clickInput();
-        await componentPage.fillInput('t');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
+        await componentPage.deleteButtonLocator.nth(1).click();
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('t');
 
         await componentPage.expectOptionsCount(3, loopErrorContext);
         await componentPage.expectOptionToHaveText('test2', loopErrorContext);
@@ -936,9 +882,9 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.clickOption(1);
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.optionLocator.nth(0).click();
 
         await componentPage.expectOptionsContainerToBeVisible(loopErrorContext);
         await componentPage.expectOptionsCount(3, loopErrorContext);
@@ -954,9 +900,9 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
 
         await componentPage.expectOptionsContainerToBeVisible(loopErrorContext);
         await componentPage.expectOptionsCount(3, loopErrorContext);
@@ -974,11 +920,11 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('testing new value');
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
-        await componentPage.clickInputIconIndicator();
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('testing new value');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
+        await componentPage.inputIconLocator.click();
 
         await componentPage.testSelectedValue('testing new value', isMultiMode, loopErrorContext);
         await componentPage.expectInputToBeFocused(loopErrorContext);
@@ -996,14 +942,14 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
+        await componentPage.comboboxInputLocator.click();
 
         await componentPage.expectOptionsCount(0, loopErrorContext);
 
-        await componentPage.clickInput();
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
-        await componentPage.pressInput('ArrowDown');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
 
         await componentPage.expectOptionToHaveText('test1', loopErrorContext);
         await componentPage.expectManualSelectedOptionToHaveText('test1', loopErrorContext);
@@ -1021,15 +967,15 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
+        await componentPage.comboboxInputLocator.click();
 
         await componentPage.expectOptionsCount(0, loopErrorContext);
 
-        await componentPage.clickInput();
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
 
         await componentPage.expectManualSelectedOptionToHaveText('test1', loopErrorContext, 0);
       }
@@ -1046,15 +992,15 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
+        await componentPage.comboboxInputLocator.click();
 
         await componentPage.expectOptionsCount(0, loopErrorContext);
 
-        await componentPage.clickInput();
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
 
         await componentPage.testNoSelectedValue(false, loopErrorContext);
       }
@@ -1071,8 +1017,8 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('t');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('t');
 
         await componentPage.expectNoOptionsFoundNotToBeVisible(loopErrorContext);
       }
@@ -1091,8 +1037,8 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('t');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('t');
 
         await componentPage.expectAsyncDataLoadingIndicatorNotToBeVisible(loopErrorContext);
 
@@ -1116,8 +1062,8 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.fillInput('tes');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.fill('tes');
 
         await componentPage.expectAsyncDataLoadingIndicatorToBeVisible(loopErrorContext);
         await componentPage.expectOptionsCount(4, loopErrorContext);
@@ -1136,9 +1082,9 @@ test.describe('combobox @combobox-component', () => {
 
         await componentPage.goto(testUrls[i]);
 
-        await componentPage.clickInput();
-        await componentPage.pressInput('ArrowDown');
-        await componentPage.pressInput('Enter');
+        await componentPage.comboboxInputLocator.click();
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('Enter');
 
         await componentPage.expectSelectedOptionsCount(1, loopErrorContext);
         await componentPage.expectInputValue('', loopErrorContext);

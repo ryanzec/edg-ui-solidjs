@@ -1,14 +1,13 @@
-import { For, Index, Match, Show, Switch, createEffect, createSignal } from 'solid-js';
+import { type Accessor, createEffect, createSignal, For, Index, Match, Show, Switch } from 'solid-js';
 import * as uuid from 'uuid';
 import type { ZodType } from 'zod';
 import * as zod from 'zod';
-
 import Button from '$/core/components/button';
 import Checkbox from '$/core/components/checkbox';
 import Combobox, {
-  comboboxComponentUtils,
   type ComboboxOption,
   type ComboboxValueStore,
+  comboboxComponentUtils,
 } from '$/core/components/combobox';
 import DatePicker from '$/core/components/date-picker';
 import FormField from '$/core/components/form-field';
@@ -18,9 +17,8 @@ import Label from '$/core/components/label';
 import Radio from '$/core/components/radio';
 import Textarea from '$/core/components/textarea';
 import TimeInput, { timeInputComponentUtils } from '$/core/components/time-input';
-import { type DateRangeStore, type WhichDate, dateStoreUtils } from '$/core/stores/date.store';
-import { formStoreUtils } from '$/core/stores/form.store';
-import { FormInputValidationState } from '$/core/stores/form.store';
+import { type DateRangeStore, dateStoreUtils, type WhichDate } from '$/core/stores/date.store';
+import { FormInputValidationState, formStoreUtils } from '$/core/stores/form.store';
 import type { CommonDataType } from '$/core/types/generic';
 import { ValidationMessageType, validationUtils } from '$/core/utils/validation';
 import { zodUtils } from '$/core/utils/zod';
@@ -160,7 +158,7 @@ export const SetValue = () => {
     <div data-id="container">
       <form use:formDirective>
         <FormFields>
-          <FormField>
+          <FormField data-id="input">
             <Label>Title</Label>
             <Input type="text" name="title" />
           </FormField>
@@ -229,11 +227,11 @@ export const InitializeWithValues = () => {
     <div data-id="container">
       <form use:formDirective>
         <FormFields>
-          <FormField>
+          <FormField data-id="input">
             <Label>Title</Label>
             <Input type="text" name="title" />
           </FormField>
-          <FormField>
+          <FormField data-id="input">
             <Label>Title2</Label>
             <Input type="text" name="title2" />
           </FormField>
@@ -266,11 +264,11 @@ export const Clear = () => {
     <div data-id="container">
       <form use:formDirective>
         <FormFields>
-          <FormField>
+          <FormField data-id="input">
             <Label>Title</Label>
             <Input type="text" name="title" />
           </FormField>
-          <FormField>
+          <FormField data-id="input">
             <Label>Title2</Label>
             <Input type="text" name="title2" />
           </FormField>
@@ -299,15 +297,15 @@ export const ResetWithoutInitial = () => {
     <div data-id="container">
       <form use:formDirective>
         <FormFields>
-          <FormField>
+          <FormField data-id="input">
             <Label>Title</Label>
             <Input type="text" name="title" placeholder="placeholder" />
           </FormField>
-          <FormField>
+          <FormField data-id="input">
             <Label>Title2</Label>
             <Input type="text" name="title2" placeholder="placeholder" />
           </FormField>
-          <FormField>
+          <FormField data-id="textarea">
             <Label>Textarea</Label>
             <Textarea name="textarea" placeholder="placeholder" />
           </FormField>
@@ -343,15 +341,15 @@ export const ResetWithInitial = () => {
     <div data-id="container">
       <form use:formDirective>
         <FormFields>
-          <FormField>
+          <FormField data-id="input">
             <Label>Title</Label>
             <Input type="text" name="title" placeholder="placeholder" />
           </FormField>
-          <FormField>
+          <FormField data-id="input">
             <Label>Title2</Label>
             <Input type="text" name="title2" placeholder="placeholder" />
           </FormField>
-          <FormField>
+          <FormField data-id="textarea">
             <Label>Textarea</Label>
             <Textarea name="textarea" placeholder="placeholder" />
           </FormField>
@@ -388,7 +386,7 @@ export const IsTouched = () => {
     <div data-id="container">
       <form use:formDirective>
         <FormFields>
-          <FormField>
+          <FormField data-id="input">
             <Label>Title</Label>
             <Input type="text" name="title" />
           </FormField>
@@ -453,7 +451,7 @@ export const Events = () => {
     <div data-id="container">
       <form use:formDirective>
         <FormFields>
-          <FormField errors={form.errors().title?.errors}>
+          <FormField data-id="input-validated" errors={form.errors().title?.errors}>
             <Label>Title</Label>
             <Input type="text" name="title" />
           </FormField>
@@ -532,7 +530,7 @@ export const NoValidateOnChange = () => {
     <div data-id="container">
       <form use:formDirective>
         <FormFields>
-          <FormField errors={form.errors().title?.errors}>
+          <FormField data-id="input-validated" errors={form.errors().title?.errors}>
             <Label>Title</Label>
             <Input type="text" name="title" />
           </FormField>
@@ -549,65 +547,6 @@ export const NoValidateOnChange = () => {
           </div>
         </FormFields>
       </form>
-    </div>
-  );
-};
-
-export const ArrayFields = () => {
-  const form = formStoreUtils.createStore<SimpleArrayFormData>({
-    onSubmit: () => {},
-    schema: simpleArrayFormDataSchema,
-  });
-
-  const formDirective = form.formDirective;
-
-  return (
-    <div data-id="container">
-      <Button data-id="add-array-field-button" type="button" onclick={() => form.addArrayField('array', {})}>
-        + Add Array Field
-      </Button>
-      <form use:formDirective>
-        <FormFields>
-          <FormField errors={form.errors().array?.errors}>
-            <Index each={form.data().array}>
-              {(arrayField, index) => {
-                const getArrayFieldError = () => form.errors().array?.[index] ?? {};
-
-                return (
-                  <div data-id="array-field-element">
-                    <FormFields>
-                      <FormField errors={getArrayFieldError().partA?.errors}>
-                        <Label>Part A</Label>
-                        <Input type="text" name={`array.${index}.partA`} />
-                      </FormField>
-                      <FormField errors={getArrayFieldError().partB?.errors}>
-                        <Label>Part B</Label>
-                        <Input type="text" name={`array.${index}.partB`} />
-                      </FormField>
-                      <Button
-                        // @todo(!!!) make danger when implemented
-                        data-id="remove-array-field-button"
-                        onclick={() => form.removeArrayField('array', index)}
-                      >
-                        REMOVE
-                      </Button>
-                    </FormFields>
-                  </div>
-                );
-              }}
-            </Index>
-          </FormField>
-          <div>
-            <Button data-id="submit-button" type="submit">
-              Submit
-            </Button>
-          </div>
-        </FormFields>
-      </form>
-      <hr />
-      <h1>Debug Tools</h1>
-      <ExpandableCode label="Errors">{JSON.stringify(form.errors(), null, 2)}</ExpandableCode>
-      <ExpandableCode label="Touched Fields">{JSON.stringify(form.touchedFields(), null, 2)}</ExpandableCode>
     </div>
   );
 };
@@ -1078,6 +1017,954 @@ export const DynamicFormElements = () => {
       <ExpandableCode label="Errors">{JSON.stringify(form.errors(), null, 2)}</ExpandableCode>
       <ExpandableCode label="Touched Fields">{JSON.stringify(form.touchedFields(), null, 2)}</ExpandableCode>
       <ExpandableCode label="Dirty Fields">{JSON.stringify(form.dirtyFields(), null, 2)}</ExpandableCode>
+    </div>
+  );
+};
+
+export const ValidateWith = () => {
+  type FormData = {
+    title: string;
+    confirmTitle: string;
+  };
+
+  const buildFormSchema = (formData: Accessor<Partial<FormData>>) => {
+    const schema = zodUtils.schemaForType<FormData>()(
+      zod.object({
+        title: zod
+          .string()
+          .min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED))
+          .superRefine((value, context) => {
+            if (!formData().confirmTitle || value === formData().confirmTitle) {
+              return;
+            }
+
+            context.addIssue({
+              code: zod.ZodIssueCode.custom,
+              message: 'Titles do not match',
+            });
+          }),
+        confirmTitle: zod
+          .string()
+          .min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED))
+          .superRefine((value, context) => {
+            if (!formData().title || value === formData().title) {
+              return;
+            }
+
+            context.addIssue({
+              code: zod.ZodIssueCode.custom,
+              message: 'Titles do not match',
+            });
+          }),
+      }),
+    );
+
+    return schema;
+  };
+
+  const form = formStoreUtils.createStore<FormData>({
+    buildSchema: buildFormSchema,
+    validateWith: {
+      title: ['confirmTitle'],
+      confirmTitle: ['title'],
+    },
+    onSubmit: (data) => {
+      console.log(data);
+    },
+  });
+
+  const formDirective = form.formDirective;
+
+  return (
+    <div data-id="container">
+      <form use:formDirective>
+        <FormFields>
+          <FormField errors={form.errors()?.title?.errors}>
+            <Label>Title</Label>
+            <Input type="text" name="title" formData={form.data} />
+          </FormField>
+          <FormField errors={form.errors()?.confirmTitle?.errors}>
+            <Label>Confirm Title</Label>
+            <Input type="text" name="confirmTitle" formData={form.data} />
+          </FormField>
+          <div>
+            <Button data-id="submit-button" type="submit">
+              Submit
+            </Button>
+          </div>
+        </FormFields>
+      </form>
+    </div>
+  );
+};
+
+export const ValidationArrayFields = () => {
+  type ObjectFormData = {
+    partA: string;
+    partB?: string;
+  };
+
+  type FormData = {
+    array?: ObjectFormData[];
+    arrayValidated: ObjectFormData[];
+  };
+
+  const schemaFormData = zodUtils.schemaForType<FormData>()(
+    zod.object({
+      array: zod
+        .object({
+          partA: zod.string().min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED)),
+          partB: zod.string().optional(),
+        })
+        .array()
+        .optional(),
+      arrayValidated: zod
+        .object({
+          partA: zod.string().min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED)),
+          partB: zod.string().optional(),
+        })
+        .array()
+        .min(2, '2 Required'),
+    }),
+  );
+
+  const form = formStoreUtils.createStore<FormData>({
+    onSubmit: (data) => {
+      console.log(data);
+    },
+    schema: schemaFormData,
+  });
+
+  const formDirective = form.formDirective;
+
+  return (
+    <div data-id="container">
+      <form use:formDirective>
+        <FormFields>
+          <FormField errors={form.errors().array?.errors}>
+            <Label>Array</Label>
+            <Index each={form.data().array}>
+              {(_arrayField, index) => {
+                const getArrayFieldError = () => form.errors().array?.[index] ?? {};
+
+                return (
+                  <div data-id="array">
+                    <FormFields>
+                      <FormField errors={getArrayFieldError().partA?.errors}>
+                        <Label>Part A</Label>
+                        <Input type="text" name={`array.${index}.partA`} />
+                      </FormField>
+                      <FormField errors={getArrayFieldError().partB?.errors}>
+                        <Label>Part B</Label>
+                        <Input type="text" name={`array.${index}.partB`} />
+                      </FormField>
+                      <Button
+                        // @todo(!!!) make danger when implemented
+                        data-id="remove-array-field-button"
+                        onclick={() => form.removeArrayField('array', index)}
+                      >
+                        REMOVE
+                      </Button>
+                    </FormFields>
+                  </div>
+                );
+              }}
+            </Index>
+          </FormField>
+          <Button data-id="add-array-field-button" type="button" onclick={() => form.addArrayField('array', {})}>
+            + Add Array Field
+          </Button>
+          <FormField errors={form.errors().arrayValidated?.errors}>
+            <Label>Array Validated</Label>
+            <Index each={form.data().arrayValidated}>
+              {(_arrayField, index) => {
+                const getArrayFieldError = () => form.errors().arrayValidated?.[index] ?? {};
+
+                return (
+                  <div data-id="array-validated">
+                    <FormFields>
+                      <FormField errors={getArrayFieldError().partA?.errors}>
+                        <Label>Part A</Label>
+                        <Input type="text" name={`arrayValidated.${index}.partA`} />
+                      </FormField>
+                      <FormField errors={getArrayFieldError().partB?.errors}>
+                        <Label>Part B</Label>
+                        <Input type="text" name={`arrayValidated.${index}.partB`} />
+                      </FormField>
+                      <Button
+                        // @todo(!!!) make danger when implemented
+                        data-id="remove-array-field-button"
+                        onclick={() => form.removeArrayField('arrayValidated', index)}
+                      >
+                        REMOVE
+                      </Button>
+                    </FormFields>
+                  </div>
+                );
+              }}
+            </Index>
+          </FormField>
+          <Button
+            data-id="add-array-field-validated-button"
+            type="button"
+            onclick={() => form.addArrayField('arrayValidated', {})}
+          >
+            + Add Array Field Validated
+          </Button>
+          <div>
+            <Button data-id="submit-button" type="submit">
+              Submit
+            </Button>
+            <Button data-id="reset-button" onClick={() => form.reset()}>
+              Reset
+            </Button>
+            <Button data-id="clear-button" onClick={() => form.clear()}>
+              Clear
+            </Button>
+          </div>
+        </FormFields>
+      </form>
+      <hr />
+      <h1>Debug Tools</h1>
+      <ExpandableCode label="Errors">{JSON.stringify(form.errors(), null, 2)}</ExpandableCode>
+      <ExpandableCode label="Touched Fields">{JSON.stringify(form.touchedFields(), null, 2)}</ExpandableCode>
+    </div>
+  );
+};
+
+export const ValidationCheckboxBoolean = () => {
+  type FormData = {
+    checkbox?: boolean;
+    checkboxValidated: boolean;
+  };
+
+  const schema = zodUtils.schemaForType<FormData>()(
+    zod.object({
+      checkbox: zod.boolean().optional(),
+      checkboxValidated: zod
+        .boolean()
+        .refine((value) => value, validationUtils.getMessage(ValidationMessageType.REQUIRED)),
+    }),
+  );
+
+  const form = formStoreUtils.createStore<FormData>({
+    schema,
+    onSubmit: (data) => {
+      console.log(data);
+    },
+  });
+
+  const formDirective = form.formDirective;
+
+  return (
+    <div data-id="container">
+      <form use:formDirective>
+        <FormFields>
+          <FormField data-id="checkbox" errors={form.errors()?.checkbox?.errors}>
+            <Label>Checkbox</Label>
+            <Checkbox name="checkbox" formData={form.data} labelElement="Value 1" />
+          </FormField>
+          <FormField data-id="checkbox-validated" errors={form.errors()?.checkboxValidated?.errors}>
+            <Label>Checkbox Validated</Label>
+            <Checkbox name="checkboxValidated" formData={form.data} labelElement="Value 1" />
+          </FormField>
+          <div>
+            <Button data-id="submit-button" type="submit">
+              Submit
+            </Button>
+            <Button data-id="reset-button" onClick={() => form.reset()}>
+              Reset
+            </Button>
+            <Button data-id="clear-button" onClick={() => form.clear()}>
+              Clear
+            </Button>
+          </div>
+        </FormFields>
+      </form>
+      <ExpandableCode data-id="errors" label="Errors">
+        {JSON.stringify(form.errors(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="touched-fields" label="Touched Fields">
+        {JSON.stringify(form.touchedFields(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="dirty-fields" label="Dirty Fields">
+        {JSON.stringify(form.dirtyFields(), null, 2)}
+      </ExpandableCode>
+    </div>
+  );
+};
+
+export const ValidationCheckboxValues = () => {
+  type FormData = {
+    checkbox?: string[];
+    checkboxValidated: string[];
+  };
+
+  const schema = zodUtils.schemaForType<FormData>()(
+    zod.object({
+      checkbox: zod.array(zod.string()).optional(),
+      checkboxValidated: zod.array(zod.string()).min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED)),
+    }),
+  );
+
+  const form = formStoreUtils.createStore<FormData>({
+    schema,
+    onSubmit: (data) => {
+      console.log(data);
+    },
+  });
+
+  const formDirective = form.formDirective;
+
+  return (
+    <div data-id="container">
+      <form use:formDirective>
+        <FormFields>
+          <FormField data-id="checkbox" errors={form.errors()?.checkbox?.errors}>
+            <Label>Checkbox</Label>
+            <Checkbox.Group>
+              <Checkbox name="checkbox" formData={form.data} labelElement="Value 1" value="1" />
+              <Checkbox name="checkbox" formData={form.data} labelElement="Value 2" value="2" />
+              <Checkbox name="checkbox" formData={form.data} labelElement="Value 3" value="3" />
+            </Checkbox.Group>
+          </FormField>
+          <FormField data-id="checkbox-validated" errors={form.errors()?.checkboxValidated?.errors}>
+            <Label>Checkbox Validated</Label>
+            <Checkbox.Group>
+              <Checkbox name="checkboxValidated" formData={form.data} labelElement="Value 1" value="1" />
+              <Checkbox name="checkboxValidated" formData={form.data} labelElement="Value 2" value="2" />
+              <Checkbox name="checkboxValidated" formData={form.data} labelElement="Value 3" value="3" />
+            </Checkbox.Group>
+          </FormField>
+          <div>
+            <Button data-id="submit-button" type="submit">
+              Submit
+            </Button>
+            <Button data-id="reset-button" onClick={() => form.reset()}>
+              Reset
+            </Button>
+            <Button data-id="clear-button" onClick={() => form.clear()}>
+              Clear
+            </Button>
+          </div>
+        </FormFields>
+      </form>
+      <ExpandableCode data-id="errors" label="Errors">
+        {JSON.stringify(form.errors(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="touched-fields" label="Touched Fields">
+        {JSON.stringify(form.touchedFields(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="dirty-fields" label="Dirty Fields">
+        {JSON.stringify(form.dirtyFields(), null, 2)}
+      </ExpandableCode>
+    </div>
+  );
+};
+
+export const ValidationCheckboxToggle = () => {
+  type FormData = {
+    checkboxToggle?: string;
+    checkboxToggleValidated: string;
+  };
+
+  const schema = zodUtils.schemaForType<FormData>()(
+    zod.object({
+      checkboxToggle: zod.string().optional(),
+      checkboxToggleValidated: zod.string().min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED)),
+    }),
+  );
+
+  const form = formStoreUtils.createStore<FormData>({
+    schema,
+    onSubmit: (data) => {
+      console.log(data);
+    },
+  });
+
+  const formDirective = form.formDirective;
+
+  return (
+    <div data-id="container">
+      <form use:formDirective>
+        <FormFields>
+          <FormField data-id="checkbox-toggle" errors={form.errors()?.checkboxToggle?.errors}>
+            <Label>Checkbox Toggle</Label>
+            <Checkbox.Toggle name="checkboxToggle" formData={form.data} labelElement="checkbox toggle value" />
+          </FormField>
+          <FormField data-id="checkbox-toggle-validated" errors={form.errors()?.checkboxToggleValidated?.errors}>
+            <Label>Checkbox Toggle Validated</Label>
+            <Checkbox.Toggle name="checkboxToggleValidated" formData={form.data} labelElement="checkbox toggle value" />
+          </FormField>
+          <div>
+            <Button data-id="submit-button" type="submit">
+              Submit
+            </Button>
+            <Button data-id="reset-button" onClick={() => form.reset()}>
+              Reset
+            </Button>
+            <Button data-id="clear-button" onClick={() => form.clear()}>
+              Clear
+            </Button>
+          </div>
+        </FormFields>
+      </form>
+      <ExpandableCode data-id="errors" label="Errors">
+        {JSON.stringify(form.errors(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="touched-fields" label="Touched Fields">
+        {JSON.stringify(form.touchedFields(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="dirty-fields" label="Dirty Fields">
+        {JSON.stringify(form.dirtyFields(), null, 2)}
+      </ExpandableCode>
+    </div>
+  );
+};
+
+export const ValidationCombobox = () => {
+  type FormData = {
+    combobox?: CommonDataType;
+    comboboxValidated: CommonDataType;
+  };
+
+  const schema = zodUtils.schemaForType<FormData>()(
+    zod.object({
+      combobox: zod.string().optional(),
+      comboboxValidated: zod.string().min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED)),
+    }),
+  );
+
+  const comboboxValueStore = comboboxComponentUtils.createValueStore<FormData['combobox']>();
+  const comboboxValidatedValueStore = comboboxComponentUtils.createValueStore<FormData['comboboxValidated']>();
+
+  const form = formStoreUtils.createStore<FormData>({
+    schema,
+    onSubmit: (data) => {
+      console.log(data);
+    },
+  });
+
+  const formDirective = form.formDirective;
+
+  return (
+    <div data-id="container">
+      <form use:formDirective>
+        <FormFields>
+          <FormField data-id="combobox" errors={form.errors()?.combobox?.errors}>
+            <Label>Combobox</Label>
+            <Combobox
+              name="combobox"
+              autoShowOptions
+              formData={form.data}
+              options={[
+                { label: 'option 1', value: '11' },
+                { label: 'option 2', value: '22' },
+              ]}
+              selected={comboboxValueStore.selected()}
+              setSelected={(selectedOptions) => {
+                form.setValue('combobox', selectedOptions[0]?.value);
+                comboboxValueStore.setSelected(selectedOptions);
+              }}
+            />
+          </FormField>
+          <FormField data-id="combobox-validated" errors={form.errors()?.comboboxValidated?.errors}>
+            <Label>Combobox Validated</Label>
+            <Combobox
+              name="comboboxValidated"
+              autoShowOptions
+              formData={form.data}
+              options={[
+                { label: 'option 1', value: '11' },
+                { label: 'option 2', value: '22' },
+              ]}
+              selected={comboboxValidatedValueStore.selected()}
+              setSelected={(selectedOptions) => {
+                form.setValue('comboboxValidated', selectedOptions[0]?.value);
+                comboboxValidatedValueStore.setSelected(selectedOptions);
+              }}
+            />
+          </FormField>
+          <div>
+            <Button data-id="submit-button" type="submit">
+              Submit
+            </Button>
+            <Button data-id="reset-button" onClick={() => form.reset()}>
+              Reset
+            </Button>
+            <Button data-id="clear-button" onClick={() => form.clear()}>
+              Clear
+            </Button>
+          </div>
+        </FormFields>
+      </form>
+      <ExpandableCode data-id="errors" label="Errors">
+        {JSON.stringify(form.errors(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="touched-fields" label="Touched Fields">
+        {JSON.stringify(form.touchedFields(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="dirty-fields" label="Dirty Fields">
+        {JSON.stringify(form.dirtyFields(), null, 2)}
+      </ExpandableCode>
+    </div>
+  );
+};
+
+export const ValidationDate = () => {
+  type FormData = {
+    date?: string;
+    dateValidated: string;
+  };
+
+  const schema = zodUtils.schemaForType<FormData>()(
+    zod.object({
+      date: zod.string().optional(),
+      dateValidated: zod.string().min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED)),
+    }),
+  );
+
+  const form = formStoreUtils.createStore<FormData>({
+    schema,
+    onSubmit: (data) => {
+      console.log(data);
+    },
+  });
+
+  const formDirective = form.formDirective;
+
+  return (
+    <div data-id="container">
+      <form use:formDirective>
+        <FormFields>
+          <FormField data-id="date" errors={form.errors()?.date?.errors}>
+            <Label>Date</Label>
+            <DatePicker.Input name="date" formData={form.data} />
+          </FormField>
+          <FormField data-id="date-validated" errors={form.errors()?.dateValidated?.errors}>
+            <Label>Date Validated</Label>
+            <DatePicker.Input name="dateValidated" formData={form.data} />
+          </FormField>
+          <div>
+            <Button data-id="submit-button" type="submit">
+              Submit
+            </Button>
+            <Button data-id="reset-button" onClick={() => form.reset()}>
+              Reset
+            </Button>
+            <Button data-id="clear-button" onClick={() => form.clear()}>
+              Clear
+            </Button>
+          </div>
+        </FormFields>
+      </form>
+      <ExpandableCode data-id="errors" label="Errors">
+        {JSON.stringify(form.errors(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="touched-fields" label="Touched Fields">
+        {JSON.stringify(form.touchedFields(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="dirty-fields" label="Dirty Fields">
+        {JSON.stringify(form.dirtyFields(), null, 2)}
+      </ExpandableCode>
+    </div>
+  );
+};
+
+export const ValidationDateRange = () => {
+  type FormData = {
+    dateRange?: string[];
+    dateRangeValidated: string[];
+  };
+
+  const schema = zodUtils.schemaForType<FormData>()(
+    zod.object({
+      dateRange: zod.array(zod.string()).optional(),
+      dateRangeValidated: zod.array(zod.string()).min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED)),
+    }),
+  );
+
+  const form = formStoreUtils.createStore<FormData>({
+    schema,
+    onSubmit: (data) => {
+      console.log(data);
+    },
+  });
+
+  const formDirective = form.formDirective;
+
+  return (
+    <div data-id="container">
+      <form use:formDirective>
+        <FormFields>
+          <FormField data-id="date-range" errors={form.errors()?.dateRange?.errors}>
+            <Label>Date Range</Label>
+            <DatePicker.Input name="dateRange" formData={form.data} />
+          </FormField>
+          <FormField data-id="date-range-validated" errors={form.errors()?.dateRangeValidated?.errors}>
+            <Label>Date Range Validated</Label>
+            <DatePicker.Input name="dateRangeValidated" formData={form.data} />
+          </FormField>
+          <div>
+            <Button data-id="submit-button" type="submit">
+              Submit
+            </Button>
+            <Button data-id="reset-button" onClick={() => form.reset()}>
+              Reset
+            </Button>
+            <Button data-id="clear-button" onClick={() => form.clear()}>
+              Clear
+            </Button>
+          </div>
+        </FormFields>
+      </form>
+      <ExpandableCode data-id="errors" label="Errors">
+        {JSON.stringify(form.errors(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="touched-fields" label="Touched Fields">
+        {JSON.stringify(form.touchedFields(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="dirty-fields" label="Dirty Fields">
+        {JSON.stringify(form.dirtyFields(), null, 2)}
+      </ExpandableCode>
+    </div>
+  );
+};
+
+export const ValidationInput = () => {
+  type FormData = {
+    input?: string;
+    inputValidated: string;
+  };
+
+  const schema = zodUtils.schemaForType<FormData>()(
+    zod.object({
+      input: zod.string().optional(),
+      inputValidated: zod.string().min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED)),
+    }),
+  );
+
+  const form = formStoreUtils.createStore<FormData>({
+    schema,
+    onSubmit: (data) => {
+      console.log(data);
+    },
+  });
+
+  const formDirective = form.formDirective;
+
+  return (
+    <div data-id="container">
+      <form use:formDirective>
+        <FormFields>
+          <FormField data-id="input" errors={form.errors()?.input?.errors}>
+            <Label>Input</Label>
+            <Input name="input" formData={form.data} />
+          </FormField>
+          <FormField data-id="input-validated" errors={form.errors()?.inputValidated?.errors}>
+            <Label>Input Validated</Label>
+            <Input name="inputValidated" formData={form.data} />
+          </FormField>
+          <div>
+            <Button data-id="submit-button" type="submit">
+              Submit
+            </Button>
+            <Button data-id="reset-button" onClick={() => form.reset()}>
+              Reset
+            </Button>
+            <Button data-id="clear-button" onClick={() => form.clear()}>
+              Clear
+            </Button>
+          </div>
+        </FormFields>
+      </form>
+      <ExpandableCode data-id="errors" label="Errors">
+        {JSON.stringify(form.errors(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="touched-fields" label="Touched Fields">
+        {JSON.stringify(form.touchedFields(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="dirty-fields" label="Dirty Fields">
+        {JSON.stringify(form.dirtyFields(), null, 2)}
+      </ExpandableCode>
+    </div>
+  );
+};
+
+export const ValidationNumber = () => {
+  type FormData = {
+    inputNumber?: string;
+    inputNumberValidated: string;
+  };
+
+  const schema = zodUtils.schemaForType<FormData>()(
+    zod.object({
+      inputNumber: zod.string().optional(),
+      inputNumberValidated: zod.string().min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED)),
+    }),
+  );
+
+  const form = formStoreUtils.createStore<FormData>({
+    schema,
+    onSubmit: (data) => {
+      console.log(data);
+    },
+  });
+
+  const formDirective = form.formDirective;
+
+  return (
+    <div data-id="container">
+      <form use:formDirective>
+        <FormFields>
+          <FormField data-id="input-number" errors={form.errors()?.inputNumber?.errors}>
+            <Label>Input Number</Label>
+            <Input type="number" name="inputNumber" formData={form.data} />
+          </FormField>
+          <FormField data-id="input-number-validated" errors={form.errors()?.inputNumberValidated?.errors}>
+            <Label>Input Number Validated</Label>
+            <Input type="number" name="inputNumberValidated" formData={form.data} />
+          </FormField>
+          <div>
+            <Button data-id="submit-button" type="submit">
+              Submit
+            </Button>
+            <Button data-id="reset-button" onClick={() => form.reset()}>
+              Reset
+            </Button>
+            <Button data-id="clear-button" onClick={() => form.clear()}>
+              Clear
+            </Button>
+          </div>
+        </FormFields>
+      </form>
+      <ExpandableCode data-id="errors" label="Errors">
+        {JSON.stringify(form.errors(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="touched-fields" label="Touched Fields">
+        {JSON.stringify(form.touchedFields(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="dirty-fields" label="Dirty Fields">
+        {JSON.stringify(form.dirtyFields(), null, 2)}
+      </ExpandableCode>
+    </div>
+  );
+};
+
+export const ValidationRadio = () => {
+  type FormData = {
+    radio?: string;
+    radioValidated: string;
+  };
+
+  const schema = zodUtils.schemaForType<FormData>()(
+    zod.object({
+      radio: zod.string().optional(),
+      radioValidated: zod.string().min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED)),
+    }),
+  );
+
+  const form = formStoreUtils.createStore<FormData>({
+    schema,
+    onSubmit: (data) => {
+      console.log(data);
+    },
+  });
+
+  const formDirective = form.formDirective;
+
+  return (
+    <div data-id="container">
+      <form use:formDirective>
+        <FormFields>
+          <FormField data-id="radio" errors={form.errors()?.radio?.errors}>
+            <Label>Radio</Label>
+            <Radio name="radio" formData={form.data} labelElement="radio value" />
+          </FormField>
+          <FormField data-id="radio-validated" errors={form.errors()?.radioValidated?.errors}>
+            <Label>Radio Validated</Label>
+            <Radio name="radioValidated" formData={form.data} labelElement="radio value" />
+          </FormField>
+          <div>
+            <Button data-id="submit-button" type="submit">
+              Submit
+            </Button>
+            <Button data-id="reset-button" onClick={() => form.reset()}>
+              Reset
+            </Button>
+            <Button data-id="clear-button" onClick={() => form.clear()}>
+              Clear
+            </Button>
+          </div>
+        </FormFields>
+      </form>
+      <ExpandableCode data-id="errors" label="Errors">
+        {JSON.stringify(form.errors(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="touched-fields" label="Touched Fields">
+        {JSON.stringify(form.touchedFields(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="dirty-fields" label="Dirty Fields">
+        {JSON.stringify(form.dirtyFields(), null, 2)}
+      </ExpandableCode>
+    </div>
+  );
+};
+
+export const ValidationTextarea = () => {
+  type FormData = {
+    textarea?: string;
+    textareaValidated: string;
+  };
+
+  const schema = zodUtils.schemaForType<FormData>()(
+    zod.object({
+      textarea: zod.string().optional(),
+      textareaValidated: zod.string().min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED)),
+    }),
+  );
+
+  const form = formStoreUtils.createStore<FormData>({
+    schema,
+    onSubmit: (data) => {
+      console.log(data);
+    },
+  });
+
+  const formDirective = form.formDirective;
+
+  return (
+    <div data-id="container">
+      <form use:formDirective>
+        <FormFields>
+          <FormField data-id="textarea" errors={form.errors()?.textarea?.errors}>
+            <Label>Textarea</Label>
+            <Textarea name="textarea" formData={form.data} />
+          </FormField>
+          <FormField data-id="textarea-validated" errors={form.errors()?.textareaValidated?.errors}>
+            <Label>Textarea Validated</Label>
+            <Textarea name="textareaValidated" formData={form.data} />
+          </FormField>
+          <div>
+            <Button data-id="submit-button" type="submit">
+              Submit
+            </Button>
+            <Button data-id="reset-button" onClick={() => form.reset()}>
+              Reset
+            </Button>
+            <Button data-id="clear-button" onClick={() => form.clear()}>
+              Clear
+            </Button>
+          </div>
+        </FormFields>
+      </form>
+      <ExpandableCode data-id="errors" label="Errors">
+        {JSON.stringify(form.errors(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="touched-fields" label="Touched Fields">
+        {JSON.stringify(form.touchedFields(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="dirty-fields" label="Dirty Fields">
+        {JSON.stringify(form.dirtyFields(), null, 2)}
+      </ExpandableCode>
+    </div>
+  );
+};
+
+export const ValidationTime = () => {
+  type FormData = {
+    timeInput?: string;
+    timeInputValidated: string;
+  };
+
+  const schema = zodUtils.schemaForType<FormData>()(
+    zod.object({
+      timeInput: zod.string().optional(),
+      timeInputValidated: zod.string().min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED)),
+    }),
+  );
+
+  const form = formStoreUtils.createStore<FormData>({
+    schema,
+    onSubmit: (data) => {
+      console.log(data);
+    },
+  });
+
+  const formDirective = form.formDirective;
+
+  return (
+    <div data-id="container">
+      <form use:formDirective>
+        <FormFields>
+          <FormField data-id="time-input" errors={form.errors()?.timeInput?.errors}>
+            <Label>Time Input</Label>
+            <TimeInput name="timeInput" formData={form.data} />
+          </FormField>
+          <FormField data-id="time-input-validated" errors={form.errors()?.timeInputValidated?.errors}>
+            <Label>Time Input Validated</Label>
+            <TimeInput name="timeInputValidated" formData={form.data} />
+          </FormField>
+          <div>
+            <Button data-id="submit-button" type="submit">
+              Submit
+            </Button>
+            <Button data-id="reset-button" onClick={() => form.reset()}>
+              Reset
+            </Button>
+            <Button data-id="clear-button" onClick={() => form.clear()}>
+              Clear
+            </Button>
+          </div>
+        </FormFields>
+      </form>
+      <ExpandableCode data-id="errors" label="Errors">
+        {JSON.stringify(form.errors(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="touched-fields" label="Touched Fields">
+        {JSON.stringify(form.touchedFields(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="dirty-fields" label="Dirty Fields">
+        {JSON.stringify(form.dirtyFields(), null, 2)}
+      </ExpandableCode>
+    </div>
+  );
+};
+
+export const ValidationComplexObject = () => {
+  type FormData = {
+    timeInput?: string;
+    timeInputValidated: string;
+  };
+
+  const schema = zodUtils.schemaForType<FormData>()(
+    zod.object({
+      timeInput: zod.string().optional(),
+      timeInputValidated: zod.string().min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED)),
+    }),
+  );
+
+  const form = formStoreUtils.createStore<FormData>({
+    schema,
+    onSubmit: (data) => {
+      console.log(data);
+    },
+  });
+
+  const formDirective = form.formDirective;
+
+  return (
+    <div data-id="container">
+      <form use:formDirective>TODO</form>
+      <ExpandableCode data-id="errors" label="Errors">
+        {JSON.stringify(form.errors(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="touched-fields" label="Touched Fields">
+        {JSON.stringify(form.touchedFields(), null, 2)}
+      </ExpandableCode>
+      <ExpandableCode data-id="dirty-fields" label="Dirty Fields">
+        {JSON.stringify(form.dirtyFields(), null, 2)}
+      </ExpandableCode>
     </div>
   );
 };

@@ -18,7 +18,7 @@ const mockGetSandboxQueryEndpoint = async (page: Page, options: PlaywrightMockEn
       const postData = request.postData();
 
       if (postData?.includes('mockerror')) {
-        await asyncUtils.sleep(100);
+        await asyncUtils.sleep(options.delay || DEFAULT_RESPONSE_DELAY);
         await route.fulfill({
           status: 500,
         });
@@ -28,7 +28,7 @@ const mockGetSandboxQueryEndpoint = async (page: Page, options: PlaywrightMockEn
 
       const postDataJson = JSON.parse(request.postData() ?? '{}');
 
-      await asyncUtils.sleep(100);
+      await asyncUtils.sleep(options.delay || DEFAULT_RESPONSE_DELAY);
       await route.fulfill({ json: { query: { id: postDataJson.id } } });
 
       return;
@@ -42,7 +42,7 @@ const mockGetSandboxQueryEndpoint = async (page: Page, options: PlaywrightMockEn
       queryData.push({ id: `filter given: ${filter}` });
     }
 
-    await asyncUtils.sleep(options.delay || 0);
+    await asyncUtils.sleep(options.delay || DEFAULT_RESPONSE_DELAY);
     const json = { query: queryData };
     await route.fulfill({ json });
   });

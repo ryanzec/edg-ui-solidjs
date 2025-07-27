@@ -87,6 +87,10 @@ export type FormSetValues<TFormData> = (values?: Partial<TFormData>, options?: S
 
 export type FormData<TFormData> = Accessor<Partial<TFormData>>;
 
+export type FormValidatWith<TFormData> = {
+  [K in keyof TFormData]?: (keyof TFormData)[];
+};
+
 type CreateFormStoreOptions<TFormData extends object> = {
   // this is partial as without validation (which is not required), the data could be missing data
   onSubmit: (data: Partial<TFormData>) => void;
@@ -114,9 +118,7 @@ type CreateFormStoreOptions<TFormData extends object> = {
   // as it will provide the accessor to the rest of the form data
   buildSchema?: (data: Accessor<Partial<TFormData>>) => zod.ZodObject<{ [key in keyof TFormData]: zod.ZodTypeAny }>;
 
-  validateWith?: {
-    [K in keyof Partial<TFormData>]: (keyof TFormData)[];
-  };
+  validateWith?: FormValidatWith<TFormData>;
 };
 
 type ResetOptions<TFormData> = {
@@ -143,6 +145,7 @@ export type CreateFormStoreReturn<TFormData extends object> = {
   isValid: () => boolean;
   watch: (watcher: FormWatcher<TFormData>) => FormWatchReturns;
   setSchema: (newSchema: zod.ZodObject<{ [key in keyof TFormData]: zod.ZodTypeAny }> | undefined) => void;
+  setValidateWith: (newValidateWith: FormValidatWith<TFormData> | undefined) => void;
 
   // make it easier to submit the form when the button can't be in the <form> element
   submitForm: () => void;
@@ -175,6 +178,9 @@ const createStore = <TFormData extends object>(
   const [dirtyFields, setDirtyFields] = createSignal<Array<keyof TFormData>>([]);
   const [formElement, setFormElement] = createSignal<HTMLFormElement>();
   const [formWatchers, setFormWatchers] = createSignal<FormWatcher<TFormData>[]>([]);
+  const [validateWith, setValidateWith] = createSignal<FormValidatWith<TFormData> | undefined>(
+    formOptions.validateWith,
+  );
 
   const defaultSchema = formOptions.buildSchema ? formOptions.buildSchema(data) : formOptions.schema;
 
@@ -269,13 +275,20 @@ const createStore = <TFormData extends object>(
     checkForValidateWith?: boolean;
     fieldName?: string;
     currentErrors?: FormErrorsData<TFormData>;
+
+    // since sometimes other code that might call the validate code before this, allowing them to passing the
+    // valifation error is just a performance optimization
+    fullFormattedErrors?: zod.ZodFormattedError<unknown>;
   };
 
-  const generateErrors = (options: GenerateErrorsOptions = {}) => {
+  const generateErrors = (options: GenerateErrorsOptions = {}): FormErrorsData<TFormData> => {
     const fieldName = options.fieldName;
     const checkIsTouched = options.checkIsTouched ?? true;
     const checkForValidateWith = options.checkForValidateWith ?? true;
+    let formattedErrors = options.fullFormattedErrors || undefined;
     const activeSchema = schema();
+
+    // console.log(formattedErrors);
 
     if (!activeSchema) {
       return {};
@@ -284,34 +297,63 @@ const createStore = <TFormData extends object>(
     // if we are validating a specific field, we only need to validate that, this will make sure performance is good
     // by not wasting time validating data that did not change
     if (fieldName) {
+      console.log('single validation', fieldName, checkIsTouched, isTouched(fieldName as keyof TFormData));
+      let currentErrors = options.currentErrors ?? errors();
+
       if (checkIsTouched && !isTouched(fieldName as keyof TFormData)) {
-        return errors();
+        return currentErrors;
       }
 
+      let validationFormattedError: string[] = [];
+
+      // if (formattedErrors) {
+      //   validationFormattedError = lodash.get(formattedErrors, fieldName)?._errors || [];
+      // } else {
       const value = lodash.get(data(), fieldName);
+
+      // @ts-expect-error using an internal zod structure to be able to super refine schema (un tested)
+      const schema = activeSchema.shape || activeSchema._def.schema.shape;
+
       // in the edge case that a field for a form has no validator assigned to it (can happen with highly
-      // dynamic forms) we use an optional any validator that should basic pass anything (which effectively is
+      // dynamic forms) we use an any optional validator that should basic pass anything (which effectively is
       // no validation)
-      const fieldValidator = zodUtils.getNestedSchema(fieldName, activeSchema.shape) || zod.any().optional();
+      const fieldValidator =
+        zodUtils.getNestedSchema(fieldName, schema, { unwrapEffects: false }) || zod.any().optional();
+
+      // console.log('fieldValidator', fieldValidator);
       const fieldValidationResults = fieldValidator.safeParse(value);
-      let currentErrors = options.currentErrors ?? errors();
+
+      // console.log('fieldValidationResults', fieldValidationResults.success, fieldValidationResults.error);
+
+      validationFormattedError = fieldValidationResults.error?.format()._errors || [];
+      // }
+
+      // console.log(validationFormattedError);
+
+      const validationSuccessful = validationFormattedError.length === 0;
+
+      // console.log('previous  ', currentErrors);
 
       // we need to be explicit with the field we change so that if this field is an array field, we don't modify
       // the array item validations if there are any
-      if (fieldValidationResults.success === false) {
+      if (validationSuccessful === false) {
+        // console.log('add to errors', fieldName);
         currentErrors = produce(currentErrors, (draft) => {
-          immerUtils.set(draft, fieldName, fieldValidationResults.error.format()._errors);
+          immerUtils.set(draft, fieldName, validationFormattedError);
         });
+        // console.log('ce', currentErrors);
       } else {
+        // console.log('remove from errors', fieldName);
         currentErrors = produce(currentErrors, (draft) => {
           immerUtils.unset(draft, fieldName);
         });
       }
 
-      const validateWith: (keyof TFormData)[] | undefined = formOptions.validateWith?.[fieldName as keyof TFormData];
+      const currentValidateWith: (keyof TFormData)[] | undefined = validateWith()?.[fieldName as keyof TFormData];
 
-      if (checkForValidateWith && validateWith && validateWith.length > 0) {
-        for (const field of validateWith) {
+      if (checkForValidateWith && currentValidateWith && currentValidateWith.length > 0) {
+        // console.log('validate with', fieldName, currentValidateWith, validateWith());
+        for (const field of currentValidateWith) {
           currentErrors = generateErrors({
             ...options,
             fieldName: field as string,
@@ -320,21 +362,28 @@ const createStore = <TFormData extends object>(
           });
         }
       }
+      // console.log('final ce', currentErrors);
 
       return currentErrors;
     }
 
-    // do full validation if we are not updating a specific field
-    const validationResults = activeSchema.safeParse(data());
+    if (!formattedErrors) {
+      // console.log('full validate');
+      // do full validation if we are not updating a specific field
+      const validationResults = activeSchema.safeParse(data());
 
-    if (validationResults.success) {
-      return {};
+      if (validationResults.success) {
+        return {};
+      }
+
+      formattedErrors = validationResults.error.format();
     }
 
-    const formattedErrors = validationResults.error.format();
-
-    // biome-ignore lint/suspicious/noExplicitAny: avoid weird typescript error
-    const getErrors = (formattedErrors: { _errors: string[]; [key: string]: any }, parentPath = '') => {
+    const getErrors = (
+      // biome-ignore lint/suspicious/noExplicitAny: avoid weird typescript error
+      formattedErrors: { _errors: string[]; [key: string]: any },
+      parentPath = '',
+    ): FormErrorsData<TFormData> => {
       // biome-ignore lint/suspicious/noExplicitAny: avoid weird typescript error
       const newFormat: { [key: string]: any } = {};
 
@@ -412,7 +461,7 @@ const createStore = <TFormData extends object>(
     setTouchedFields((previousTouchedFields) => [...new Set([...previousTouchedFields, ...newTouchedFields])]);
 
     setErrors(() => {
-      return generateErrors({ fieldName });
+      return generateErrors({ fieldName, fullFormattedErrors: validationResults.error?.format() });
     });
 
     return true;
@@ -922,6 +971,7 @@ const createStore = <TFormData extends object>(
     watch,
     submitForm,
     getFieldValue,
+    setValidateWith,
   };
 };
 

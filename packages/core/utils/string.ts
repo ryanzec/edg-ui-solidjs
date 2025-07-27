@@ -97,6 +97,16 @@ const toInitialism = (str: string, options: ToInitialismOptions = {}): string =>
   return options.limit ? initials.slice(0, options.limit) : initials;
 };
 
+const splitOnce = (str: string, separator: string): [string, string] => {
+  const index = str.indexOf(separator);
+
+  if (index === -1) {
+    return [str, ''];
+  }
+
+  return [str.slice(0, index), str.slice(index + 1)];
+};
+
 export const stringUtils = {
   pascalToKabob,
   isPascalCase,
@@ -105,4 +115,5 @@ export const stringUtils = {
   capitalize,
   titleCase,
   toInitialism,
+  splitOnce,
 };

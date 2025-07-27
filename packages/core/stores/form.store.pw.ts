@@ -1,9 +1,20 @@
-import { expect, test } from '@playwright/test';
+import { expect, type Locator, type Page, test } from '@playwright/test';
 
-import { playwrightUtils } from '$/core/utils/playwright';
+import { BasePage, playwrightUtils } from '$/core/utils/playwright';
 
 const urls = {
-  arrayFields: '/stores/form/array-fields',
+  validationArrayFields: '/stores/form/validation-array-fields',
+  validationCheckboxBoolean: '/stores/form/validation-checkbox-boolean',
+  validationCheckboxValues: '/stores/form/validation-checkbox-values',
+  validationCheckboxToggle: '/stores/form/validation-checkbox-toggle',
+  validationCombobox: '/stores/form/validation-combobox',
+  validationDate: '/stores/form/validation-date',
+  validationDateRange: '/stores/form/validation-date-range',
+  validationInput: '/stores/form/validation-input',
+  validationNumber: '/stores/form/validation-number',
+  validationRadio: '/stores/form/validation-radio',
+  validationTextarea: '/stores/form/validation-textarea',
+  validationTime: '/stores/form/validation-time',
   clear: '/stores/form/clear',
   dynamicFormElements: '/stores/form/dynamic-form-elements',
   isTouched: '/stores/form/is-touched',
@@ -15,270 +26,502 @@ const urls = {
   validateOnChange: '/stores/form/validate-on-change',
   noValidateOnChange: '/stores/form/no-validate-on-change',
 };
+class FormStorePage extends BasePage {
+  readonly setValueButtonLocator: Locator;
+  readonly resetButtonLocator: Locator;
+  readonly clearButtonLocator: Locator;
+  readonly submitButtonLocator: Locator;
+  readonly addArrayFieldValidatedButtonLocator: Locator;
+  readonly removeArrayFieldButtonLocator: Locator;
+  readonly addStringFieldButtonLocator: Locator;
+  readonly isTouchedLocator: Locator;
+  readonly valueChangeEventTriggeredLocator: Locator;
+  readonly submitEventTriggeredLocator: Locator;
+  readonly clearEventTriggeredLocator: Locator;
+  readonly resetEventTriggeredLocator: Locator;
 
-const locators = {
-  setValueButton: '[data-id="set-value-button"]',
-  resetButton: '[data-id="reset-button"]',
-  clearButton: '[data-id="clear-button"]',
-  submitButton: '[data-id="submit-button"]',
-  addArrayFieldButton: '[data-id="add-array-field-button"]',
-  removeArrayFieldButton: '[data-id="remove-array-field-button"]',
-  isTouchedIndicator: '[data-id="is-touched-indicator"]',
-  valueChangeEventTriggeredIndicator: '[data-id="value-changed-event-triggered-indicator"]',
-  submitEventTriggeredIndicator: '[data-id="submit-event-triggered-indicator"]',
-  clearEventTriggeredIndicator: '[data-id="clear-event-triggered-indicator"]',
-  resetEventTriggeredIndicator: '[data-id="reset-event-triggered-indicator"]',
-  input: '[data-id="container"] input',
-  textarea: '[data-id="container"] textarea',
-  addStringFieldButton: '[data-id="add-string-field"]',
-  validationMessage: '[data-id="validation-message"]',
-  arrayFieldElement: '[data-id="array-field-element"]',
-};
+  readonly arrayFieldContainerLocator: Locator;
+  readonly arrayFieldInputLocator: Locator;
+  readonly arrayFieldValidatedContainerLocator: Locator;
+  readonly arrayFieldValidatedInputLocator: Locator;
 
-test.describe('form store @form-store', () => {
+  readonly checkboxContainerLocator: Locator;
+  readonly checkboxLocator: Locator;
+  readonly checkboxValidatedContainerLocator: Locator;
+  readonly checkboxValidatedLocator: Locator;
+
+  readonly comboboxContainerLocator: Locator;
+  readonly comboboxLocator: Locator;
+  readonly comboboxValidatedContainerLocator: Locator;
+  readonly comboboxValidatedLocator: Locator;
+
+  readonly dateContainerLocator: Locator;
+  readonly dateLocator: Locator;
+  readonly dateValidatedContainerLocator: Locator;
+  readonly dateValidatedLocator: Locator;
+
+  readonly dateRangeContainerLocator: Locator;
+  readonly dateRangeLocator: Locator;
+  readonly dateRangeValidatedContainerLocator: Locator;
+  readonly dateRangeValidatedLocator: Locator;
+
+  readonly inputContainerLocator: Locator;
+  readonly inputLocator: Locator;
+  readonly inputValidatedContainerLocator: Locator;
+  readonly inputValidatedLocator: Locator;
+
+  readonly numberContainerLocator: Locator;
+  readonly numberLocator: Locator;
+  readonly numberValidatedContainerLocator: Locator;
+  readonly numberValidatedLocator: Locator;
+
+  readonly radioContainerLocator: Locator;
+  readonly radioLocator: Locator;
+  readonly radioValidatedContainerLocator: Locator;
+  readonly radioValidatedLocator: Locator;
+
+  readonly textareaContainerLocator: Locator;
+  readonly textareaLocator: Locator;
+  readonly textareaValidatedContainerLocator: Locator;
+  readonly textareaValidatedLocator: Locator;
+
+  readonly timeContainerLocator: Locator;
+  readonly timeLocator: Locator;
+  readonly timeValidatedContainerLocator: Locator;
+  readonly timeValidatedLocator: Locator;
+
+  constructor(page: Page) {
+    super(page);
+
+    this.setValueButtonLocator = page.locator('[data-id="set-value-button"]');
+    this.resetButtonLocator = page.locator('[data-id="reset-button"]');
+    this.clearButtonLocator = page.locator('[data-id="clear-button"]');
+    this.submitButtonLocator = page.locator('[data-id="submit-button"]');
+    this.addArrayFieldValidatedButtonLocator = page.locator('[data-id="add-array-field-validated-button"]');
+    this.removeArrayFieldButtonLocator = page.locator('[data-id="remove-array-field-button"]');
+    this.isTouchedLocator = page.locator('[data-id="is-touched-indicator"]');
+    this.valueChangeEventTriggeredLocator = page.locator('[data-id="value-changed-event-triggered-indicator"]');
+    this.submitEventTriggeredLocator = page.locator('[data-id="submit-event-triggered-indicator"]');
+    this.clearEventTriggeredLocator = page.locator('[data-id="clear-event-triggered-indicator"]');
+    this.resetEventTriggeredLocator = page.locator('[data-id="reset-event-triggered-indicator"]');
+    this.addStringFieldButtonLocator = page.locator('[data-id="add-string-field"]');
+
+    this.arrayFieldContainerLocator = page.locator('[data-id="array"]');
+    this.arrayFieldInputLocator = this.arrayFieldContainerLocator.locator('input');
+    this.arrayFieldValidatedContainerLocator = page.locator('[data-id="array-validated"]');
+    this.arrayFieldValidatedInputLocator = this.arrayFieldValidatedContainerLocator.locator('input');
+
+    this.checkboxContainerLocator = page.locator('[data-id="checkbox"]');
+    this.checkboxLocator = this.checkboxContainerLocator.locator('input');
+    this.checkboxValidatedContainerLocator = page.locator('[data-id="checkbox-validated"]');
+    this.checkboxValidatedLocator = this.checkboxValidatedContainerLocator.locator('input');
+
+    this.comboboxContainerLocator = page.locator('[data-id="combobox"]');
+    this.comboboxLocator = this.comboboxContainerLocator.locator('input');
+    this.comboboxValidatedContainerLocator = page.locator('[data-id="combobox-validated"]');
+    this.comboboxValidatedLocator = this.comboboxValidatedContainerLocator.locator('input');
+
+    this.dateContainerLocator = page.locator('[data-id="date"]');
+    this.dateLocator = this.dateContainerLocator.locator('input');
+    this.dateValidatedContainerLocator = page.locator('[data-id="date-validated"]');
+    this.dateValidatedLocator = this.dateValidatedContainerLocator.locator('input');
+
+    this.dateRangeContainerLocator = page.locator('[data-id="date-range"]');
+    this.dateRangeLocator = this.dateRangeContainerLocator.locator('input');
+    this.dateRangeValidatedContainerLocator = page.locator('[data-id="date-range-validated"]');
+    this.dateRangeValidatedLocator = this.dateRangeValidatedContainerLocator.locator('input');
+
+    this.inputContainerLocator = page.locator('[data-id="input"]');
+    this.inputLocator = this.inputContainerLocator.locator('input');
+    this.inputValidatedContainerLocator = page.locator('[data-id="input-validated"]');
+    this.inputValidatedLocator = this.inputValidatedContainerLocator.locator('input');
+
+    this.numberContainerLocator = page.locator('[data-id="number"]');
+    this.numberLocator = this.numberContainerLocator.locator('input');
+    this.numberValidatedContainerLocator = page.locator('[data-id="number-validated"]');
+    this.numberValidatedLocator = this.numberValidatedContainerLocator.locator('input');
+
+    this.radioContainerLocator = page.locator('[data-id="radio"]');
+    this.radioLocator = this.radioContainerLocator.locator('input');
+    this.radioValidatedContainerLocator = page.locator('[data-id="radio-validated"]');
+    this.radioValidatedLocator = this.radioValidatedContainerLocator.locator('input');
+
+    this.textareaContainerLocator = page.locator('[data-id="textarea"]');
+    this.textareaLocator = this.textareaContainerLocator.locator('textarea');
+    this.textareaValidatedContainerLocator = page.locator('[data-id="textarea-validated"]');
+    this.textareaValidatedLocator = this.textareaValidatedContainerLocator.locator('textarea');
+
+    this.timeContainerLocator = page.locator('[data-id="time"]');
+    this.timeLocator = this.timeContainerLocator.locator('input');
+    this.timeValidatedContainerLocator = page.locator('[data-id="time-validated"]');
+    this.timeValidatedLocator = this.timeValidatedContainerLocator.locator('input');
+  }
+
+  // expects
+  async expectInputValueToBe(locator: Locator, value: string) {
+    expect(await locator.inputValue()).toBe(value);
+  }
+
+  async expectTextareaValueToBe(locator: Locator, value: string) {
+    expect(await locator.inputValue()).toBe(value);
+  }
+
+  async expectHasIsTouchedIndicator(count: number) {
+    await expect(this.isTouchedLocator).toHaveCount(count);
+  }
+
+  async expectHasSubmitEventTriggered(count: number) {
+    await expect(this.submitEventTriggeredLocator).toHaveCount(count);
+  }
+
+  async expectHasClearEventTriggered(count: number) {
+    await expect(this.clearEventTriggeredLocator).toHaveCount(count);
+  }
+
+  async expectHasResetEventTriggered(count: number) {
+    await expect(this.resetEventTriggeredLocator).toHaveCount(count);
+  }
+
+  async expectHasValueChangeEventTriggered(count: number) {
+    await expect(this.valueChangeEventTriggeredLocator).toHaveCount(count);
+  }
+
+  async expectHasValidationMessage(locator: Locator, count: number) {
+    await expect(locator.locator('[data-id="validation-message"]')).toHaveCount(count);
+  }
+
+  async expectHasArrayFieldElement(locator: Locator, count: number) {
+    await expect(locator).toHaveCount(count);
+  }
+}
+
+test.describe('form store @store', () => {
   test.describe('core', () => {
-    test('set value outside of input element @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.setValue));
+    test('set value outside of input element', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
 
-      expect(await page.locator(locators.input).nth(0).inputValue()).toBe('');
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.setValue));
 
-      await page.locator(locators.setValueButton).click();
+      await formStorePage.expectInputValueToBe(formStorePage.inputLocator, '');
 
-      expect(await page.locator(locators.input).nth(0).inputValue()).toBe('test');
+      await formStorePage.setValueButtonLocator.click();
+
+      await formStorePage.expectInputValueToBe(formStorePage.inputLocator, 'test');
     });
 
     test('initialize form with data', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.initializeWithValues));
+      const formStorePage = new FormStorePage(page);
 
-      expect(await page.locator(locators.input).nth(0).inputValue()).toBe('test');
-      expect(await page.locator(locators.input).nth(1).inputValue()).toBe('test2');
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.initializeWithValues));
+
+      await formStorePage.expectInputValueToBe(formStorePage.inputLocator.nth(0), 'test');
+      await formStorePage.expectInputValueToBe(formStorePage.inputLocator.nth(1), 'test2');
     });
 
-    test('clear form @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.clear));
+    test('clear form', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
 
-      expect(await page.locator(locators.input).nth(0).inputValue()).toBe('test');
-      expect(await page.locator(locators.input).nth(1).inputValue()).toBe('test2');
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.clear));
 
-      await page.locator(locators.clearButton).click();
+      await formStorePage.expectInputValueToBe(formStorePage.inputLocator.nth(0), 'test');
+      await formStorePage.expectInputValueToBe(formStorePage.inputLocator.nth(1), 'test2');
 
-      expect(await page.locator(locators.input).nth(0).inputValue()).toBe('');
-      expect(await page.locator(locators.input).nth(1).inputValue()).toBe('');
+      await formStorePage.clearButtonLocator.click();
+
+      await formStorePage.expectInputValueToBe(formStorePage.inputLocator.nth(0), '');
+      await formStorePage.expectInputValueToBe(formStorePage.inputLocator.nth(1), '');
     });
 
-    test('reset form without initial data @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.resetWithoutInitial));
+    test('reset form without initial data', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
 
-      await page.locator(locators.input).nth(0).fill('first');
-      await page.locator(locators.input).nth(1).fill('second');
-      await page.locator(locators.textarea).nth(0).fill('third');
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.resetWithoutInitial));
 
-      expect(await page.locator(locators.input).nth(0).inputValue()).toBe('first');
-      expect(await page.locator(locators.input).nth(1).inputValue()).toBe('second');
-      expect(await page.locator(locators.textarea).nth(0).inputValue()).toBe('third');
+      await formStorePage.inputLocator.nth(0).fill('first');
+      await formStorePage.inputLocator.nth(1).fill('second');
+      await formStorePage.textareaLocator.fill('third');
 
-      await page.locator(locators.resetButton).click();
+      await formStorePage.expectInputValueToBe(formStorePage.inputLocator.nth(0), 'first');
+      await formStorePage.expectInputValueToBe(formStorePage.inputLocator.nth(1), 'second');
+      await formStorePage.expectTextareaValueToBe(formStorePage.textareaLocator, 'third');
 
-      expect(await page.locator(locators.input).nth(0).inputValue()).toBe('');
-      expect(await page.locator(locators.input).nth(1).inputValue()).toBe('');
-      expect(await page.locator(locators.textarea).nth(0).inputValue()).toBe('');
+      await formStorePage.resetButtonLocator.click();
+
+      await formStorePage.expectInputValueToBe(formStorePage.inputLocator.nth(0), '');
+      await formStorePage.expectInputValueToBe(formStorePage.inputLocator.nth(1), '');
+      await formStorePage.expectTextareaValueToBe(formStorePage.textareaLocator, '');
     });
 
-    test('reset form with initial data @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.resetWithInitial));
+    test('reset form with initial data', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
 
-      await page.locator(locators.clearButton).click();
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.resetWithInitial));
 
-      expect(await page.locator(locators.input).nth(0).inputValue()).toBe('');
-      expect(await page.locator(locators.input).nth(1).inputValue()).toBe('');
-      expect(await page.locator(locators.textarea).nth(0).inputValue()).toBe('');
+      await formStorePage.clearButtonLocator.click();
 
-      await page.locator(locators.resetButton).click();
+      await formStorePage.expectInputValueToBe(formStorePage.inputLocator.nth(0), '');
+      await formStorePage.expectInputValueToBe(formStorePage.inputLocator.nth(1), '');
+      await formStorePage.expectTextareaValueToBe(formStorePage.textareaLocator, '');
 
-      expect(await page.locator(locators.input).nth(0).inputValue()).toBe('test');
-      expect(await page.locator(locators.input).nth(1).inputValue()).toBe('test2');
-      expect(await page.locator(locators.textarea).nth(0).inputValue()).toBe('test3');
+      await formStorePage.resetButtonLocator.click();
+
+      await formStorePage.expectInputValueToBe(formStorePage.inputLocator.nth(0), 'test');
+      await formStorePage.expectInputValueToBe(formStorePage.inputLocator.nth(1), 'test2');
+      await formStorePage.expectTextareaValueToBe(formStorePage.textareaLocator, 'test3');
     });
 
-    test('clear form reset touched status @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.isTouched));
+    test('clear form reset touched status', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
 
-      await page.locator(locators.input).nth(0).click();
-      await page.locator(locators.input).nth(0).blur();
-      await page.locator(locators.clearButton).click();
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.isTouched));
 
-      await expect(page.locator(locators.isTouchedIndicator)).toHaveCount(0);
+      await formStorePage.inputLocator.click();
+      await formStorePage.inputLocator.blur();
+      await formStorePage.clearButtonLocator.click();
+
+      await formStorePage.expectHasIsTouchedIndicator(0);
     });
 
-    test('reset form reset touched status @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.isTouched));
+    test('reset form reset touched status', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
 
-      await page.locator(locators.input).nth(0).click();
-      await page.locator(locators.input).nth(0).blur();
-      await page.locator(locators.resetButton).click();
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.isTouched));
 
-      await expect(page.locator(locators.isTouchedIndicator)).toHaveCount(0);
+      await formStorePage.inputLocator.click();
+      await formStorePage.inputLocator.blur();
+      await formStorePage.resetButtonLocator.click();
+
+      await formStorePage.expectHasIsTouchedIndicator(0);
     });
   });
 
   test.describe('events', () => {
-    test('submit event @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.events));
+    test('submit event', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
 
-      await page.locator(locators.submitButton).click();
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.events));
 
-      await expect(page.locator(locators.submitEventTriggeredIndicator)).toHaveCount(1);
+      await formStorePage.submitButtonLocator.click();
+
+      await formStorePage.expectHasSubmitEventTriggered(1);
     });
 
-    test('submit event not triggered when there are validation errors @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.events));
+    test('submit event not triggered when there are validation errors', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
 
-      await page.locator(locators.clearButton).click();
-      await page.locator(locators.submitButton).click();
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.events));
 
-      await expect(page.locator(locators.submitEventTriggeredIndicator)).toHaveCount(0);
+      await formStorePage.clearButtonLocator.click();
+      await formStorePage.submitButtonLocator.click();
+
+      await formStorePage.expectHasSubmitEventTriggered(0);
     });
 
-    test('clear event @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.events));
+    test('clear event', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
 
-      await page.locator(locators.clearButton).click();
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.events));
 
-      await expect(page.locator(locators.clearEventTriggeredIndicator)).toHaveCount(1);
+      await formStorePage.clearButtonLocator.click();
+
+      await formStorePage.expectHasClearEventTriggered(1);
     });
 
-    test('reset event @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.events));
+    test('reset event', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
 
-      await page.locator(locators.resetButton).click();
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.events));
 
-      await expect(page.locator(locators.resetEventTriggeredIndicator)).toHaveCount(1);
+      await formStorePage.resetButtonLocator.click();
+
+      await formStorePage.expectHasResetEventTriggered(1);
     });
 
-    test('value changed event @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.events));
+    test('value changed event', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
 
-      await page.locator(locators.input).nth(0).fill('t');
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.events));
 
-      await expect(page.locator(locators.valueChangeEventTriggeredIndicator)).toHaveCount(1);
-    });
-  });
+      await formStorePage.inputValidatedLocator.fill('t');
 
-  test.describe('validation', () => {
-    test('shows when invalid @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.validateOnChange));
-
-      await page.locator(locators.input).nth(0).fill('t');
-      await page.locator(locators.input).nth(0).press('Backspace');
-      await page.locator(locators.input).blur();
-
-      await expect(page.locator(locators.validationMessage)).toHaveCount(1);
-    });
-
-    test('validates on submit @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.validateOnChange));
-
-      await page.locator(locators.submitButton).click();
-
-      await expect(page.locator(locators.validationMessage)).toHaveCount(1);
-    });
-
-    test('validates on change @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.validateOnChange));
-
-      await page.locator(locators.submitButton).click();
-      await page.locator(locators.input).nth(0).fill('t');
-
-      await expect(page.locator(locators.validationMessage)).toHaveCount(0);
-    });
-
-    test('reset form reset validation @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.validateOnChange));
-
-      await page.locator(locators.submitButton).click();
-      await page.locator(locators.resetButton).click();
-
-      await expect(page.locator(locators.validationMessage)).toHaveCount(0);
-    });
-
-    test('clear form reset validation @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.validateOnChange));
-
-      await page.locator(locators.submitButton).click();
-      await page.locator(locators.clearButton).click();
-
-      await expect(page.locator(locators.validationMessage)).toHaveCount(0);
-    });
-
-    test('does not validate on change @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.noValidateOnChange));
-
-      await page.locator(locators.submitButton).click();
-      await page.locator(locators.input).nth(0).fill('t');
-
-      await expect(page.locator(locators.validationMessage)).toHaveCount(1);
-
-      await page.locator(locators.submitButton).click();
-
-      await expect(page.locator(locators.validationMessage)).toHaveCount(0);
+      await formStorePage.expectHasValueChangeEventTriggered(1);
     });
   });
 
-  test.describe('array fields', () => {
-    test('add element @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.arrayFields));
+  test.describe('general validation', () => {
+    test('shows when invalid', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
 
-      await page.locator(locators.addArrayFieldButton).click();
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.validationInput));
 
-      await expect(page.locator(locators.arrayFieldElement)).toHaveCount(1);
+      await formStorePage.inputValidatedLocator.click();
+      await formStorePage.inputValidatedLocator.press('Backspace');
+      await formStorePage.inputValidatedLocator.blur();
+
+      await formStorePage.expectHasValidationMessage(formStorePage.inputValidatedContainerLocator, 1);
     });
 
-    test('remove element @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.arrayFields));
+    test('validates on submit', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
 
-      await page.locator(locators.addArrayFieldButton).click();
-      await page.locator(locators.removeArrayFieldButton).nth(0).click();
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.validationInput));
 
-      await expect(page.locator(locators.arrayFieldElement)).toHaveCount(0);
+      await formStorePage.submitButtonLocator.click();
+
+      await formStorePage.expectHasValidationMessage(formStorePage.inputValidatedContainerLocator, 1);
     });
 
-    test('validation @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.arrayFields));
+    test('validates on change', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
 
-      await page.locator(locators.addArrayFieldButton).click();
-      await page.locator(locators.submitButton).click();
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.validationInput));
+
+      await formStorePage.submitButtonLocator.click();
+      await formStorePage.inputValidatedLocator.fill('t');
+
+      await formStorePage.expectHasValidationMessage(formStorePage.inputValidatedContainerLocator, 0);
+    });
+
+    test('reset form reset validation', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
+
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.validationInput));
+
+      await formStorePage.submitButtonLocator.click();
+      await formStorePage.resetButtonLocator.click();
+
+      await formStorePage.expectHasValidationMessage(formStorePage.inputValidatedContainerLocator, 0);
+    });
+
+    test('clear form reset validation', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
+
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.validationInput));
+
+      await formStorePage.submitButtonLocator.click();
+      await formStorePage.clearButtonLocator.click();
+
+      await formStorePage.expectHasValidationMessage(formStorePage.inputValidatedContainerLocator, 0);
+    });
+
+    test('does not validate on change', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
+
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.noValidateOnChange));
+
+      await formStorePage.submitButtonLocator.click();
+      await formStorePage.inputValidatedLocator.fill('t');
+
+      await formStorePage.expectHasValidationMessage(formStorePage.inputValidatedContainerLocator, 1);
+
+      await formStorePage.submitButtonLocator.click();
+
+      await formStorePage.expectHasValidationMessage(formStorePage.inputValidatedContainerLocator, 0);
+    });
+  });
+
+  test.describe('array input', () => {
+    test('add element', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
+
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.validationArrayFields));
+
+      await formStorePage.addArrayFieldValidatedButtonLocator.click();
+
+      await formStorePage.expectHasArrayFieldElement(formStorePage.arrayFieldValidatedContainerLocator, 1);
+    });
+
+    test('remove element', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
+
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.validationArrayFields));
+
+      await formStorePage.addArrayFieldValidatedButtonLocator.click();
+      await formStorePage.removeArrayFieldButtonLocator.click();
+
+      await formStorePage.expectHasArrayFieldElement(formStorePage.arrayFieldValidatedContainerLocator, 0);
+    });
+
+    test('validation', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
+
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.validationArrayFields));
+
+      await formStorePage.addArrayFieldValidatedButtonLocator.click();
+      await formStorePage.submitButtonLocator.click();
+
+      await formStorePage.expectHasValidationMessage(formStorePage.arrayFieldValidatedContainerLocator, 1);
 
       // 1 for the array elements itself since it required 2, and 1 for the first array element partA
-      await expect(page.locator(locators.validationMessage)).toHaveCount(2);
+      await formStorePage.expectHasValidationMessage(formStorePage.sandboxMainContent, 2);
     });
 
-    test('added element should not be considered as touched by default @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.arrayFields));
+    test('added element should not be considered as touched by default', async ({ page }) => {
+      const formStorePage = new FormStorePage(page);
 
-      await page.locator(locators.addArrayFieldButton).click();
+      await formStorePage.goto(playwrightUtils.buildUrl(urls.validationArrayFields));
 
-      await expect(page.locator(locators.validationMessage)).toHaveCount(0);
+      await formStorePage.addArrayFieldValidatedButtonLocator.click();
 
-      await page.locator(locators.input).nth(0).fill('t');
-      await page.locator(locators.input).nth(0).press('Backspace');
-      await page.locator(locators.input).nth(0).blur();
+      await formStorePage.expectHasValidationMessage(formStorePage.arrayFieldValidatedContainerLocator, 0);
 
-      await expect(page.locator(locators.validationMessage)).toHaveCount(1);
+      await formStorePage.arrayFieldValidatedInputLocator.nth(0).fill('t');
+      await formStorePage.arrayFieldValidatedInputLocator.nth(0).press('Backspace');
+      await formStorePage.arrayFieldValidatedInputLocator.nth(0).blur();
+
+      await formStorePage.expectHasValidationMessage(formStorePage.arrayFieldValidatedContainerLocator, 1);
     });
+  });
+
+  test.describe('checkbox boolean input', () => {
+    test.skip('add test for the checkbox fields', () => {});
+  });
+
+  test.describe('checkbox values input', () => {
+    test.skip('add test for the checkbox values fields', () => {});
+  });
+
+  test.describe('checkbox toggle input', () => {
+    test.skip('add test for the checkbox toggle fields', () => {});
+  });
+
+  test.describe('combobox input', () => {
+    test.skip('add test for the combobox fields', () => {});
+  });
+
+  test.describe('combobox input multiple', () => {
+    test.skip('add test for the combobox fields', () => {});
+  });
+
+  test.describe('date input', () => {
+    test.skip('add test for the date fields', () => {});
+  });
+
+  test.describe('date range input', () => {
+    test.skip('add test for the date range fields', () => {});
+  });
+
+  test.describe('input input', () => {
+    test.skip('add test for the input fields', () => {});
+  });
+
+  test.describe('number input', () => {
+    test.skip('add test for the number fields', () => {});
+  });
+
+  test.describe('radio input', () => {
+    test.skip('add test for the radio fields', () => {});
+  });
+
+  test.describe('textarea input', () => {
+    test.skip('add test for the textarea fields', () => {});
+  });
+
+  test.describe('time input', () => {
+    test.skip('add test for the time fields', () => {});
   });
 
   test.describe('dynamic form elements', () => {
-    test('added to validation schema @component', async ({ page }) => {
-      await page.goto(playwrightUtils.buildUrl(urls.dynamicFormElements));
-
-      await page.locator(locators.submitButton).click();
-
-      await expect(page.locator(locators.validationMessage)).toHaveCount(1);
-
-      await page.locator(locators.addStringFieldButton).click();
-      await page.locator(locators.submitButton).click();
-
-      await expect(page.locator(locators.validationMessage)).toHaveCount(2);
-    });
+    test.skip('add test for the dynamic form elements', () => {});
   });
 });

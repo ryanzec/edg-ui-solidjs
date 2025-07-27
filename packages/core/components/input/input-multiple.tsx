@@ -1,6 +1,7 @@
+import * as lodash from 'lodash';
 import { type Accessor, Index, type JSX, mergeProps, splitProps } from 'solid-js';
 import FormArrayAddContainer from '$/core/components/form-array';
-import FormField from '$/core/components/form-field';
+import FormField, { type FormFieldProps } from '$/core/components/form-field';
 import Icon, { IconColor } from '$/core/components/icon';
 import Input from '$/core/components/input/input';
 import styles from '$/core/components/input/input.module.css';
@@ -27,7 +28,14 @@ const InputMultiple = <TFormData extends object>(passedProps: InputMultipleProps
     <FormArrayAddContainer onAdd={() => props.formStore.addArrayField(props.fieldName, '')} addLabel={props.addLabel}>
       <Index each={values()}>
         {(_arrayField, index) => {
-          const getArrayFieldError = () => props.formStore.errors()[props.fieldName]?.[index] ?? {};
+          const getArrayFieldError = () => {
+            const errors = lodash.get(props.formStore.errors(), `${props.fieldName as string}.${index}`) as Pick<
+              FormFieldProps,
+              'errors'
+            >;
+
+            return errors || {};
+          };
 
           const handleDelete = (event: Event) => {
             // we need to stop propagation otherwise if there is an input below the one being removed, that

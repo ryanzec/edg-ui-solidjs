@@ -298,13 +298,13 @@ export const Disabled = () => {
           <Tabs.Tab data-value="3" onClose={handleOnClose} isActive disabled>
             Tab 3
           </Tabs.Tab>
-          <Tooltip triggerEvent="hover" tooltipComponentRef={tooltipComponentRef} placement="bottom">
-            <Tooltip.Handle data-id="handle">
+          <Tooltip triggerEvent="hover" tooltipComponentRef={tooltipComponentRef}>
+            <Tooltip.Handle>
               <Tabs.Tab data-value="4" onClose={handleOnClose} disabled>
                 Tab 4
               </Tabs.Tab>
             </Tooltip.Handle>
-            <Tooltip.Content data-id="content">This tab is disabled</Tooltip.Content>
+            <Tooltip.Content>This tab is disabled</Tooltip.Content>
           </Tooltip>
         </Tabs>
       </div>

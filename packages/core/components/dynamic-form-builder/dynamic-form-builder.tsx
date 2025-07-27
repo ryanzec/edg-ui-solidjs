@@ -1,14 +1,17 @@
+import * as lodash from 'lodash';
+import { createEffect, createReaction, createSignal, For, mergeProps, Show } from 'solid-js';
+import * as zod from 'zod';
 import Checkbox from '$/core/components/checkbox';
 import Combobox, {
-  comboboxComponentUtils,
   type ComboboxOption,
   type ComboboxValueStore,
+  comboboxComponentUtils,
 } from '$/core/components/combobox';
-import DynamicFormBuilderObjectArray from '$/core/components/dynamic-form-builder/dynamic-form-builder-object-array';
 import styles from '$/core/components/dynamic-form-builder/dynamic-form-builder.module.css';
+import DynamicFormBuilderObjectArray from '$/core/components/dynamic-form-builder/dynamic-form-builder-object-array';
 import {
-  DynamicFormBuilderFieldType,
   type DynamicFormBuilderFields,
+  DynamicFormBuilderFieldType,
   type DynamicFormBuilderProps,
 } from '$/core/components/dynamic-form-builder/utils';
 import FormField from '$/core/components/form-field';
@@ -17,14 +20,20 @@ import Input from '$/core/components/input';
 import Label from '$/core/components/label';
 import Radio from '$/core/components/radio';
 import Textarea from '$/core/components/textarea';
+import type { FormValidatWith } from '$/core/stores/form.store';
+import { stringUtils } from '$/core/utils/string';
 import { tailwindUtils } from '$/core/utils/tailwind';
-import { ValidationMessageType } from '$/core/utils/validation';
+import { ValidationMessageType, validationUtils } from '$/core/utils/validation';
 import { zodUtils } from '$/core/utils/zod';
-import * as lodash from 'lodash';
-import { For, Show, createEffect, createReaction, createSignal } from 'solid-js';
-import * as zod from 'zod';
 
-const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderProps<TFormData>) => {
+const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBuilderProps<TFormData>) => {
+  const props = mergeProps(
+    {
+      skipSecretValidation: false,
+    },
+    passedProps,
+  );
+
   const stringTypes: DynamicFormBuilderFieldType[] = [
     DynamicFormBuilderFieldType.TEXT,
     DynamicFormBuilderFieldType.PASSWORD,
@@ -47,12 +56,40 @@ const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderP
 
   const [comboboxValueStores, setComboboxValueStores] = createSignal<Record<string, ComboboxValueStore>>({});
 
-  const buildSchemaForFields = (fields: DynamicFormBuilderFields): Record<string, zod.ZodType> => {
-    const schema: Record<string, zod.ZodType> = {};
+  const buildSchemaForFields = (
+    fields: DynamicFormBuilderFields,
+    fieldPathPrefix: string = '',
+  ): {
+    schema: Record<string, zod.ZodType>;
+    requiredTogether: Record<string, string[]>;
+    requiredGroupValidationMessages: Record<string, string>;
+  } => {
+    let schema: Record<string, zod.ZodType> = {};
+    const requiredTogether: Record<string, string[]> = {};
+    const requiredGroupValidationMessages: Record<string, string> = {};
 
     for (const input of fields) {
+      if (input.isSecret && props.skipSecretValidation) {
+        continue;
+      }
+
+      // when it a required group, it is only required when one of the grouped inputs is filled in
+      const isRequired = !input.requiredGroup && input.required;
+      const fullFieldPath = fieldPathPrefix ? `${fieldPathPrefix}.${input.name}` : input.name;
+
+      if (input.requiredGroup) {
+        const group = input.requiredGroup;
+
+        if (!requiredTogether[group]) {
+          requiredTogether[group] = [];
+        }
+
+        requiredTogether[group].push(fullFieldPath);
+        requiredGroupValidationMessages[fullFieldPath] = input.requiredGroupValidationMessage || 'Required';
+      }
+
       if (stringTypes.includes(input.type)) {
-        if (input.required) {
+        if (isRequired) {
           schema[input.name as string] = zod.string().min(1, ValidationMessageType.REQUIRED);
 
           continue;
@@ -64,7 +101,7 @@ const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderP
       }
 
       if (arrayStringTypes.includes(input.type)) {
-        if (input.required) {
+        if (isRequired) {
           schema[input.name as string] = zod
             .array(zod.string().min(1, ValidationMessageType.REQUIRED))
             .min(1, ValidationMessageType.REQUIRED);
@@ -78,8 +115,27 @@ const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderP
       }
 
       if (input.type === DynamicFormBuilderFieldType.COMPLEX) {
+        const {
+          schema: nestedSchema,
+          requiredTogether: nestedRequiredTogether,
+          requiredGroupValidationMessages: nestedRequiredGroupValidationMessages,
+        } = buildSchemaForFields(input.nestedFields || [], `${fieldPathPrefix}.${input.name}`);
+
+        // @todo(refactor)
+        for (const [nestedGroupName, nestedRequiredFieldPaths] of Object.entries(nestedRequiredTogether)) {
+          for (const nestedRequiredFieldPath of nestedRequiredFieldPaths) {
+            requiredTogether[nestedGroupName] = [...(requiredTogether[nestedGroupName] || []), nestedRequiredFieldPath];
+          }
+        }
+
+        for (const [nestedFieldPath, nestedRequiredGroupValidationMessage] of Object.entries(
+          nestedRequiredGroupValidationMessages,
+        )) {
+          requiredGroupValidationMessages[nestedFieldPath] = nestedRequiredGroupValidationMessage;
+        }
+
         schema[input.name as string] = zod
-          .object({ ...buildSchemaForFields(input.nestedFields || []) })
+          .object({ ...nestedSchema })
           .optional()
           // this will make sure the nested object validation is run and not just at the top level
           .default({});
@@ -88,11 +144,31 @@ const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderP
       }
 
       if (input.type === DynamicFormBuilderFieldType.COMPLEX_ARRAY) {
-        if (input.required) {
+        const nextFieldPathPrefix = fieldPathPrefix ? `${fieldPathPrefix}.${input.name}.0` : `${input.name}.0`;
+        const {
+          schema: nestedSchema,
+          requiredTogether: nestedRequiredTogether,
+          requiredGroupValidationMessages: nestedRequiredGroupValidationMessages,
+        } = buildSchemaForFields(input.nestedFields || [], nextFieldPathPrefix);
+
+        // @todo(refactor)
+        for (const [nestedGroupName, nestedRequiredFieldPaths] of Object.entries(nestedRequiredTogether)) {
+          for (const nestedRequiredFieldPath of nestedRequiredFieldPaths) {
+            requiredTogether[nestedGroupName] = [...(requiredTogether[nestedGroupName] || []), nestedRequiredFieldPath];
+          }
+        }
+
+        for (const [nestedFieldPath, nestedRequiredGroupValidationMessage] of Object.entries(
+          nestedRequiredGroupValidationMessages,
+        )) {
+          requiredGroupValidationMessages[nestedFieldPath] = nestedRequiredGroupValidationMessage;
+        }
+
+        if (isRequired) {
           schema[input.name as string] = zod
             .array(
               zod
-                .object({ ...buildSchemaForFields(input.nestedFields || []) })
+                .object({ ...nestedSchema })
                 .optional()
                 // this will make sure the nested object validation is run and not just at the top level
                 .default({}),
@@ -105,7 +181,7 @@ const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderP
         schema[input.name as string] = zod
           .array(
             zod
-              .object({ ...buildSchemaForFields(input.nestedFields || []) })
+              .object({ ...nestedSchema })
               .optional()
               // this will make sure the nested object validation is run and not just at the top level
               .default({}),
@@ -114,7 +190,40 @@ const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderP
       }
     }
 
-    return schema;
+    // since nested complex fields can be linked to fields higher up in the form, we need to until the entire form
+    // is built before we can know how to refine the schema for grouped fields
+    if (fieldPathPrefix === '') {
+      for (const [_groupName, requiredFieldPaths] of Object.entries(requiredTogether)) {
+        for (const requiredFieldPath of requiredFieldPaths) {
+          const [topLevelField, restOfPath] = stringUtils.splitOnce(requiredFieldPath, '.');
+          const fieldSchema = !restOfPath ? schema[topLevelField] : zodUtils.getNestedSchema(requiredFieldPath, schema);
+
+          schema = zodUtils.setNestedSchema(
+            requiredFieldPath,
+            schema,
+            fieldSchema.refine(
+              (currentValue) => {
+                const formData = props.formStore.data();
+                const neededValues = requiredFieldPaths.some((fieldPath) => {
+                  return validationUtils.isPopulatedFormValue(lodash.get(formData, fieldPath));
+                });
+
+                if (!neededValues) {
+                  return true;
+                }
+
+                return validationUtils.isPopulatedFormValue(currentValue);
+              },
+              {
+                message: requiredGroupValidationMessages[requiredFieldPath],
+              },
+            ),
+          );
+        }
+      }
+    }
+
+    return { schema, requiredTogether, requiredGroupValidationMessages };
   };
 
   createEffect(function buildFormSchema() {
@@ -122,14 +231,27 @@ const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderP
       return;
     }
 
-    let schema: Record<string, zod.ZodType> = {
+    // const time = performance.now();
+    const staticSchema: Record<string, zod.ZodType> = {
       ...props.staticFormSchema,
     };
+    const { schema: dynamicSchema, requiredTogether } = buildSchemaForFields(props.fields);
+    const finalSchema = zod.object({ ...staticSchema, ...dynamicSchema });
 
-    schema = { ...schema, ...buildSchemaForFields(props.fields) };
+    const validateWith: FormValidatWith<TFormData> = {};
+
+    for (const requiredFieldPaths of Object.values(requiredTogether)) {
+      for (const requiredFieldPath of requiredFieldPaths) {
+        validateWith[requiredFieldPath as keyof TFormData] = requiredFieldPaths.filter(
+          (path) => path !== requiredFieldPath,
+        ) as (keyof TFormData)[];
+      }
+    }
 
     // @ts-expect-error don't know how of even if it is possible for typescript to understand this code so f-it
-    props.formStore.setSchema(zodUtils.schemaForType<TFormData>()(zod.object(schema)));
+    props.formStore.setSchema(zodUtils.schemaForType<TFormData>()(finalSchema));
+    props.formStore.setValidateWith(validateWith);
+    // console.log('building', performance.now() - time);
   });
 
   const buildComboboxesForFields = (fields: DynamicFormBuilderFields) => {
@@ -197,6 +319,7 @@ const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderP
           const fieldName = (props.namePrefix ? `${props.namePrefix}.${field.name}` : field.name) as keyof TFormData;
 
           const getFieldError = (): string[] => {
+            // console.log(props.formStore.errors());
             return (lodash.get(props.formStore.errors(), `${fieldName as string}.errors`) || []) as string[];
           };
 
@@ -210,7 +333,7 @@ const DynamicFormBuilder = <TFormData extends object>(props: DynamicFormBuilderP
                   type={field.type}
                   name={fieldName}
                   formData={props.formStore.data}
-                  placeholder={field.placeholder}
+                  placeholder={field.isSecret && props.skipSecretValidation ? '********' : field.placeholder}
                   readonly={field.readonly ?? false}
                 />
               </Show>
