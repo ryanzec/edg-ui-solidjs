@@ -33,3 +33,4 @@ applications/web/build/*
 /playwright/.cache/
 build-visualizer.html
 .DS_Store
+.pnpm-store
