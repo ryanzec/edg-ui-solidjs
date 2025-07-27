@@ -51,22 +51,41 @@ const baseConfiguration: PlaywrightTestConfig = {
         ...devices['Desktop Chrome'],
         launchOptions: {
           args: [
-            // Existing font rendering consistency flags
+            // Aggressive font rendering consistency
             '--font-render-hinting=none',
             '--disable-font-subpixel-positioning',
             '--disable-skia-runtime-opts',
-
-            // Additional consistency flags for visual testing
             '--disable-system-font-check',
             '--disable-font-feature-settings',
             '--disable-font-variation-settings',
             '--disable-lcd-text',
+
+            // Display and scaling consistency
             '--force-device-scale-factor=1',
+            '--disable-gpu',
             '--disable-gpu-sandbox',
-            '--disable-software-rasterizer',
+            '--disable-dev-shm-usage',
+            '--disable-extensions',
+
+            // Rendering consistency
             '--disable-background-timer-throttling',
             '--disable-backgrounding-occluded-windows',
             '--disable-renderer-backgrounding',
+            '--disable-features=TranslateUI,VizDisplayCompositor',
+            '--disable-ipc-flooding-protection',
+            '--disable-background-networking',
+
+            // Force software rendering for consistency
+            '--use-gl=swiftshader',
+            '--disable-accelerated-2d-canvas',
+            '--disable-accelerated-jpeg-decoding',
+            '--disable-accelerated-mjpeg-decode',
+            '--disable-accelerated-video-decode',
+            '--disable-accelerated-video-encode',
+
+            // Stability flags
+            '--no-sandbox',
+            '--disable-web-security',
           ],
         },
       },
