@@ -9,7 +9,7 @@ const baseConfiguration: PlaywrightTestConfig = {
   snapshotDir: './__snapshots__',
   expect: {
     toHaveScreenshot: {
-      threshold: 0.2,
+      threshold: 0,
     },
   },
   timeout: 15 * 1000,
@@ -27,7 +27,6 @@ const baseConfiguration: PlaywrightTestConfig = {
     viewport: { width: 1024, height: 768 },
 
     // not sure why this produces a typescript error but it does work so ignoring for now
-    // @ts-expect-error
     ctViteConfig: viteUtils.baseConfiguration,
   },
   webServer: [
