@@ -17,7 +17,7 @@ This library is not in the state where I want it to be to write out the basic re
 
 
 CRITICAL TODOS
-- N/A
+- date component - do better default when date is invalid (!date.isValid())
 
 HIGH TODOS
 - tooltip content color

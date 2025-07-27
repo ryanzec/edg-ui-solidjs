@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
   "vcs": {
     "enabled": false,
     "clientKind": "git",
@@ -7,12 +7,13 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": [
+    "includes": [
+      "**",
       // this using tailwind functionality that is not valid css so just ignore it, it is also
       // auto generated so no need to worry about linting it
-      "packages/core/styles/variables.css",
+      "!**/packages/core/styles/variables.css",
       // this is just pocketbase so we let it do its thing
-      "applications/backend/**/*"
+      "!**/applications/backend/**/*"
     ]
   },
   "formatter": {
@@ -21,8 +22,17 @@
     "indentWidth": 2,
     "lineWidth": 120
   },
-  "organizeImports": {
-    "enabled": true
+  "css": {
+    "parser": {
+      "cssModules": true
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   },
   "linter": {
     "enabled": true,
@@ -32,12 +42,17 @@
         "noConfusingVoidType": "off"
       },
       "correctness": {
-        "noUnusedImports": "warn",
+        "noUnusedImports": "info",
+        "noUnusedVariables": "info",
+        "noUnusedFunctionParameters": "info",
         // I believe this is react specific and since we are using solidjs,we don't need it
         "useJsxKeyInIterable": "off"
       }
     },
-    "ignore": ["**/node_modules"]
+    "includes": [
+      "**",
+      "!**/node_modules"
+    ]
   },
   "javascript": {
     "formatter": {
