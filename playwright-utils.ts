@@ -1,4 +1,4 @@
-import { type PlaywrightTestConfig, devices } from '@playwright/test';
+import { devices, type PlaywrightTestConfig } from '@playwright/test';
 import { viteUtils } from './vite-utils';
 
 const DEV_SERVER_URL = 'http://localhost:6006';
@@ -50,7 +50,24 @@ const baseConfiguration: PlaywrightTestConfig = {
       use: {
         ...devices['Desktop Chrome'],
         launchOptions: {
-          args: ['--font-render-hinting=none', '--disable-font-subpixel-positioning', '--disable-skia-runtime-opts'],
+          args: [
+            // Existing font rendering consistency flags
+            '--font-render-hinting=none',
+            '--disable-font-subpixel-positioning',
+            '--disable-skia-runtime-opts',
+
+            // Additional consistency flags for visual testing
+            '--disable-system-font-check',
+            '--disable-font-feature-settings',
+            '--disable-font-variation-settings',
+            '--disable-lcd-text',
+            '--force-device-scale-factor=1',
+            '--disable-gpu-sandbox',
+            '--disable-software-rasterizer',
+            '--disable-background-timer-throttling',
+            '--disable-backgrounding-occluded-windows',
+            '--disable-renderer-backgrounding',
+          ],
         },
       },
     } /*,

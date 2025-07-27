@@ -102,6 +102,23 @@ export class BasePage {
     const testName = testInfo.titlePath.slice(1).join('-').replace(/\s+/g, '-').toLowerCase();
     const fileName = `${testName}${finalOptions.fileNameAppend || ''}`;
 
+    // Wait for fonts to load before taking screenshots to ensure consistent rendering
+    await this.page.evaluate(() => {
+      return Promise.all([
+        document.fonts.load('400 1em "Geist Sans"'),
+        document.fonts.load('500 1em "Geist Sans"'),
+        document.fonts.load('600 1em "Geist Sans"'),
+        document.fonts.load('700 1em "Geist Sans"'),
+        document.fonts.load('400 1em "Geist Mono"'),
+        document.fonts.load('500 1em "Geist Mono"'),
+        document.fonts.load('600 1em "Geist Mono"'),
+        document.fonts.load('700 1em "Geist Mono"'),
+      ]);
+    });
+
+    // Additional wait to ensure all fonts are ready
+    await this.page.waitForFunction(() => document.fonts.ready);
+
     if (!finalOptions.locator) {
       await expect(this.sandboxMainContent).toHaveScreenshot(`${fileName}.png`);
 

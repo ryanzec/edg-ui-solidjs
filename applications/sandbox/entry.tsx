@@ -10,6 +10,9 @@ import '@fontsource/geist-mono/500.css';
 import '@fontsource/geist-mono/600.css';
 import '@fontsource/geist-mono/700.css';
 
+// Override font-display for visual testing consistency
+import '$sandbox/styles/font-visual-testing.css';
+
 import '@phosphor-icons/web/regular/style.css';
 import '@phosphor-icons/web/bold/style.css';
 import '@phosphor-icons/web/fill/style.css';
