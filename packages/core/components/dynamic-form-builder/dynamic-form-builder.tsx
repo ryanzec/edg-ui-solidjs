@@ -90,7 +90,9 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
 
       if (stringTypes.includes(input.type)) {
         if (isRequired) {
-          schema[input.name as string] = zod.string().min(1, ValidationMessageType.REQUIRED);
+          schema[input.name as string] = zod
+            .string()
+            .min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED));
 
           continue;
         }
@@ -103,13 +105,15 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
       if (arrayStringTypes.includes(input.type)) {
         if (isRequired) {
           schema[input.name as string] = zod
-            .array(zod.string().min(1, ValidationMessageType.REQUIRED))
-            .min(1, ValidationMessageType.REQUIRED);
+            .array(zod.string().min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED)))
+            .min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED));
 
           continue;
         }
 
-        schema[input.name as string] = zod.array(zod.string().min(1, ValidationMessageType.REQUIRED)).optional();
+        schema[input.name as string] = zod
+          .array(zod.string().min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED)))
+          .optional();
 
         continue;
       }
@@ -173,7 +177,7 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
                 // this will make sure the nested object validation is run and not just at the top level
                 .default({}),
             )
-            .min(1, ValidationMessageType.REQUIRED);
+            .min(1, validationUtils.getMessage(ValidationMessageType.REQUIRED));
 
           continue;
         }

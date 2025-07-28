@@ -297,7 +297,7 @@ const createStore = <TFormData extends object>(
     // if we are validating a specific field, we only need to validate that, this will make sure performance is good
     // by not wasting time validating data that did not change
     if (fieldName) {
-      console.log('single validation', fieldName, checkIsTouched, isTouched(fieldName as keyof TFormData));
+      // console.log('single validation', fieldName, checkIsTouched, isTouched(fieldName as keyof TFormData));
       let currentErrors = options.currentErrors ?? errors();
 
       if (checkIsTouched && !isTouched(fieldName as keyof TFormData)) {
@@ -306,27 +306,27 @@ const createStore = <TFormData extends object>(
 
       let validationFormattedError: string[] = [];
 
-      // if (formattedErrors) {
-      //   validationFormattedError = lodash.get(formattedErrors, fieldName)?._errors || [];
-      // } else {
-      const value = lodash.get(data(), fieldName);
+      if (formattedErrors) {
+        validationFormattedError = lodash.get(formattedErrors, fieldName)?._errors || [];
+      } else {
+        const value = lodash.get(data(), fieldName);
 
-      // @ts-expect-error using an internal zod structure to be able to super refine schema (un tested)
-      const schema = activeSchema.shape || activeSchema._def.schema.shape;
+        // @ts-expect-error using an internal zod structure to be able to super refine schema (un tested)
+        const schema = activeSchema.shape || activeSchema._def.schema.shape;
 
-      // in the edge case that a field for a form has no validator assigned to it (can happen with highly
-      // dynamic forms) we use an any optional validator that should basic pass anything (which effectively is
-      // no validation)
-      const fieldValidator =
-        zodUtils.getNestedSchema(fieldName, schema, { unwrapEffects: false }) || zod.any().optional();
+        // in the edge case that a field for a form has no validator assigned to it (can happen with highly
+        // dynamic forms) we use an any optional validator that should basic pass anything (which effectively is
+        // no validation)
+        const fieldValidator =
+          zodUtils.getNestedSchema(fieldName, schema, { unwrapEffects: false }) || zod.any().optional();
 
-      // console.log('fieldValidator', fieldValidator);
-      const fieldValidationResults = fieldValidator.safeParse(value);
+        // console.log('fieldValidator', fieldValidator);
+        const fieldValidationResults = fieldValidator.safeParse(value);
 
-      // console.log('fieldValidationResults', fieldValidationResults.success, fieldValidationResults.error);
+        // console.log('fieldValidationResults', fieldValidationResults.success, fieldValidationResults.error);
 
-      validationFormattedError = fieldValidationResults.error?.format()._errors || [];
-      // }
+        validationFormattedError = fieldValidationResults.error?.format()._errors || [];
+      }
 
       // console.log(validationFormattedError);
 
