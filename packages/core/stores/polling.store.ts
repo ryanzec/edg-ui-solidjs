@@ -11,7 +11,9 @@ export type PollingStore = {
 export type CreatePollingStoreOptions = {
   defaultIsActive?: boolean;
   pollInterval?: number;
-
+  // returns true if the polling should start, false if it should not
+  onBeforeStartPolling?: () => Promise<boolean>;
+  onAfterStopPolling?: () => Promise<void>;
   // returns true if the polling should continue, false if it should stop
   onPoll: () => Promise<boolean>;
 };
@@ -36,6 +38,8 @@ const createPollingStore = (options: CreatePollingStoreOptions): PollingStore =>
     const currentIsActive = isActive();
 
     if (currentIsActive === false) {
+      await untrack(async () => await options.onAfterStopPolling?.());
+
       return;
     }
 
@@ -45,16 +49,28 @@ const createPollingStore = (options: CreatePollingStoreOptions): PollingStore =>
     if (shouldContinue === false) {
       setIsActive(false);
 
+      await untrack(async () => await options.onAfterStopPolling?.());
+
       return;
     }
 
     pollingTimeoutId = window.setTimeout(startPolling, options.pollInterval || DEFAULT_POLL_INTERVAL);
   };
 
-  createEffect(() => {
+  createEffect(async () => {
     const currentIsActive = isActive();
 
     if (currentIsActive === false) {
+      return;
+    }
+
+    const shouldStart = await untrack(async () =>
+      options.onBeforeStartPolling ? await options.onBeforeStartPolling() : true,
+    );
+
+    if (shouldStart === false) {
+      setIsActive(false);
+
       return;
     }
 
