@@ -71,11 +71,14 @@ export const AutoStart = () => {
 
 export const OnBeforeStartPolling = () => {
   const [pollingCallCount, setPollingCallCount] = createSignal(0);
+  const [beforeStartPollingCount, setBeforeStartPollingCount] = createSignal(0);
   const [stopOnNextPolling, setStopOnNextPolling] = createSignal(false);
 
   const pollingStore = pollingStoreUtils.createStore({
     pollInterval: 500,
     onBeforeStartPolling: async () => {
+      setBeforeStartPollingCount(beforeStartPollingCount() + 1);
+
       if (pollingCallCount() >= 4) {
         return false;
       }
@@ -110,6 +113,7 @@ export const OnBeforeStartPolling = () => {
         <Button onClick={() => setStopOnNextPolling(true)}>Stop On Next Polling</Button>
       </Button.Group>
       <div data-id="polling-call-count">Polling call count: {pollingCallCount()}</div>
+      <div data-id="before-start-polling-count">Before start polling count: {beforeStartPollingCount()}</div>
     </div>
   );
 };
@@ -117,11 +121,12 @@ export const OnBeforeStartPolling = () => {
 export const OnAfterStopPolling = () => {
   const [pollingCallCount, setPollingCallCount] = createSignal(0);
   const [stopOnNextPolling, setStopOnNextPolling] = createSignal(false);
+  const [afterStopPollingCount, setAfterStopPollingCount] = createSignal(0);
 
   const pollingStore = pollingStoreUtils.createStore({
     pollInterval: 500,
     onAfterStopPolling: async () => {
-      console.log('cleanup after polling stops');
+      setAfterStopPollingCount(afterStopPollingCount() + 1);
     },
     onPoll: async () => {
       setPollingCallCount(pollingCallCount() + 1);
@@ -145,6 +150,7 @@ export const OnAfterStopPolling = () => {
         <Button onClick={() => setStopOnNextPolling(true)}>Stop On Next Polling</Button>
       </Button.Group>
       <div data-id="polling-call-count">Polling call count: {pollingCallCount()}</div>
+      <div data-id="after-stop-polling-count">After stop polling count: {afterStopPollingCount()}</div>
     </div>
   );
 };
