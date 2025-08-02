@@ -1,5 +1,5 @@
 import { type Accessor, createSignal } from 'solid-js';
-import { DateTimeFormat, dateUtils } from '$/core/utils/date';
+import { type CustomDayjs, DateTimeFormat, dateUtils } from '$/core/utils/date';
 
 export const WhichDate = {
   FIRST: 'first',
@@ -12,6 +12,7 @@ export type DateFormValue = undefined | Array<Date | undefined>;
 
 export type DateStore = {
   date: Accessor<Date | undefined>;
+  dateAsDayjs: () => CustomDayjs | undefined;
   setDate: (date?: Date) => void;
   getFormattedDate: () => string;
 };
@@ -36,8 +37,19 @@ const createDateStore = (options: CreateDateStoreOptions): DateStore => {
       .format(options.includeTime ? DateTimeFormat.STANDARD_DATE_TIME : DateTimeFormat.STANDARD_DATE);
   };
 
+  const dateAsDayjs = () => {
+    const currentDate = date();
+
+    if (!currentDate) {
+      return;
+    }
+
+    return dateUtils.getDateWithConfiguredTimezone(currentDate);
+  };
+
   return {
     date,
+    dateAsDayjs,
     setDate,
     getFormattedDate,
   };
@@ -45,7 +57,9 @@ const createDateStore = (options: CreateDateStoreOptions): DateStore => {
 
 export type DateRangeStore = {
   startDate: Accessor<Date | undefined>;
+  startDateAsDayjs: () => CustomDayjs | undefined;
   endDate: Accessor<Date | undefined>;
+  endDateAsDayjs: () => CustomDayjs | undefined;
   setDate: (date?: Date, which?: WhichDate) => void;
   getFormValue: () => DateFormValue;
 };
@@ -80,7 +94,27 @@ const createDateRangeStore = (options: CreateDateRangeStoreOptions = {}): DateRa
     startEndDate(date);
   };
 
-  return { startDate, endDate, setDate, getFormValue };
+  const startDateAsDayjs = () => {
+    const currentStartDate = startDate();
+
+    if (!currentStartDate) {
+      return;
+    }
+
+    return dateUtils.getDateWithConfiguredTimezone(currentStartDate);
+  };
+
+  const endDateAsDayjs = () => {
+    const currentEndDate = endDate();
+
+    if (!currentEndDate) {
+      return;
+    }
+
+    return dateUtils.getDateWithConfiguredTimezone(currentEndDate);
+  };
+
+  return { startDate, startDateAsDayjs, endDate, endDateAsDayjs, setDate, getFormValue };
 };
 
 export const dateStoreUtils = {

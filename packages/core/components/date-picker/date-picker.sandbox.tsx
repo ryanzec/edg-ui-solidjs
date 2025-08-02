@@ -1,10 +1,13 @@
-import { createSignal, Show } from 'solid-js';
-
+import { createEffect, createSignal, Show } from 'solid-js';
+import * as zod from 'zod';
 import DatePicker from '$/core/components/date-picker';
 import FormField from '$/core/components/form-field';
-import type { WhichDate } from '$/core/stores/date.store';
+import FormFields from '$/core/components/form-fields';
+import { dateStoreUtils, type WhichDate } from '$/core/stores/date.store';
 import { formStoreUtils } from '$/core/stores/form.store';
 import { DateTimeFormat, dateUtils } from '$/core/utils/date';
+import { validationUtils } from '$/core/utils/validation';
+import { zodUtils } from '$/core/utils/zod';
 
 export default {
   title: 'Components/DatePicker',
@@ -139,6 +142,66 @@ export const Input = () => {
           defaultEndSelectedDate={new Date('Dec 11 2022 4:34 pm')}
         />
       </div>
+    </>
+  );
+};
+
+type FormData = {
+  dateRange: string[];
+};
+
+export const Form = () => {
+  const dateRangeStore = dateStoreUtils.createDateRangeStore();
+
+  const formDataSchema = zodUtils.schemaForType<FormData>()(
+    zod.object({
+      dateRange: zod.custom<string[]>(
+        (value: string[]) => {
+          console.log(value);
+          return validationUtils.isValidDateRange(value);
+        },
+        {
+          message: 'Invalid date range',
+        },
+      ),
+    }),
+  );
+
+  const formStore = formStoreUtils.createStore<FormData>({
+    schema: formDataSchema,
+    onSubmit: async (values) => {
+      console.log(values);
+    },
+  });
+
+  const formDirective = formStore.formDirective;
+
+  createEffect(() => {
+    console.log(dateRangeStore.startDateAsDayjs());
+    console.log(dateRangeStore.endDateAsDayjs());
+  });
+
+  return (
+    <>
+      <form use:formDirective>
+        <FormFields>
+          <FormField errors={formStore.errors().dateRange?.errors}>
+            <DatePicker.Input
+              isRange
+              name="dateRange"
+              formData={formStore.data}
+              onSelectDate={(data: Date | undefined, which?: WhichDate) => {
+                dateRangeStore.setDate(data, which);
+
+                formStore.setValue('dateRange', dateRangeStore.getFormValue(), {
+                  markAsTouched: false,
+                });
+              }}
+            />
+          </FormField>
+        </FormFields>
+      </form>
+      <div data-id="form-data">{JSON.stringify(formStore.data)}</div>
     </>
   );
 };

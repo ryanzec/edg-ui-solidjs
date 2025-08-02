@@ -1,11 +1,10 @@
-import { type Accessor, createEffect, createSignal, untrack } from 'solid-js';
+import { type Accessor, createEffect, createSignal, onCleanup, untrack } from 'solid-js';
 
 const DEFAULT_POLL_INTERVAL = 3000;
 
 export type PollingStore = {
   isActive: Accessor<boolean>;
   setIsActive: (isActive: boolean) => void;
-  onCleanup: () => void;
 };
 
 export type CreatePollingStoreOptions = {
@@ -77,14 +76,13 @@ const createPollingStore = (options: CreatePollingStoreOptions): PollingStore =>
     startPolling();
   });
 
-  const onCleanup = () => {
+  onCleanup(() => {
     clearCurrentPolling();
-  };
+  });
 
   return {
     isActive,
     setIsActive,
-    onCleanup,
   };
 };
 

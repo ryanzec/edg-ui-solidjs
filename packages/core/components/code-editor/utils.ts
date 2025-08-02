@@ -1,5 +1,5 @@
 import { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
-import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
+import { defaultKeymap, history, historyKeymap, indentLess, insertTab } from '@codemirror/commands';
 import {
   bracketMatching,
   defaultHighlightStyle,
@@ -77,6 +77,12 @@ export const defaultExtensions: Extension[] = [
     ...foldKeymap,
     ...completionKeymap,
     ...lintKeymap,
-    indentWithTab,
+    {
+      key: 'Tab',
+    },
+    {
+      key: 'Shift-Tab',
+      run: indentLess,
+    },
   ]),
 ];

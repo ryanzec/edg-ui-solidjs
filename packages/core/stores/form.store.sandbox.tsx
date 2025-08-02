@@ -740,7 +740,7 @@ export const DynamicFormElements = () => {
       name: 'date',
       type: RandomFormFieldType.DATE,
       // @todo(!!!) date specific validation
-      validation: zod.custom((value) => validationUtils.isValidDate(value), {
+      validation: zod.custom<string>((value) => validationUtils.isValidDate(value), {
         message: 'must select a date',
       }),
     },
@@ -748,7 +748,7 @@ export const DynamicFormElements = () => {
       name: 'date-range',
       type: RandomFormFieldType.DATE_RANGE,
       // @todo(!!!) date specific validation
-      validation: zod.custom((value) => validationUtils.isValidDateRange(value), {
+      validation: zod.custom<string[]>((value) => validationUtils.isValidDateRange(value), {
         message: 'must select a date',
       }),
     },
@@ -756,7 +756,7 @@ export const DynamicFormElements = () => {
       name: 'time-input',
       type: RandomFormFieldType.TIME_INPUT,
       // @todo(!!!) date specific validation
-      validation: zod.custom((value) => timeInputComponentUtils.isValidTime(value as string), {
+      validation: zod.custom<string>((value) => timeInputComponentUtils.isValidTime(value), {
         message: 'must select a time',
       }),
     },

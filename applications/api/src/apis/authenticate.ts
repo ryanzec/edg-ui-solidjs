@@ -42,8 +42,6 @@ export const registerAuthenticateApi = (api: FastifyInstance) => {
       const pocketBaseClient = await pocketBaseUtils.createClient();
       const authData = await pocketBaseClient.collection<PocketBaseUser>('users').authWithPassword(email, password);
 
-      request.log.error(authData);
-
       authenticationUtils.setJwtCookie(response, authData.token);
 
       return response.status(200).send(

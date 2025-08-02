@@ -24,7 +24,7 @@ const isValidDate = (value: string) => {
   return !!value && !!value[0];
 };
 
-const isValidDateRange = (value: string) => {
+const isValidDateRange = (value: string[]) => {
   return !!value && !!value[0] && !!value[1];
 };
 
