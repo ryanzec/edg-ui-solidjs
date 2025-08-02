@@ -2,6 +2,7 @@ import { createEffect, createMemo, createSignal } from 'solid-js';
 import { Page } from '$/application/components/page';
 import GridTable from '$/core/components/grid-table';
 import { GridTableSortDirection } from '$/core/components/grid-table/grid-table-header-data';
+import Icon from '$/core/components/icon';
 import List from '$/core/components/list';
 import PaginationComponent, { type PaginationCursorProps } from '$/core/components/pagination';
 import type { TooltipComponentRef } from '$/core/components/tooltip';
@@ -173,7 +174,9 @@ let newLargeData: ComplexData[] = [];
 
 // 10 per loop so this == 10000
 for (let i = 0; i < 1000; i++) {
-  newLargeData = newLargeData.concat(newData.map((item) => ({ ...item, id: `${i}${item.id}` })));
+  newLargeData = newLargeData.concat(
+    newData.map((item) => ({ ...item, id: `${i}${item.id}`, name: `${item.name} ${i}` })),
+  );
 }
 
 export const Default = () => {
@@ -203,6 +206,101 @@ export const Default = () => {
                 </GridTable.Data>
                 <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} class="justify-center" isEndOfRow>
                   {item.date}
+                </GridTable.Data>
+              </>
+            );
+          }}
+        </GridTable.Simple>
+      </Page.ContentSection>
+    </SandboxExamplesContainer>
+  );
+};
+
+export const SelectableAndPaginated = () => {
+  const [selectedItems, setSelectedItems] = createSignal<ComplexData[]>([]);
+  const paginationStore = paginationStoreUtils.createStore({
+    totalItems: newLargeData.length,
+  });
+
+  const selectedIds = createMemo(() => selectedItems().map((item) => item.id));
+
+  const currentItems = () => {
+    const offsets = paginationStore.currentItemOffsets();
+
+    return newLargeData.slice(offsets[0], offsets[1]);
+  };
+
+  const handlePageChange = async (previousPage: number, newPage: number) => {
+    console.log(`Page changed from ${previousPage} to ${newPage} ${newPage === 5}`);
+
+    if (newPage === 5) {
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleRowSelectorChange = (checked: boolean, item: ComplexData) => {
+    console.log('checked', checked, item);
+
+    if (checked) {
+      setSelectedItems([...selectedItems(), item]);
+
+      return;
+    }
+
+    setSelectedItems(selectedItems().filter((i) => i.id !== item.id));
+  };
+
+  const handleDelete = () => {
+    console.log('delete', selectedItems());
+  };
+
+  return (
+    <SandboxExamplesContainer>
+      <Page.ContentSection>
+        <GridTable.Simple
+          class="grid-cols-[auto_auto_1fr_auto_auto]"
+          items={currentItems()}
+          headerData={['Title', 'Severity', 'Last Modified', 'Author']}
+          footerElement={<PaginationComponent paginationStore={paginationStore} onPageChange={handlePageChange} />}
+          columnCount={5}
+          selectedItems={selectedItems()}
+          setSelectedItems={setSelectedItems}
+          selectedActionElement={
+            <>
+              <Icon icon="trash" onClick={handleDelete} />
+              <Icon icon="copy" />
+              <Icon icon="pencil" />
+              <Icon icon="database" />
+            </>
+          }
+        >
+          {(item, index) => {
+            const isFirstRow = index() === 0;
+            const isLastRow = index() === currentItems().length - 1;
+
+            return (
+              <>
+                <GridTable.RowSelector
+                  isFirstRow={isFirstRow}
+                  isLastRow={isLastRow}
+                  isStartOfRow
+                  item={item}
+                  isSelected={selectedIds().includes(item.id)}
+                  onChange={handleRowSelectorChange}
+                />
+                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                  {item.name}
+                </GridTable.Data>
+                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                  {item.severity}
+                </GridTable.Data>
+                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                  {item.lastModified}
+                </GridTable.Data>
+                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isEndOfRow>
+                  {item.author.name}
                 </GridTable.Data>
               </>
             );

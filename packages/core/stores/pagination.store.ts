@@ -3,7 +3,7 @@ import { type Accessor, createSignal } from 'solid-js';
 type CreatePaginationStoreOptions = {
   defaultCurrentPage?: number;
   itemsPerPage?: number;
-  totalItems: number;
+  totalItems?: number;
   surroundingPages?: number;
 };
 
@@ -23,7 +23,7 @@ export type PaginationStore = {
   visiblePageNumbers: () => (number | string)[];
 };
 
-const createPaginationStore = (options: CreatePaginationStoreOptions): PaginationStore => {
+const createPaginationStore = (options: CreatePaginationStoreOptions = {}): PaginationStore => {
   const [currentPage, setCurrentPage] = createSignal(options.defaultCurrentPage || 1);
   const [isLoading, setIsLoading] = createSignal(false);
   const [itemsPerPage, setItemsPerPage] = createSignal(options.itemsPerPage || 10);

@@ -1,4 +1,13 @@
-import { type Accessor, createEffect, createSignal, type JSX, Show, splitProps, useContext } from 'solid-js';
+import {
+  type Accessor,
+  createEffect,
+  createMemo,
+  createSignal,
+  type JSX,
+  Show,
+  splitProps,
+  useContext,
+} from 'solid-js';
 import styles from '$/core/components/checkbox/checkbox.module.css';
 import { FormFieldContext } from '$/core/components/form-field';
 import Icon from '$/core/components/icon';
@@ -15,6 +24,9 @@ export type CheckboxProps<TFormData = DefaultFormData> = Omit<JSX.InputHTMLAttri
 
   // while not directly used, used to infer the type for name to give properly type checking on that property
   formData?: Accessor<Partial<TFormData>>;
+
+  // while this should be on the JSX.InputHTMLAttributes<HTMLInputElement> typescript complains so manually adding it
+  indeterminate?: boolean;
 };
 
 const CheckedState = {
@@ -53,7 +65,7 @@ const Checkbox = <TFormData = DefaultFormData>(passedProps: CheckboxProps<TFormD
     passedProps.inputRef?.(element);
   };
 
-  const getCheckedStateIcon = (): IconName => {
+  const getCheckedStateIcon = createMemo((): IconName => {
     const isChecked = checkedState() === CheckedState.CHECKED;
 
     if (checkedState() === CheckedState.INDETERMINATE) {
@@ -65,7 +77,7 @@ const Checkbox = <TFormData = DefaultFormData>(passedProps: CheckboxProps<TFormD
     }
 
     return 'square';
-  };
+  });
 
   const handleChange: JSX.EventHandlerUnion<HTMLInputElement, Event> = (event) => {
     const target = event.target as HTMLInputElement;
@@ -81,7 +93,7 @@ const Checkbox = <TFormData = DefaultFormData>(passedProps: CheckboxProps<TFormD
     }
   };
 
-  createEffect(function updateInternalCheckState() {
+  createEffect(function setupInternalCheckState() {
     if (inputElementRef()?.indeterminate) {
       setCheckedState(CheckedState.INDETERMINATE);
 
@@ -89,6 +101,16 @@ const Checkbox = <TFormData = DefaultFormData>(passedProps: CheckboxProps<TFormD
     }
 
     setCheckedState(inputElementRef()?.checked ? CheckedState.CHECKED : CheckedState.UNCHECKED);
+  });
+
+  createEffect(function updateInternalCheckedState() {
+    if (restOfProps.indeterminate) {
+      setCheckedState(CheckedState.INDETERMINATE);
+
+      return;
+    }
+
+    setCheckedState(restOfProps.checked ? CheckedState.CHECKED : CheckedState.UNCHECKED);
   });
 
   return (
