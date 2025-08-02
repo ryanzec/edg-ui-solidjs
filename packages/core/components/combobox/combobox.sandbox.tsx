@@ -262,6 +262,16 @@ export const Multi = () => {
   return <MultiSelectExample />;
 };
 
+export const SingleDisabledOption = () => {
+  return <BasicExample autoShowOptions options={[...baseOptions, { label: 'disabled', value: 55, disabled: true }]} />;
+};
+
+export const MultiDisabledOption = () => {
+  return (
+    <MultiSelectExample autoShowOptions options={[...baseOptions, { label: 'disabled', value: 55, disabled: true }]} />
+  );
+};
+
 export const SingleGrouped = () => {
   return <BasicExample options={baseGroupedOptions} />;
 };

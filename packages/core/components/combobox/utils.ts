@@ -5,6 +5,7 @@ import { createStore, produce } from 'solid-js/store';
 import type { DefaultFormData } from '$/core/stores/form.store';
 import { Key } from '$/core/types/generic';
 import { domUtils } from '$/core/utils/dom';
+import { loggerUtils } from '$/core/utils/logger';
 
 export const comboboxDataAttribute = {
   HIGHLIGHTED_OPTION: 'data-combobox-highlighted-option',
@@ -25,6 +26,7 @@ export type ComboboxOption<TData = ComboboxExtraData> = {
   label: string;
   value: ComboboxOptionValue;
   groupKey?: string;
+  disabled?: boolean;
 } & TData;
 
 export const AsyncOptionsState = {
@@ -265,6 +267,10 @@ const createComboboxStore = <TData extends ComboboxExtraData, TFormData = Defaul
     }
   };
 
+  const openCombobox = () => {
+    setComboboxStore('isOpened', true);
+  };
+
   const closeCombobox = () => {
     setComboboxStore(
       produce((store) => {
@@ -284,7 +290,7 @@ const createComboboxStore = <TData extends ComboboxExtraData, TFormData = Defaul
 
   const getHighlightedValue = (): ComboboxOption<TData> | undefined => {
     const elements = comboboxStore.optionsContainerRef?.querySelectorAll(
-      `[${comboboxDataAttribute.HIGHLIGHTED_OPTION}="true"]`,
+      `[${comboboxDataAttribute.HIGHLIGHTED_OPTION}="true"]:not([disabled])`,
     ) as NodeListOf<HTMLElement>;
     const element = elements?.[0];
 
@@ -398,13 +404,65 @@ const createComboboxStore = <TData extends ComboboxExtraData, TFormData = Defaul
     return !!props.selected.find((selectedItem) => selectedItem.value === value);
   };
 
-  const setFocusedOption = (optionIndex: number) => {
-    let newOptionIndex = optionIndex;
+  type SetFocusedOptionOptions = {
+    findNextValidOption?: boolean;
+    movementDirection?: 'up' | 'down';
+  };
 
-    if (optionIndex < 0) {
+  const defaultSetFocusedOptionOptions: SetFocusedOptionOptions = {
+    findNextValidOption: false,
+    movementDirection: 'down',
+  };
+
+  // this take an index and returns a valid index account for going out of bounds of the data
+  const getValidIndex = (currentIndex: number) => {
+    let newOptionIndex = currentIndex;
+
+    if (newOptionIndex < 0) {
       newOptionIndex = comboboxStore.displayOptions.length - 1;
-    } else if (optionIndex >= comboboxStore.displayOptions.length) {
+    } else if (newOptionIndex >= comboboxStore.displayOptions.length) {
       newOptionIndex = 0;
+    }
+
+    return newOptionIndex;
+  };
+
+  const setFocusedOption = (optionIndex: number, optionOverrides: SetFocusedOptionOptions = {}) => {
+    const options = structuredClone(Object.assign({}, defaultSetFocusedOptionOptions, optionOverrides));
+
+    let newOptionIndex = getValidIndex(optionIndex);
+    let newFocusedOption: ComboboxOption<TData> = comboboxStore.displayOptions[newOptionIndex];
+
+    if (!newFocusedOption) {
+      return;
+    }
+
+    if (newFocusedOption.disabled) {
+      if (options.findNextValidOption === false) {
+        clearFocusedOption();
+
+        return;
+      }
+
+      let maximumAttempts = 200;
+
+      while (maximumAttempts > 0 && newFocusedOption.disabled) {
+        newOptionIndex = getValidIndex(newOptionIndex + (options.movementDirection === 'up' ? -1 : 1));
+        newFocusedOption = comboboxStore.displayOptions[newOptionIndex];
+        maximumAttempts -= 1;
+      }
+
+      if (maximumAttempts === 0) {
+        loggerUtils.warn({
+          type: 'combobox-set-focused-option-max-attempts',
+          optionIndex,
+          displayOptions: comboboxStore.displayOptions,
+        });
+
+        clearFocusedOption();
+
+        return;
+      }
     }
 
     // we split this update out because the change to is opened will cause the options to update in the dom which is
@@ -495,7 +553,10 @@ const createComboboxStore = <TData extends ComboboxExtraData, TFormData = Defaul
 
       case Key.ARROW_DOWN: {
         // this should make the down arrow start with the first item
-        setFocusedOption((comboboxStore.focusedOptionIndex ?? -1) + 1);
+        setFocusedOption((comboboxStore.focusedOptionIndex ?? -1) + 1, {
+          findNextValidOption: true,
+          movementDirection: 'down',
+        });
 
         const elementToScrollTo = comboboxStore.optionsContainerRef?.querySelector(
           `[${comboboxDataAttribute.HIGHLIGHTED_OPTION}="true"]`,
@@ -510,7 +571,10 @@ const createComboboxStore = <TData extends ComboboxExtraData, TFormData = Defaul
 
       case Key.ARROW_UP: {
         // this should make the up arrow start with the last item
-        setFocusedOption((comboboxStore.focusedOptionIndex ?? comboboxStore.displayOptions.length) - 1);
+        setFocusedOption((comboboxStore.focusedOptionIndex ?? comboboxStore.displayOptions.length) - 1, {
+          findNextValidOption: true,
+          movementDirection: 'up',
+        });
 
         const elementToScrollTo = comboboxStore.optionsContainerRef?.querySelector(
           `[${comboboxDataAttribute.HIGHLIGHTED_OPTION}="true"]`,
@@ -816,6 +880,7 @@ const createComboboxStore = <TData extends ComboboxExtraData, TFormData = Defaul
     getSelectedValues,
     getDefaultIsOpened,
     triggerCombobox,
+    openCombobox,
     closeCombobox,
     getHighlightedValue,
     selectValue,

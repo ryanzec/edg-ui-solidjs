@@ -8,7 +8,7 @@ export const LogMode = {
 
 export type LogMode = (typeof LogMode)[keyof typeof LogMode];
 
-let loggingMode: LogMode = import.meta.env.MODE as LogMode;
+let loggingMode: LogMode = (import.meta?.env?.MODE as LogMode) || LogMode.PRODUCTION;
 
 // biome-ignore lint/suspicious/noExplicitAny: match native api
 const log = (...args: any) => {

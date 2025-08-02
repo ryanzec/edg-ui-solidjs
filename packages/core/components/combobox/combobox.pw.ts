@@ -28,6 +28,8 @@ const urls = {
   multiDisabled: '/components/combobox/multi-disabled',
   singleWithMissingData: '/components/combobox/single-with-missing-data',
   multiWithMissingData: '/components/combobox/multi-with-missing-data',
+  singleDisabledOption: '/components/combobox/single-disabled-option',
+  multiDisabledOption: '/components/combobox/multi-disabled-option',
 };
 
 class ComboboxPage extends BasePage {
@@ -1089,6 +1091,72 @@ test.describe('combobox @combobox-component', () => {
         await componentPage.expectSelectedOptionsCount(1, loopErrorContext);
         await componentPage.expectInputValue('', loopErrorContext);
         await componentPage.expectInputToBeFocused(loopErrorContext);
+      }
+    });
+  });
+
+  test.describe('disabled options', () => {
+    test('disabled options are skipped when navigating with the down arrow', async ({ page }) => {
+      const testUrls = [urls.singleDisabledOption, urls.multiDisabledOption];
+      const componentPage = new ComboboxPage(page);
+
+      for (let i = 0; i < testUrls.length; i++) {
+        const loopErrorContext = `failed url: ${testUrls[i]}`;
+
+        await componentPage.goto(testUrls[i]);
+
+        await componentPage.comboboxInputLocator.click();
+
+        await componentPage.expectOptionsCount(5, loopErrorContext);
+
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+        await componentPage.comboboxInputLocator.press('ArrowDown');
+
+        await componentPage.expectInputValue('', loopErrorContext);
+        await componentPage.expectHighlightedOptionDisplay('test1', loopErrorContext);
+      }
+    });
+
+    test('disabled options are skipped when navigating with the up arrow', async ({ page }) => {
+      const testUrls = [urls.singleDisabledOption, urls.multiDisabledOption];
+      const componentPage = new ComboboxPage(page);
+
+      for (let i = 0; i < testUrls.length; i++) {
+        const loopErrorContext = `failed url: ${testUrls[i]}`;
+
+        await componentPage.goto(testUrls[i]);
+
+        await componentPage.comboboxInputLocator.click();
+
+        await componentPage.expectOptionsCount(5, loopErrorContext);
+
+        await componentPage.comboboxInputLocator.press('ArrowUp');
+
+        await componentPage.expectInputValue('', loopErrorContext);
+        await componentPage.expectHighlightedOptionDisplay('tes4', loopErrorContext);
+      }
+    });
+
+    test('clicking on a disabled option does not select it', async ({ page }) => {
+      const testUrls = [urls.singleDisabledOption, urls.multiDisabledOption];
+      const componentPage = new ComboboxPage(page);
+
+      for (let i = 0; i < testUrls.length; i++) {
+        const loopErrorContext = `failed url: ${testUrls[i]}`;
+
+        await componentPage.goto(testUrls[i]);
+
+        await componentPage.comboboxInputLocator.click();
+
+        await componentPage.expectOptionsCount(5, loopErrorContext);
+
+        // since this should be disabled we need to force the click
+        await componentPage.optionLocator.nth(4).click({ force: true });
+
+        await componentPage.expectInputValue('', loopErrorContext);
       }
     });
   });
