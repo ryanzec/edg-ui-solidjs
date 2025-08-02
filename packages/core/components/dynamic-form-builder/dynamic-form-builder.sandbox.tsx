@@ -104,6 +104,7 @@ const formFields: DynamicFormBuilderFields = [
       {
         value: '2',
         label: 'Option 2',
+        disabled: true,
       },
       {
         value: '3',

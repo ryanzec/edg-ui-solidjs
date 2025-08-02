@@ -37,6 +37,7 @@ export type DynamicFormBuilderField = {
   options?: {
     value: string | number;
     label: string;
+    disabled?: boolean;
   }[];
 
   // used for complex and complex_array types
