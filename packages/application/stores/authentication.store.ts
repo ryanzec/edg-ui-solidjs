@@ -2,12 +2,14 @@ import { type Accessor, createRoot, createSignal } from 'solid-js';
 import { authenticationApi } from '$/application/apis/authentication';
 import { globalsStore } from '$/application/stores/globals.store';
 import { LocalStorageKey } from '$/application/utils/application';
+import { emailUtils } from '$/core/utils/email';
 import { ErrorMessage } from '$/core/utils/error';
 import { localStorageCacheUtils } from '$/core/utils/local-storage-cache';
 import { loggerUtils } from '$/core/utils/logger';
 import { userUtils } from '$api/data-models/user';
 import type { AuthenticationAuthenticateRequest } from '$api/types/authentication';
 import type { User, UserRoleName } from '$api/types/user';
+import { featureFlagStore } from '$web/stores/feature-flag.store';
 import { analyticsUtils } from '$web/utils/analytics';
 
 export type SessionUser = {
@@ -58,6 +60,7 @@ const createApplicationStore = (): ApplicationStore => {
   const [isAuthenticated, setIsAuthenticated] = createSignal<boolean>(false);
   const [currentLoginAction, setCurrentLoginAction] = createSignal<LoginAction>(LoginAction.NONE);
   const [loginError, setLoginError] = createSignal<string[]>([]);
+  const [launchDarklyHash, setLaunchDarklyHash] = createSignal<string>();
 
   const handleAuthenticatedUser = (user?: User) => {
     let sessionUser: SessionUser | undefined = localStorageCacheUtils.get<SessionUser>(LocalStorageKey.SESSION_USER);
@@ -83,6 +86,29 @@ const createApplicationStore = (): ApplicationStore => {
       organizationId: sessionUser.user.organizationId ?? '',
     });
 
+    const currentLaunchDarklyHash = launchDarklyHash();
+
+    if (currentLaunchDarklyHash) {
+      featureFlagStore.initialize(
+        {
+          kind: 'multi',
+          user: {
+            key: sessionUser.user.id,
+            emailDomain: emailUtils.getDomain(sessionUser.user.email),
+          },
+          organization: {
+            key: sessionUser.user.organizationId,
+          },
+        },
+        currentLaunchDarklyHash,
+      );
+    } else {
+      loggerUtils.error({
+        type: 'launchdarkly-hash-not-found',
+        userId: sessionUser.user.id,
+      });
+    }
+
     setSessionUser(sessionUser);
     setIsAuthenticated(true);
   };
@@ -106,8 +132,9 @@ const createApplicationStore = (): ApplicationStore => {
         return;
       }
 
-      await authenticationApi.checkRaw();
+      const checkResponse = await authenticationApi.checkRaw();
 
+      setLaunchDarklyHash(checkResponse.data?.launchDarklyHash);
       handleAuthenticatedUser();
     } catch (error: unknown) {
       // failure error is not an error, it just means we are not authenticated
@@ -131,8 +158,9 @@ const createApplicationStore = (): ApplicationStore => {
         return;
       }
 
-      const { user } = authenticateResponse.data;
+      const { user, launchDarklyHash } = authenticateResponse.data;
 
+      setLaunchDarklyHash(launchDarklyHash);
       handleAuthenticatedUser(user);
 
       // @todo redirect to previously accessed page

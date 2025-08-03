@@ -11,6 +11,7 @@ import type {
 import type { PocketBaseUser } from '$api/types/user';
 import { apiUtils } from '$api/utils/api';
 import { authenticationUtils } from '$api/utils/authentication';
+import { featureFlagUtils } from '$api/utils/feature-flag';
 import { pocketBaseUtils } from '$api/utils/pocketbase';
 
 export const registerAuthenticateApi = (api: FastifyInstance) => {
@@ -50,6 +51,14 @@ export const registerAuthenticateApi = (api: FastifyInstance) => {
             ...authData.record,
             hasPassword: true,
           },
+          launchDarklyHash: featureFlagUtils.generateContextHash({
+            user: {
+              key: authData.record.id,
+            },
+            organization: {
+              key: authData.record.organizationId,
+            },
+          }),
         }),
       );
     } catch (error: unknown) {
@@ -72,7 +81,12 @@ export const registerAuthenticateApi = (api: FastifyInstance) => {
         throw new Error('invalid authentication token');
       }
 
-      return response.status(200).send(apiUtils.buildDataResponse({ status: 'ok' }));
+      return response.status(200).send(
+        apiUtils.buildDataResponse({
+          status: 'ok',
+          launchDarklyHash: featureFlagUtils.generateContextHash(request.launchDarklyUser),
+        }),
+      );
     } catch (error: unknown) {
       return response.status(apiUtils.getErrorStatusCode(error)).send(apiUtils.buildErrorResponse(error));
     }

@@ -21,6 +21,7 @@ const requiredEnvironmentVariables = [
   'POCKETBASE_ADMIN_PASSWORD',
   'SESSION_DURATION',
   'COOKIE_SECRET',
+  'LAUNCH_DARKLY_SDK_KEY',
 ];
 
 for (const variable of requiredEnvironmentVariables) {
@@ -55,6 +56,9 @@ export interface ApplicationConfiguration {
   pocketbaseUrl: string;
   pocketbaseAdminUser: string;
   pocketbaseAdminPassword: string;
+
+  // launch darkly
+  launchDarklySdkKey: string;
 }
 
 export const applicationConfiguration: ApplicationConfiguration = {
@@ -78,4 +82,7 @@ export const applicationConfiguration: ApplicationConfiguration = {
   // session
   sessionDuration: Number(process.env.SESSION_DURATION || 1440),
   cookieSecret: process.env.COOKIE_SECRET as string,
+
+  // launch darkly
+  launchDarklySdkKey: process.env.LAUNCH_DARKLY_SDK_KEY as string,
 };

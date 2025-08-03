@@ -7,11 +7,13 @@ export type AuthenticationAuthenticateRequest = RequestStructure<{
 }>;
 export type AuthenticationAuthenticateResponse = ResponseStructure<{
   user: User;
+  launchDarklyHash: string;
 }>;
 
 export type AuthenticationCheckRequest = undefined;
 export type AuthenticationCheckResponse = ResponseStructure<{
   status: string;
+  launchDarklyHash: string;
 }>;
 
 export type AuthenticationLogoutRequest = undefined;

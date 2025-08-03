@@ -10,6 +10,7 @@ import GlobalNotifications from '$/core/components/global-notifications';
 import Loading from '$/core/components/loading';
 import { globalNotificationsStore } from '$/core/stores/global-notifications.store';
 import { type HttpRequest, httpUtils } from '$/core/utils/http';
+import { featureFlagStore } from '$web/stores/feature-flag.store';
 import { FeatureFlag, featureFlagUtils } from '$web/utils/feature-flag';
 
 const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
@@ -18,7 +19,7 @@ const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
   const getFrameFeatures = (): ApplicationFeature[] => {
     const features: ApplicationFeature[] = [];
 
-    if (featureFlagUtils.hasFeatureFlag(FeatureFlag.INTERNAL_TOOLS)) {
+    if (featureFlagStore.hasFlag(FeatureFlag.INTERNAL_TOOLS)) {
       features.push(ApplicationFeature.INTERNAL_TOOLS);
     }
 

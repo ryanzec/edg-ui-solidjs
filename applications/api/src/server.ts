@@ -5,15 +5,17 @@ import url from 'node:url';
 import fastifyCookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import fastify from 'fastify';
+import { emailUtils } from '$/core/utils/email';
 import { registerAuthenticateApi } from '$api/apis/authenticate';
 import { registerHealthApi } from '$api/apis/health';
 import { registerUsersApi } from '$api/apis/users';
 import { delayerHook } from '$api/middleware/delayer';
 import { mockerrorHook } from '$api/middleware/mockerror';
 import { applicationConfiguration } from '$api/utils/application-configuration';
+import { authenticationUtils } from '$api/utils/authentication';
+import { featureFlagUtils } from '$api/utils/feature-flag';
 import { loggerUtils } from '$api/utils/logger';
-import { authenticationUtils } from './utils/authentication';
-import { pocketBaseUtils } from './utils/pocketbase';
+import { pocketBaseUtils } from '$api/utils/pocketbase';
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -61,6 +63,17 @@ api.addHook('preHandler', async (request, response) => {
 
     throw new Error('invalid authentication token');
   }
+
+  request.launchDarklyUser = {
+    kind: 'multi',
+    user: {
+      key: pocketBaseClient.authStore.record?.id ?? '',
+      emailDomain: emailUtils.getDomain(pocketBaseClient.authStore.record?.email ?? ''),
+    },
+    organization: {
+      key: pocketBaseClient.authStore.record?.organizationId ?? '',
+    },
+  };
 });
 
 // register routes
