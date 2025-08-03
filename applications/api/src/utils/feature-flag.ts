@@ -55,6 +55,8 @@ const generateContextKey = (data: KeyGenerationData) => {
   return `organization:${data.organization.key}:user:${data.user.key}`;
 };
 
+// this is required by launch darkly secure mode which ensures that no one can generate new contexts since they will
+// need the server side sdk key to generate the hash
 const generateContextHash = (data: KeyGenerationData) => {
   const contextKey = generateContextKey(data);
 

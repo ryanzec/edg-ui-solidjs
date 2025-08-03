@@ -2,4 +2,11 @@
   --default-peek-width: 600px;
   --spacing-grid-table-x: var(--spacing-sm);
   --spacing-grid-table-y: var(--spacing-2xs);
+
+  --color-input-active-border: var(--color-info);
+}
+
+[data-theme="dark"] {
+  /* @todo */
+  --color-input-active-border: red;
 }
