@@ -195,11 +195,15 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
   };
 
   const handleSelectStartDate = (date?: Dayjs) => {
-    handleSelectDate(date, WhichDate.FIRST);
+    const dataToUse = datePickerProps.includeTime ? date : date?.startOf('day');
+
+    handleSelectDate(dataToUse, WhichDate.FIRST);
   };
 
   const handleSelectEndDate = (date?: Dayjs) => {
-    handleSelectDate(date, WhichDate.SECOND);
+    const dataToUse = datePickerProps.includeTime ? date : date?.endOf('day');
+
+    handleSelectDate(dataToUse, WhichDate.SECOND);
   };
 
   createEffect(function updateInput() {
