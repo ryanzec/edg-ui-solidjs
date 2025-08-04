@@ -11,8 +11,6 @@ dayjs.extend(relativeTime);
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-export type CustomDayjs = Dayjs;
-
 export const TimezoneFormat = {
   STANDARD: 'z',
 } as const;
@@ -45,7 +43,7 @@ export const DateTimeFormat = {
 
 export type DateTimeFormat = (typeof DateTimeFormat)[keyof typeof DateTimeFormat];
 
-const getDaysBetweenDates = (startDate: CustomDayjs, endDate: CustomDayjs) => {
+const getDaysBetweenDates = (startDate: Dayjs, endDate: Dayjs) => {
   return endDate.diff(startDate, 'days') + 1;
 };
 
@@ -53,12 +51,7 @@ const configureTimezone = (timezone: string) => {
   dayjs.tz.setDefault(timezone);
 };
 
-const getDateWithConfiguredTimezone = (date?: dayjs.ConfigType, format?: dayjs.OptionType): CustomDayjs => {
-  return dayjs(date, format).tz();
-};
-
 export const dateUtils = {
   configureTimezone,
-  getDateWithConfiguredTimezone,
   getDaysBetweenDates,
 };

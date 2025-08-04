@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { mergeProps, splitProps } from 'solid-js';
 import { DateTime, type DateTimeProps } from '$/core/components/date-time';
 import Icon, { IconColor, IconVariant } from '$/core/components/icon';
@@ -35,7 +36,7 @@ const DateUpdatedIndicator = (passedProps: DataUpdatedIndicatorProps) => {
       Last Updated:&nbsp;
       <DateTime
         {...restOfProps}
-        date={dateUtils.getDateWithConfiguredTimezone(props.lastUpdatedAt)}
+        date={dayjs(props.lastUpdatedAt)}
         dateFormat={DateFormat.STANDARD}
         timeFormat={TimeFormat.STANDARD}
       />

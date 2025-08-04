@@ -1,4 +1,4 @@
-import type dayjs from 'dayjs';
+import dayjs, { type Dayjs } from 'dayjs';
 import { createMemo, createSignal, Index, type JSX, mergeProps, Show, splitProps } from 'solid-js';
 import Button, { ButtonColor, ButtonVariant } from '$/core/components/button';
 import styles from '$/core/components/date-picker/date-picker.module.css';
@@ -19,21 +19,21 @@ type DayData = {
 };
 
 export type DatePickerProps = {
-  defaultDisplayDate?: Date;
-  defaultSelectedDate?: Date;
-  onSelectDate?: (selectedDate?: Date) => void;
+  defaultDisplayDate?: Dayjs;
+  defaultSelectedDate?: Dayjs;
+  onSelectDate?: (selectedDate?: Dayjs) => void;
   onDone?: () => void;
   includeTime?: boolean;
   includeFooter?: boolean;
-  disableBefore?: Date;
-  disableAfter?: Date;
+  disableBefore?: Dayjs;
+  disableAfter?: Dayjs;
 };
 
 const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivElement>) => {
   const [props, restOfProps] = splitProps(
     mergeProps(
       {
-        defaultDisplayDate: passedProps.defaultSelectedDate ?? new Date(),
+        defaultDisplayDate: passedProps.defaultSelectedDate ?? dayjs(),
         includeTime: false,
         includeFooter: false,
       },
@@ -52,23 +52,18 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
     ],
   );
 
-  const currentDayFormatted = dateUtils
-    .getDateWithConfiguredTimezone()
-    .startOf('day')
-    .format(DateTimeFormat.DATE_COMPARE);
+  const currentDayFormatted = dayjs().startOf('day').format(DateTimeFormat.DATE_COMPARE);
 
-  const [rawDisplayDate, setRawDisplayDate] = createSignal<Date>(props.defaultDisplayDate);
-  const [rawSelectedDate, setRawSelectedDate] = createSignal<Date | undefined>(props.defaultSelectedDate);
+  const [rawDisplayDate, setRawDisplayDate] = createSignal<Dayjs>(props.defaultDisplayDate);
+  const [rawSelectedDate, setRawSelectedDate] = createSignal<Dayjs | undefined>(props.defaultSelectedDate);
   const [showMonthYearSelection, setShowMonthYearSelection] = createSignal(false);
   const [errors, setErrors] = createSignal<string[] | undefined>();
   const [timeInputValue, setTimeInputValue] = createSignal<string>(
-    props.defaultSelectedDate
-      ? dateUtils.getDateWithConfiguredTimezone(props.defaultSelectedDate).format(TimeFormat.STANDARD)
-      : '12:00 am',
+    props.defaultSelectedDate ? dayjs(props.defaultSelectedDate).format(TimeFormat.STANDARD) : '12:00 am',
   );
 
   const displayDate = createMemo(() => {
-    return dateUtils.getDateWithConfiguredTimezone(rawDisplayDate());
+    return dayjs(rawDisplayDate());
   });
 
   const selectedDateFormatted = createMemo(() => {
@@ -78,7 +73,7 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
       return;
     }
 
-    return dateUtils.getDateWithConfiguredTimezone(currentSelectedDate).format(DateTimeFormat.DATE_COMPARE);
+    return dayjs(currentSelectedDate).format(DateTimeFormat.DATE_COMPARE);
   });
   const currentMonth = createMemo(() => {
     return displayDate().month();
@@ -91,8 +86,8 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
   });
   const currentViewDays = createMemo(() => {
     const currentMonthNumber = displayDate().month();
-    let currentProcessingDate = dateUtils.getDateWithConfiguredTimezone(displayDate().startOf('month')).startOf('week');
-    const endDate = dateUtils.getDateWithConfiguredTimezone(displayDate().endOf('month')).endOf('week');
+    let currentProcessingDate = dayjs(displayDate().startOf('month')).startOf('week');
+    const endDate = dayjs(displayDate().endOf('month')).endOf('week');
     const newViewDays: Array<DayData[]> = [];
     let currentWeek: DayData[] = [];
 
@@ -107,9 +102,7 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
         isCurrentMonth: currentProcessingMonthNumber === currentMonthNumber,
         date: currentProcessingDate,
         day: currentProcessingDate.format('D'),
-        formatCurrentCheck: dateUtils
-          .getDateWithConfiguredTimezone(currentProcessingDate)
-          .format(DateTimeFormat.DATE_COMPARE),
+        formatCurrentCheck: currentProcessingDate.format(DateTimeFormat.DATE_COMPARE),
       });
 
       // zero indexed
@@ -126,19 +119,19 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
   });
 
   const moveToNextMonth = () => {
-    setRawDisplayDate(displayDate().add(1, 'month').toDate());
+    setRawDisplayDate(displayDate().add(1, 'month'));
   };
 
   const moveToPreviousMonth = () => {
-    setRawDisplayDate(displayDate().subtract(1, 'month').toDate());
+    setRawDisplayDate(displayDate().subtract(1, 'month'));
   };
 
   const setMonth = (month: number) => {
-    setRawDisplayDate(displayDate().month(month).toDate());
+    setRawDisplayDate(displayDate().month(month));
   };
 
   const setYear = (year: number) => {
-    setRawDisplayDate(displayDate().year(year).toDate());
+    setRawDisplayDate(displayDate().year(year));
   };
 
   const handleToggleMonthYearSelection = () => {
@@ -156,7 +149,7 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
       return;
     }
 
-    const date = dateUtils.getDateWithConfiguredTimezone(target.value, TimeFormat.STANDARD);
+    const date = dayjs(target.value, TimeFormat.STANDARD);
 
     if (!date.isValid()) {
       setErrors(['Invalid time format']);
@@ -166,8 +159,8 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
 
     setErrors(undefined);
 
-    setRawSelectedDate(date.toDate());
-    props.onSelectDate?.(date.toDate());
+    setRawSelectedDate(date);
+    props.onSelectDate?.(date);
   };
 
   const selectDate = (day: DayData) => {
@@ -178,7 +171,7 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
     }
 
     const currentTimeValue = timeInputValue();
-    let date = dateUtils.getDateWithConfiguredTimezone(currentTimeValue, TimeFormat.STANDARD);
+    let date = dayjs(currentTimeValue, TimeFormat.STANDARD);
 
     // @todo(investigate) is there an easier way to do this?
     date = date.date(day.date.date());
@@ -191,10 +184,10 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
       return;
     }
 
-    setRawSelectedDate(date.toDate());
-    setRawDisplayDate(date.toDate());
+    setRawSelectedDate(date);
+    setRawDisplayDate(date);
 
-    props.onSelectDate?.(date.toDate());
+    props.onSelectDate?.(date);
   };
 
   const clearDate = () => {

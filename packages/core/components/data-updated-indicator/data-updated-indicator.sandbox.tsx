@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import DataUpdatedIndicator from '$/core/components/data-updated-indicator';
 import { dateUtils } from '$/core/utils/date';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
@@ -9,7 +10,7 @@ export default {
 export const Default = () => {
   return (
     <SandboxExamplesContainer>
-      <DataUpdatedIndicator lastUpdatedAt={dateUtils.getDateWithConfiguredTimezone().toISOString()} />
+      <DataUpdatedIndicator lastUpdatedAt={dayjs().toISOString()} />
     </SandboxExamplesContainer>
   );
 };
@@ -17,7 +18,7 @@ export const Default = () => {
 export const Live = () => {
   return (
     <SandboxExamplesContainer>
-      <DataUpdatedIndicator lastUpdatedAt={dateUtils.getDateWithConfiguredTimezone().toISOString()} isLive />
+      <DataUpdatedIndicator lastUpdatedAt={dayjs().toISOString()} isLive />
     </SandboxExamplesContainer>
   );
 };
@@ -25,7 +26,7 @@ export const Live = () => {
 export const Refreshing = () => {
   return (
     <SandboxExamplesContainer>
-      <DataUpdatedIndicator lastUpdatedAt={dateUtils.getDateWithConfiguredTimezone().toISOString()} isRefreshing />
+      <DataUpdatedIndicator lastUpdatedAt={dayjs().toISOString()} isRefreshing />
     </SandboxExamplesContainer>
   );
 };
@@ -33,11 +34,7 @@ export const Refreshing = () => {
 export const LiveRefreshing = () => {
   return (
     <SandboxExamplesContainer>
-      <DataUpdatedIndicator
-        lastUpdatedAt={dateUtils.getDateWithConfiguredTimezone().toISOString()}
-        isLive
-        isRefreshing
-      />
+      <DataUpdatedIndicator lastUpdatedAt={dayjs().toISOString()} isLive isRefreshing />
     </SandboxExamplesContainer>
   );
 };

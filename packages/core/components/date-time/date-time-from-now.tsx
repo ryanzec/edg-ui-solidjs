@@ -1,10 +1,10 @@
+import type { Dayjs } from 'dayjs';
 import { type JSX, splitProps } from 'solid-js';
 import styles from '$/core/components/date-time/date-time.module.css';
-import type { CustomDayjs } from '$/core/utils/date';
 import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type DateTimeFromNowProps = JSX.HTMLAttributes<HTMLDivElement> & {
-  date: CustomDayjs;
+  date: Dayjs;
 };
 
 const DateTimeFromNow = (passedProps: DateTimeFromNowProps) => {

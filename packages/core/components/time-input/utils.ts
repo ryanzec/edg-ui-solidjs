@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { dateUtils, TimeFormat } from '$/core/utils/date';
 
 export const EditItem = {
@@ -99,7 +100,7 @@ const getNewSteppedEditItemValue = (
 export const DEFAULT_VALUE = 'hh:mm aa';
 
 const isValidTime = (value: string) => {
-  if (dateUtils.getDateWithConfiguredTimezone(value, TimeFormat.STANDARD).isValid()) {
+  if (dayjs(value, TimeFormat.STANDARD).isValid()) {
     return true;
   }
 

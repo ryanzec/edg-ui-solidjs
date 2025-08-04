@@ -1,3 +1,4 @@
+import dayjs, { type Dayjs } from 'dayjs';
 import { createEffect, createSignal, Show } from 'solid-js';
 import * as zod from 'zod';
 import Button from '$/core/components/button';
@@ -6,7 +7,7 @@ import FormField from '$/core/components/form-field';
 import FormFields from '$/core/components/form-fields';
 import { dateStoreUtils, type WhichDate } from '$/core/stores/date.store';
 import { formStoreUtils } from '$/core/stores/form.store';
-import { DateTimeFormat, dateUtils } from '$/core/utils/date';
+import { DateTimeFormat } from '$/core/utils/date';
 import { validationUtils } from '$/core/utils/validation';
 import { zodUtils } from '$/core/utils/zod';
 
@@ -15,9 +16,9 @@ export default {
 };
 
 export const Default = () => {
-  const [lastSelectedDate, setLastSelectedDate] = createSignal<Date>();
+  const [lastSelectedDate, setLastSelectedDate] = createSignal<Dayjs>();
 
-  const onSelectDate = (selectedDate?: Date) => {
+  const onSelectDate = (selectedDate?: Dayjs) => {
     setLastSelectedDate(selectedDate);
   };
 
@@ -28,7 +29,7 @@ export const Default = () => {
       return '';
     }
 
-    return dateUtils.getDateWithConfiguredTimezone(currentSelectedDate).format(DateTimeFormat.STANDARD_DATE_TIME);
+    return dayjs(currentSelectedDate).format(DateTimeFormat.STANDARD_DATE_TIME);
   };
 
   return (
@@ -39,38 +40,38 @@ export const Default = () => {
       </div>
       <div>
         <div>With default selected value</div>
-        <DatePicker onSelectDate={onSelectDate} defaultSelectedDate={new Date('Nov 1 2022')} />
+        <DatePicker onSelectDate={onSelectDate} defaultSelectedDate={dayjs('Nov 1 2022')} />
       </div>
       <div>
         <div>With default selected value and display date not the same</div>
         <DatePicker
           onSelectDate={onSelectDate}
-          defaultSelectedDate={new Date('Nov 1 2022')}
-          defaultDisplayDate={new Date('Dec 1 2022')}
+          defaultSelectedDate={dayjs('Nov 1 2022')}
+          defaultDisplayDate={dayjs('Dec 1 2022')}
         />
       </div>
       <div>
         <div>With time</div>
-        <DatePicker includeTime onSelectDate={onSelectDate} defaultSelectedDate={new Date('Nov 1 2022 3:34 pm')} />
+        <DatePicker includeTime onSelectDate={onSelectDate} defaultSelectedDate={dayjs('Nov 1 2022 3:34 pm')} />
       </div>
       <div>
         <div>Explicitly pass current date</div>
-        <DatePicker defaultDisplayDate={new Date('Nov 1 2022')} onSelectDate={onSelectDate} />
+        <DatePicker defaultDisplayDate={dayjs('Nov 1 2022')} onSelectDate={onSelectDate} />
       </div>
       <div>
         <div>disable before date</div>
         <DatePicker
           onSelectDate={onSelectDate}
-          defaultDisplayDate={new Date('Nov 1 2022')}
-          disableBefore={new Date('Nov 10 2022')}
+          defaultDisplayDate={dayjs('Nov 1 2022')}
+          disableBefore={dayjs('Nov 10 2022')}
         />
       </div>
       <div>
         <div>disable after date</div>
         <DatePicker
           onSelectDate={onSelectDate}
-          defaultDisplayDate={new Date('Nov 1 2022')}
-          disableAfter={new Date('Nov 20 2022')}
+          defaultDisplayDate={dayjs('Nov 1 2022')}
+          disableAfter={dayjs('Nov 20 2022')}
         />
       </div>
       <div>
@@ -89,10 +90,6 @@ export const Default = () => {
 };
 
 export const Input = () => {
-  const onSelectDate = (selectedDate: Date, which?: WhichDate) => {
-    console.log(which, selectedDate);
-  };
-
   return (
     <>
       <div>
@@ -109,19 +106,19 @@ export const Input = () => {
       </div>
       <div>
         <div>with default display date</div>
-        <DatePicker.Input includeTime defaultStartDisplayDate={new Date('Nov 1 2022')} />
+        <DatePicker.Input includeTime defaultStartDisplayDate={dayjs('Nov 1 2022')} />
       </div>
       <div>
         <div>with default selected date</div>
-        <DatePicker.Input includeTime defaultStartSelectedDate={new Date('Nov 1 2022 12:23 pm')} />
+        <DatePicker.Input includeTime defaultStartSelectedDate={dayjs('Nov 1 2022 12:23 pm')} />
       </div>
       <div>
         <div>range with default display dates</div>
         <DatePicker.Input
           includeTime
           isRange
-          defaultStartDisplayDate={new Date('Nov 1 2022')}
-          defaultEndDisplayDate={new Date('Dec 1 2022')}
+          defaultStartDisplayDate={dayjs('Nov 1 2022')}
+          defaultEndDisplayDate={dayjs('Dec 1 2022')}
         />
       </div>
       <div>
@@ -129,8 +126,8 @@ export const Input = () => {
         <DatePicker.Input
           includeTime
           isRange
-          defaultStartSelectedDate={new Date('Nov 1 2022 12:23 pm')}
-          defaultEndSelectedDate={new Date('Dec 11 2022 4:34 pm')}
+          defaultStartSelectedDate={dayjs('Nov 1 2022 12:23 pm')}
+          defaultEndSelectedDate={dayjs('Dec 11 2022 4:34 pm')}
         />
       </div>
       <div>
@@ -139,8 +136,8 @@ export const Input = () => {
           includeTime
           isRange
           disabled
-          defaultStartSelectedDate={new Date('Nov 1 2022 12:23 pm')}
-          defaultEndSelectedDate={new Date('Dec 11 2022 4:34 pm')}
+          defaultStartSelectedDate={dayjs('Nov 1 2022 12:23 pm')}
+          defaultEndSelectedDate={dayjs('Dec 11 2022 4:34 pm')}
         />
       </div>
     </>
@@ -178,8 +175,8 @@ export const Form = () => {
   const formDirective = formStore.formDirective;
 
   createEffect(() => {
-    console.log(dateRangeStore.startDateAsDayjs());
-    console.log(dateRangeStore.endDateAsDayjs());
+    console.log(dateRangeStore.startDate());
+    console.log(dateRangeStore.endDate());
   });
 
   return (
@@ -191,7 +188,7 @@ export const Form = () => {
               isRange
               name="dateRange"
               formData={formStore.data}
-              onSelectDate={(data: Date | undefined, which?: WhichDate) => {
+              onSelectDate={(data: Dayjs | undefined, which?: WhichDate) => {
                 dateRangeStore.setDate(data, which);
 
                 formStore.setValue('dateRange', dateRangeStore.getFormValue(), {
@@ -235,8 +232,8 @@ export const LimitedRangeFromSelection = () => {
   const formDirective = formStore.formDirective;
 
   createEffect(() => {
-    console.log(dateRangeStore.startDateAsDayjs());
-    console.log(dateRangeStore.endDateAsDayjs());
+    console.log(dateRangeStore.startDate());
+    console.log(dateRangeStore.endDate());
   });
 
   return (
@@ -253,7 +250,7 @@ export const LimitedRangeFromSelection = () => {
                 value: 13,
                 type: 'day',
               }}
-              onSelectDate={(data: Date | undefined, which?: WhichDate) => {
+              onSelectDate={(data: Dayjs | undefined, which?: WhichDate) => {
                 dateRangeStore.setDate(data, which);
 
                 formStore.setValue('dateRange', dateRangeStore.getFormValue(), {

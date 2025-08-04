@@ -1,5 +1,6 @@
+import type { Dayjs } from 'dayjs';
 import { type Accessor, createSignal } from 'solid-js';
-import { type CustomDayjs, DateTimeFormat, dateUtils } from '$/core/utils/date';
+import { DateTimeFormat } from '$/core/utils/date';
 
 export const WhichDate = {
   FIRST: 'first',
@@ -8,22 +9,21 @@ export const WhichDate = {
 
 export type WhichDate = (typeof WhichDate)[keyof typeof WhichDate];
 
-export type DateFormValue = undefined | Array<Date | undefined>;
+export type DateFormValue = undefined | Array<Dayjs | undefined>;
 
 export type DateStore = {
-  date: Accessor<Date | undefined>;
-  dateAsDayjs: () => CustomDayjs | undefined;
-  setDate: (date?: Date) => void;
+  date: Accessor<Dayjs | undefined>;
+  setDate: (date?: Dayjs) => void;
   getFormattedDate: () => string;
 };
 
 type CreateDateStoreOptions = {
-  defaultDate?: Date;
+  defaultDate?: Dayjs;
   includeTime?: boolean;
 };
 
 const createDateStore = (options: CreateDateStoreOptions): DateStore => {
-  const [date, setDate] = createSignal<Date | undefined>(options.defaultDate);
+  const [date, setDate] = createSignal<Dayjs | undefined>(options.defaultDate);
 
   const getFormattedDate = () => {
     const currentDate = date();
@@ -32,46 +32,31 @@ const createDateStore = (options: CreateDateStoreOptions): DateStore => {
       return '';
     }
 
-    return dateUtils
-      .getDateWithConfiguredTimezone(currentDate)
-      .format(options.includeTime ? DateTimeFormat.STANDARD_DATE_TIME : DateTimeFormat.STANDARD_DATE);
-  };
-
-  const dateAsDayjs = () => {
-    const currentDate = date();
-
-    if (!currentDate) {
-      return;
-    }
-
-    return dateUtils.getDateWithConfiguredTimezone(currentDate);
+    return currentDate.format(options.includeTime ? DateTimeFormat.STANDARD_DATE_TIME : DateTimeFormat.STANDARD_DATE);
   };
 
   return {
     date,
-    dateAsDayjs,
     setDate,
     getFormattedDate,
   };
 };
 
 export type DateRangeStore = {
-  startDate: Accessor<Date | undefined>;
-  startDateAsDayjs: () => CustomDayjs | undefined;
-  endDate: Accessor<Date | undefined>;
-  endDateAsDayjs: () => CustomDayjs | undefined;
-  setDate: (date?: Date, which?: WhichDate) => void;
+  startDate: Accessor<Dayjs | undefined>;
+  endDate: Accessor<Dayjs | undefined>;
+  setDate: (date?: Dayjs, which?: WhichDate) => void;
   getFormValue: () => DateFormValue;
 };
 
 type CreateDateRangeStoreOptions = {
-  defaultStartDate?: Date;
-  defaultEndDate?: Date;
+  defaultStartDate?: Dayjs;
+  defaultEndDate?: Dayjs;
 };
 
 const createDateRangeStore = (options: CreateDateRangeStoreOptions = {}): DateRangeStore => {
-  const [startDate, setStartDate] = createSignal<Date | undefined>(options.defaultStartDate);
-  const [endDate, startEndDate] = createSignal<Date | undefined>(options.defaultEndDate);
+  const [startDate, setStartDate] = createSignal<Dayjs | undefined>(options.defaultStartDate);
+  const [endDate, startEndDate] = createSignal<Dayjs | undefined>(options.defaultEndDate);
 
   const getFormValue = () => {
     const currentStartDate = startDate();
@@ -84,7 +69,7 @@ const createDateRangeStore = (options: CreateDateRangeStoreOptions = {}): DateRa
     return [currentStartDate, currentEndDate];
   };
 
-  const setDate = (date?: Date, which?: WhichDate) => {
+  const setDate = (date?: Dayjs, which?: WhichDate) => {
     if (which !== WhichDate.SECOND) {
       setStartDate(date);
 
@@ -94,27 +79,7 @@ const createDateRangeStore = (options: CreateDateRangeStoreOptions = {}): DateRa
     startEndDate(date);
   };
 
-  const startDateAsDayjs = () => {
-    const currentStartDate = startDate();
-
-    if (!currentStartDate) {
-      return;
-    }
-
-    return dateUtils.getDateWithConfiguredTimezone(currentStartDate);
-  };
-
-  const endDateAsDayjs = () => {
-    const currentEndDate = endDate();
-
-    if (!currentEndDate) {
-      return;
-    }
-
-    return dateUtils.getDateWithConfiguredTimezone(currentEndDate);
-  };
-
-  return { startDate, startDateAsDayjs, endDate, endDateAsDayjs, setDate, getFormValue };
+  return { startDate, endDate, setDate, getFormValue };
 };
 
 export const dateStoreUtils = {

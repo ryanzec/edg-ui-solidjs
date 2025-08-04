@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import DateTime from '$/core/components/date-time';
 import { dateUtils, TimeFormat } from '$/core/utils/date';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
@@ -7,7 +8,7 @@ export default {
 
 export const Default = () => {
   console.log('dayjs');
-  const date = dateUtils.getDateWithConfiguredTimezone();
+  const date = dayjs();
 
   return (
     <SandboxExamplesContainer>
@@ -19,7 +20,7 @@ export const Default = () => {
 
 export const TimeZone = () => {
   const dateString = '2020-12-31T23:00:00-04:00';
-  const date = dateUtils.getDateWithConfiguredTimezone(dateString);
+  const date = dayjs(dateString);
 
   return (
     <SandboxExamplesContainer>
@@ -32,7 +33,7 @@ export const TimeZone = () => {
 };
 
 export const FromNow = () => {
-  const date = dateUtils.getDateWithConfiguredTimezone().subtract(1, 'day');
+  const date = dayjs().subtract(1, 'day');
 
   return (
     <SandboxExamplesContainer>
@@ -42,7 +43,7 @@ export const FromNow = () => {
 };
 
 export const Tooltip = () => {
-  const date = dateUtils.getDateWithConfiguredTimezone().subtract(1, 'day');
+  const date = dayjs().subtract(1, 'day');
 
   return (
     <SandboxExamplesContainer>

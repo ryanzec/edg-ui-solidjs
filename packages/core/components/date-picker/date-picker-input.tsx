@@ -1,4 +1,5 @@
 import { autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
+import dayjs, { type Dayjs } from 'dayjs';
 import { createEffect, createMemo, createSignal, mergeProps, onCleanup, Show, splitProps } from 'solid-js';
 import DatePicker, { type DatePickerProps } from '$/core/components/date-picker/date-picker';
 import styles from '$/core/components/date-picker/date-picker.module.css';
@@ -23,11 +24,11 @@ export type DatePickerInputProps<TFormData = DefaultFormData> = InputProps<TForm
   Omit<DatePickerProps, 'onSelectDate' | 'defaultSelectedDate' | 'defaultDisplayDate'> &
   CommonDataAttributes & {
     isRange?: boolean;
-    onSelectDate?: (date?: Date, which?: WhichDate) => void;
-    defaultStartDisplayDate?: Date;
-    defaultStartSelectedDate?: Date;
-    defaultEndDisplayDate?: Date;
-    defaultEndSelectedDate?: Date;
+    onSelectDate?: (date?: Dayjs, which?: WhichDate) => void;
+    defaultStartDisplayDate?: Dayjs;
+    defaultStartSelectedDate?: Dayjs;
+    defaultEndDisplayDate?: Dayjs;
+    defaultEndSelectedDate?: Dayjs;
     allowedRange?: DatePickerAllowedRange;
   };
 
@@ -36,8 +37,8 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
     mergeProps(
       {
         isRange: false,
-        defaultStartDisplayDate: passedProps.defaultStartSelectedDate ?? new Date(),
-        defaultEndDisplayDate: passedProps.defaultEndSelectedDate ?? new Date(),
+        defaultStartDisplayDate: passedProps.defaultStartSelectedDate ?? dayjs(),
+        defaultEndDisplayDate: passedProps.defaultEndSelectedDate ?? dayjs(),
       },
       passedProps,
     ),
@@ -78,27 +79,25 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
     defaultDate: props.defaultEndSelectedDate,
   });
 
-  const startDisableBefore = createMemo<Date | undefined>(() => {
+  const startDisableBefore = createMemo<Dayjs | undefined>(() => {
     // if we don't have the data for applying an allowed range, we should not have any limit
     if (!props.allowedRange || !endDate.date()) {
       return undefined;
     }
 
-    let disableBefore = dateUtils
-      .getDateWithConfiguredTimezone(endDate.date())
-      .subtract(props.allowedRange.value, props.allowedRange.type);
+    let disableBefore = dayjs(endDate.date()).subtract(props.allowedRange.value, props.allowedRange.type);
 
     if (datePickerProps.includeTime) {
       disableBefore = disableBefore.startOf('day');
     }
 
-    return disableBefore.toDate();
+    return disableBefore;
   });
 
-  const startDisableAfter = createMemo<Date | undefined>(() => {
+  const startDisableAfter = createMemo<Dayjs | undefined>(() => {
     // a date range should not allow for a backwards selection
     if (endDate.date()) {
-      return dateUtils.getDateWithConfiguredTimezone(endDate.date()).endOf('day').toDate();
+      return dayjs(endDate.date()).endOf('day');
     }
 
     // if we don't have the data for applying an allowed range, we should not have any limit
@@ -106,21 +105,19 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
       return undefined;
     }
 
-    let disableAfter = dateUtils
-      .getDateWithConfiguredTimezone(startDate.date())
-      .add(props.allowedRange.value, props.allowedRange.type);
+    let disableAfter = dayjs(startDate.date()).add(props.allowedRange.value, props.allowedRange.type);
 
     if (datePickerProps.includeTime) {
       disableAfter = disableAfter.endOf('day');
     }
 
-    return disableAfter.toDate();
+    return disableAfter;
   });
 
-  const endDisableBefore = createMemo<Date | undefined>(() => {
+  const endDisableBefore = createMemo<Dayjs | undefined>(() => {
     // a date range should not allow for a backwards selection
     if (startDate.date()) {
-      return dateUtils.getDateWithConfiguredTimezone(startDate.date()).startOf('day').toDate();
+      return dayjs(startDate.date()).startOf('day');
     }
 
     // if we don't have the data for applying an allowed range, we should not have any limit
@@ -128,32 +125,28 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
       return undefined;
     }
 
-    let disableBefore = dateUtils
-      .getDateWithConfiguredTimezone(endDate.date())
-      .subtract(props.allowedRange.value, props.allowedRange.type);
+    let disableBefore = dayjs(endDate.date()).subtract(props.allowedRange.value, props.allowedRange.type);
 
     if (datePickerProps.includeTime) {
       disableBefore = disableBefore.startOf('day');
     }
 
-    return disableBefore.toDate();
+    return disableBefore;
   });
 
-  const endDisableAfter = createMemo<Date | undefined>(() => {
+  const endDisableAfter = createMemo<Dayjs | undefined>(() => {
     // if we don't have the data for applying an allowed range, we should not have any limit
     if (!props.allowedRange || !startDate.date()) {
       return undefined;
     }
 
-    let disableBefore = dateUtils
-      .getDateWithConfiguredTimezone(startDate.date())
-      .add(props.allowedRange.value, props.allowedRange.type);
+    let disableBefore = dayjs(startDate.date()).add(props.allowedRange.value, props.allowedRange.type);
 
     if (datePickerProps.includeTime) {
       disableBefore = disableBefore.endOf('day');
     }
 
-    return disableBefore.toDate();
+    return disableBefore;
   });
 
   const showDatePicker = () => {
@@ -185,7 +178,7 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
     setIsDatePickerVisible(false);
   };
 
-  const handleSelectDate = (selectedDate?: Date, which?: WhichDate) => {
+  const handleSelectDate = (selectedDate?: Dayjs, which?: WhichDate) => {
     const currentInputElement = inputElementRef();
 
     if (!currentInputElement) {
@@ -201,11 +194,11 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
     props.onSelectDate?.(selectedDate, which);
   };
 
-  const handleSelectStartDate = (date?: Date) => {
+  const handleSelectStartDate = (date?: Dayjs) => {
     handleSelectDate(date, WhichDate.FIRST);
   };
 
-  const handleSelectEndDate = (date?: Date) => {
+  const handleSelectEndDate = (date?: Dayjs) => {
     handleSelectDate(date, WhichDate.SECOND);
   };
 
