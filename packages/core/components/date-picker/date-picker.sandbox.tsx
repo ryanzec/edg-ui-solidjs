@@ -1,5 +1,6 @@
 import { createEffect, createSignal, Show } from 'solid-js';
 import * as zod from 'zod';
+import Button from '$/core/components/button';
 import DatePicker from '$/core/components/date-picker';
 import FormField from '$/core/components/form-field';
 import FormFields from '$/core/components/form-fields';
@@ -199,6 +200,69 @@ export const Form = () => {
               }}
             />
           </FormField>
+          <Button type="submit">Submit</Button>
+        </FormFields>
+      </form>
+      <div data-id="form-data">{JSON.stringify(formStore.data)}</div>
+    </>
+  );
+};
+
+export const LimitedRangeFromSelection = () => {
+  const dateRangeStore = dateStoreUtils.createDateRangeStore();
+
+  const formDataSchema = zodUtils.schemaForType<FormData>()(
+    zod.object({
+      dateRange: zod.custom<string[]>(
+        (value: string[]) => {
+          console.log(value);
+          return validationUtils.isValidDateRange(value);
+        },
+        {
+          message: 'Invalid date range',
+        },
+      ),
+    }),
+  );
+
+  const formStore = formStoreUtils.createStore<FormData>({
+    schema: formDataSchema,
+    onSubmit: async (values) => {
+      console.log(values);
+    },
+  });
+
+  const formDirective = formStore.formDirective;
+
+  createEffect(() => {
+    console.log(dateRangeStore.startDateAsDayjs());
+    console.log(dateRangeStore.endDateAsDayjs());
+  });
+
+  return (
+    <>
+      <form use:formDirective>
+        <FormFields>
+          <FormField errors={formStore.errors().dateRange?.errors}>
+            <DatePicker.Input
+              isRange
+              name="dateRange"
+              formData={formStore.data}
+              // since the selected data is always available, to do 2 weeks we need to allow 13 days for the range
+              allowedRange={{
+                value: 13,
+                type: 'day',
+              }}
+              onSelectDate={(data: Date | undefined, which?: WhichDate) => {
+                dateRangeStore.setDate(data, which);
+
+                formStore.setValue('dateRange', dateRangeStore.getFormValue(), {
+                  markAsTouched: false,
+                });
+              }}
+            />
+          </FormField>
+          <Button type="submit">Submit</Button>
         </FormFields>
       </form>
       <div data-id="form-data">{JSON.stringify(formStore.data)}</div>

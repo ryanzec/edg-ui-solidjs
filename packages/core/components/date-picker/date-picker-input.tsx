@@ -1,5 +1,5 @@
 import { autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
-import { createEffect, createSignal, mergeProps, onCleanup, Show, splitProps } from 'solid-js';
+import { createEffect, createMemo, createSignal, mergeProps, onCleanup, Show, splitProps } from 'solid-js';
 import DatePicker, { type DatePickerProps } from '$/core/components/date-picker/date-picker';
 import styles from '$/core/components/date-picker/date-picker.module.css';
 import Input, { type InputProps } from '$/core/components/input';
@@ -7,11 +7,17 @@ import { clickOutsideDirective } from '$/core/directives/click-outside-directive
 import { dateStoreUtils, WhichDate } from '$/core/stores/date.store';
 import { type DefaultFormData, formDataAttribute } from '$/core/stores/form.store';
 import type { CommonDataAttributes } from '$/core/types/generic';
+import { dateUtils } from '$/core/utils/date';
 import { loggerUtils } from '$/core/utils/logger';
 import { tailwindUtils } from '$/core/utils/tailwind';
 
 // this is needed to avoid this code being stripped in compilation because of the way directive work in SolidJS
 clickOutsideDirective;
+
+export type DatePickerAllowedRange = {
+  value: number;
+  type: 'day' | 'week' | 'month' | 'year';
+};
 
 export type DatePickerInputProps<TFormData = DefaultFormData> = InputProps<TFormData> &
   Omit<DatePickerProps, 'onSelectDate' | 'defaultSelectedDate' | 'defaultDisplayDate'> &
@@ -22,6 +28,7 @@ export type DatePickerInputProps<TFormData = DefaultFormData> = InputProps<TForm
     defaultStartSelectedDate?: Date;
     defaultEndDisplayDate?: Date;
     defaultEndSelectedDate?: Date;
+    allowedRange?: DatePickerAllowedRange;
   };
 
 const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInputProps<TFormData>) => {
@@ -44,6 +51,7 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
       'defaultStartSelectedDate',
       'defaultEndDisplayDate',
       'defaultEndSelectedDate',
+      'allowedRange',
     ],
   );
   const [props, datePickerProps] = splitProps(customProps, [
@@ -55,6 +63,7 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
     'defaultStartSelectedDate',
     'defaultEndDisplayDate',
     'defaultEndSelectedDate',
+    'allowedRange',
   ]);
 
   const [containerElementRef, setContainerElementRef] = createSignal<HTMLDivElement>();
@@ -67,6 +76,84 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
   const endDate = dateStoreUtils.createDateStore({
     includeTime: datePickerProps.includeTime,
     defaultDate: props.defaultEndSelectedDate,
+  });
+
+  const startDisableBefore = createMemo<Date | undefined>(() => {
+    // if we don't have the data for applying an allowed range, we should not have any limit
+    if (!props.allowedRange || !endDate.date()) {
+      return undefined;
+    }
+
+    let disableBefore = dateUtils
+      .getDateWithConfiguredTimezone(endDate.date())
+      .subtract(props.allowedRange.value, props.allowedRange.type);
+
+    if (datePickerProps.includeTime) {
+      disableBefore = disableBefore.startOf('day');
+    }
+
+    return disableBefore.toDate();
+  });
+
+  const startDisableAfter = createMemo<Date | undefined>(() => {
+    // a date range should not allow for a backwards selection
+    if (endDate.date()) {
+      return dateUtils.getDateWithConfiguredTimezone(endDate.date()).endOf('day').toDate();
+    }
+
+    // if we don't have the data for applying an allowed range, we should not have any limit
+    if (!props.allowedRange || !startDate.date()) {
+      return undefined;
+    }
+
+    let disableAfter = dateUtils
+      .getDateWithConfiguredTimezone(startDate.date())
+      .add(props.allowedRange.value, props.allowedRange.type);
+
+    if (datePickerProps.includeTime) {
+      disableAfter = disableAfter.endOf('day');
+    }
+
+    return disableAfter.toDate();
+  });
+
+  const endDisableBefore = createMemo<Date | undefined>(() => {
+    // a date range should not allow for a backwards selection
+    if (startDate.date()) {
+      return dateUtils.getDateWithConfiguredTimezone(startDate.date()).startOf('day').toDate();
+    }
+
+    // if we don't have the data for applying an allowed range, we should not have any limit
+    if (!props.allowedRange || !endDate.date()) {
+      return undefined;
+    }
+
+    let disableBefore = dateUtils
+      .getDateWithConfiguredTimezone(endDate.date())
+      .subtract(props.allowedRange.value, props.allowedRange.type);
+
+    if (datePickerProps.includeTime) {
+      disableBefore = disableBefore.startOf('day');
+    }
+
+    return disableBefore.toDate();
+  });
+
+  const endDisableAfter = createMemo<Date | undefined>(() => {
+    // if we don't have the data for applying an allowed range, we should not have any limit
+    if (!props.allowedRange || !startDate.date()) {
+      return undefined;
+    }
+
+    let disableBefore = dateUtils
+      .getDateWithConfiguredTimezone(startDate.date())
+      .add(props.allowedRange.value, props.allowedRange.type);
+
+    if (datePickerProps.includeTime) {
+      disableBefore = disableBefore.endOf('day');
+    }
+
+    return disableBefore.toDate();
   });
 
   const showDatePicker = () => {
@@ -209,7 +296,8 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
             {...datePickerProps}
             defaultDisplayDate={startDate.date() ?? props.defaultStartDisplayDate}
             defaultSelectedDate={startDate.date() ?? props.defaultStartSelectedDate}
-            disableAfter={endDate.date()}
+            disableAfter={startDisableAfter()}
+            disableBefore={startDisableBefore()}
             onSelectDate={handleSelectStartDate}
             includeFooter
             onDone={hideDatePicker}
@@ -219,7 +307,8 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
               {...datePickerProps}
               defaultDisplayDate={endDate.date() ?? props.defaultEndDisplayDate}
               defaultSelectedDate={endDate.date() ?? props.defaultEndSelectedDate}
-              disableBefore={startDate.date()}
+              disableBefore={endDisableBefore()}
+              disableAfter={endDisableAfter()}
               onSelectDate={handleSelectEndDate}
               includeFooter
               onDone={hideDatePicker}
