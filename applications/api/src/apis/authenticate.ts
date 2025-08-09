@@ -51,14 +51,7 @@ export const registerAuthenticateApi = (api: FastifyInstance) => {
             ...authData.record,
             hasPassword: true,
           },
-          launchDarklyHash: featureFlagUtils.generateContextHash({
-            user: {
-              key: authData.record.id,
-            },
-            organization: {
-              key: authData.record.organizationId,
-            },
-          }),
+          launchDarklyHash: featureFlagUtils.generateContextHash(authData.record.id, authData.record.organizationId),
         }),
       );
     } catch (error: unknown) {
@@ -81,10 +74,17 @@ export const registerAuthenticateApi = (api: FastifyInstance) => {
         throw new Error('invalid authentication token');
       }
 
+      if (!request.launchDarklyUser) {
+        throw new Error('launch darkly user not found');
+      }
+
       return response.status(200).send(
         apiUtils.buildDataResponse({
           status: 'ok',
-          launchDarklyHash: featureFlagUtils.generateContextHash(request.launchDarklyUser),
+          launchDarklyHash: featureFlagUtils.generateContextHash(
+            request.launchDarklyUser.user.key,
+            request.launchDarklyUser.organization.key,
+          ),
         }),
       );
     } catch (error: unknown) {

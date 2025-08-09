@@ -20,6 +20,7 @@ CRITICAL TODOS
 - date component - do better default when date is invalid (!date.isValid())
 - debounce value store
 - selectable with virtual version of grid table
+- refactor all color to better account for color contrast standards
 
 HIGH TODOS
 - tooltip content color
@@ -84,3 +85,7 @@ REVIEW COMPONENTS:
 - time input
 - typography
 - unsaved changes dialog
+
+# Links
+
+- https://webaim.org/resources/contrastchecker/ - color contrast standards checker

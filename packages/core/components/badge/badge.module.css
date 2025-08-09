@@ -24,7 +24,7 @@
 
   .neutral.transparent {
     background-color: transparent;
-    color: var(--color-neutral3);
+    color: var(--color-neutral-text);
   }
 
   /* brand */
@@ -40,7 +40,7 @@
 
   .brand.transparent {
     background-color: transparent;
-    color: var(--color-brand3);
+    color: var(--color-brand-text);
   }
 
   /* brand secondary */
@@ -56,7 +56,7 @@
 
   .brand-secondary.transparent {
     background-color: transparent;
-    color: var(--color-brand-secondary3);
+    color: var(--color-brand-secondary-text);
   }
 
   /* success */
@@ -72,7 +72,7 @@
 
   .success.transparent {
     background-color: transparent;
-    color: var(--color-success3);
+    color: var(--color-success-text);
   }
 
   /* info */
@@ -88,7 +88,7 @@
 
   .info.transparent {
     background-color: transparent;
-    color: var(--color-info3);
+    color: var(--color-info-text);
   }
 
   /* warning */
@@ -104,7 +104,7 @@
 
   .warning.transparent {
     background-color: transparent;
-    color: var(--color-warning3);
+    color: var(--color-warning-text);
   }
 
   /* warning high */
@@ -120,7 +120,7 @@
 
   .warning-high.transparent {
     background-color: transparent;
-    color: var(--color-warning-high3);
+    color: var(--color-warning-high-text);
   }
 
   /* danger */
@@ -136,7 +136,7 @@
 
   .danger.transparent {
     background-color: transparent;
-    color: var(--color-danger3);
+    color: var(--color-danger-text);
   }
 
   .icon > i {

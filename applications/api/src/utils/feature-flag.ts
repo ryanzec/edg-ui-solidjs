@@ -46,19 +46,14 @@ const hasFlag = (flag: string, user: LaunchDarklyContext, defaultValue: any = fa
   return launchDarklyClient.variation(flag, user, defaultValue);
 };
 
-type KeyGenerationData = {
-  user: Pick<LaunchDarklyContext['user'], 'key'>;
-  organization: Pick<LaunchDarklyContext['organization'], 'key'>;
-};
-
-const generateContextKey = (data: KeyGenerationData) => {
-  return `organization:${data.organization.key}:user:${data.user.key}`;
+const generateContextKey = (userKey: string, organizationKey: string) => {
+  return `organization:${organizationKey}:user:${userKey}`;
 };
 
 // this is required by launch darkly secure mode which ensures that no one can generate new contexts since they will
 // need the server side sdk key to generate the hash
-const generateContextHash = (data: KeyGenerationData) => {
-  const contextKey = generateContextKey(data);
+const generateContextHash = (userKey: string, organizationKey: string) => {
+  const contextKey = generateContextKey(userKey, organizationKey);
 
   return crypto.createHmac('sha256', applicationConfiguration.launchDarklySdkKey).update(contextKey).digest('hex');
 };

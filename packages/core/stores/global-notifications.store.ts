@@ -10,14 +10,20 @@ export type GlobalNotification = {
   isRemoving?: boolean;
   removeAnimationDuration?: number;
   color?: CalloutColor;
+  canClose: boolean;
 
   // we make this a function instead of just a JSX.Element in case the message has signal based data
   message: () => JSX.Element;
+  preElement?: () => JSX.Element;
+};
+
+export type AddNotification = Omit<GlobalNotification, 'id' | 'canClose'> & {
+  canClose?: boolean;
 };
 
 export type GlobalNotificationsStore = {
   notifications: Accessor<GlobalNotification[]>;
-  addNotification: (notification: Omit<GlobalNotification, 'id'>) => void;
+  addNotification: (notification: AddNotification) => GlobalNotification;
   removeNotification: (id: GlobalNotification['id']) => void;
   clearNotifications: () => void;
 };
@@ -29,14 +35,15 @@ export const REMOVE_ANIMATION_DURATION = 350;
 const createGlobalNotificationsStore = (): GlobalNotificationsStore => {
   const [notifications, setNotifications] = createSignal<GlobalNotification[]>([]);
 
-  const addNotification = (notification: Omit<GlobalNotification, 'id'>) => {
+  const addNotification = (notification: AddNotification) => {
     // calls of this method should not trigger reactive changes to signals change here
-    untrack(() => {
+    return untrack(() => {
       const newNotification = {
         id: uuid.v4(),
         ...notification,
         autoClose: notification.autoClose ?? DEFAULT_AUTO_CLOSE,
         removeAnimationDuration: notification.removeAnimationDuration ?? REMOVE_ANIMATION_DURATION,
+        canClose: notification.canClose ?? true,
       };
 
       if (newNotification.autoClose !== 0) {
@@ -52,6 +59,8 @@ const createGlobalNotificationsStore = (): GlobalNotificationsStore => {
           draft.push(newNotification);
         }),
       );
+
+      return newNotification;
     });
   };
 

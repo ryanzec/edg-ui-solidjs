@@ -47,31 +47,31 @@
   }
 
   .neutral {
-    color: var(--color-neutral);
+    color: var(--color-neutral-text);
   }
 
   .brand {
-    color: var(--color-brand);
+    color: var(--color-brand-text);
   }
 
   .success {
-    color: var(--color-success);
+    color: var(--color-success-text);
   }
 
   .info {
-    color: var(--color-info);
+    color: var(--color-info-text);
   }
 
   .warning {
-    color: var(--color-warning);
+    color: var(--color-warning-text);
   }
 
   .warning-high {
-    color: var(--color-warning-high);
+    color: var(--color-warning-high-text);
   }
 
   .danger {
-    color: var(--color-danger);
+    color: var(--color-danger-text);
   }
 
   .inherit-color {

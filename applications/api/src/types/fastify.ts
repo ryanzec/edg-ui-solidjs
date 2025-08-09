@@ -5,6 +5,6 @@ import type { LaunchDarklyContext } from '$api/types/feature-flag';
 declare module 'fastify' {
   interface FastifyRequest {
     newJwt: string;
-    launchDarklyUser: LaunchDarklyContext;
+    launchDarklyUser?: LaunchDarklyContext;
   }
 }

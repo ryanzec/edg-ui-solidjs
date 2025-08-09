@@ -1,4 +1,4 @@
-import { type JSX, splitProps } from 'solid-js';
+import { type JSX, Show, splitProps } from 'solid-js';
 import Callout, { CalloutColor, CalloutVariant } from '$/core/components/callout';
 import styles from '$/core/components/global-notifications/global-notifications.module.css';
 import Icon from '$/core/components/icon';
@@ -27,14 +27,17 @@ const GlobalNotificationsItem = (passedProps: GlobalNotificationsListItemProps) 
       color={calloutColor()}
       variant={CalloutVariant.WEAK}
       style={{ 'animation-duration': `${REMOVE_ANIMATION_DURATION * 1.05}ms` }}
+      preElement={props.notification.preElement?.()}
       postElement={
-        <Icon
-          icon="x"
-          class={styles.removeTrigger}
-          onClick={() => {
-            globalNotificationsStore.removeNotification(props.notification.id);
-          }}
-        />
+        <Show when={props.notification.canClose}>
+          <Icon
+            icon="x"
+            class={styles.removeTrigger}
+            onClick={() => {
+              globalNotificationsStore.removeNotification(props.notification.id);
+            }}
+          />
+        </Show>
       }
     >
       {props.notification.message()}{' '}

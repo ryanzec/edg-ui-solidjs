@@ -41,7 +41,7 @@ export const Button = (passedProps: ButtonProps) => {
         shape: ButtonShape.ROUNDED,
         loadingIconPosition: ButtonItemPosition.PRE,
         size: ButtonSize.BASE,
-        markerColor: BadgeColor.DANGER,
+        markerColor: BadgeColor.WARNING_HIGH,
       },
       passedProps,
     ),
@@ -91,16 +91,6 @@ export const Button = (passedProps: ButtonProps) => {
       })}
       disabled={props.disabled || isLoading()}
     >
-      <Show when={props.marker}>
-        <Badge
-          class="absolute -top-xs right-4xs"
-          color={props.markerColor}
-          variant={BadgeVariant.STRONG}
-          size={BadgeSize.SMALL}
-        >
-          <Typography size={TypographySize.EXTRA_SMALL}>{props.marker}</Typography>
-        </Badge>
-      </Show>
       <span class={styles.buttonContent}>
         {isLoading() && (
           <ButtonPrePostItem
@@ -119,6 +109,11 @@ export const Button = (passedProps: ButtonProps) => {
            */}
           <Show when={props.icon}>{(icon) => <Icon icon={icon()} />}</Show>
           <Show when={!props.icon}>{props.children}</Show>
+          <Show when={props.marker}>
+            <Badge color={props.markerColor} variant={BadgeVariant.STRONG} size={BadgeSize.SMALL}>
+              <Typography size={TypographySize.EXTRA_SMALL}>{props.marker}</Typography>
+            </Badge>
+          </Show>
         </span>
         {!isLoading() && hasPostItem() && (
           <ButtonPrePostItem

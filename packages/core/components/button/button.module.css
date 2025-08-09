@@ -38,6 +38,7 @@
     display: inline-flex;
     align-items: center;
     min-width: 1px;
+    gap: var(--spacing-2xs);
   }
 
   /* shapes */

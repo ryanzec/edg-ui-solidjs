@@ -19,10 +19,12 @@ const baseConfiguration: PlaywrightTestConfig = {
   workers: 4,
   reporter: 'list',
   use: {
-    screenshot: process.env.CI ? 'off' : 'only-on-failure',
+    screenshot: 'only-on-failure',
+
+    headless: true,
 
     // Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer
-    trace: 'on-first-retry',
+    trace: 'retain-on-failure',
     baseURL: DEV_SERVER_URL,
     viewport: { width: 1024, height: 768 },
 

@@ -99,6 +99,12 @@
               "value": "#212529"
             },
             {
+              "name": "neutral/text",
+              "type": "color",
+              "isAlias": false,
+              "value": "#6C757D"
+            },
+            {
               "name": "neutral/on-base",
               "type": "color",
               "isAlias": false,
@@ -120,19 +126,19 @@
               "name": "brand/subtle3",
               "type": "color",
               "isAlias": false,
-              "value": "#D1DDD8"
+              "value": "#DBEAE5"
             },
             {
               "name": "brand/subtle4",
               "type": "color",
               "isAlias": false,
-              "value": "#A8BFB6"
+              "value": "#C2D7CF"
             },
             {
               "name": "brand/subtle5",
               "type": "color",
               "isAlias": false,
-              "value": "#7A9B91"
+              "value": "#A9C3BB"
             },
             {
               "name": "brand/base",
@@ -157,6 +163,12 @@
               "type": "color",
               "isAlias": false,
               "value": "#263530"
+            },
+            {
+              "name": "brand/text",
+              "type": "color",
+              "isAlias": false,
+              "value": "#4D6E62"
             },
             {
               "name": "brand/on-base",
@@ -217,6 +229,12 @@
               "type": "color",
               "isAlias": false,
               "value": "#2E1065"
+            },
+            {
+              "name": "brand-secondary/text",
+              "type": "color",
+              "isAlias": false,
+              "value": "#6D28D9"
             },
             {
               "name": "brand-secondary/on-base",
@@ -285,22 +303,16 @@
               "value": "#E8F4FF"
             },
             {
-              "name": "info/subtle3",
-              "type": "color",
-              "isAlias": false,
-              "value": "#D4E8FF"
-            },
-            {
               "name": "success/bold",
               "type": "color",
               "isAlias": false,
               "value": "#052E16"
             },
             {
-              "name": "success/on-base",
+              "name": "info/subtle3",
               "type": "color",
               "isAlias": false,
-              "value": "#FFFFFF"
+              "value": "#D4E8FF"
             },
             {
               "name": "info/subtle4",
@@ -333,16 +345,22 @@
               "value": "#FEFDF7"
             },
             {
+              "name": "warning/subtle2",
+              "type": "color",
+              "isAlias": false,
+              "value": "#FDFBE8"
+            },
+            {
               "name": "info/base3",
               "type": "color",
               "isAlias": false,
               "value": "#0369A1"
             },
             {
-              "name": "warning/subtle2",
+              "name": "info/bold",
               "type": "color",
               "isAlias": false,
-              "value": "#FDFBE8"
+              "value": "#0C1B29"
             },
             {
               "name": "warning/subtle3",
@@ -351,10 +369,10 @@
               "value": "#FBF7D4"
             },
             {
-              "name": "info/bold",
+              "name": "info/text",
               "type": "color",
               "isAlias": false,
-              "value": "#0C1B29"
+              "value": "#0D699C"
             },
             {
               "name": "info/on-base",
@@ -378,13 +396,13 @@
               "name": "warning/base",
               "type": "color",
               "isAlias": false,
-              "value": "#EAB308"
+              "value": "#E0AC07"
             },
             {
               "name": "warning/base2",
               "type": "color",
               "isAlias": false,
-              "value": "#CA8A04"
+              "value": "#B18805"
             },
             {
               "name": "warning-high/subtle",
@@ -441,6 +459,12 @@
               "value": "#431407"
             },
             {
+              "name": "warning-high/text",
+              "type": "color",
+              "isAlias": false,
+              "value": "#AC4F0D"
+            },
+            {
               "name": "warning-high/on-base",
               "type": "color",
               "isAlias": false,
@@ -456,7 +480,7 @@
               "name": "warning/base3",
               "type": "color",
               "isAlias": false,
-              "value": "#A16207"
+              "value": "#916F03"
             },
             {
               "name": "danger/subtle2",
@@ -474,7 +498,13 @@
               "name": "warning/bold",
               "type": "color",
               "isAlias": false,
-              "value": "#422006"
+              "value": "#523F01"
+            },
+            {
+              "name": "warning/text",
+              "type": "color",
+              "isAlias": false,
+              "value": "#916F03"
             },
             {
               "name": "warning/on-base",
@@ -517,6 +547,12 @@
               "type": "color",
               "isAlias": false,
               "value": "#450A0A"
+            },
+            {
+              "name": "danger/text",
+              "type": "color",
+              "isAlias": false,
+              "value": "#991B1B"
             },
             {
               "name": "danger/on-base",
@@ -574,6 +610,18 @@
             },
             {
               "name": "text/inverse",
+              "type": "color",
+              "isAlias": false,
+              "value": "#FFFFFF"
+            },
+            {
+              "name": "success/text",
+              "type": "color",
+              "isAlias": false,
+              "value": "#1A8542"
+            },
+            {
+              "name": "success/on-base",
               "type": "color",
               "isAlias": false,
               "value": "#FFFFFF"
@@ -674,6 +722,12 @@
               "value": "#FFFFFF"
             },
             {
+              "name": "neutral/text",
+              "type": "color",
+              "isAlias": false,
+              "value": "#FFFFFF"
+            },
+            {
               "name": "neutral/on-base",
               "type": "color",
               "isAlias": false,
@@ -734,6 +788,12 @@
               "value": "#FFFFFF"
             },
             {
+              "name": "brand/text",
+              "type": "color",
+              "isAlias": false,
+              "value": "#FFFFFF"
+            },
+            {
               "name": "brand/on-base",
               "type": "color",
               "isAlias": false,
@@ -789,6 +849,12 @@
             },
             {
               "name": "brand-secondary/bold",
+              "type": "color",
+              "isAlias": false,
+              "value": "#FFFFFF"
+            },
+            {
+              "name": "brand-secondary/text",
               "type": "color",
               "isAlias": false,
               "value": "#FFFFFF"
@@ -860,22 +926,16 @@
               "value": "#06214D"
             },
             {
-              "name": "info/subtle3",
-              "type": "color",
-              "isAlias": false,
-              "value": "#082658"
-            },
-            {
               "name": "success/bold",
               "type": "color",
               "isAlias": false,
               "value": "#FFFFFF"
             },
             {
-              "name": "success/on-base",
+              "name": "info/subtle3",
               "type": "color",
               "isAlias": false,
-              "value": "#F0F0F0"
+              "value": "#082658"
             },
             {
               "name": "info/subtle4",
@@ -908,16 +968,22 @@
               "value": "#2E2102"
             },
             {
+              "name": "warning/subtle2",
+              "type": "color",
+              "isAlias": false,
+              "value": "#3C2A02"
+            },
+            {
               "name": "info/base3",
               "type": "color",
               "isAlias": false,
               "value": "#FFFFFF"
             },
             {
-              "name": "warning/subtle2",
+              "name": "info/bold",
               "type": "color",
               "isAlias": false,
-              "value": "#3C2A02"
+              "value": "#FFFFFF"
             },
             {
               "name": "warning/subtle3",
@@ -926,7 +992,7 @@
               "value": "#4A3503"
             },
             {
-              "name": "info/bold",
+              "name": "info/text",
               "type": "color",
               "isAlias": false,
               "value": "#FFFFFF"
@@ -1016,6 +1082,12 @@
               "value": "#FFFFFF"
             },
             {
+              "name": "warning-high/text",
+              "type": "color",
+              "isAlias": false,
+              "value": "#FFFFFF"
+            },
+            {
               "name": "warning-high/on-base",
               "type": "color",
               "isAlias": false,
@@ -1047,6 +1119,12 @@
             },
             {
               "name": "warning/bold",
+              "type": "color",
+              "isAlias": false,
+              "value": "#FFFFFF"
+            },
+            {
+              "name": "warning/text",
               "type": "color",
               "isAlias": false,
               "value": "#FFFFFF"
@@ -1089,6 +1167,12 @@
             },
             {
               "name": "danger/bold",
+              "type": "color",
+              "isAlias": false,
+              "value": "#FFFFFF"
+            },
+            {
+              "name": "danger/text",
               "type": "color",
               "isAlias": false,
               "value": "#FFFFFF"
@@ -1152,6 +1236,18 @@
               "type": "color",
               "isAlias": false,
               "value": "#000000"
+            },
+            {
+              "name": "success/text",
+              "type": "color",
+              "isAlias": false,
+              "value": "#FFFFFF"
+            },
+            {
+              "name": "success/on-base",
+              "type": "color",
+              "isAlias": false,
+              "value": "#F0F0F0"
             }
           ]
         }

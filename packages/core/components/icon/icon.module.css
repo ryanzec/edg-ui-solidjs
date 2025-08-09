@@ -44,7 +44,7 @@
     color: var(--color-neutral);
 
     &.clickable:hover {
-      color: var(--color-neutral3);
+      color: var(--color-neutral-text);
     }
   }
 
@@ -52,7 +52,7 @@
     color: var(--color-brand);
 
     &.clickable:hover {
-      color: var(--color-brand3);
+      color: var(--color-brand-text);
     }
   }
 
@@ -60,7 +60,7 @@
     color: var(--color-success);
 
     &.clickable:hover {
-      color: var(--color-success3);
+      color: var(--color-success-text);
     }
   }
 
@@ -68,7 +68,7 @@
     color: var(--color-info);
 
     &.clickable:hover {
-      color: var(--color-info3);
+      color: var(--color-info-text);
     }
   }
 
@@ -76,7 +76,7 @@
     color: var(--color-warning);
 
     &.clickable:hover {
-      color: var(--color-warning3);
+      color: var(--color-warning-text);
     }
   }
 
@@ -84,7 +84,7 @@
     color: var(--color-warning-high);
 
     &.clickable:hover {
-      color: var(--color-warning-high3);
+      color: var(--color-warning-high-text);
     }
   }
 
@@ -92,7 +92,7 @@
     color: var(--color-danger);
 
     &.clickable:hover {
-      color: var(--color-danger-bold);
+      color: var(--color-danger-text);
     }
   }
 

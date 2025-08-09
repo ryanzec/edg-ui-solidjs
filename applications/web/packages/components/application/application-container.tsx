@@ -10,8 +10,7 @@ import GlobalNotifications from '$/core/components/global-notifications';
 import Loading from '$/core/components/loading';
 import { globalNotificationsStore } from '$/core/stores/global-notifications.store';
 import { type HttpRequest, httpUtils } from '$/core/utils/http';
-import { featureFlagStore } from '$web/stores/feature-flag.store';
-import { FeatureFlag, featureFlagUtils } from '$web/utils/feature-flag';
+import { FeatureFlag, featureFlagStore } from '$web/stores/feature-flag.store';
 
 const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
   const navigate = useNavigate();

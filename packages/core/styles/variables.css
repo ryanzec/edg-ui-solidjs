@@ -24,6 +24,7 @@
   --color-neutral2: var(--color-neutral2);
   --color-neutral3: var(--color-neutral3);
   --color-neutral-bold: var(--color-neutral-bold);
+  --color-neutral-text: var(--color-neutral-text);
   --color-on-neutral: var(--color-on-neutral);
   --color-brand-subtle: var(--color-brand-subtle);
   --color-brand-subtle2: var(--color-brand-subtle2);
@@ -34,6 +35,7 @@
   --color-brand2: var(--color-brand2);
   --color-brand3: var(--color-brand3);
   --color-brand-bold: var(--color-brand-bold);
+  --color-brand-text: var(--color-brand-text);
   --color-on-brand: var(--color-on-brand);
   --color-brand-secondary-subtle: var(--color-brand-secondary-subtle);
   --color-brand-secondary-subtle2: var(--color-brand-secondary-subtle2);
@@ -44,6 +46,7 @@
   --color-brand-secondary2: var(--color-brand-secondary2);
   --color-brand-secondary3: var(--color-brand-secondary3);
   --color-brand-secondary-bold: var(--color-brand-secondary-bold);
+  --color-brand-secondary-text: var(--color-brand-secondary-text);
   --color-on-brand-secondary: var(--color-on-brand-secondary);
   --color-success-subtle: var(--color-success-subtle);
   --color-success-subtle2: var(--color-success-subtle2);
@@ -55,18 +58,18 @@
   --color-info-subtle: var(--color-info-subtle);
   --color-success3: var(--color-success3);
   --color-info-subtle2: var(--color-info-subtle2);
-  --color-info-subtle3: var(--color-info-subtle3);
   --color-success-bold: var(--color-success-bold);
-  --color-on-success: var(--color-on-success);
+  --color-info-subtle3: var(--color-info-subtle3);
   --color-info-subtle4: var(--color-info-subtle4);
   --color-info-subtle5: var(--color-info-subtle5);
   --color-info: var(--color-info);
   --color-info2: var(--color-info2);
   --color-warning-subtle: var(--color-warning-subtle);
-  --color-info3: var(--color-info3);
   --color-warning-subtle2: var(--color-warning-subtle2);
-  --color-warning-subtle3: var(--color-warning-subtle3);
+  --color-info3: var(--color-info3);
   --color-info-bold: var(--color-info-bold);
+  --color-warning-subtle3: var(--color-warning-subtle3);
+  --color-info-text: var(--color-info-text);
   --color-on-info: var(--color-on-info);
   --color-warning-subtle4: var(--color-warning-subtle4);
   --color-warning-subtle5: var(--color-warning-subtle5);
@@ -81,12 +84,14 @@
   --color-warning-high2: var(--color-warning-high2);
   --color-warning-high3: var(--color-warning-high3);
   --color-warning-high-bold: var(--color-warning-high-bold);
+  --color-warning-high-text: var(--color-warning-high-text);
   --color-on-warning-high: var(--color-on-warning-high);
   --color-danger-subtle: var(--color-danger-subtle);
   --color-warning3: var(--color-warning3);
   --color-danger-subtle2: var(--color-danger-subtle2);
   --color-danger-subtle3: var(--color-danger-subtle3);
   --color-warning-bold: var(--color-warning-bold);
+  --color-warning-text: var(--color-warning-text);
   --color-on-warning: var(--color-on-warning);
   --color-danger-subtle4: var(--color-danger-subtle4);
   --color-danger-subtle5: var(--color-danger-subtle5);
@@ -94,6 +99,7 @@
   --color-danger2: var(--color-danger2);
   --color-danger3: var(--color-danger3);
   --color-danger-bold: var(--color-danger-bold);
+  --color-danger-text: var(--color-danger-text);
   --color-on-danger: var(--color-on-danger);
   --color-dialog-background: var(--color-dialog-background);
   --color-input-background: var(--color-input-background);
@@ -104,6 +110,8 @@
   --color-text-secondary: var(--color-text-secondary);
   --color-text-tertiary: var(--color-text-tertiary);
   --color-text-inverse: var(--color-text-inverse);
+  --color-success-text: var(--color-success-text);
+  --color-on-success: var(--color-on-success);
 
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -202,16 +210,18 @@
   --color-neutral2: #495057;
   --color-neutral3: #343A40;
   --color-neutral-bold: #212529;
+  --color-neutral-text: #6C757D;
   --color-on-neutral: #FFFFFF;
   --color-brand-subtle: #F2F6F5;
   --color-brand-subtle2: #E6EEEB;
-  --color-brand-subtle3: #D1DDD8;
-  --color-brand-subtle4: #A8BFB6;
-  --color-brand-subtle5: #7A9B91;
+  --color-brand-subtle3: #DBEAE5;
+  --color-brand-subtle4: #C2D7CF;
+  --color-brand-subtle5: #A9C3BB;
   --color-brand: #5C7D74;
   --color-brand2: #476258;
   --color-brand3: #374B43;
   --color-brand-bold: #263530;
+  --color-brand-text: #4D6E62;
   --color-on-brand: #FFFFFF;
   --color-brand-secondary-subtle: #FDFCFF;
   --color-brand-secondary-subtle2: #FBF8FF;
@@ -222,6 +232,7 @@
   --color-brand-secondary2: #7C3AED;
   --color-brand-secondary3: #6D28D9;
   --color-brand-secondary-bold: #2E1065;
+  --color-brand-secondary-text: #6D28D9;
   --color-on-brand-secondary: #FFFFFF;
   --color-success-subtle: #F7FCF7;
   --color-success-subtle2: #E8F5E8;
@@ -233,23 +244,23 @@
   --color-info-subtle: #F7FBFF;
   --color-success3: #15803D;
   --color-info-subtle2: #E8F4FF;
-  --color-info-subtle3: #D4E8FF;
   --color-success-bold: #052E16;
-  --color-on-success: #FFFFFF;
+  --color-info-subtle3: #D4E8FF;
   --color-info-subtle4: #C6DFFF;
   --color-info-subtle5: #B8D6FF;
   --color-info: #0EA5E9;
   --color-info2: #0284C7;
   --color-warning-subtle: #FEFDF7;
-  --color-info3: #0369A1;
   --color-warning-subtle2: #FDFBE8;
-  --color-warning-subtle3: #FBF7D4;
+  --color-info3: #0369A1;
   --color-info-bold: #0C1B29;
+  --color-warning-subtle3: #FBF7D4;
+  --color-info-text: #0D699C;
   --color-on-info: #FFFFFF;
   --color-warning-subtle4: #F9F3C6;
   --color-warning-subtle5: #F7EFB8;
-  --color-warning: #EAB308;
-  --color-warning2: #CA8A04;
+  --color-warning: #E0AC07;
+  --color-warning2: #B18805;
   --color-warning-high-subtle: #FFFCF7;
   --color-warning-high-subtle2: #FEF8E8;
   --color-warning-high-subtle3: #FDF0D4;
@@ -259,12 +270,14 @@
   --color-warning-high2: #C2410C;
   --color-warning-high3: #9A3412;
   --color-warning-high-bold: #431407;
+  --color-warning-high-text: #AC4F0D;
   --color-on-warning-high: #FFFFFF;
   --color-danger-subtle: #FFFBFB;
-  --color-warning3: #A16207;
+  --color-warning3: #916F03;
   --color-danger-subtle2: #FEF5F5;
   --color-danger-subtle3: #FDEAEA;
-  --color-warning-bold: #422006;
+  --color-warning-bold: #523F01;
+  --color-warning-text: #916F03;
   --color-on-warning: #FFFFFF;
   --color-danger-subtle4: #FCDEDE;
   --color-danger-subtle5: #FBD2D2;
@@ -272,6 +285,7 @@
   --color-danger2: #B91C1C;
   --color-danger3: #991B1B;
   --color-danger-bold: #450A0A;
+  --color-danger-text: #991B1B;
   --color-on-danger: #FFFFFF;
   --color-dialog-background: #FFFFFF;
   --color-input-background: #FFFFFF;
@@ -282,6 +296,8 @@
   --color-text-secondary: #515151;
   --color-text-tertiary: #A5A5A5;
   --color-text-inverse: #FFFFFF;
+  --color-success-text: #1A8542;
+  --color-on-success: #FFFFFF;
 
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -380,6 +396,7 @@
   --color-neutral2: #FAFAFA;
   --color-neutral3: #FFFFFF;
   --color-neutral-bold: #FFFFFF;
+  --color-neutral-text: #FFFFFF;
   --color-on-neutral: #F0F0F0;
   --color-brand-subtle: #03302A;
   --color-brand-subtle2: #043E36;
@@ -390,6 +407,7 @@
   --color-brand2: #E0F2F1;
   --color-brand3: #FFFFFF;
   --color-brand-bold: #FFFFFF;
+  --color-brand-text: #FFFFFF;
   --color-on-brand: #F0F0F0;
   --color-brand-secondary-subtle: #03302A;
   --color-brand-secondary-subtle2: #043E36;
@@ -400,6 +418,7 @@
   --color-brand-secondary2: #E0F2F1;
   --color-brand-secondary3: #FFFFFF;
   --color-brand-secondary-bold: #FFFFFF;
+  --color-brand-secondary-text: #FFFFFF;
   --color-on-brand-secondary: #F0F0F0;
   --color-success-subtle: #0A2F0C;
   --color-success-subtle2: #0D3E10;
@@ -411,18 +430,18 @@
   --color-info-subtle: #051A3C;
   --color-success3: #FFFFFF;
   --color-info-subtle2: #06214D;
-  --color-info-subtle3: #082658;
   --color-success-bold: #FFFFFF;
-  --color-on-success: #F0F0F0;
+  --color-info-subtle3: #082658;
   --color-info-subtle4: #2C88D2;
   --color-info-subtle5: #2982C9;
   --color-info: #267BBF;
   --color-info2: #E3F2FD;
   --color-warning-subtle: #2E2102;
-  --color-info3: #FFFFFF;
   --color-warning-subtle2: #3C2A02;
-  --color-warning-subtle3: #4A3503;
+  --color-info3: #FFFFFF;
   --color-info-bold: #FFFFFF;
+  --color-warning-subtle3: #4A3503;
+  --color-info-text: #FFFFFF;
   --color-on-info: #F0F0F0;
   --color-warning-subtle4: #C5982A;
   --color-warning-subtle5: #BC9228;
@@ -437,12 +456,14 @@
   --color-warning-high2: #FFF8E1;
   --color-warning-high3: #FFFFFF;
   --color-warning-high-bold: #FFFFFF;
+  --color-warning-high-text: #FFFFFF;
   --color-on-warning-high: #F0F0F0;
   --color-danger-subtle: #330303;
   --color-warning3: #FFFFFF;
   --color-danger-subtle2: #440505;
   --color-danger-subtle3: #570505;
   --color-warning-bold: #FFFFFF;
+  --color-warning-text: #FFFFFF;
   --color-on-warning: #F0F0F0;
   --color-danger-subtle4: #C62824;
   --color-danger-subtle5: #BB2622;
@@ -450,6 +471,7 @@
   --color-danger2: #FFEBEE;
   --color-danger3: #FFFFFF;
   --color-danger-bold: #FFFFFF;
+  --color-danger-text: #FFFFFF;
   --color-on-danger: #F0F0F0;
   --color-dialog-background: #1C1C1C;
   --color-input-background: #1C1C1C;
@@ -460,6 +482,8 @@
   --color-text-secondary: #BCBCBC;
   --color-text-tertiary: #ABABAB;
   --color-text-inverse: #000000;
+  --color-success-text: #FFFFFF;
+  --color-on-success: #F0F0F0;
 }
 
 /* since buttons are overridden to look like plain text, resetting the text to align to the left */
