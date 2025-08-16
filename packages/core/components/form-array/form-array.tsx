@@ -11,6 +11,7 @@ export type FormArrayProps = {
   wrapItems?: boolean;
   hideAddButton?: boolean;
   class?: string;
+  disabled?: boolean;
 };
 
 const FormArray = (props: FormArrayProps) => {
@@ -26,6 +27,7 @@ const FormArray = (props: FormArrayProps) => {
           color={ButtonColor.INFO}
           onclick={props.onAdd}
           preElement={<Icon icon="plus-circle" />}
+          disabled={props.disabled}
         >
           {props.addLabel}
         </Button>

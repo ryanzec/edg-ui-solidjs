@@ -402,6 +402,72 @@ export const AllSupportedFieldTypes = () => {
   );
 };
 
+export const Disabled = () => {
+  const [currentDynamicFields, setCurrentDynamicFields] = createSignal<DynamicFormBuilderFields>(formFields);
+
+  const comboboxValueStore = comboboxComponentUtils.createValueStore<ComboboxExtraData>({
+    defaultValue: [{ label: 'With Validation', value: 1 }],
+  });
+  const formStore = formStoreUtils.createStore<DefaultFormData>({
+    onSubmit: (data) => {
+      console.log(data);
+      console.log(dynamicFormBuilderComponentUtils.convertData(data, currentDynamicFields()));
+    },
+  });
+
+  const formDirective = formStore.formDirective;
+
+  return (
+    <div data-id="container">
+      <form use:formDirective>
+        <FormFields>
+          <FormField errors={formStore.errors().dynamicFieldsSelection?.errors}>
+            <Combobox
+              autoShowOptions
+              options={[
+                { label: 'With Validation', value: 1 },
+                { label: 'Without Validation', value: 2 },
+              ]}
+              setSelected={(options: ComboboxOption[]) => {
+                const value = options.map((option) => option.value)[0] as number;
+
+                setCurrentDynamicFields(value === 2 ? formFieldsNoRequired : formFields);
+                formStore.setValue('dynamicFieldsSelection', value);
+                comboboxValueStore.setSelected(options);
+              }}
+              selected={comboboxValueStore.selected()}
+              name="dynamicFieldsSelection"
+              selectedComponent={Combobox.SelectedOption}
+              selectableComponent={Combobox.SelectableOption}
+            />
+          </FormField>
+          <FormField errors={formStore.errors().staticField?.errors}>
+            <Label>Static Field</Label>
+            <Input type="text" name="staticField" formData={formStore.data} />
+          </FormField>
+          <DynamicFormBuilder
+            fields={currentDynamicFields()}
+            formStore={formStore}
+            staticFormSchema={staticFormSchema}
+            disabled
+          />
+        </FormFields>
+        <div>
+          <Button data-id="submit-button" type="submit">
+            Submit
+          </Button>
+        </div>
+      </form>
+      <div>touched fields</div>
+      <pre>{JSON.stringify(formStore.touchedFields(), null, 2)}</pre>
+      <div>errors</div>
+      <pre>{JSON.stringify(formStore.errors(), null, 2)}</pre>
+      <div>data</div>
+      <pre>{JSON.stringify(formStore.data(), null, 2)}</pre>
+    </div>
+  );
+};
+
 export const PrePopulated = () => {
   const [currentDynamicFields, setCurrentDynamicFields] = createSignal<DynamicFormBuilderFields>(formFields);
 
@@ -499,6 +565,120 @@ export const PrePopulated = () => {
             fields={currentDynamicFields()}
             formStore={formStore}
             staticFormSchema={staticFormSchema}
+          />
+        </FormFields>
+        <div>
+          <Button data-id="submit-button" type="submit">
+            Submit
+          </Button>
+        </div>
+      </form>
+      <div>touched fields</div>
+      <pre>{JSON.stringify(formStore.touchedFields(), null, 2)}</pre>
+      <div>errors</div>
+      <pre>{JSON.stringify(formStore.errors(), null, 2)}</pre>
+    </div>
+  );
+};
+
+export const PrePopulatedDisabled = () => {
+  const [currentDynamicFields, setCurrentDynamicFields] = createSignal<DynamicFormBuilderFields>(formFields);
+
+  const comboboxValueStore = comboboxComponentUtils.createValueStore<ComboboxExtraData>({
+    defaultValue: [dynamicFieldsSelection[0]],
+  });
+  const formStore = formStoreUtils.createStore<DefaultFormData>({
+    initialValues: {
+      dynamicFieldsSelection: dynamicFieldsSelection[0].value,
+      staticField: 'test',
+      title: 'title',
+      password: 'password',
+      textarea: 'text\narea',
+      radio: '2',
+      singleCheckbox: ['1'],
+      multipleCheckbox: ['1', '3'],
+      selectOne: '2',
+      complexObject: {
+        one: 'one',
+        two: ['1'],
+        three: '1',
+      },
+      complexObjectArray: [
+        {
+          one: 'two',
+          two: ['1'],
+          three: '2',
+        },
+        {
+          one: 'three',
+          two: ['1'],
+          three: '3',
+        },
+      ],
+      reallyComplexObjectArray: [
+        {
+          complexArray: [
+            {
+              complex: [
+                {
+                  field1: '1',
+                  field2: ['asd', 'as'],
+                  field3: 'asd',
+                },
+              ],
+            },
+            {
+              complex: [
+                {
+                  field1: '2',
+                  field2: ['asd', 'asd'],
+                  field3: 'asd',
+                },
+              ],
+            },
+          ],
+          condition: 'asd',
+        },
+      ],
+    },
+    onSubmit: (data) => {
+      console.log(data);
+      console.log(dynamicFormBuilderComponentUtils.convertData(data, currentDynamicFields()));
+    },
+  });
+
+  const formDirective = formStore.formDirective;
+
+  return (
+    <div data-id="container">
+      <form use:formDirective>
+        <FormFields>
+          <FormField errors={formStore.errors().dynamicFieldsSelection?.errors}>
+            <Combobox
+              autoShowOptions
+              options={dynamicFieldsSelection}
+              setSelected={(options: ComboboxOption[]) => {
+                const value = options.map((option) => option.value)[0] as number;
+
+                setCurrentDynamicFields(value === 2 ? formFieldsNoRequired : formFields);
+                formStore.setValue('dynamicFieldsSelection', value);
+                comboboxValueStore.setSelected(options);
+              }}
+              selected={comboboxValueStore.selected()}
+              name="dynamicFieldsSelection"
+              selectedComponent={Combobox.SelectedOption}
+              selectableComponent={Combobox.SelectableOption}
+            />
+          </FormField>
+          <FormField errors={formStore.errors().staticField?.errors}>
+            <Label>Static Field</Label>
+            <Input type="text" name="staticField" formData={formStore.data} />
+          </FormField>
+          <DynamicFormBuilder
+            fields={currentDynamicFields()}
+            formStore={formStore}
+            staticFormSchema={staticFormSchema}
+            disabled
           />
         </FormFields>
         <div>

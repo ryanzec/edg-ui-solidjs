@@ -12,6 +12,7 @@ export type InputMultipleProps<TFormData extends object> = JSX.HTMLAttributes<HT
   formStore: CreateFormStoreReturn<TFormData>;
   addLabel?: string;
   autofocus?: boolean;
+  disabled?: boolean;
 };
 
 const InputMultiple = <TFormData extends object>(passedProps: InputMultipleProps<TFormData>) => {
@@ -21,11 +22,16 @@ const InputMultiple = <TFormData extends object>(passedProps: InputMultipleProps
     'addLabel',
     'class',
     'autofocus',
+    'disabled',
   ]);
   const values = props.formStore.getFieldValue(props.fieldName) as Accessor<TFormData[]>;
 
   return (
-    <FormArrayAddContainer onAdd={() => props.formStore.addArrayField(props.fieldName, '')} addLabel={props.addLabel}>
+    <FormArrayAddContainer
+      onAdd={() => props.formStore.addArrayField(props.fieldName, '')}
+      addLabel={props.addLabel}
+      disabled={props.disabled}
+    >
       <Index each={values()}>
         {(_arrayField, index) => {
           const getArrayFieldError = () => {
@@ -52,8 +58,11 @@ const InputMultiple = <TFormData extends object>(passedProps: InputMultipleProps
                   type="text"
                   name={`${props.fieldName as string}.${index}` as keyof TFormData}
                   formData={props.formStore.data}
-                  postElement={<Icon color={IconColor.DANGER} icon="trash" onClick={handleDelete} />}
+                  postElement={
+                    <Icon color={IconColor.DANGER} icon="trash" onClick={props.disabled ? undefined : handleDelete} />
+                  }
                   autofocus={props.autofocus}
+                  disabled={props.disabled}
                 />
               </FormField>
             </div>

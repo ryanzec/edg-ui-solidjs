@@ -7,6 +7,7 @@ export type FormArrayItemProps = {
   encloseItem?: boolean;
   children: JSX.Element;
   onDelete?: () => void;
+  disabled?: boolean;
 };
 
 const FormArrayItem = (props: FormArrayItemProps) => {
@@ -17,7 +18,13 @@ const FormArrayItem = (props: FormArrayItemProps) => {
       })}
     >
       <Show when={props.onDelete}>
-        <Icon class={styles.itemDeleteTrigger} icon="trash" color={IconColor.DANGER} onClick={props.onDelete} />
+        <Icon
+          class={styles.itemDeleteTrigger}
+          icon="trash"
+          color={IconColor.DANGER}
+          onClick={props.onDelete}
+          disabled={props.disabled}
+        />
       </Show>
       {props.children}
     </div>

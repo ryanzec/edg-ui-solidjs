@@ -7,7 +7,7 @@ type DynamicFormBuilderObjectArrayProps<TFormData extends object> = {
   nestedFields?: DynamicFormBuilderProps<TFormData>['fields'];
   countLimit?: number;
   DynamicFormBuilderComponent: Component<DynamicFormBuilderProps<TFormData>>;
-} & Pick<DynamicFormBuilderProps<TFormData>, 'formStore'>;
+} & Pick<DynamicFormBuilderProps<TFormData>, 'formStore' | 'disabled'>;
 
 const DynamicFormBuilderObjectArray = <TFormData extends object>(
   props: DynamicFormBuilderObjectArrayProps<TFormData>,
@@ -20,15 +20,21 @@ const DynamicFormBuilderObjectArray = <TFormData extends object>(
       onAdd={() => props.formStore.addArrayField(props.fieldName, {})}
       addLabel="Add"
       class={`field-container-${((props.fieldName as string) || '').replaceAll('.', '_')}`}
+      disabled={props.disabled}
     >
       <Index each={values()}>
         {(_item, index) => {
           return (
-            <FormArray.Item encloseItem onDelete={() => props.formStore.removeArrayField(props.fieldName, index)}>
+            <FormArray.Item
+              encloseItem
+              onDelete={() => props.formStore.removeArrayField(props.fieldName, index)}
+              disabled={props.disabled}
+            >
               <props.DynamicFormBuilderComponent
                 namePrefix={`${props.fieldName as string}.${index}`}
                 fields={props.nestedFields || []}
                 formStore={props.formStore}
+                disabled={props.disabled}
               />
             </FormArray.Item>
           );

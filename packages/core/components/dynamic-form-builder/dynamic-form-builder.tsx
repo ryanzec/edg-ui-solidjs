@@ -325,9 +325,7 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
 
   initializeComboboxValues(() => comboboxValueStores());
 
-  let formWarchSubscription: FormWatchReturns | undefined;
-
-  formWarchSubscription = props.formStore.watch((name, data) => {
+  const formWarchSubscription = props.formStore.watch((name, data) => {
     const currentComboboxValueStore = comboboxValueStores()[name as string];
     const currentComboboxOptions = comboboxOptions()[name as string];
 
@@ -355,7 +353,7 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
   });
 
   onCleanup(() => {
-    formWarchSubscription?.unsubscribe();
+    formWarchSubscription.unsubscribe();
   });
 
   return (
@@ -386,6 +384,7 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
                   formData={props.formStore.data}
                   placeholder={field.isSecret && props.skipSecretValidation ? '********' : field.placeholder}
                   readonly={field.readonly ?? false}
+                  disabled={props.disabled}
                 />
               </Show>
               <Show when={field.type === DynamicFormBuilderFieldType.TEXTAREA}>
@@ -394,6 +393,7 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
                   formData={props.formStore.data}
                   placeholder={field.placeholder}
                   readonly={field.readonly ?? false}
+                  disabled={props.disabled}
                 />
               </Show>
               <Show when={field.type === DynamicFormBuilderFieldType.RADIO}>
@@ -407,6 +407,7 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
                           value={option.value}
                           formData={props.formStore.data}
                           readonly={field.readonly ?? false}
+                          disabled={props.disabled}
                         />
                       );
                     }}
@@ -429,6 +430,7 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
                           value={option.value}
                           formData={props.formStore.data}
                           readonly={field.readonly ?? false}
+                          disabled={props.disabled}
                         />
                       );
                     }}
@@ -451,11 +453,11 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
                   name={fieldName as keyof TFormData}
                   selectableComponent={Combobox.SelectableOption}
                   formData={props.formStore.data}
-                  disabled={field.readonly ?? false}
+                  disabled={props.disabled || field.readonly || false}
                 />
               </Show>
               <Show when={field.type === DynamicFormBuilderFieldType.TEXT_MULTIPLE}>
-                <Input.Multiple formStore={props.formStore} fieldName={fieldName} />
+                <Input.Multiple formStore={props.formStore} fieldName={fieldName} disabled={props.disabled} />
               </Show>
               <Show when={field.type === DynamicFormBuilderFieldType.COMPLEX}>
                 <DynamicFormBuilder
@@ -463,6 +465,7 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
                   fields={field.nestedFields || []}
                   formStore={props.formStore}
                   encloseForm
+                  disabled={props.disabled}
                 />
               </Show>
               <Show when={field.type === DynamicFormBuilderFieldType.COMPLEX_ARRAY}>
@@ -473,6 +476,7 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
                   formStore={props.formStore}
                   nestedFields={field.nestedFields}
                   countLimit={field.arrayLimit}
+                  disabled={props.disabled}
                 />
               </Show>
             </FormField>

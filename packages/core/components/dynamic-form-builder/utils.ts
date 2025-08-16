@@ -57,6 +57,7 @@ export type DynamicFormBuilderProps<TFormData extends object> = {
   encloseForm?: boolean;
   skipSecretValidation?: boolean;
   groupedFields?: Record<string, string[]>;
+  disabled?: boolean;
 };
 
 type ConvertDataOptions = {
