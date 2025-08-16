@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
-import { dateUtils, TimeFormat } from '$/core/utils/date';
+import { DateTime } from 'luxon';
+import { TimeFormat } from '$/core/utils/date';
 
 export const EditItem = {
   NONE: 0,
@@ -93,14 +93,14 @@ const getNewSteppedEditItemValue = (
   }
 
   if (editItem === EditItem.MERIDIEM) {
-    return currentValue === 'am' ? 'pm' : 'am';
+    return currentValue === 'AM' ? 'PM' : 'AM';
   }
 };
 
 export const DEFAULT_VALUE = 'hh:mm aa';
 
 const isValidTime = (value: string) => {
-  if (dayjs(value, TimeFormat.STANDARD).isValid()) {
+  if (DateTime.fromFormat(value, TimeFormat.STANDARD).isValid) {
     return true;
   }
 
@@ -112,7 +112,7 @@ const getTimeFormattedForInput = (value?: string) => {
     return DEFAULT_VALUE;
   }
 
-  const timeRegex = /^(\d{1,2}):(\d{2}) (am|pm)$/;
+  const timeRegex = /^(\d{1,2}):(\d{2}) (am|pm|AM|PM)$/;
   const match = value.match(timeRegex);
 
   if (!match) {

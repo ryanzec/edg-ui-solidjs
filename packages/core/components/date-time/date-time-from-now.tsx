@@ -1,10 +1,10 @@
-import type { Dayjs } from 'dayjs';
+import type { DateTime } from 'luxon';
 import { type JSX, splitProps } from 'solid-js';
 import styles from '$/core/components/date-time/date-time.module.css';
 import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type DateTimeFromNowProps = JSX.HTMLAttributes<HTMLDivElement> & {
-  date: Dayjs;
+  date: DateTime;
 };
 
 const DateTimeFromNow = (passedProps: DateTimeFromNowProps) => {
@@ -12,7 +12,7 @@ const DateTimeFromNow = (passedProps: DateTimeFromNowProps) => {
 
   return (
     <div class={tailwindUtils.merge(styles.dateTime, props.class)} {...restOfProps}>
-      <span>{props.date.fromNow()}</span>
+      <span>{props.date.toRelative()}</span>
     </div>
   );
 };

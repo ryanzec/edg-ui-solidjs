@@ -34,7 +34,10 @@ const createFeatureFlagStore = (): FeatureFlagStore => {
 
       const featureFlags = launchDarklyClient.allFlags();
 
-      console.log('featureFlags', featureFlags);
+      loggerUtils.log({
+        type: 'feature-flags',
+        featureFlags,
+      });
 
       setFeatureFlags({
         [FeatureFlag.INTERNAL_TOOLS]: featureFlags[FeatureFlag.INTERNAL_TOOLS] ?? false,

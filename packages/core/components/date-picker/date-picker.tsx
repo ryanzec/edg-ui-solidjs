@@ -1,4 +1,4 @@
-import dayjs, { type Dayjs } from 'dayjs';
+import { DateTime } from 'luxon';
 import { createMemo, createSignal, Index, type JSX, mergeProps, Show, splitProps } from 'solid-js';
 import Button, { ButtonColor, ButtonVariant } from '$/core/components/button';
 import styles from '$/core/components/date-picker/date-picker.module.css';
@@ -6,34 +6,34 @@ import DatePickerMonthYearSelection from '$/core/components/date-picker/date-pic
 import FormField from '$/core/components/form-field';
 import Icon from '$/core/components/icon';
 import TimeInput from '$/core/components/time-input';
-import { DateTimeFormat, dateUtils, TimeFormat } from '$/core/utils/date';
+import { DateTimeFormat, TimeFormat } from '$/core/utils/date';
 import { loggerUtils } from '$/core/utils/logger';
 import { tailwindUtils } from '$/core/utils/tailwind';
 
 type DayData = {
   isDisabled: boolean;
   isCurrentMonth: boolean;
-  date: dayjs.Dayjs;
+  date: DateTime;
   day: string;
   formatCurrentCheck: string;
 };
 
 export type DatePickerProps = {
-  defaultDisplayDate?: Dayjs;
-  defaultSelectedDate?: Dayjs;
-  onSelectDate?: (selectedDate?: Dayjs) => void;
+  defaultDisplayDate?: DateTime;
+  defaultSelectedDate?: DateTime;
+  onSelectDate?: (selectedDate?: DateTime) => void;
   onDone?: () => void;
   includeTime?: boolean;
   includeFooter?: boolean;
-  disableBefore?: Dayjs;
-  disableAfter?: Dayjs;
+  disableBefore?: DateTime;
+  disableAfter?: DateTime;
 };
 
 const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivElement>) => {
   const [props, restOfProps] = splitProps(
     mergeProps(
       {
-        defaultDisplayDate: passedProps.defaultSelectedDate ?? dayjs(),
+        defaultDisplayDate: passedProps.defaultSelectedDate ?? DateTime.now(),
         includeTime: false,
         includeFooter: false,
       },
@@ -52,18 +52,18 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
     ],
   );
 
-  const currentDayFormatted = dayjs().startOf('day').format(DateTimeFormat.DATE_COMPARE);
+  const currentDayFormatted = DateTime.now().startOf('day').toFormat(DateTimeFormat.DATE_COMPARE);
 
-  const [rawDisplayDate, setRawDisplayDate] = createSignal<Dayjs>(props.defaultDisplayDate);
-  const [rawSelectedDate, setRawSelectedDate] = createSignal<Dayjs | undefined>(props.defaultSelectedDate);
+  const [rawDisplayDate, setRawDisplayDate] = createSignal<DateTime>(props.defaultDisplayDate);
+  const [rawSelectedDate, setRawSelectedDate] = createSignal<DateTime | undefined>(props.defaultSelectedDate);
   const [showMonthYearSelection, setShowMonthYearSelection] = createSignal(false);
   const [errors, setErrors] = createSignal<string[] | undefined>();
   const [timeInputValue, setTimeInputValue] = createSignal<string>(
-    props.defaultSelectedDate ? dayjs(props.defaultSelectedDate).format(TimeFormat.STANDARD) : '12:00 am',
+    props.defaultSelectedDate ? props.defaultSelectedDate.toFormat(TimeFormat.STANDARD) : '12:00 AM',
   );
 
   const displayDate = createMemo(() => {
-    return dayjs(rawDisplayDate());
+    return rawDisplayDate();
   });
 
   const selectedDateFormatted = createMemo(() => {
@@ -73,65 +73,66 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
       return;
     }
 
-    return dayjs(currentSelectedDate).format(DateTimeFormat.DATE_COMPARE);
+    return currentSelectedDate.toFormat(DateTimeFormat.DATE_COMPARE);
   });
   const currentMonth = createMemo(() => {
-    return displayDate().month();
+    return displayDate().month;
   });
   const currentYear = createMemo(() => {
-    return displayDate().year();
+    return displayDate().year;
   });
   const headerText = createMemo(() => {
-    return displayDate().format('MMM YYYY');
+    return displayDate().toFormat('LLL yyyy');
   });
   const currentViewDays = createMemo(() => {
-    const currentMonthNumber = displayDate().month();
-    let currentProcessingDate = dayjs(displayDate().startOf('month')).startOf('week');
-    const endDate = dayjs(displayDate().endOf('month')).endOf('week');
+    const currentMonthNumber = displayDate().month;
+    let currentProcessingDate = displayDate().startOf('month').startOf('week', { useLocaleWeeks: true });
+    const endDate = displayDate().endOf('month').endOf('week', { useLocaleWeeks: true });
     const newViewDays: Array<DayData[]> = [];
     let currentWeek: DayData[] = [];
 
-    while (!currentProcessingDate.isAfter(endDate)) {
-      const currentProcessingMonthNumber = currentProcessingDate.month();
-      const day = currentProcessingDate.day();
+    while (currentProcessingDate < endDate) {
+      const currentProcessingMonthNumber = currentProcessingDate.month;
+      const day = currentProcessingDate.weekday;
 
       currentWeek.push({
         isDisabled:
-          (!!props.disableBefore && currentProcessingDate.isBefore(props.disableBefore)) ||
-          (!!props.disableAfter && currentProcessingDate.isAfter(props.disableAfter)),
+          (!!props.disableBefore && currentProcessingDate < props.disableBefore) ||
+          (!!props.disableAfter && currentProcessingDate > props.disableAfter),
         isCurrentMonth: currentProcessingMonthNumber === currentMonthNumber,
         date: currentProcessingDate,
-        day: currentProcessingDate.format('D'),
-        formatCurrentCheck: currentProcessingDate.format(DateTimeFormat.DATE_COMPARE),
+        day: currentProcessingDate.toFormat('d'),
+        formatCurrentCheck: currentProcessingDate.toFormat(DateTimeFormat.DATE_COMPARE),
       });
 
-      // zero indexed
+      // we force a sun -> sat week in the date util configuration so 6 mean we are at the end of the week (since
+      // in luxon, 7 = sun)
       if (day === 6) {
         newViewDays.push([...currentWeek]);
 
         currentWeek = [];
       }
 
-      currentProcessingDate = currentProcessingDate.add(1, 'day');
+      currentProcessingDate = currentProcessingDate.plus({ days: 1 });
     }
 
     return newViewDays;
   });
 
   const moveToNextMonth = () => {
-    setRawDisplayDate(displayDate().add(1, 'month'));
+    setRawDisplayDate(displayDate().plus({ months: 1 }));
   };
 
   const moveToPreviousMonth = () => {
-    setRawDisplayDate(displayDate().subtract(1, 'month'));
+    setRawDisplayDate(displayDate().minus({ months: 1 }));
   };
 
   const setMonth = (month: number) => {
-    setRawDisplayDate(displayDate().month(month));
+    setRawDisplayDate(displayDate().set({ month }));
   };
 
   const setYear = (year: number) => {
-    setRawDisplayDate(displayDate().year(year));
+    setRawDisplayDate(displayDate().set({ year }));
   };
 
   const handleToggleMonthYearSelection = () => {
@@ -149,9 +150,9 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
       return;
     }
 
-    const date = dayjs(target.value, TimeFormat.STANDARD);
+    const date = DateTime.fromFormat(target.value, TimeFormat.STANDARD);
 
-    if (!date.isValid()) {
+    if (!date.isValid) {
       setErrors(['Invalid time format']);
 
       return;
@@ -171,14 +172,16 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
     }
 
     const currentTimeValue = timeInputValue();
-    let date = dayjs(currentTimeValue, TimeFormat.STANDARD);
+    let date = DateTime.fromFormat(currentTimeValue, TimeFormat.STANDARD);
 
     // @todo(investigate) is there an easier way to do this?
-    date = date.date(day.date.date());
-    date = date.month(day.date.month());
-    date = date.year(day.date.year());
+    date = date.set({
+      day: day.date.day,
+      month: day.date.month,
+      year: day.date.year,
+    });
 
-    if (!date.isValid()) {
+    if (!date.isValid) {
       loggerUtils.warn(`can't select an invalid date`, date);
 
       return;

@@ -1,14 +1,14 @@
-import dayjs from 'dayjs';
+import { DateTime as LuxonDateTime } from 'luxon';
 import DateTime from '$/core/components/date-time';
-import { dateUtils, TimeFormat } from '$/core/utils/date';
+import { TimeFormat } from '$/core/utils/date';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 export default {
   title: 'Components/DateTime',
 };
 
 export const Default = () => {
-  const date = dayjs();
-  const invalidDate = dayjs('invalid');
+  const date = LuxonDateTime.now();
+  const invalidDate = LuxonDateTime.fromJSDate(new Date('invalid'));
 
   return (
     <SandboxExamplesContainer>
@@ -20,8 +20,8 @@ export const Default = () => {
 
 export const TimeZone = () => {
   const dateString = '2020-12-31T23:00:00-04:00';
-  const date = dayjs(dateString);
-  const invalidDate = dayjs('invalid');
+  const date = LuxonDateTime.fromJSDate(new Date(dateString));
+  const invalidDate = LuxonDateTime.fromJSDate(new Date('invalid'));
 
   return (
     <SandboxExamplesContainer>
@@ -34,8 +34,8 @@ export const TimeZone = () => {
 };
 
 export const FromNow = () => {
-  const date = dayjs().subtract(1, 'day');
-  const invalidDate = dayjs('invalid');
+  const date = LuxonDateTime.now().minus({ days: 1 });
+  const invalidDate = LuxonDateTime.fromJSDate(new Date('invalid'));
 
   return (
     <SandboxExamplesContainer>
@@ -45,8 +45,8 @@ export const FromNow = () => {
 };
 
 export const FromNowTooltip = () => {
-  const date = dayjs().subtract(1, 'day');
-  const invalidDate = dayjs('invalid');
+  const date = LuxonDateTime.now().minus({ days: 1 });
+  const invalidDate = LuxonDateTime.fromJSDate(new Date('invalid'));
 
   return (
     <SandboxExamplesContainer>
@@ -56,8 +56,8 @@ export const FromNowTooltip = () => {
 };
 
 export const Tooltip = () => {
-  const date = dayjs().subtract(1, 'day');
-  const invalidDate = dayjs('invalid');
+  const date = LuxonDateTime.now().minus({ days: 1 });
+  const invalidDate = LuxonDateTime.fromJSDate(new Date('invalid'));
 
   return (
     <SandboxExamplesContainer>

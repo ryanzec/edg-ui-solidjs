@@ -1,7 +1,7 @@
+import DateTimeFromNow, { type DateTimeFromNowProps } from '$/core/components/date-time/date-time-from-now';
 import Tooltip, { type TooltipComponentRef } from '$/core/components/tooltip';
 import { componentRefUtils } from '$/core/stores/component-ref';
 import { DateTimeFormat } from '$/core/utils/date';
-import DateTimeFromNow, { type DateTimeFromNowProps } from './date-time-from-now';
 
 export type DateTimeFromNowTooltipProps = DateTimeFromNowProps;
 
@@ -13,7 +13,7 @@ const DateTimeFromNowTooltip = (props: DateTimeFromNowTooltipProps) => {
       <Tooltip.Handle isStyled={false}>
         <DateTimeFromNow {...props} />
       </Tooltip.Handle>
-      <Tooltip.Content>{props.date.tz('UTC').format(DateTimeFormat.STANDARD_DATE_TIME_TIMEZONE)}</Tooltip.Content>
+      <Tooltip.Content>{props.date.toFormat(DateTimeFormat.STANDARD_DATE_TIME_TIMEZONE)}</Tooltip.Content>
     </Tooltip>
   );
 };

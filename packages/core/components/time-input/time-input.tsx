@@ -183,7 +183,7 @@ const TimeInput = <TFormData = DefaultFormData>(passedProps: TimeInputProps<TFor
       case Key.UPPER_P: {
         event.preventDefault();
 
-        const meridiemValue = event.key.toLowerCase() === Key.LOWER_A ? 'am' : 'pm';
+        const meridiemValue = event.key.toLowerCase() === Key.LOWER_A ? 'AM' : 'PM';
 
         inlineUpdateInputValue(currentInputElementRef.value, meridiemValue, selectionRange);
 
@@ -202,6 +202,10 @@ const TimeInput = <TFormData = DefaultFormData>(passedProps: TimeInputProps<TFor
       case Key.EIGHT:
       case Key.NINE: {
         event.preventDefault();
+
+        if (activeEditItem() === EditItem.MERIDIEM) {
+          return;
+        }
 
         const isFirstCharacter = activeEditCharacter() === 0;
         const currentEditItemValue = currentInputElementRef.value.substring(selectionRange[0], selectionRange[1]);

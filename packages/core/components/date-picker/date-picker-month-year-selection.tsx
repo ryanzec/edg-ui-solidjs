@@ -28,51 +28,51 @@ type Month = { label: string; value: number };
 const months: Month[] = [
   {
     label: 'January',
-    value: 0,
-  },
-  {
-    label: 'February',
     value: 1,
   },
   {
-    label: 'March',
+    label: 'February',
     value: 2,
   },
   {
-    label: 'April',
+    label: 'March',
     value: 3,
   },
   {
-    label: 'May',
+    label: 'April',
     value: 4,
   },
   {
-    label: 'June',
+    label: 'May',
     value: 5,
   },
   {
-    label: 'July',
+    label: 'June',
     value: 6,
   },
   {
-    label: 'August',
+    label: 'July',
     value: 7,
   },
   {
-    label: 'September',
+    label: 'August',
     value: 8,
   },
   {
-    label: 'October',
+    label: 'September',
     value: 9,
   },
   {
-    label: 'November',
+    label: 'October',
     value: 10,
   },
   {
-    label: 'December',
+    label: 'November',
     value: 11,
+  },
+  {
+    label: 'December',
+    value: 12,
   },
 ];
 

@@ -1,8 +1,8 @@
-import dayjs from 'dayjs';
+import { DateTime as LuxonDateTime } from 'luxon';
 import { mergeProps, splitProps } from 'solid-js';
 import { DateTime, type DateTimeProps } from '$/core/components/date-time';
 import Icon, { IconColor, IconVariant } from '$/core/components/icon';
-import { DateFormat, dateUtils, TimeFormat } from '$/core/utils/date';
+import { DateFormat, TimeFormat } from '$/core/utils/date';
 import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type DataUpdatedIndicatorProps = Omit<DateTimeProps, 'date'> & {
@@ -36,7 +36,7 @@ const DateUpdatedIndicator = (passedProps: DataUpdatedIndicatorProps) => {
       Last Updated:&nbsp;
       <DateTime
         {...restOfProps}
-        date={dayjs(props.lastUpdatedAt)}
+        date={LuxonDateTime.fromJSDate(new Date(props.lastUpdatedAt))}
         dateFormat={DateFormat.STANDARD}
         timeFormat={TimeFormat.STANDARD}
       />

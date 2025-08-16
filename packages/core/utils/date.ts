@@ -1,31 +1,18 @@
-import dayjs, { type Dayjs } from 'dayjs';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import timezone from 'dayjs/plugin/timezone';
-import utc from 'dayjs/plugin/utc';
-
-dayjs.extend(advancedFormat);
-dayjs.extend(customParseFormat);
-dayjs.extend(relativeTime);
-dayjs.extend(utc);
-dayjs.extend(timezone);
+import { type DateTime, Settings } from 'luxon';
 
 export const TimezoneFormat = {
-  STANDARD: 'z',
+  STANDARD: 'ZZZZ',
 } as const;
 
 export type TimezoneFormat = (typeof TimezoneFormat)[keyof typeof TimezoneFormat];
 
-// since this is designed to be able to create one off formats, no need for timezone version
 export const DateFormat = {
-  STANDARD: 'M/D/YY',
-  COMPARE: 'YYYYMMDD',
+  STANDARD: 'M/d/yy',
+  COMPARE: 'yyyyLLdd',
 } as const;
 
 export type DateFormat = (typeof DateFormat)[keyof typeof DateFormat];
 
-// since this is designed to be able to create one off formats, no need for timezone version
 export const TimeFormat = {
   STANDARD: 'h:mm a',
   STANDARD_WITH_SECONDS: 'h:mm:ss a',
@@ -43,12 +30,17 @@ export const DateTimeFormat = {
 
 export type DateTimeFormat = (typeof DateTimeFormat)[keyof typeof DateTimeFormat];
 
-const getDaysBetweenDates = (startDate: Dayjs, endDate: Dayjs) => {
-  return endDate.diff(startDate, 'days') + 1;
+const getDaysBetweenDates = (startDate: DateTime, endDate: DateTime) => {
+  return endDate.diff(startDate, 'days').days + 1;
 };
 
 const configureTimezone = (timezone: string) => {
-  dayjs.tz.setDefault(timezone);
+  Settings.defaultZone = timezone;
+
+  // since firefox does not support weekinfo for intl locale, we are just going to force sun -> sat as the week for
+  // all users until we decide it is worth the effort to address (or Firefox support this) or just make this
+  // configurable on by the user
+  Settings.defaultWeekSettings = { firstDay: 7, minimalDays: 1, weekend: [6, 7] };
 };
 
 export const dateUtils = {

@@ -1,6 +1,5 @@
-import dayjs from 'dayjs';
+import { DateTime } from 'luxon';
 import DataUpdatedIndicator from '$/core/components/data-updated-indicator';
-import { dateUtils } from '$/core/utils/date';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 
 export default {
@@ -10,7 +9,7 @@ export default {
 export const Default = () => {
   return (
     <SandboxExamplesContainer>
-      <DataUpdatedIndicator lastUpdatedAt={dayjs().toISOString()} />
+      <DataUpdatedIndicator lastUpdatedAt={DateTime.now().toISO()} />
     </SandboxExamplesContainer>
   );
 };
@@ -18,7 +17,7 @@ export const Default = () => {
 export const Live = () => {
   return (
     <SandboxExamplesContainer>
-      <DataUpdatedIndicator lastUpdatedAt={dayjs().toISOString()} isLive />
+      <DataUpdatedIndicator lastUpdatedAt={DateTime.now().toISO()} isLive />
     </SandboxExamplesContainer>
   );
 };
@@ -26,7 +25,7 @@ export const Live = () => {
 export const Refreshing = () => {
   return (
     <SandboxExamplesContainer>
-      <DataUpdatedIndicator lastUpdatedAt={dayjs().toISOString()} isRefreshing />
+      <DataUpdatedIndicator lastUpdatedAt={DateTime.now().toISO()} isRefreshing />
     </SandboxExamplesContainer>
   );
 };
@@ -34,7 +33,7 @@ export const Refreshing = () => {
 export const LiveRefreshing = () => {
   return (
     <SandboxExamplesContainer>
-      <DataUpdatedIndicator lastUpdatedAt={dayjs().toISOString()} isLive isRefreshing />
+      <DataUpdatedIndicator lastUpdatedAt={DateTime.now().toISO()} isLive isRefreshing />
     </SandboxExamplesContainer>
   );
 };

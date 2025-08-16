@@ -1,4 +1,4 @@
-import type { Dayjs } from 'dayjs';
+import type { DateTime } from 'luxon';
 import { type Accessor, createEffect, createSignal, For, Index, Match, Show, Switch } from 'solid-js';
 import * as uuid from 'uuid';
 import type { ZodType } from 'zod';
@@ -910,7 +910,7 @@ export const DynamicFormElements = () => {
                           includeTime
                           name={input.name}
                           placeholder="placeholder"
-                          onSelectDate={(date?: Dayjs, which?: WhichDate) => {
+                          onSelectDate={(date?: DateTime, which?: WhichDate) => {
                             datePickerValues()?.[input.name]?.setDate(date, which);
 
                             form.setValue(input.name, datePickerValues()?.[input.name]?.getFormValue());
@@ -922,7 +922,7 @@ export const DynamicFormElements = () => {
                           isRange
                           name={input.name}
                           placeholder="placeholder"
-                          onSelectDate={(date?: Dayjs, which?: WhichDate) => {
+                          onSelectDate={(date?: DateTime, which?: WhichDate) => {
                             datePickerValues()?.[input.name]?.setDate(date, which);
 
                             // we don't want to mark as touched in the case and setting 1 date in the range would

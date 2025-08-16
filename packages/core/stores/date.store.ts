@@ -1,4 +1,4 @@
-import type { Dayjs } from 'dayjs';
+import type { DateTime } from 'luxon';
 import { type Accessor, createSignal } from 'solid-js';
 import { DateTimeFormat } from '$/core/utils/date';
 
@@ -9,21 +9,21 @@ export const WhichDate = {
 
 export type WhichDate = (typeof WhichDate)[keyof typeof WhichDate];
 
-export type DateFormValue = undefined | Array<Dayjs | undefined>;
+export type DateFormValue = undefined | Array<DateTime | undefined>;
 
 export type DateStore = {
-  date: Accessor<Dayjs | undefined>;
-  setDate: (date?: Dayjs) => void;
+  date: Accessor<DateTime | undefined>;
+  setDate: (date?: DateTime) => void;
   getFormattedDate: () => string;
 };
 
 type CreateDateStoreOptions = {
-  defaultDate?: Dayjs;
+  defaultDate?: DateTime;
   includeTime?: boolean;
 };
 
 const createDateStore = (options: CreateDateStoreOptions): DateStore => {
-  const [date, setDate] = createSignal<Dayjs | undefined>(options.defaultDate);
+  const [date, setDate] = createSignal<DateTime | undefined>(options.defaultDate);
 
   const getFormattedDate = () => {
     const currentDate = date();
@@ -32,7 +32,7 @@ const createDateStore = (options: CreateDateStoreOptions): DateStore => {
       return '';
     }
 
-    return currentDate.format(options.includeTime ? DateTimeFormat.STANDARD_DATE_TIME : DateTimeFormat.STANDARD_DATE);
+    return currentDate.toFormat(options.includeTime ? DateTimeFormat.STANDARD_DATE_TIME : DateTimeFormat.STANDARD_DATE);
   };
 
   return {
@@ -43,20 +43,20 @@ const createDateStore = (options: CreateDateStoreOptions): DateStore => {
 };
 
 export type DateRangeStore = {
-  startDate: Accessor<Dayjs | undefined>;
-  endDate: Accessor<Dayjs | undefined>;
-  setDate: (date?: Dayjs, which?: WhichDate) => void;
+  startDate: Accessor<DateTime | undefined>;
+  endDate: Accessor<DateTime | undefined>;
+  setDate: (date?: DateTime, which?: WhichDate) => void;
   getFormValue: () => DateFormValue;
 };
 
 type CreateDateRangeStoreOptions = {
-  defaultStartDate?: Dayjs;
-  defaultEndDate?: Dayjs;
+  defaultStartDate?: DateTime;
+  defaultEndDate?: DateTime;
 };
 
 const createDateRangeStore = (options: CreateDateRangeStoreOptions = {}): DateRangeStore => {
-  const [startDate, setStartDate] = createSignal<Dayjs | undefined>(options.defaultStartDate);
-  const [endDate, startEndDate] = createSignal<Dayjs | undefined>(options.defaultEndDate);
+  const [startDate, setStartDate] = createSignal<DateTime | undefined>(options.defaultStartDate);
+  const [endDate, startEndDate] = createSignal<DateTime | undefined>(options.defaultEndDate);
 
   const getFormValue = () => {
     const currentStartDate = startDate();
@@ -69,7 +69,7 @@ const createDateRangeStore = (options: CreateDateRangeStoreOptions = {}): DateRa
     return [currentStartDate, currentEndDate];
   };
 
-  const setDate = (date?: Dayjs, which?: WhichDate) => {
+  const setDate = (date?: DateTime, which?: WhichDate) => {
     if (which !== WhichDate.SECOND) {
       setStartDate(date);
 

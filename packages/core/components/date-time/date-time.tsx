@@ -1,11 +1,11 @@
-import type { Dayjs } from 'dayjs';
+import type { DateTime as LuxonDateTime } from 'luxon';
 import { type JSX, mergeProps, Show, splitProps } from 'solid-js';
 import styles from '$/core/components/date-time/date-time.module.css';
 import { DateFormat, type TimeFormat, TimezoneFormat } from '$/core/utils/date';
 import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type DateTimeProps = JSX.HTMLAttributes<HTMLDivElement> & {
-  date: Dayjs;
+  date: LuxonDateTime;
   dateFormat?: DateFormat;
   timeFormat?: TimeFormat;
   showTimezone?: boolean;
@@ -18,17 +18,11 @@ const DateTime = (passedProps: DateTimeProps) => {
     ['class', 'date', 'dateFormat', 'timeFormat', 'showTimezone', 'isInline'],
   );
 
-  const convertedDate = () => {
-    return props.date.tz('UTC');
-  };
-
   return (
     <div class={tailwindUtils.merge(styles.dateTime, props.class, { 'inline-flex': props.isInline })} {...restOfProps}>
-      <span>{convertedDate().format(props.dateFormat)}</span>
-      <Show when={props.timeFormat}>
-        <span>{convertedDate().format(props.timeFormat)}</span>
-      </Show>
-      <Show when={props.showTimezone}>{convertedDate().format(TimezoneFormat.STANDARD)}</Show>
+      <span>{props.date.toFormat(props.dateFormat)}</span>
+      <Show when={props.timeFormat}>{(timeFormat) => <span>{props.date.toFormat(timeFormat())}</span>}</Show>
+      <Show when={props.showTimezone}>{props.date.toFormat(TimezoneFormat.STANDARD)}</Show>
     </div>
   );
 };
