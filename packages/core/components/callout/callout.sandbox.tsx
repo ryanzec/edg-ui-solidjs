@@ -70,77 +70,6 @@ export const Variant = () => {
   );
 };
 
-const longCustomDataContent = (name: string, badgeColor: BadgeColor, badgeVariant: BadgeVariant) => (
-  <>
-    {name}
-    <Badge color={badgeColor} variant={badgeVariant}>
-      Badge
-    </Badge>
-    This is just some long extra content for testing purposes. This is just some long extra content for testing
-    purposes. This is just some long extra content for testing purposes. This is just some long extra content for
-    testing purposes. This is just some long extra content for testing purposes. This is just some long extra content
-    for testing purposes.
-  </>
-);
-
-export const CustomData = () => {
-  return (
-    <div>
-      <h2>Weak</h2>
-      <SandboxExamplesContainer>
-        <Callout variant={CalloutVariant.WEAK} color={CalloutColor.BRAND}>
-          {longCustomDataContent('Brand', BadgeColor.BRAND, BadgeVariant.STRONG)}
-        </Callout>
-        <Callout variant={CalloutVariant.WEAK} color={CalloutColor.BRAND_SECONDARY}>
-          {longCustomDataContent('Brand Secondary', BadgeColor.BRAND_SECONDARY, BadgeVariant.STRONG)}
-        </Callout>
-        <Callout variant={CalloutVariant.WEAK} color={CalloutColor.NEUTRAL}>
-          {longCustomDataContent('Neutral', BadgeColor.NEUTRAL, BadgeVariant.STRONG)}
-        </Callout>
-        <Callout variant={CalloutVariant.WEAK} color={CalloutColor.SUCCESS}>
-          {longCustomDataContent('Success', BadgeColor.SUCCESS, BadgeVariant.STRONG)}
-        </Callout>
-        <Callout variant={CalloutVariant.WEAK} color={CalloutColor.INFO}>
-          {longCustomDataContent('Info', BadgeColor.INFO, BadgeVariant.STRONG)}
-        </Callout>
-        <Callout variant={CalloutVariant.WEAK} color={CalloutColor.WARNING}>
-          {longCustomDataContent('Warning', BadgeColor.WARNING, BadgeVariant.STRONG)}
-        </Callout>
-        <Callout variant={CalloutVariant.WEAK} color={CalloutColor.WARNING_HIGH}>
-          {longCustomDataContent('Warning High', BadgeColor.WARNING_HIGH, BadgeVariant.STRONG)}
-        </Callout>
-        <Callout variant={CalloutVariant.WEAK} color={CalloutColor.DANGER}>
-          {longCustomDataContent('Danger', BadgeColor.DANGER, BadgeVariant.STRONG)}
-        </Callout>
-      </SandboxExamplesContainer>
-      <h2>Strong</h2>
-      <SandboxExamplesContainer>
-        <Callout variant={CalloutVariant.STRONG} color={CalloutColor.BRAND}>
-          {longCustomDataContent('Brand', BadgeColor.BRAND, BadgeVariant.WEAK)}
-        </Callout>
-        <Callout variant={CalloutVariant.STRONG} color={CalloutColor.NEUTRAL}>
-          {longCustomDataContent('Neutral', BadgeColor.NEUTRAL, BadgeVariant.WEAK)}
-        </Callout>
-        <Callout variant={CalloutVariant.STRONG} color={CalloutColor.SUCCESS}>
-          {longCustomDataContent('Success', BadgeColor.SUCCESS, BadgeVariant.WEAK)}
-        </Callout>
-        <Callout variant={CalloutVariant.STRONG} color={CalloutColor.INFO}>
-          {longCustomDataContent('Info', BadgeColor.INFO, BadgeVariant.WEAK)}
-        </Callout>
-        <Callout variant={CalloutVariant.STRONG} color={CalloutColor.WARNING}>
-          {longCustomDataContent('Warning', BadgeColor.WARNING, BadgeVariant.WEAK)}
-        </Callout>
-        <Callout variant={CalloutVariant.STRONG} color={CalloutColor.WARNING_HIGH}>
-          {longCustomDataContent('Warning High', BadgeColor.WARNING_HIGH, BadgeVariant.WEAK)}
-        </Callout>
-        <Callout variant={CalloutVariant.STRONG} color={CalloutColor.DANGER}>
-          {longCustomDataContent('Danger', BadgeColor.DANGER, BadgeVariant.WEAK)}
-        </Callout>
-      </SandboxExamplesContainer>
-    </div>
-  );
-};
-
 export const PrePostItems = () => {
   return (
     <div>
@@ -492,18 +421,36 @@ export const ExtraContentElement = () => {
         <Callout
           variant={CalloutVariant.WEAK}
           color={CalloutColor.BRAND}
-          extraContentElement={<div>Extra Content</div>}
+          postElement={<Icon icon="x" />}
+          extraContentElement={<>Extra Content</>}
         >
           Brand
         </Callout>
         <Callout
           variant={CalloutVariant.WEAK}
           color={CalloutColor.BRAND_SECONDARY}
-          extraContentElement={<div>Extra Content</div>}
+          extraContentElement={<>Extra Content</>}
         >
           <div class="flex gap-3xs">
             <Loading /> Loading Content...
           </div>
+        </Callout>
+        <Callout
+          variant={CalloutVariant.WEAK}
+          color={CalloutColor.BRAND_SECONDARY}
+          extraContentElement={
+            <>
+              <Badge color={BadgeColor.BRAND_SECONDARY} variant={BadgeVariant.STRONG}>
+                Badge
+              </Badge>
+              This is just some long extra content for testing purposes. This is just some long extra content for
+              testing purposes. This is just some long extra content for testing purposes. This is just some long extra
+              content for testing purposes. This is just some long extra content for testing purposes. This is just some
+              long extra content for testing purposes.
+            </>
+          }
+        >
+          Hey
         </Callout>
       </SandboxExamplesContainer>
     </div>

@@ -6,6 +6,10 @@
   --color-input-active-border: var(--color-info);
 }
 
+:root {
+  --color-input-active-border: var(--color-info);
+}
+
 [data-theme="dark"] {
   /* @todo */
   --color-input-active-border: red;

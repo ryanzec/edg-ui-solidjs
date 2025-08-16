@@ -21,6 +21,7 @@ CRITICAL TODOS
 - debounce value store
 - selectable with virtual version of grid table
 - refactor all color to better account for color contrast standards
+- make sure all props.class are passed last for merge
 
 HIGH TODOS
 - tooltip content color

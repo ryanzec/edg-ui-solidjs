@@ -68,7 +68,7 @@ const SimpleGridTable = <TRowData,>(passedProps: SimpleGridTableProps<TRowData>)
     }
 
     if (allItemsSelected()) {
-      props.setSelectedItems([...props.items.filter((item) => !props.selectedItems?.includes(item))]);
+      props.setSelectedItems([...(props.selectedItems || []).filter((item) => !props.items?.includes(item))]);
 
       return;
     }

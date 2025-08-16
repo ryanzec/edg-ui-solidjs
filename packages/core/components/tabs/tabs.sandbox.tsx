@@ -52,6 +52,49 @@ export const Vertical = () => {
   );
 };
 
+export const Markers = () => {
+  return (
+    <SandboxExamplesContainer>
+      <Tabs>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Tab isActive marker="Beta">
+          Tab 2
+        </Tabs.Tab>
+        <Tabs.Tab marker="Beta">Tab 3</Tabs.Tab>
+        <Tabs.Tab>Tab 4</Tabs.Tab>
+      </Tabs>
+      <div class={styles.darkBackground}>
+        <Tabs onInverse>
+          <Tabs.Tab>Tab 1</Tabs.Tab>
+          <Tabs.Tab marker="Beta">Tab 2</Tabs.Tab>
+          <Tabs.Tab isActive marker="Beta">
+            Tab 3
+          </Tabs.Tab>
+          <Tabs.Tab>Tab 4</Tabs.Tab>
+        </Tabs>
+      </div>
+      <Tabs orientation={TabOrientation.VERTICAL}>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Tab isActive marker="Beta">
+          Tab 2
+        </Tabs.Tab>
+        <Tabs.Tab marker="Beta">Tab 3</Tabs.Tab>
+        <Tabs.Tab>Tab 4</Tabs.Tab>
+      </Tabs>
+      <div class={styles.darkBackground}>
+        <Tabs orientation={TabOrientation.VERTICAL} onInverse>
+          <Tabs.Tab>Tab 1</Tabs.Tab>
+          <Tabs.Tab marker="Beta">Tab 2</Tabs.Tab>
+          <Tabs.Tab isActive marker="Beta">
+            Tab 3
+          </Tabs.Tab>
+          <Tabs.Tab>Tab 4</Tabs.Tab>
+        </Tabs>
+      </div>
+    </SandboxExamplesContainer>
+  );
+};
+
 export const Icons = () => {
   return (
     <SandboxExamplesContainer class="max-w-[500px]">

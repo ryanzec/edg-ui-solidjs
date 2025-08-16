@@ -11,7 +11,9 @@ export type BadgeProps = Omit<TypographyProps, 'size' | 'color' | 'variant'> & {
   shape?: BadgeShape;
   size?: BadgeSize;
   preIcon?: IconName;
+  preIconClass?: string;
   postIcon?: IconName;
+  postIconClass?: string;
   iconClass?: string;
 };
 
@@ -32,7 +34,19 @@ const Badge = (passedProps: BadgeProps) => {
       },
       passedProps,
     ),
-    ['color', 'variant', 'shape', 'size', 'class', 'children', 'preIcon', 'postIcon', 'iconClass'],
+    [
+      'color',
+      'variant',
+      'shape',
+      'size',
+      'class',
+      'children',
+      'preIcon',
+      'preIconClass',
+      'postIcon',
+      'postIconClass',
+      'iconClass',
+    ],
   );
   const isStrong = props.variant === BadgeVariant.STRONG;
 
@@ -71,7 +85,7 @@ const Badge = (passedProps: BadgeProps) => {
       {props.preIcon && (
         <Icon
           icon={props.preIcon}
-          class={tailwindUtils.merge(styles.icon, props.iconClass)}
+          class={tailwindUtils.merge(styles.icon, props.preIconClass, props.iconClass)}
           size={props.size === BadgeSize.LARGE ? IconSize.EXTRA_LARGE : undefined}
         />
       )}
@@ -79,7 +93,7 @@ const Badge = (passedProps: BadgeProps) => {
       {props.postIcon && (
         <Icon
           icon={props.postIcon}
-          class={tailwindUtils.merge(styles.icon, props.iconClass)}
+          class={tailwindUtils.merge(styles.icon, props.postIconClass, props.iconClass)}
           size={props.size === BadgeSize.LARGE ? IconSize.EXTRA_LARGE : undefined}
         />
       )}

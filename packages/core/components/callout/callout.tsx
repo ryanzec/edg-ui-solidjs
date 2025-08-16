@@ -2,6 +2,8 @@ import { type JSX, mergeProps, Show, splitProps } from 'solid-js';
 import styles from '$/core/components/callout/callout.module.css';
 import { CalloutColor, CalloutVariant } from '$/core/components/callout/utils';
 import { tailwindUtils } from '$/core/utils/tailwind';
+import Typography from '../typography';
+import { TypographyVariant } from '../typography/typography';
 
 export type CalloutProps = JSX.HTMLAttributes<HTMLDivElement> & {
   color?: CalloutColor;
@@ -68,20 +70,26 @@ const Callout = (passedProps: CalloutProps) => {
         [styles.inheritText]: props.inheritTextColor,
       })}
     >
-      <Show when={props.preElement}>
-        <div class={styles.preItem}>{props.preElement}</div>
-      </Show>
       <span
-        class={tailwindUtils.merge('flex flex-col gap-2xs items-start', props.contentClass, {
+        class={tailwindUtils.merge('flex flex-col gap-2xs items-start w-full', props.contentClass, {
           [styles.centered]: props.isCentered,
         })}
       >
-        {props.children}
-        {props.extraContentElement}
+        <div class="flex gap-2xs items-center w-full">
+          <Show when={props.preElement}>
+            <div class={styles.preItem}>{props.preElement}</div>
+          </Show>
+          {props.children}
+          <Show when={props.postElement}>
+            <div class={styles.postItem}>{props.postElement}</div>
+          </Show>
+        </div>
+        <Show when={props.extraContentElement}>
+          <Typography variant={TypographyVariant.PRESERVE_WHITESPACE} class="flex flex-col gap-2xs items-start w-full">
+            {props.extraContentElement}
+          </Typography>
+        </Show>
       </span>
-      <Show when={props.postElement}>
-        <div class={styles.postItem}>{props.postElement}</div>
-      </Show>
     </div>
   );
 };

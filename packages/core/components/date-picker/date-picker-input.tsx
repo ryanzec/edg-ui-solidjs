@@ -87,7 +87,7 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
 
     let disableBefore = dayjs(endDate.date()).subtract(props.allowedRange.value, props.allowedRange.type);
 
-    if (datePickerProps.includeTime) {
+    if (!datePickerProps.includeTime) {
       disableBefore = disableBefore.startOf('day');
     }
 
@@ -100,18 +100,7 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
       return dayjs(endDate.date()).endOf('day');
     }
 
-    // if we don't have the data for applying an allowed range, we should not have any limit
-    if (!props.allowedRange || !startDate.date()) {
-      return undefined;
-    }
-
-    let disableAfter = dayjs(startDate.date()).add(props.allowedRange.value, props.allowedRange.type);
-
-    if (datePickerProps.includeTime) {
-      disableAfter = disableAfter.endOf('day');
-    }
-
-    return disableAfter;
+    return undefined;
   });
 
   const endDisableBefore = createMemo<Dayjs | undefined>(() => {
@@ -120,18 +109,7 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
       return dayjs(startDate.date()).startOf('day');
     }
 
-    // if we don't have the data for applying an allowed range, we should not have any limit
-    if (!props.allowedRange || !endDate.date()) {
-      return undefined;
-    }
-
-    let disableBefore = dayjs(endDate.date()).subtract(props.allowedRange.value, props.allowedRange.type);
-
-    if (datePickerProps.includeTime) {
-      disableBefore = disableBefore.startOf('day');
-    }
-
-    return disableBefore;
+    return undefined;
   });
 
   const endDisableAfter = createMemo<Dayjs | undefined>(() => {
@@ -140,13 +118,13 @@ const DatePickerInput = <TFormData = DefaultFormData>(passedProps: DatePickerInp
       return undefined;
     }
 
-    let disableBefore = dayjs(startDate.date()).add(props.allowedRange.value, props.allowedRange.type);
+    let disableAfter = dayjs(startDate.date()).add(props.allowedRange.value, props.allowedRange.type);
 
-    if (datePickerProps.includeTime) {
-      disableBefore = disableBefore.endOf('day');
+    if (!datePickerProps.includeTime) {
+      disableAfter = disableAfter.endOf('day');
     }
 
-    return disableBefore;
+    return disableAfter;
   });
 
   const showDatePicker = () => {

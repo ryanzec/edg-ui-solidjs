@@ -46,6 +46,19 @@ export const Default = () => {
         onClick={() => {
           globalNotificationsStore.addNotification({
             message: () => 'This is a test message',
+            extraContentElement: () => (
+              <div>{'This is a test \n\t\textra \n\ncontent message\nwith whitespace that should show'}</div>
+            ),
+            autoClose: 0,
+          });
+        }}
+      >
+        Add Extra Content Whitespace Notification
+      </Button>
+      <Button
+        onClick={() => {
+          globalNotificationsStore.addNotification({
+            message: () => 'This is a test message',
             color: CalloutColor.DANGER,
             autoClose: 0,
           });

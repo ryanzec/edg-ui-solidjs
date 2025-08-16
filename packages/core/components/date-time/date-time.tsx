@@ -9,12 +9,13 @@ export type DateTimeProps = JSX.HTMLAttributes<HTMLDivElement> & {
   dateFormat?: DateFormat;
   timeFormat?: TimeFormat;
   showTimezone?: boolean;
+  isInline?: boolean;
 };
 
 const DateTime = (passedProps: DateTimeProps) => {
   const [props, restOfProps] = splitProps(
-    mergeProps({ dateFormat: DateFormat.STANDARD, showTimezone: true }, passedProps),
-    ['class', 'date', 'dateFormat', 'timeFormat', 'showTimezone'],
+    mergeProps({ dateFormat: DateFormat.STANDARD, showTimezone: true, isInline: false }, passedProps),
+    ['class', 'date', 'dateFormat', 'timeFormat', 'showTimezone', 'isInline'],
   );
 
   const convertedDate = () => {
@@ -22,7 +23,7 @@ const DateTime = (passedProps: DateTimeProps) => {
   };
 
   return (
-    <div class={tailwindUtils.merge(styles.dateTime, props.class)} {...restOfProps}>
+    <div class={tailwindUtils.merge(styles.dateTime, props.class, { 'inline-flex': props.isInline })} {...restOfProps}>
       <span>{convertedDate().format(props.dateFormat)}</span>
       <Show when={props.timeFormat}>
         <span>{convertedDate().format(props.timeFormat)}</span>

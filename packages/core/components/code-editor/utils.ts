@@ -79,10 +79,35 @@ export const defaultExtensions: Extension[] = [
     ...lintKeymap,
     {
       key: 'Tab',
+      run: (view: EditorView): boolean => {
+        view.dispatch(view.state.replaceSelection('  '));
+
+        return true;
+      },
     },
     {
       key: 'Shift-Tab',
-      run: indentLess,
+      run: (view: EditorView): boolean => {
+        const { state } = view;
+        const { from } = state.selection.main;
+        const line = state.doc.lineAt(from);
+        const lineStart = line.from;
+        const lineText = line.text;
+
+        if (lineText.startsWith('  ')) {
+          view.dispatch({
+            changes: {
+              from: lineStart,
+              to: lineStart + 2,
+              insert: '',
+            },
+          });
+
+          return true;
+        }
+
+        return false;
+      },
     },
   ]),
 ];

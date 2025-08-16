@@ -39,8 +39,9 @@ const GlobalNotificationsItem = (passedProps: GlobalNotificationsListItemProps) 
           />
         </Show>
       }
+      extraContentElement={props.notification.extraContentElement?.()}
     >
-      {props.notification.message()}{' '}
+      {props.notification.message()}
     </Callout>
   );
 };

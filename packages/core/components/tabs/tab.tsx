@@ -6,6 +6,8 @@ import { TabSize, TabsContext, TabVariant } from '$/core/components/tabs/tabs';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import { loggerUtils } from '$/core/utils/logger';
 import { tailwindUtils } from '$/core/utils/tailwind';
+import Badge, { BadgeColor, BadgeSize, BadgeVariant } from '../badge';
+import Typography, { TypographySize } from '../typography';
 
 export type TabProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> &
   CommonDataAttributes & {
@@ -15,10 +17,12 @@ export type TabProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> &
     onClose?: (value?: string) => void;
     hasUnsavedChanges?: boolean;
     disabled?: boolean;
+    marker?: string;
+    markerColor?: BadgeColor;
   };
 
 const Tab = (passedProps: TabProps) => {
-  const [props, restOfProps] = splitProps(mergeProps({ count: 0 }, passedProps), [
+  const [props, restOfProps] = splitProps(mergeProps({ count: 0, markerColor: BadgeColor.WARNING_HIGH }, passedProps), [
     'class',
     'isActive',
     'icon',
@@ -27,6 +31,8 @@ const Tab = (passedProps: TabProps) => {
     'data-value',
     'hasUnsavedChanges',
     'disabled',
+    'marker',
+    'markerColor',
   ]);
 
   const context = useContext(TabsContext);
@@ -64,6 +70,11 @@ const Tab = (passedProps: TabProps) => {
     >
       <Show when={props.icon}>{(icon) => <Icon icon={icon()} />}</Show>
       {props.children}
+      <Show when={props.marker}>
+        <Badge color={props.markerColor} variant={BadgeVariant.STRONG} size={BadgeSize.SMALL}>
+          <Typography size={TypographySize.EXTRA_SMALL}>{props.marker}</Typography>
+        </Badge>
+      </Show>
       <Show when={props.onClose}>
         <Link onClick={handleOnClose} isUnstyled class="inline-flex">
           <Icon

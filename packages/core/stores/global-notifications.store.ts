@@ -15,6 +15,7 @@ export type GlobalNotification = {
   // we make this a function instead of just a JSX.Element in case the message has signal based data
   message: () => JSX.Element;
   preElement?: () => JSX.Element;
+  extraContentElement?: () => JSX.Element;
 };
 
 export type AddNotification = Omit<GlobalNotification, 'id' | 'canClose'> & {

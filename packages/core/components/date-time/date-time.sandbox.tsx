@@ -7,8 +7,8 @@ export default {
 };
 
 export const Default = () => {
-  console.log('dayjs');
   const date = dayjs();
+  const invalidDate = dayjs('invalid');
 
   return (
     <SandboxExamplesContainer>
@@ -21,6 +21,7 @@ export const Default = () => {
 export const TimeZone = () => {
   const dateString = '2020-12-31T23:00:00-04:00';
   const date = dayjs(dateString);
+  const invalidDate = dayjs('invalid');
 
   return (
     <SandboxExamplesContainer>
@@ -34,6 +35,7 @@ export const TimeZone = () => {
 
 export const FromNow = () => {
   const date = dayjs().subtract(1, 'day');
+  const invalidDate = dayjs('invalid');
 
   return (
     <SandboxExamplesContainer>
@@ -42,8 +44,20 @@ export const FromNow = () => {
   );
 };
 
+export const FromNowTooltip = () => {
+  const date = dayjs().subtract(1, 'day');
+  const invalidDate = dayjs('invalid');
+
+  return (
+    <SandboxExamplesContainer>
+      <DateTime.FromNowTooltip date={date} />
+    </SandboxExamplesContainer>
+  );
+};
+
 export const Tooltip = () => {
   const date = dayjs().subtract(1, 'day');
+  const invalidDate = dayjs('invalid');
 
   return (
     <SandboxExamplesContainer>

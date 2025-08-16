@@ -552,6 +552,9 @@ const createComboboxStore = <TData extends ComboboxExtraData, TFormData = Defaul
       }
 
       case Key.ARROW_DOWN: {
+        // prevent the arrow keey from scrolling the page
+        event.preventDefault();
+
         // this should make the down arrow start with the first item
         setFocusedOption((comboboxStore.focusedOptionIndex ?? -1) + 1, {
           findNextValidOption: true,
@@ -570,6 +573,9 @@ const createComboboxStore = <TData extends ComboboxExtraData, TFormData = Defaul
       }
 
       case Key.ARROW_UP: {
+        // prevent the arrow keey from scrolling the page
+        event.preventDefault();
+
         // this should make the up arrow start with the last item
         setFocusedOption((comboboxStore.focusedOptionIndex ?? comboboxStore.displayOptions.length) - 1, {
           findNextValidOption: true,
