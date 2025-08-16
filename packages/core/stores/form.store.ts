@@ -236,7 +236,7 @@ const createStore = <TFormData extends object>(
     previousValue: any,
     selfOptions: TriggerValueChangeOptions = {},
   ) => {
-    if (value !== previousValue && formWatchers().length > 0) {
+    if (lodash.isEqual(value, previousValue) === false && formWatchers().length > 0) {
       for (const watcher of formWatchers()) {
         watcher(name as keyof TFormData, data(), previousValue);
       }

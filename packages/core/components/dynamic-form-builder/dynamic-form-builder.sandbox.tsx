@@ -807,6 +807,75 @@ export const GroupValidation = () => {
   );
 };
 
+const comboboxTestFormFields: DynamicFormBuilderFields = [
+  {
+    name: 'comboboxValue',
+    label: 'Value',
+    type: DynamicFormBuilderFieldType.SELECT,
+    options: [
+      {
+        value: '1',
+        label: 'Value 1',
+      },
+      {
+        value: '2',
+        label: 'Value 2',
+      },
+      {
+        value: '3',
+        label: 'Value 3',
+      },
+    ],
+    required: true,
+    placeholder: 'Placeholder...',
+  },
+  {
+    name: 'comboboxComplexArray',
+    label: 'Really Complex Object Array',
+    type: DynamicFormBuilderFieldType.COMPLEX_ARRAY,
+    arrayLimit: 1,
+    requiredGroup: 'title',
+    nestedFields: [
+      {
+        name: 'complexArray',
+        label: 'Complex Array',
+        type: DynamicFormBuilderFieldType.COMPLEX_ARRAY,
+        required: true,
+        nestedFields: [
+          {
+            name: 'complex',
+            label: 'Complex',
+            type: DynamicFormBuilderFieldType.COMPLEX_ARRAY,
+            required: true,
+            nestedFields: [
+              {
+                name: 'field',
+                label: 'Field',
+                type: DynamicFormBuilderFieldType.SELECT,
+                options: [
+                  {
+                    value: '1',
+                    label: 'Option 1',
+                  },
+                  {
+                    value: '2',
+                    label: 'Option 2',
+                  },
+                  {
+                    value: '3',
+                    label: 'Option 3',
+                  },
+                ],
+                required: true,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+];
+
 export const GroupValidationNotRequiredWithInGroup = () => {
   // this validates that even if a field is required, if it is part of a required group, validation should not
   // happen unless of one of the grouped fields has a value
@@ -840,5 +909,60 @@ export const GroupValidationNotRequiredWithInGroup = () => {
       <div>errors</div>
       <pre>{JSON.stringify(formStore.errors(), null, 2)}</pre>
     </div>
+  );
+};
+
+export const ComboboxValuesUpdate = () => {
+  const formStore = formStoreUtils.createStore<DefaultFormData>({
+    onSubmit: (data) => {
+      console.log(data);
+      console.log(dynamicFormBuilderComponentUtils.convertData(data, comboboxTestFormFields));
+    },
+  });
+
+  const handleSetValue = () => {
+    formStore.setValue('comboboxValue', '1');
+  };
+
+  const handleSetField1 = () => {
+    formStore.setValue('comboboxComplexArray.0.complexArray.0.complex.0.field', '2');
+  };
+
+  const handleSetField2 = () => {
+    formStore.setValue('comboboxComplexArray.0.complexArray.0.complex.1.field', '3');
+  };
+
+  const formDirective = formStore.formDirective;
+
+  return (
+    <>
+      <Button.Group>
+        <Button data-id="set-value-button" onClick={handleSetValue}>
+          Set Value
+        </Button>
+        <Button data-id="set-field1-button" onClick={handleSetField1}>
+          Set Field1
+        </Button>
+        <Button data-id="set-field2-button" onClick={handleSetField2}>
+          Set Field2
+        </Button>
+      </Button.Group>
+      <div data-id="container">
+        <form use:formDirective>
+          <FormFields>
+            <DynamicFormBuilder fields={comboboxTestFormFields} formStore={formStore} />
+          </FormFields>
+          <div>
+            <Button data-id="submit-button" type="submit">
+              Submit
+            </Button>
+          </div>
+        </form>
+        <div>touched fields</div>
+        <pre>{JSON.stringify(formStore.touchedFields(), null, 2)}</pre>
+        <div>errors</div>
+        <pre>{JSON.stringify(formStore.errors(), null, 2)}</pre>
+      </div>
+    </>
   );
 };

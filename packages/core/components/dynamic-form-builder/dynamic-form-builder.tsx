@@ -1,5 +1,5 @@
 import * as lodash from 'lodash';
-import { createEffect, createReaction, createSignal, For, mergeProps, Show } from 'solid-js';
+import { createEffect, createReaction, createSignal, For, mergeProps, onCleanup, Show } from 'solid-js';
 import * as zod from 'zod';
 import Checkbox from '$/core/components/checkbox';
 import Combobox, {
@@ -20,7 +20,7 @@ import Input from '$/core/components/input';
 import Label from '$/core/components/label';
 import Radio from '$/core/components/radio';
 import Textarea from '$/core/components/textarea';
-import type { FormValidatWith } from '$/core/stores/form.store';
+import type { FormValidatWith, FormWatchReturns } from '$/core/stores/form.store';
 import { stringUtils } from '$/core/utils/string';
 import { tailwindUtils } from '$/core/utils/tailwind';
 import { ValidationMessageType, validationUtils } from '$/core/utils/validation';
@@ -55,6 +55,7 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
   const comboboxTypes: DynamicFormBuilderFieldType[] = [DynamicFormBuilderFieldType.SELECT];
 
   const [comboboxValueStores, setComboboxValueStores] = createSignal<Record<string, ComboboxValueStore>>({});
+  const [comboboxOptions, setComboboxOptions] = createSignal<Record<string, ComboboxOption[]>>({});
 
   const buildSchemaForFields = (
     fields: DynamicFormBuilderFields,
@@ -207,9 +208,10 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
             schema,
             fieldSchema.refine(
               (currentValue) => {
-                const formData = props.formStore.data();
                 const neededValues = requiredFieldPaths.some((fieldPath) => {
-                  return validationUtils.isPopulatedFormValue(lodash.get(formData, fieldPath));
+                  const value = props.formStore.getFieldValue(fieldPath as keyof TFormData);
+
+                  return validationUtils.isPopulatedFormValue(value());
                 });
 
                 if (!neededValues) {
@@ -258,24 +260,36 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
     // console.log('building', performance.now() - time);
   });
 
-  const buildComboboxesForFields = (fields: DynamicFormBuilderFields) => {
+  const buildComboboxesForFields = (fields: DynamicFormBuilderFields, fieldPathPrefix: string = '') => {
     let newComboboxValueStores: Record<string, ComboboxValueStore> = {};
+    let newComboboxOptions: Record<string, ComboboxOption[]> = {};
 
     for (const input of fields) {
+      const baseName = props.namePrefix ? `${props.namePrefix}.${input.name}` : input.name;
+      const fieldName = fieldPathPrefix ? `${fieldPathPrefix}.${baseName}` : baseName;
+
       if (comboboxTypes.includes(input.type)) {
-        newComboboxValueStores[input.name as string] = comboboxComponentUtils.createValueStore();
+        newComboboxValueStores[fieldName] = comboboxComponentUtils.createValueStore();
+        newComboboxOptions[fieldName] = input.options || [];
       }
 
       if (input.nestedFields) {
-        newComboboxValueStores = { ...newComboboxValueStores, ...buildComboboxesForFields(input.nestedFields) };
+        const { newComboboxValueStores: nestedComboboxValueStores, newComboboxOptions: nestedComboboxOptions } =
+          buildComboboxesForFields(input.nestedFields, fieldName);
+
+        newComboboxValueStores = { ...newComboboxValueStores, ...nestedComboboxValueStores };
+        newComboboxOptions = { ...newComboboxOptions, ...nestedComboboxOptions };
       }
     }
 
-    return newComboboxValueStores;
+    return { newComboboxValueStores, newComboboxOptions };
   };
 
   createEffect(function buildComboboxValueStores() {
-    setComboboxValueStores(buildComboboxesForFields(props.fields));
+    const { newComboboxValueStores, newComboboxOptions } = buildComboboxesForFields(props.fields);
+
+    setComboboxValueStores(newComboboxValueStores);
+    setComboboxOptions(newComboboxOptions);
   });
 
   const initializeComboboxValues = createReaction(() => {
@@ -310,6 +324,39 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
   });
 
   initializeComboboxValues(() => comboboxValueStores());
+
+  let formWarchSubscription: FormWatchReturns | undefined;
+
+  formWarchSubscription = props.formStore.watch((name, data) => {
+    const currentComboboxValueStore = comboboxValueStores()[name as string];
+    const currentComboboxOptions = comboboxOptions()[name as string];
+
+    if (!currentComboboxValueStore) {
+      return;
+    }
+
+    const selectedValue = props.formStore.getFieldValue(name);
+
+    if (!selectedValue) {
+      currentComboboxValueStore.setSelected([]);
+
+      return;
+    }
+
+    const selectedOption = currentComboboxOptions.find((option) => option.value === selectedValue());
+
+    if (!selectedOption) {
+      currentComboboxValueStore.setSelected([]);
+
+      return;
+    }
+
+    currentComboboxValueStore.setSelected([selectedOption]);
+  });
+
+  onCleanup(() => {
+    formWarchSubscription?.unsubscribe();
+  });
 
   return (
     <FormFields
@@ -388,16 +435,18 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
                   </For>
                 </Checkbox.Group>
               </Show>
-              <Show when={field.type === DynamicFormBuilderFieldType.SELECT && comboboxValueStores()[field.name]}>
+              <Show
+                when={field.type === DynamicFormBuilderFieldType.SELECT && comboboxValueStores()[fieldName as string]}
+              >
                 <Combobox
                   forceSelection
                   autoShowOptions
                   options={field.options || []}
                   setSelected={(options: ComboboxOption[]) => {
                     props.formStore.setValue(fieldName, options[0]?.value ?? '');
-                    comboboxValueStores()[field.name].setSelected(options);
+                    comboboxValueStores()[fieldName as string].setSelected(options);
                   }}
-                  selected={comboboxValueStores()[field.name].selected()}
+                  selected={comboboxValueStores()[fieldName as string].selected()}
                   placeholder={field.placeholder}
                   name={fieldName as keyof TFormData}
                   selectableComponent={Combobox.SelectableOption}

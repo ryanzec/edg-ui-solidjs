@@ -4,6 +4,7 @@ import { BasePage, playwrightUtils } from '$/core/utils/playwright';
 
 const urls = {
   groupValidation: '/components/dynamic-form-builder/group-validation',
+  comboboxValuesUpdate: '/components/dynamic-form-builder/combobox-values-update',
 };
 
 class DynamicFormBuilderPage extends BasePage {
@@ -98,14 +99,33 @@ class DynamicFormBuilderPage extends BasePage {
     );
   }
 
+  getComboboxValueInputLocator() {
+    return this.page.locator('input[name="comboboxValue"]');
+  }
+
+  getComboboxComplexArrayInputLocator(index: number) {
+    return this.page.locator(`input[name="comboboxComplexArray.0.complexArray.0.complex.${index}.field"]`);
+  }
+
+  // actions
+  async setComboboxValues() {
+    await this.page.locator('[data-id="set-value-button"]').click();
+    await this.page.locator('[data-id="set-field1-button"]').click();
+    await this.page.locator('[data-id="set-field2-button"]').click();
+  }
+
   // expects
   async expectHasValidationMessage(locator: Locator, count: number) {
     await expect(locator.locator('[data-id="validation-message"]')).toHaveCount(count);
   }
+
+  async expectInputValue(locator: Locator, value: string) {
+    await expect(locator).toHaveValue(value);
+  }
 }
 
 test.describe('dynamic form builder @component', () => {
-  test.describe('core', () => {
+  test.describe('validation', () => {
     test('should only validation the non-grouped field', async ({ page }) => {
       const dynamicFormBuilderPage = new DynamicFormBuilderPage(page);
 
@@ -351,6 +371,30 @@ test.describe('dynamic form builder @component', () => {
       await dynamicFormBuilderPage.expectHasValidationMessage(
         dynamicFormBuilderPage.getGroupComplexObjectArrayField3ContainerLocator(),
         0,
+      );
+    });
+  });
+
+  test.describe('combobox value setting', () => {
+    test('setting form value for a combobox so properly update the combobox displayed value', async ({ page }) => {
+      const dynamicFormBuilderPage = new DynamicFormBuilderPage(page);
+
+      await dynamicFormBuilderPage.goto(urls.comboboxValuesUpdate);
+
+      await dynamicFormBuilderPage.groupValidationAddTopArrayItemLocator.click();
+      await dynamicFormBuilderPage.groupValidationAddSecondLevelArrayItemLocator.click();
+      await dynamicFormBuilderPage.groupValidationAddThirdLevelArrayItemLocator.click();
+      await dynamicFormBuilderPage.groupValidationAddThirdLevelArrayItemLocator.click();
+      await dynamicFormBuilderPage.setComboboxValues();
+
+      await dynamicFormBuilderPage.expectInputValue(dynamicFormBuilderPage.getComboboxValueInputLocator(), 'Value 1');
+      await dynamicFormBuilderPage.expectInputValue(
+        dynamicFormBuilderPage.getComboboxComplexArrayInputLocator(0),
+        'Option 2',
+      );
+      await dynamicFormBuilderPage.expectInputValue(
+        dynamicFormBuilderPage.getComboboxComplexArrayInputLocator(1),
+        'Option 3',
       );
     });
   });
