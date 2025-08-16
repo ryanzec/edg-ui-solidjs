@@ -28,7 +28,7 @@ const Icon = (passedProps: IconProps) => {
   );
 
   return (
-    <button data-id="icon" type="button" disabled={props.disabled}>
+    <button data-id="icon" class="inline-flex" type="button" disabled={props.disabled}>
       <i
         {...restOfProps}
         class={tailwindUtils.merge(`ph-${props.icon}`, styles.icon, props.class, {
