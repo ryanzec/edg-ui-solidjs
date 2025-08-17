@@ -49,6 +49,7 @@ const VirtualGridTable = <TRowData,>(passedProps: VirtualGridTableProps<TRowData
                   onSortChange={finalHeader().onSortChange}
                   sortDirection={finalHeader().sortDirection}
                   sortKey={finalHeader().sortKey}
+                  class={finalHeader().cssClass}
                   isFirstColumn={index() === 0}
                   isLastColumn={props.hasActions === false && index() === (props.headerData || []).length - 1}
                 >

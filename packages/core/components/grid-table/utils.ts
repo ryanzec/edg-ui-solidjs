@@ -3,6 +3,7 @@ import type { GridTableHeaderDataProps } from '$/core/components/grid-table/grid
 
 export type GridTableHeaderDataOptions = {
   element: () => JSX.Element;
+  cssClass?: string;
   onSortChange?: GridTableHeaderDataProps['onSortChange'];
   sortDirection?: GridTableHeaderDataProps['sortDirection'];
   sortKey?: GridTableHeaderDataProps['sortKey'];

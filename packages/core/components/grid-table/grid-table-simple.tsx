@@ -122,6 +122,7 @@ const SimpleGridTable = <TRowData,>(passedProps: SimpleGridTableProps<TRowData>)
                   onSortChange={finalHeader().onSortChange}
                   sortDirection={finalHeader().sortDirection}
                   sortKey={finalHeader().sortKey}
+                  class={finalHeader().cssClass}
                   isFirstColumn={!props.setSelectedItems && index() === 0}
                   isLastColumn={props.hasActions === false && index() === (props.headerData || []).length - 1}
                 >

@@ -216,6 +216,57 @@ export const Default = () => {
   );
 };
 
+export const CustomHeaderCssClasses = () => {
+  return (
+    <SandboxExamplesContainer>
+      <Page.ContentSection>
+        <GridTable.Simple
+          class="grid-cols-[auto_1fr_auto_auto]"
+          items={gridData}
+          headerData={[
+            'Default',
+            {
+              element: () => 'Left',
+              cssClass: 'justify-start',
+            },
+            {
+              element: () => 'Centered',
+              cssClass: 'justify-center',
+            },
+            {
+              element: () => 'Right',
+              cssClass: 'justify-end',
+            },
+          ]}
+          columnCount={4}
+        >
+          {(item, index) => {
+            const isFirstRow = index() === 0;
+            const isLastRow = index() === gridData.length - 1;
+
+            return (
+              <>
+                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isStartOfRow>
+                  {item.id}
+                </GridTable.Data>
+                <GridTable.Data class="justify-start" isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                  {item.name}
+                </GridTable.Data>
+                <GridTable.Data class="justify-center" isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                  {item.status}
+                </GridTable.Data>
+                <GridTable.Data class="justify-end" isFirstRow={isFirstRow} isLastRow={isLastRow} isEndOfRow>
+                  {item.date}
+                </GridTable.Data>
+              </>
+            );
+          }}
+        </GridTable.Simple>
+      </Page.ContentSection>
+    </SandboxExamplesContainer>
+  );
+};
+
 export const SelectableAndPaginated = () => {
   const [selectedItems, setSelectedItems] = createSignal<ComplexData[]>([]);
   const paginationStore = paginationStoreUtils.createStore({
@@ -960,6 +1011,75 @@ export const Virtualized = () => {
                   {item.lastModified}
                 </GridTable.Data>
                 <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow} isEndOfRow>
+                  {item.author.name}
+                </GridTable.Data>
+              </GridTable>
+            );
+          }}
+        </GridTable.Virtual>
+      </Page.ContentSection>
+    </SandboxExamplesContainer>
+  );
+};
+
+export const VirtualizedCustomHeaderCssClasses = () => {
+  const tableCss = 'grid-cols-[1fr_110px_160px_180px]';
+
+  return (
+    <SandboxExamplesContainer>
+      <Page.ContentSection>
+        <GridTable.Virtual
+          class={tableCss}
+          scrollAreaClass="h-[500px]"
+          headerData={[
+            'Title',
+            {
+              element: () => 'Left',
+              cssClass: 'justify-start',
+            },
+            {
+              element: () => 'Centered',
+              cssClass: 'justify-center',
+            },
+            {
+              element: () => 'Right',
+              cssClass: 'justify-end',
+            },
+          ]}
+          virtualProps={{
+            items: newLargeData,
+            estimateSize: () => 37,
+          }}
+          columnCount={4}
+        >
+          {(index, virtualizer) => {
+            const item = newLargeData[index];
+            const isFirstRow = index === 0;
+            const isLastRow = index === newLargeData.length - 1;
+            const [isExpanded, setIsExpanded] = createSignal(false);
+            const [elementRef, setElementRef] = createSignal<Element>();
+            const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
+
+            // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
+            const handleEdit = (data: any) => {
+              console.log('edit', data);
+
+              dropDownComponentRef.api()?.hide();
+            };
+
+            return (
+              // biome-ignore lint/a11y/useSemanticElements: we do this to have a more flexible table component
+              <GridTable class={tableCss} ref={setElementRef} data-index={index} role="row">
+                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow} isStartOfRow>
+                  {item.name}
+                </GridTable.Data>
+                <GridTable.Data class="justify-start" isExpanded={isExpanded()} isFirstRow={isFirstRow}>
+                  {item.severity}
+                </GridTable.Data>
+                <GridTable.Data class="justify-center" isExpanded={isExpanded()} isFirstRow={isFirstRow}>
+                  {item.lastModified}
+                </GridTable.Data>
+                <GridTable.Data class="justify-end" isExpanded={isExpanded()} isFirstRow={isFirstRow} isEndOfRow>
                   {item.author.name}
                 </GridTable.Data>
               </GridTable>
