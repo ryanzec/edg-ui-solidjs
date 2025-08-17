@@ -8,24 +8,29 @@ export type TimezoneFormat = (typeof TimezoneFormat)[keyof typeof TimezoneFormat
 
 export const DateFormat = {
   STANDARD: 'M/d/yy',
+  STANDARD_TIMEZONE: `M/d/yy ${TimezoneFormat.STANDARD}`,
   COMPARE: 'yyyyLLdd',
+  SQL: 'yyyy-MM-dd',
 } as const;
 
 export type DateFormat = (typeof DateFormat)[keyof typeof DateFormat];
 
 export const TimeFormat = {
   STANDARD: 'h:mm a',
+  STANDARD_TIMEZONE: `h:mm a ${TimezoneFormat.STANDARD}`,
   STANDARD_WITH_SECONDS: 'h:mm:ss a',
+  STANDARD_WITH_SECONDS_TIMEZONE: `h:mm:ss a ${TimezoneFormat.STANDARD}`,
+  SQL: 'HH:mm:ss',
 } as const;
 
 export type TimeFormat = (typeof TimeFormat)[keyof typeof TimeFormat];
 
 export const DateTimeFormat = {
-  STANDARD_DATE: DateFormat.STANDARD,
-  STANDARD_DATE_TIMEZONE: `${DateFormat.STANDARD} ${TimezoneFormat.STANDARD}`,
-  STANDARD_DATE_TIME: `${DateFormat.STANDARD} ${TimeFormat.STANDARD}`,
-  STANDARD_DATE_TIME_TIMEZONE: `${DateFormat.STANDARD} ${TimeFormat.STANDARD} ${TimezoneFormat.STANDARD}`,
-  DATE_COMPARE: DateFormat.COMPARE,
+  STANDARD: `${DateFormat.STANDARD} ${TimeFormat.STANDARD}`,
+  STANDARD_TIMEZONE: `${DateFormat.STANDARD} ${TimeFormat.STANDARD_TIMEZONE}`,
+  STANDARD_WITH_SECONDS: `${DateFormat.STANDARD} ${TimeFormat.STANDARD_WITH_SECONDS}`,
+  STANDARD_WITH_SECONDS_TIMEZONE: `${DateFormat.STANDARD} ${TimeFormat.STANDARD_WITH_SECONDS_TIMEZONE}`,
+  SQL: `${DateFormat.SQL} ${TimeFormat.SQL}`,
 } as const;
 
 export type DateTimeFormat = (typeof DateTimeFormat)[keyof typeof DateTimeFormat];

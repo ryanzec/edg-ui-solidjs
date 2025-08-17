@@ -1,6 +1,6 @@
 import type { DateTime } from 'luxon';
 import { type Accessor, createSignal } from 'solid-js';
-import { DateTimeFormat } from '$/core/utils/date';
+import { DateFormat, DateTimeFormat } from '$/core/utils/date';
 
 export const WhichDate = {
   FIRST: 'first',
@@ -32,7 +32,7 @@ const createDateStore = (options: CreateDateStoreOptions): DateStore => {
       return '';
     }
 
-    return currentDate.toFormat(options.includeTime ? DateTimeFormat.STANDARD_DATE_TIME : DateTimeFormat.STANDARD_DATE);
+    return currentDate.toFormat(options.includeTime ? DateTimeFormat.STANDARD : DateFormat.STANDARD);
   };
 
   return {

@@ -6,7 +6,7 @@ import DatePickerMonthYearSelection from '$/core/components/date-picker/date-pic
 import FormField from '$/core/components/form-field';
 import Icon from '$/core/components/icon';
 import TimeInput from '$/core/components/time-input';
-import { DateTimeFormat, TimeFormat } from '$/core/utils/date';
+import { DateFormat, DateTimeFormat, TimeFormat } from '$/core/utils/date';
 import { loggerUtils } from '$/core/utils/logger';
 import { tailwindUtils } from '$/core/utils/tailwind';
 
@@ -52,7 +52,7 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
     ],
   );
 
-  const currentDayFormatted = DateTime.now().startOf('day').toFormat(DateTimeFormat.DATE_COMPARE);
+  const currentDayFormatted = DateTime.now().startOf('day').toFormat(DateFormat.COMPARE);
 
   const [rawDisplayDate, setRawDisplayDate] = createSignal<DateTime>(props.defaultDisplayDate);
   const [rawSelectedDate, setRawSelectedDate] = createSignal<DateTime | undefined>(props.defaultSelectedDate);
@@ -73,7 +73,7 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
       return;
     }
 
-    return currentSelectedDate.toFormat(DateTimeFormat.DATE_COMPARE);
+    return currentSelectedDate.toFormat(DateFormat.COMPARE);
   });
   const currentMonth = createMemo(() => {
     return displayDate().month;
@@ -102,7 +102,7 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
         isCurrentMonth: currentProcessingMonthNumber === currentMonthNumber,
         date: currentProcessingDate,
         day: currentProcessingDate.toFormat('d'),
-        formatCurrentCheck: currentProcessingDate.toFormat(DateTimeFormat.DATE_COMPARE),
+        formatCurrentCheck: currentProcessingDate.toFormat(DateFormat.COMPARE),
       });
 
       // we force a sun -> sat week in the date util configuration so 6 mean we are at the end of the week (since

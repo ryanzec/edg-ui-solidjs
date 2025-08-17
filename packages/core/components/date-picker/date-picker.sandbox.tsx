@@ -29,7 +29,7 @@ export const Default = () => {
       return '';
     }
 
-    return currentSelectedDate.toFormat(DateTimeFormat.STANDARD_DATE_TIME);
+    return currentSelectedDate.toFormat(DateTimeFormat.STANDARD);
   };
 
   return (

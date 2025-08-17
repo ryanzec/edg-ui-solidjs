@@ -18,7 +18,7 @@ const DateTimeTooltip = (props: DateTimeTooltipProps) => {
       <Tooltip.Handle isStyled={false}>
         <DateTime {...props} />
       </Tooltip.Handle>
-      <Tooltip.Content>{props.date.toFormat(DateTimeFormat.STANDARD_DATE_TIME_TIMEZONE)}</Tooltip.Content>
+      <Tooltip.Content>{props.date.toFormat(DateTimeFormat.STANDARD_TIMEZONE)}</Tooltip.Content>
     </Tooltip>
   );
 };
