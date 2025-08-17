@@ -21,6 +21,7 @@ import Label from '$/core/components/label';
 import Radio from '$/core/components/radio';
 import Textarea from '$/core/components/textarea';
 import type { FormValidatWith, FormWatchReturns } from '$/core/stores/form.store';
+import { loggerUtils } from '$/core/utils/logger';
 import { stringUtils } from '$/core/utils/string';
 import { tailwindUtils } from '$/core/utils/tailwind';
 import { ValidationMessageType, validationUtils } from '$/core/utils/validation';
@@ -211,6 +212,16 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
                 const neededValues = requiredFieldPaths.some((fieldPath) => {
                   const value = props.formStore.getFieldValue(fieldPath as keyof TFormData);
 
+                  if (!value) {
+                    loggerUtils.warn({
+                      type: 'form-value-not-found',
+                      fieldPath,
+                    });
+
+                    // force validation is the field value accessor is not found will make typos easier to notice
+                    return true;
+                  }
+
                   return validationUtils.isPopulatedFormValue(value());
                 });
 
@@ -265,8 +276,8 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
     let newComboboxOptions: Record<string, ComboboxOption[]> = {};
 
     for (const input of fields) {
-      const baseName = props.namePrefix ? `${props.namePrefix}.${input.name}` : input.name;
-      const fieldName = fieldPathPrefix ? `${fieldPathPrefix}.${baseName}` : baseName;
+      const fieldPrefix = fieldPathPrefix ? fieldPathPrefix : props.namePrefix;
+      const fieldName = fieldPrefix ? `${fieldPrefix}.${input.name}` : input.name;
 
       if (comboboxTypes.includes(input.type)) {
         newComboboxValueStores[fieldName] = comboboxComponentUtils.createValueStore();
@@ -443,7 +454,7 @@ const DynamicFormBuilder = <TFormData extends object>(passedProps: DynamicFormBu
                 <Combobox
                   forceSelection
                   autoShowOptions
-                  options={field.options || []}
+                  options={comboboxOptions()[fieldName as string] || []}
                   setSelected={(options: ComboboxOption[]) => {
                     props.formStore.setValue(fieldName, options[0]?.value ?? '');
                     comboboxValueStores()[fieldName as string].setSelected(options);

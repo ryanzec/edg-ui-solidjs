@@ -22,7 +22,7 @@
   .content-styled {
     border: 1px solid var(--color-outline);
     border-radius: var(--radius-sm);
-    padding: var(--spacing-4xs) var(--spacing-2xs);
+    padding: var(--spacing-2xs);
     background-color: var(--color-surface);
     color: var(--color-text);
   }

@@ -14,14 +14,15 @@ export const Default = () => {
     <SandboxExamplesContainer>
       <DateTime date={date} />
       <DateTime date={date} timeFormat={TimeFormat.STANDARD} />
+      <DateTime date={invalidDate} />
+      <DateTime date={invalidDate} timeFormat={TimeFormat.STANDARD} />
     </SandboxExamplesContainer>
   );
 };
 
-export const TimeZone = () => {
+export const FromDifferentTimeZone = () => {
   const dateString = '2020-12-31T23:00:00-04:00';
   const date = LuxonDateTime.fromJSDate(new Date(dateString));
-  const invalidDate = LuxonDateTime.fromJSDate(new Date('invalid'));
 
   return (
     <SandboxExamplesContainer>
@@ -40,6 +41,7 @@ export const FromNow = () => {
   return (
     <SandboxExamplesContainer>
       <DateTime.FromNow date={date} />
+      <DateTime.FromNow date={invalidDate} />
     </SandboxExamplesContainer>
   );
 };
@@ -51,6 +53,7 @@ export const FromNowTooltip = () => {
   return (
     <SandboxExamplesContainer>
       <DateTime.FromNowTooltip date={date} />
+      <DateTime.FromNowTooltip date={invalidDate} />
     </SandboxExamplesContainer>
   );
 };
@@ -62,6 +65,7 @@ export const Tooltip = () => {
   return (
     <SandboxExamplesContainer>
       <DateTime.Tooltip date={date} showTimezone={false} />
+      <DateTime.Tooltip date={invalidDate} showTimezone={false} />
     </SandboxExamplesContainer>
   );
 };

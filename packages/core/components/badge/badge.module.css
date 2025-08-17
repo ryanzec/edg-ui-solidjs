@@ -13,129 +13,153 @@
 
   /* neutral */
   .neutral {
-    background-color: var(--color-neutral-subtle4);
-    color: var(--color-neutral-bold);
+    background-color: var(--color-neutral-subtle1);
+    color: var(--color-neutral-text);
+    border: 1px solid var(--color-neutral-text);
   }
 
   .neutral-strong {
     background-color: var(--color-neutral);
     color: var(--color-neutral-subtle);
+    border-color: var(--color-neutral);
   }
 
   .neutral.transparent {
     background-color: transparent;
+    border: transparent;
     color: var(--color-neutral-text);
   }
 
   /* brand */
   .brand {
-    background-color: var(--color-brand-subtle4);
-    color: var(--color-brand-bold);
+    background-color: var(--color-brand-subtle1);
+    color: var(--color-brand-text);
+    border: 1px solid var(--color-brand-text);
   }
 
   .brand-strong {
     background-color: var(--color-brand);
     color: var(--color-brand-subtle);
+    border-color: var(--color-brand);
   }
 
   .brand.transparent {
     background-color: transparent;
+    border: transparent;
     color: var(--color-brand-text);
   }
 
   /* brand secondary */
   .brand-secondary {
-    background-color: var(--color-brand-secondary-subtle4);
-    color: var(--color-brand-secondary-bold);
+    background-color: var(--color-brand-secondary-subtle1);
+    color: var(--color-brand-secondary-text);
+    border: 1px solid var(--color-brand-secondary-text);
   }
 
   .brand-secondary-strong {
     background-color: var(--color-brand-secondary);
     color: var(--color-brand-secondary-subtle);
+    border-color: var(--color-brand-secondary);
   }
 
   .brand-secondary.transparent {
     background-color: transparent;
+    border: transparent;
     color: var(--color-brand-secondary-text);
   }
 
   /* success */
   .success {
-    background-color: var(--color-success-subtle4);
-    color: var(--color-success-bold);
+    background-color: var(--color-success-subtle1);
+    color: var(--color-success-text);
+    border: 1px solid var(--color-success-text);
   }
 
   .success-strong {
     background-color: var(--color-success);
     color: var(--color-success-subtle);
+    border-color: var(--color-success);
   }
 
   .success.transparent {
     background-color: transparent;
+    border: transparent;
     color: var(--color-success-text);
   }
 
   /* info */
   .info {
-    background-color: var(--color-info-subtle4);
-    color: var(--color-info-bold);
+    background-color: var(--color-info-subtle1);
+    color: var(--color-info-text);
+    border: 1px solid var(--color-info-text);
   }
 
   .info-strong {
     background-color: var(--color-info);
     color: var(--color-info-subtle);
+    border-color: var(--color-info);
   }
 
   .info.transparent {
     background-color: transparent;
+    border: transparent;
     color: var(--color-info-text);
   }
 
   /* warning */
   .warning {
-    background-color: var(--color-warning-subtle4);
-    color: var(--color-warning-bold);
+    background-color: var(--color-warning-subtle1);
+    color: var(--color-warning-text);
+    border: 1px solid var(--color-warning-text);
   }
 
   .warning-strong {
     background-color: var(--color-warning);
     color: var(--color-warning-subtle);
+    border-color: var(--color-warning);
   }
 
   .warning.transparent {
     background-color: transparent;
+    border: transparent;
     color: var(--color-warning-text);
   }
 
   /* warning high */
   .warning-high {
-    background-color: var(--color-warning-high-subtle4);
-    color: var(--color-warning-high-bold);
+    background-color: var(--color-warning-high-subtle1);
+    color: var(--color-warning-high-text);
+    border: 1px solid var(--color-warning-high-text);
   }
 
   .warning-high-strong {
     background-color: var(--color-warning-high);
     color: var(--color-warning-high-subtle);
+    border-color: var(--color-warning-high);
   }
 
   .warning-high.transparent {
     background-color: transparent;
+    border: transparent;
     color: var(--color-warning-high-text);
   }
 
   /* danger */
   .danger {
-    background-color: var(--color-danger-subtle4);
-    color: var(--color-danger-bold);
+    background-color: var(--color-danger-subtle1);
+    color: var(--color-danger-text);
+    border: 1px solid var(--color-danger-text);
   }
 
   .danger-strong {
     background-color: var(--color-danger);
     color: var(--color-danger-subtle);
+    border-color: var(--color-danger);
   }
 
   .danger.transparent {
     background-color: transparent;
+    border: transparent;
     color: var(--color-danger-text);
   }
 

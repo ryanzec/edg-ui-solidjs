@@ -1,3 +1,4 @@
+import { createEffect } from 'solid-js';
 import DateTime, { type DateTimeProps } from '$/core/components/date-time/date-time';
 import Tooltip, { type TooltipComponentRef } from '$/core/components/tooltip';
 import { componentRefUtils } from '$/core/stores/component-ref';
@@ -7,6 +8,10 @@ export type DateTimeTooltipProps = DateTimeProps;
 
 const DateTimeTooltip = (props: DateTimeTooltipProps) => {
   const tooltipComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
+
+  createEffect(function updateTooltipEnabledState() {
+    tooltipComponentRef.api()?.setIsEnabled(props.date.isValid);
+  });
 
   return (
     <Tooltip tooltipComponentRef={tooltipComponentRef} placement="bottom">

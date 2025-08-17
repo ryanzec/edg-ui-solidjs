@@ -1,6 +1,6 @@
 import { For } from 'solid-js';
 import Icon, { type IconName, IconSize } from '$/core/components/icon';
-import Typography, { TypographyColor } from '../typography';
+import Typography, { TypographyColor } from '$/core/components/typography';
 
 export const ChecklistItemStatus = {
   COMPLETED: 'completed',
@@ -30,7 +30,7 @@ const statusColorMap: Record<ChecklistItemStatus, TypographyColor> = {
 
 const Checklist = (props: ChecklistProps) => {
   return (
-    <div>
+    <div class="flex flex-col gap-3xs">
       <For each={props.items}>
         {(item) => (
           <Typography class="flex items-center gap-3xs" color={statusColorMap[item.status]}>

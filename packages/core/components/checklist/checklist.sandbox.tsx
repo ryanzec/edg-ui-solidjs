@@ -6,9 +6,9 @@ export default {
 };
 
 const items: ChecklistItem[] = [
-  { label: 'Item 1', status: ChecklistItemStatus.COMPLETED },
+  { label: 'This is an item that is long enough in order to test wrapping', status: ChecklistItemStatus.COMPLETED },
   { label: 'Item 2', status: ChecklistItemStatus.COMPLETED },
-  { label: 'Item 3', status: ChecklistItemStatus.INCOMPLETE },
+  { label: 'This is an item that is long enough in order to test wrapping', status: ChecklistItemStatus.INCOMPLETE },
   { label: 'Item 4', status: ChecklistItemStatus.COMPLETED },
   { label: 'Item 5', status: ChecklistItemStatus.INCOMPLETE },
 ];

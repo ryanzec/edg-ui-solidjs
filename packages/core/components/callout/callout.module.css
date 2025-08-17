@@ -32,9 +32,9 @@
 
   /* neutral */
   .neutral {
-    border-color: var(--color-neutral-subtle4);
+    border-color: var(--color-neutral-text);
     background-color: var(--color-neutral-subtle2);
-    color: var(--color-neutral-bold);
+    color: var(--color-neutral-text);
   }
 
   .neutral-strong {
@@ -44,9 +44,9 @@
 
   /* brand */
   .brand {
-    border-color: var(--color-brand-subtle4);
+    border-color: var(--color-brand-text);
     background-color: var(--color-brand-subtle2);
-    color: var(--color-brand-bold);
+    color: var(--color-brand-text);
   }
 
   .brand-strong {
@@ -56,9 +56,9 @@
 
   /* brand secondary */
   .brand-secondary {
-    border-color: var(--color-brand-secondary-subtle4);
+    border-color: var(--color-brand-secondary-text);
     background-color: var(--color-brand-secondary-subtle2);
-    color: var(--color-brand-secondary-bold);
+    color: var(--color-brand-secondary-text);
   }
 
   .brand-secondary-strong {
@@ -68,9 +68,9 @@
 
   /* success */
   .success {
-    border-color: var(--color-success-subtle4);
+    border-color: var(--color-success-text);
     background-color: var(--color-success-subtle2);
-    color: var(--color-success-bold);
+    color: var(--color-success-text);
   }
 
   .success-strong {
@@ -80,9 +80,9 @@
 
   /* info */
   .info {
-    border-color: var(--color-info-subtle4);
+    border-color: var(--color-info-text);
     background-color: var(--color-info-subtle2);
-    color: var(--color-info-bold);
+    color: var(--color-info-text);
   }
 
   .info-strong {
@@ -92,9 +92,9 @@
 
   /* warning */
   .warning {
-    border-color: var(--color-warning-subtle4);
+    border-color: var(--color-warning-text);
     background-color: var(--color-warning-subtle2);
-    color: var(--color-warning-bold);
+    color: var(--color-warning-text);
   }
 
   .warning-strong {
@@ -104,9 +104,9 @@
 
   /* warning high */
   .warning-high {
-    border-color: var(--color-warning-high-subtle4);
+    border-color: var(--color-warning-high-text);
     background-color: var(--color-warning-high-subtle2);
-    color: var(--color-warning-high-bold);
+    color: var(--color-warning-high-text);
   }
 
   .warning-high-strong {
@@ -116,9 +116,9 @@
 
   /* danger */
   .danger {
-    border-color: var(--color-danger-subtle4);
+    border-color: var(--color-danger-text);
     background-color: var(--color-danger-subtle2);
-    color: var(--color-danger-bold);
+    color: var(--color-danger-text);
   }
 
   .danger-strong {

@@ -48,7 +48,7 @@
               "name": "neutral/subtle",
               "type": "color",
               "isAlias": false,
-              "value": "#F8F9FA"
+              "value": "#EFEFEF"
             },
             {
               "name": "neutral/subtle2",
@@ -114,7 +114,7 @@
               "name": "brand/subtle",
               "type": "color",
               "isAlias": false,
-              "value": "#F2F6F5"
+              "value": "#ECF4F2"
             },
             {
               "name": "brand/subtle2",
@@ -180,13 +180,13 @@
               "name": "brand-secondary/subtle",
               "type": "color",
               "isAlias": false,
-              "value": "#FDFCFF"
+              "value": "#F6F4FB"
             },
             {
               "name": "brand-secondary/subtle2",
               "type": "color",
               "isAlias": false,
-              "value": "#FBF8FF"
+              "value": "#F8F4FE"
             },
             {
               "name": "brand-secondary/subtle3",
@@ -246,7 +246,7 @@
               "name": "success/subtle",
               "type": "color",
               "isAlias": false,
-              "value": "#F7FCF7"
+              "value": "#F3F9F3"
             },
             {
               "name": "success/subtle2",
@@ -288,7 +288,7 @@
               "name": "info/subtle",
               "type": "color",
               "isAlias": false,
-              "value": "#F7FBFF"
+              "value": "#F3F7FC"
             },
             {
               "name": "success/base3",
@@ -342,7 +342,7 @@
               "name": "warning/subtle",
               "type": "color",
               "isAlias": false,
-              "value": "#FEFDF7"
+              "value": "#F9F8F1"
             },
             {
               "name": "warning/subtle2",
@@ -408,7 +408,7 @@
               "name": "warning-high/subtle",
               "type": "color",
               "isAlias": false,
-              "value": "#FFFCF7"
+              "value": "#FAF8F3"
             },
             {
               "name": "warning-high/subtle2",
@@ -474,7 +474,7 @@
               "name": "danger/subtle",
               "type": "color",
               "isAlias": false,
-              "value": "#FFFBFB"
+              "value": "#FEF4F4"
             },
             {
               "name": "warning/base3",
@@ -486,7 +486,7 @@
               "name": "danger/subtle2",
               "type": "color",
               "isAlias": false,
-              "value": "#FEF5F5"
+              "value": "#FDF0F0"
             },
             {
               "name": "danger/subtle3",

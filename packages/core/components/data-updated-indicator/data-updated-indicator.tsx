@@ -1,4 +1,4 @@
-import { DateTime as LuxonDateTime } from 'luxon';
+import type { DateTime as LuxonDateTime } from 'luxon';
 import { mergeProps, splitProps } from 'solid-js';
 import { DateTime, type DateTimeProps } from '$/core/components/date-time';
 import Icon, { IconColor, IconVariant } from '$/core/components/icon';
@@ -6,7 +6,7 @@ import { DateFormat, TimeFormat } from '$/core/utils/date';
 import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type DataUpdatedIndicatorProps = Omit<DateTimeProps, 'date'> & {
-  lastUpdatedAt: string;
+  lastUpdatedAt: LuxonDateTime;
   isRefreshing?: boolean;
   isLive?: boolean;
 };
@@ -36,7 +36,7 @@ const DateUpdatedIndicator = (passedProps: DataUpdatedIndicatorProps) => {
       Last Updated:&nbsp;
       <DateTime
         {...restOfProps}
-        date={LuxonDateTime.fromJSDate(new Date(props.lastUpdatedAt))}
+        date={props.lastUpdatedAt}
         dateFormat={DateFormat.STANDARD}
         timeFormat={TimeFormat.STANDARD}
       />

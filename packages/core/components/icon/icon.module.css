@@ -2,6 +2,7 @@
   .icon {
     display: inline-flex;
     font-size: var(--text-base);
+    cursor: inherit;
   }
 
   .extra_small {

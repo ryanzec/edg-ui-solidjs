@@ -55,7 +55,7 @@ const Card = (passedProps: CardProps) => {
     return props.onClick ? 'button' : 'div';
   };
 
-  const clickableIconCssClass = 'absolute right-base top-base cursor-pointer';
+  const clickableIconCssClass = 'absolute right-sm top-sm cursor-pointer';
 
   return (
     <Dynamic

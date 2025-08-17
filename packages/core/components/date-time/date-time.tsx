@@ -3,6 +3,7 @@ import { type JSX, mergeProps, Show, splitProps } from 'solid-js';
 import styles from '$/core/components/date-time/date-time.module.css';
 import { DateFormat, type TimeFormat, TimezoneFormat } from '$/core/utils/date';
 import { tailwindUtils } from '$/core/utils/tailwind';
+import Typography, { TypographyColor } from '../typography';
 
 export type DateTimeProps = JSX.HTMLAttributes<HTMLDivElement> & {
   date: LuxonDateTime;
@@ -20,9 +21,11 @@ const DateTime = (passedProps: DateTimeProps) => {
 
   return (
     <div class={tailwindUtils.merge(styles.dateTime, props.class, { 'inline-flex': props.isInline })} {...restOfProps}>
-      <span>{props.date.toFormat(props.dateFormat)}</span>
-      <Show when={props.timeFormat}>{(timeFormat) => <span>{props.date.toFormat(timeFormat())}</span>}</Show>
-      <Show when={props.showTimezone}>{props.date.toFormat(TimezoneFormat.STANDARD)}</Show>
+      <Show when={props.date.isValid} fallback={<Typography color={TypographyColor.NEUTRAL}>N/A</Typography>}>
+        <span>{props.date.toFormat(props.dateFormat)}</span>
+        <Show when={props.timeFormat}>{(timeFormat) => <span>{props.date.toFormat(timeFormat())}</span>}</Show>
+        <Show when={props.showTimezone}>{props.date.toFormat(TimezoneFormat.STANDARD)}</Show>
+      </Show>
     </div>
   );
 };

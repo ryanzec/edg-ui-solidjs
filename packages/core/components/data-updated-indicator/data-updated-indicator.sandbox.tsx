@@ -9,7 +9,7 @@ export default {
 export const Default = () => {
   return (
     <SandboxExamplesContainer>
-      <DataUpdatedIndicator lastUpdatedAt={DateTime.now().toISO()} />
+      <DataUpdatedIndicator lastUpdatedAt={DateTime.now()} />
     </SandboxExamplesContainer>
   );
 };
@@ -17,7 +17,7 @@ export const Default = () => {
 export const Live = () => {
   return (
     <SandboxExamplesContainer>
-      <DataUpdatedIndicator lastUpdatedAt={DateTime.now().toISO()} isLive />
+      <DataUpdatedIndicator lastUpdatedAt={DateTime.now()} isLive />
     </SandboxExamplesContainer>
   );
 };
@@ -25,7 +25,7 @@ export const Live = () => {
 export const Refreshing = () => {
   return (
     <SandboxExamplesContainer>
-      <DataUpdatedIndicator lastUpdatedAt={DateTime.now().toISO()} isRefreshing />
+      <DataUpdatedIndicator lastUpdatedAt={DateTime.now()} isRefreshing />
     </SandboxExamplesContainer>
   );
 };
@@ -33,7 +33,7 @@ export const Refreshing = () => {
 export const LiveRefreshing = () => {
   return (
     <SandboxExamplesContainer>
-      <DataUpdatedIndicator lastUpdatedAt={DateTime.now().toISO()} isLive isRefreshing />
+      <DataUpdatedIndicator lastUpdatedAt={DateTime.now()} isLive isRefreshing />
     </SandboxExamplesContainer>
   );
 };
