@@ -1,4 +1,5 @@
 import * as fs from 'node:fs';
+import { cachedDataVersionTag } from 'node:v8';
 
 const FIGMA_VARIABLES_JSON_PATH = './artifacts/figma-variables.json';
 const BASE_SIZE = 16;
@@ -145,18 +146,60 @@ const buildColorCssVariables = (data: ConfigData, forTailwind = false): [string[
 
   // this default value basically reset the classes for any variable type we dynamically generate to avoid the
   // default ones from being used and limit ourselves to just the ones we define
-  const lightCssVariables: string[] = [];
-  const darkCssVariables: string[] = [];
+  let lightCssVariables: string[] = [];
+  let darkCssVariables: string[] = [];
 
   for (const mode of colorCollection.modes) {
     for (const variable of mode.variables) {
       const cssVariableName = cleanColorVariableName(variable.name);
-      const cssVariableValue = forTailwind ? `var(--${cssPrefix}-${cssVariableName})` : variable.value;
+      let cssVariableValue = forTailwind ? `var(--${cssPrefix}-${cssVariableName})` : variable.value;
+
+      if ((cssVariableValue as AliasVariable).name) {
+        const aliasVariable = cssVariableValue as AliasVariable;
+        const cleanedVariableName = cleanColorVariableName(aliasVariable.name);
+
+        cssVariableValue = `--${cssPrefix}-${cleanedVariableName.replace('/', '-')}`;
+      }
+
       const cssVariable = `  --${cssPrefix}-${cssVariableName}: ${cssVariableValue};`;
 
       (mode.name === 'light' ? lightCssVariables : darkCssVariables).push(cssVariable);
     }
   }
+
+  const handleVariableReferences = (cssVariables: string[]): string[] => {
+    const newCssVariables: string[] = structuredClone(cssVariables);
+    const variableMap = newCssVariables.map((variable) => variable.split(': '));
+
+    for (let i = 0; i < variableMap.length; i++) {
+      // console.log(variableMap[i]);
+      if (variableMap[i][1].includes('--')) {
+        const replaceValue = variableMap.find((variable) => {
+          // console.log(`${variable[0]};`, `  ${variableMap[i][1]}`);
+          return `${variable[0]};` === `  ${variableMap[i][1]}`;
+        });
+
+        if (!replaceValue) {
+          console.error(`replacement value not found for ${variableMap[i][1]}`);
+          console.log(JSON.stringify(variableMap, null, 2));
+
+          continue;
+        }
+
+        variableMap[i][1] = replaceValue[1];
+      }
+    }
+
+    return variableMap.map((variable) => variable.join(': '));
+  };
+
+  if (forTailwind === false) {
+    lightCssVariables = handleVariableReferences(lightCssVariables);
+    darkCssVariables = handleVariableReferences(darkCssVariables);
+  }
+
+  // console.log('lightCssVariables', lightCssVariables);
+  // console.log('darkCssVariables', darkCssVariables);
 
   return [lightCssVariables, darkCssVariables];
 };

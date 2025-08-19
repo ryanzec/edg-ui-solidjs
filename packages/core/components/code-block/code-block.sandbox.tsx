@@ -43,3 +43,24 @@ export const Copy = () => {
     </SandboxExamplesContainer>
   );
 };
+
+export const Ellipsis = () => {
+  let code = 'PowerShell -ExecutionPolicy Bypass -File C\Users\Public\akira_disguise.ps1';
+
+  for (let i = 0; i < 4; i++) {
+    code += code;
+  }
+
+  return (
+    <SandboxExamplesContainer>
+      <div>Ellipsis</div>
+      <div class={styles.smallWidth}>
+        <CodeBlock ellipsis code={code} showCopyButton />
+      </div>
+      <div>No Ellipsis</div>
+      <div class={styles.smallWidth}>
+        <CodeBlock code={code} showCopyButton />
+      </div>
+    </SandboxExamplesContainer>
+  );
+};

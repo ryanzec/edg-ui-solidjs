@@ -1,8 +1,9 @@
-import { mergeProps, splitProps } from 'solid-js';
+import { mergeProps, Show, splitProps } from 'solid-js';
 import styles from '$/core/components/code-block/code-block.module.css';
 import CopyText from '$/core/components/copy-text';
 import Typography, { type TypographyProps, TypographySize } from '$/core/components/typography';
 import { tailwindUtils } from '$/core/utils/tailwind';
+import EllipsisText from '../ellipsis-text';
 
 export const CodeBlockVariant = {
   BLOCK: 'block',
@@ -15,6 +16,7 @@ export type CodeBlockProps = Omit<TypographyProps, 'variant'> & {
   code: string;
   variant?: CodeBlockVariant;
   showCopyButton?: boolean;
+  ellipsis?: boolean;
 };
 
 const CodeBlock = (passedProps: CodeBlockProps) => {
@@ -23,6 +25,7 @@ const CodeBlock = (passedProps: CodeBlockProps) => {
     'variant',
     'class',
     'showCopyButton',
+    'ellipsis',
   ]);
 
   // @todo(?) not sure if we need this but if we want to do like word breaks on special characters like `/` or `\`
@@ -41,8 +44,12 @@ const CodeBlock = (passedProps: CodeBlockProps) => {
         [styles.inline]: props.variant === CodeBlockVariant.INLINE,
       })}
     >
-      {props.code}
-      {props.showCopyButton && <CopyText class={styles.copyButton} text={props.code} />}
+      <Show when={props.ellipsis} fallback={props.code}>
+        <EllipsisText class="line-clamp-[10]" text={props.code} />
+      </Show>
+      <Show when={props.showCopyButton}>
+        <CopyText class={styles.copyButton} text={props.code} />
+      </Show>
     </Typography>
   );
 };

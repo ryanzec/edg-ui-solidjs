@@ -82,7 +82,7 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
     return displayDate().year;
   });
   const headerText = createMemo(() => {
-    return displayDate().toFormat('LLL yyyy');
+    return displayDate().toFormat(DateFormat.MONTH_YEAR);
   });
   const currentViewDays = createMemo(() => {
     const currentMonthNumber = displayDate().month;
@@ -101,7 +101,7 @@ const DatePicker = (passedProps: DatePickerProps & JSX.HTMLAttributes<HTMLDivEle
           (!!props.disableAfter && currentProcessingDate > props.disableAfter),
         isCurrentMonth: currentProcessingMonthNumber === currentMonthNumber,
         date: currentProcessingDate,
-        day: currentProcessingDate.toFormat('d'),
+        day: currentProcessingDate.toFormat(DateFormat.DAY),
         formatCurrentCheck: currentProcessingDate.toFormat(DateFormat.COMPARE),
       });
 

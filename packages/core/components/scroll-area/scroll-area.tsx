@@ -1,10 +1,9 @@
 import 'overlayscrollbars/overlayscrollbars.css';
 
-import type { OverlayScrollbars, PartialOptions } from 'overlayscrollbars';
-
+import type { DeepPartial } from 'chart.js/dist/types/utils';
+import type { Options, OverlayScrollbars, PartialOptions } from 'overlayscrollbars';
 import { OverlayScrollbarsComponent, type OverlayScrollbarsComponentProps } from 'overlayscrollbars-solid';
 import { type Accessor, children, createContext, createSignal, mergeProps, type Setter, splitProps } from 'solid-js';
-
 import styles from '$/core/components/scroll-area/scroll-area.module.css';
 import { tailwindUtils } from '$/core/utils/tailwind';
 
@@ -44,6 +43,7 @@ const ScrollArea = (
   const contentAsVariable = children(() => (
     <ScrollAreaContext.Provider value={{ isReady }}>{props.children}</ScrollAreaContext.Provider>
   ));
+  const paddingAbsolute = (props.options as DeepPartial<Options>)?.paddingAbsolute;
 
   return (
     <OverlayScrollbarsComponent
@@ -62,7 +62,7 @@ const ScrollArea = (
           ...options.scrollbars,
           ...defaultScrollbarOptions.scrollbars,
         },
-        paddingAbsolute: props.overlapContent === false,
+        paddingAbsolute: props.overlapContent === false || paddingAbsolute,
       }}
       events={{
         // this seems to be the most reliable way to get the instance vs using the ref property

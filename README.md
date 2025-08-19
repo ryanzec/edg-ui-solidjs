@@ -90,3 +90,4 @@ REVIEW COMPONENTS:
 # Links
 
 - https://webaim.org/resources/contrastchecker/ - color contrast standards checker
+- https://uicolors.app/generate/ea011a - color palette generator
