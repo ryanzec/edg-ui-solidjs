@@ -86,6 +86,9 @@ importers:
       '@types/date-fns':
         specifier: 2.6.3
         version: 2.6.3
+      '@types/dropzone':
+        specifier: 5.7.9
+        version: 5.7.9
       '@types/get-value':
         specifier: 3.0.5
         version: 3.0.5
@@ -134,6 +137,9 @@ importers:
       dpdm:
         specifier: 3.14.0
         version: 3.14.0
+      dropzone:
+        specifier: 6.0.0-beta.2
+        version: 6.0.0-beta.2
       fastify:
         specifier: 5.2.1
         version: 5.2.1
@@ -1257,6 +1263,9 @@ packages:
   '@statsig/js-client@3.18.1':
     resolution: {integrity: sha512-bTprZXCZXFqAYt58KFuRkJfljRHuf53q4d1hL/QPTsEgY0jTe36x6spZuImtE1pUcsD6QoT2VLzNS+ENr5iLmA==}
 
+  '@swc/helpers@0.2.14':
+    resolution: {integrity: sha512-wpCQMhf5p5GhNg2MmGKXzUNwxe7zRiCsmqYsamez2beP7mKPCSiu+BjZcdN95yYSzO857kr0VfQewmGpS77nqA==}
+
   '@tailwindcss/node@4.1.3':
     resolution: {integrity: sha512-H/6r6IPFJkCfBJZ2dKZiPJ7Ueb2wbL592+9bQEl2r73qbX6yGnmQVIfiUvDRB2YI0a3PWDrzUwkvQx1XW1bNkA==}
 
@@ -1462,11 +1471,17 @@ packages:
     resolution: {integrity: sha512-Ke1lw2Ni1t/wMUoLtKFmSNCLozcTBd6vmMqFP4hRzXn6qzkNt97bPAX0x5Y/c15DP43kKvwW1ycStD5+43jVQA==}
     deprecated: This is a stub types definition. date-fns provides its own type definitions, so you do not need this installed.
 
+  '@types/dropzone@5.7.9':
+    resolution: {integrity: sha512-c6IlUz+DeQ4gANzJKn8fdP5rO6UyDNOyWLjfPbDRUHCNsXaAVKQOpuOv6LWEyvaK7pLqmoIpvSIlvBgGsk1vGw==}
+
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
   '@types/get-value@3.0.5':
     resolution: {integrity: sha512-+o8nw0TId5cDwtdVrhlc8rvzaxbCU+JksFeu8ZunY9vUaODxngXiNceTFj2gkSwGWNRpe3PtaSWt1y0VB71PvA==}
+
+  '@types/jquery@3.5.32':
+    resolution: {integrity: sha512-b9Xbf4CkMqS02YH8zACqN1xzdxc3cO735Qe5AbSUFmyOiaWAbcpqh9Wna+Uk0vgACvoQHpWDg2rGdHkYPLmCiQ==}
 
   '@types/lodash@4.17.16':
     resolution: {integrity: sha512-HX7Em5NYQAXKW+1T+FiuG27NGwzJfCX3s1GjOa7ujxZa52kjJLOr4FUxT+giF6Tgxv1e+/czV/iTtBw27WTU9g==}
@@ -1488,6 +1503,9 @@ packages:
 
   '@types/set-value@4.0.3':
     resolution: {integrity: sha512-tSuUcLl6kMzI+l0gG7FZ04xbIcynxNIYgWFj91LPAvRcn7W3L1EveXNdVjqFDgAZPjY1qCOsm8Sb1C70SxAPHw==}
+
+  '@types/sizzle@2.3.9':
+    resolution: {integrity: sha512-xzLEyKB50yqCUPUJkIsrVvoWNfFUbIZI+RspLWt8u+tIW/BetMBZtgV2LY/2o+tYH8dRvQ+eoPf3NdhQCcLE2w==}
 
   '@types/spark-md5@3.0.5':
     resolution: {integrity: sha512-lWf05dnD42DLVKQJZrDHtWFidcLrHuip01CtnC2/S6AMhX4t9ZlEUj4iuRlAnts0PQk7KESOqKxeGE/b6sIPGg==}
@@ -1990,6 +2008,9 @@ packages:
     resolution: {integrity: sha512-YJzsFSyEtj88q5eTELg3UWU7TVZkG1dpbF4JDQ3t1b07xuzXmdoGeSz9TKOke1mUuOpWlk4q+pBh+aHzD6GBTg==}
     hasBin: true
 
+  dropzone@6.0.0-beta.2:
+    resolution: {integrity: sha512-k44yLuFFhRk53M8zP71FaaNzJYIzr99SKmpbO/oZKNslDjNXQsBTdfLs+iONd0U0L94zzlFzRnFdqbLcs7h9fQ==}
+
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
     engines: {node: '>= 0.4'}
@@ -2449,6 +2470,9 @@ packages:
 
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
+
+  just-extend@5.1.1:
+    resolution: {integrity: sha512-b+z6yF1d4EOyDgylzQo5IminlUmzSeqR1hs/bzjBNjuGras4FXq/6TrzjxfN0j+TmI0ltJzTNlqXUMCniciwKQ==}
 
   kolorist@1.8.0:
     resolution: {integrity: sha512-Y+60/zizpJ3HRH8DCss+q95yr6145JXZo46OTpFvDZWLfRCE4qChOyk1b26nMaNpfHHgxagk9dXT5OP0Tfe+dQ==}
@@ -3932,7 +3956,7 @@ snapshots:
       '@smithy/protocol-http': 5.1.2
       '@smithy/smithy-client': 4.4.5
       '@smithy/types': 4.3.1
-      '@smithy/util-streAM': 4.2.2
+      '@smithy/util-stream': 4.2.2
       tslib: 2.8.1
 
   '@aws-sdk/credential-provider-ini@3.777.0':
@@ -4771,7 +4795,7 @@ snapshots:
       '@smithy/util-base64': 4.0.0
       '@smithy/util-body-length-browser': 4.0.0
       '@smithy/util-middleware': 4.0.4
-      '@smithy/util-streAM': 4.2.2
+      '@smithy/util-stream': 4.2.2
       '@smithy/util-utf8': 4.0.0
       tslib: 2.8.1
 
@@ -4914,7 +4938,7 @@ snapshots:
       '@smithy/middleware-stack': 4.0.4
       '@smithy/protocol-http': 5.1.2
       '@smithy/types': 4.3.1
-      '@smithy/util-streAM': 4.2.2
+      '@smithy/util-stream': 4.2.2
       tslib: 2.8.1
 
   '@smithy/types@4.3.1':
@@ -5032,6 +5056,8 @@ snapshots:
   '@statsig/js-client@3.18.1':
     dependencies:
       '@statsig/client-core': 3.18.1
+
+  '@swc/helpers@0.2.14': {}
 
   '@tailwindcss/node@4.1.3':
     dependencies:
@@ -5203,9 +5229,17 @@ snapshots:
     dependencies:
       date-fns: 4.1.0
 
+  '@types/dropzone@5.7.9':
+    dependencies:
+      '@types/jquery': 3.5.32
+
   '@types/estree@1.0.8': {}
 
   '@types/get-value@3.0.5': {}
+
+  '@types/jquery@3.5.32':
+    dependencies:
+      '@types/sizzle': 2.3.9
 
   '@types/lodash@4.17.16': {}
 
@@ -5222,6 +5256,8 @@ snapshots:
   '@types/scrollparent@2.0.3': {}
 
   '@types/set-value@4.0.3': {}
+
+  '@types/sizzle@2.3.9': {}
 
   '@types/spark-md5@3.0.5': {}
 
@@ -5762,6 +5798,11 @@ snapshots:
       typescript: 5.8.2
       yargs: 17.7.2
 
+  dropzone@6.0.0-beta.2:
+    dependencies:
+      '@swc/helpers': 0.2.14
+      just-extend: 5.1.1
+
   dunder-proto@1.0.1:
     dependencies:
       call-bind-apply-helpers: 1.0.2
@@ -6227,6 +6268,8 @@ snapshots:
       universalify: 2.0.1
     optionalDependencies:
       graceful-fs: 4.2.11
+
+  just-extend@5.1.1: {}
 
   kolorist@1.8.0: {}
 
