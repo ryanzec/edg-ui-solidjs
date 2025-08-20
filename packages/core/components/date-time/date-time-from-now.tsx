@@ -14,7 +14,7 @@ const DateTimeFromNow = (passedProps: DateTimeFromNowProps) => {
 
   const getDisplayText = (): JSX.Element => {
     if (secondsDiff < 0 && secondsDiff > -60) {
-      return 'just now';
+      return 'moments ago';
     }
 
     if (secondsDiff >= 0 && secondsDiff < 60) {

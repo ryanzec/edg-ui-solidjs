@@ -53,12 +53,18 @@ export const FromNow = () => {
 };
 
 export const FromNowTooltip = () => {
-  const date = LuxonDateTime.now().minus({ days: 1 });
+  const inOneDay = LuxonDateTime.now().plus({ days: 1 });
+  const inOneSecond = LuxonDateTime.now().plus({ seconds: 1 });
+  const now = LuxonDateTime.now();
+  const backOneDay = LuxonDateTime.now().minus({ days: 1 }).minus({ seconds: 1 });
   const invalidDate = LuxonDateTime.fromJSDate(new Date('invalid'));
 
   return (
     <SandboxExamplesContainer>
-      <DateTime.FromNowTooltip date={date} />
+      <DateTime.FromNowTooltip date={inOneDay} />
+      <DateTime.FromNowTooltip date={inOneSecond} />
+      <DateTime.FromNowTooltip date={now} />
+      <DateTime.FromNowTooltip date={backOneDay} />
       <DateTime.FromNowTooltip date={invalidDate} />
     </SandboxExamplesContainer>
   );

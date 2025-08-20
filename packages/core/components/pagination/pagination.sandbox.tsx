@@ -63,8 +63,11 @@ export const PageSizeOptions = () => {
   const handlePageSizeChange = (itemsPerPage: number) => {
     setQueryString({
       ...queryString(),
+      offset: 0,
       itemsPerPage,
     });
+    paginationStore.setItemsPerPage(itemsPerPage);
+    paginationStore.setCurrentPage(1);
   };
 
   const handlePageChange = paginationComponentUtils.buildHandlePageChange({
@@ -87,6 +90,7 @@ export const PageSizeOptions = () => {
           onPageChange={handlePageChange}
           onPageSizeChange={handlePageSizeChange}
           pageSizeOptions={[10, 20, 50, 100]}
+          showNumbers
         />
       </SandboxExamplesContainer>
       <pre>query string: {JSON.stringify(queryString(), null, 2)}</pre>
