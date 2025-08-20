@@ -189,7 +189,7 @@ export const CustomStyling = () => {
             source: ChatMessageSource.USER,
             messageElement: 'This user message has custom border styling',
           }}
-          class="border-2 border-brand-primary"
+          class="border-2 border-brand-strong"
         />
         <Chat.Message
           source={ChatMessageSource.AI}
@@ -197,7 +197,7 @@ export const CustomStyling = () => {
             source: ChatMessageSource.AI,
             messageElement: 'This AI message has custom background and border colors',
           }}
-          class="bg-success-subtle2 border-success-primary"
+          class="bg-success-weak border-success-strong"
         />
         <Chat.Message
           source={ChatMessageSource.SYSTEM}
@@ -205,7 +205,7 @@ export const CustomStyling = () => {
             source: ChatMessageSource.SYSTEM,
             messageElement: 'This system message has custom text color and weight',
           }}
-          class="text-warning-primary font-bold"
+          class="text-warning-strong font-bold"
         />
       </Chat.Messages>
     </SandboxExamplesContainer>

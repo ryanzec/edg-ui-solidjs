@@ -93,6 +93,10 @@ const Checkbox = <TFormData = DefaultFormData>(passedProps: CheckboxProps<TFormD
     }
   };
 
+  const handleClickIcon = () => {
+    inputElementRef()?.click();
+  };
+
   createEffect(function setupInternalCheckState() {
     if (inputElementRef()?.indeterminate) {
       setCheckedState(CheckedState.INDETERMINATE);
@@ -128,7 +132,7 @@ const Checkbox = <TFormData = DefaultFormData>(passedProps: CheckboxProps<TFormD
           name={props.name as string}
           onChange={handleChange}
         />
-        <Icon class={tailwindUtils.merge(styles.icon)} icon={getCheckedStateIcon()} />
+        <Icon class={tailwindUtils.merge(styles.icon)} icon={getCheckedStateIcon()} onClick={handleClickIcon} />
         <Show when={props.labelElement}>
           <span class={styles.label}>{props.labelElement}</span>
         </Show>

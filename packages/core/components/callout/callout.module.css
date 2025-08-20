@@ -32,97 +32,97 @@
 
   /* neutral */
   .neutral {
-    border-color: var(--color-neutral-text);
-    background-color: var(--color-neutral-subtle2);
-    color: var(--color-neutral-text);
+    border-color: var(--color-neutral-weak-text);
+    background-color: var(--color-neutral-weak);
+    color: var(--color-neutral-weak-text);
   }
 
   .neutral-strong {
-    background-color: var(--color-neutral);
-    color: var(--color-neutral-subtle);
+    background-color: var(--color-neutral-strong);
+    color: var(--color-neutral-strong-text);
   }
 
   /* brand */
   .brand {
-    border-color: var(--color-brand-text);
-    background-color: var(--color-brand-subtle2);
-    color: var(--color-brand-text);
+    border-color: var(--color-brand-weak-text);
+    background-color: var(--color-brand-weak);
+    color: var(--color-brand-weak-text);
   }
 
   .brand-strong {
-    background-color: var(--color-brand);
-    color: var(--color-brand-subtle);
+    background-color: var(--color-brand-strong);
+    color: var(--color-brand-strong-text);
   }
 
   /* brand secondary */
   .brand-secondary {
-    border-color: var(--color-brand-secondary-text);
-    background-color: var(--color-brand-secondary-subtle2);
-    color: var(--color-brand-secondary-text);
+    border-color: var(--color-brand-secondary-weak-text);
+    background-color: var(--color-brand-secondary-weak);
+    color: var(--color-brand-secondary-weak-text);
   }
 
   .brand-secondary-strong {
-    background-color: var(--color-brand-secondary);
-    color: var(--color-brand-secondary-subtle);
+    background-color: var(--color-brand-secondary-strong);
+    color: var(--color-brand-secondary-strong-text);
   }
 
   /* success */
   .success {
-    border-color: var(--color-success-text);
-    background-color: var(--color-success-subtle2);
-    color: var(--color-success-text);
+    border-color: var(--color-success-weak-text);
+    background-color: var(--color-success-weak);
+    color: var(--color-success-weak-text);
   }
 
   .success-strong {
-    background-color: var(--color-success);
-    color: var(--color-success-subtle);
+    background-color: var(--color-success-strong);
+    color: var(--color-success-strong-text);
   }
 
   /* info */
   .info {
-    border-color: var(--color-info-text);
-    background-color: var(--color-info-subtle2);
-    color: var(--color-info-text);
+    border-color: var(--color-info-weak-text);
+    background-color: var(--color-info-weak);
+    color: var(--color-info-weak-text);
   }
 
   .info-strong {
-    background-color: var(--color-info);
-    color: var(--color-info-subtle);
+    background-color: var(--color-info-strong);
+    color: var(--color-info-strong-text);
   }
 
   /* warning */
   .warning {
-    border-color: var(--color-warning-text);
-    background-color: var(--color-warning-subtle2);
-    color: var(--color-warning-text);
+    border-color: var(--color-warning-weak-text);
+    background-color: var(--color-warning-weak);
+    color: var(--color-warning-weak-text);
   }
 
   .warning-strong {
-    background-color: var(--color-warning);
-    color: var(--color-warning-subtle);
+    background-color: var(--color-warning-strong);
+    color: var(--color-warning-strong-text);
   }
 
   /* warning high */
   .warning-high {
-    border-color: var(--color-warning-high-text);
-    background-color: var(--color-warning-high-subtle2);
-    color: var(--color-warning-high-text);
+    border-color: var(--color-warning-high-weak-text);
+    background-color: var(--color-warning-high-weak);
+    color: var(--color-warning-high-weak-text);
   }
 
   .warning-high-strong {
-    background-color: var(--color-warning-high);
-    color: var(--color-warning-high-subtle);
+    background-color: var(--color-warning-high-strong);
+    color: var(--color-warning-high-strong-text);
   }
 
   /* danger */
   .danger {
-    border-color: var(--color-danger-text);
-    background-color: var(--color-danger-subtle2);
-    color: var(--color-danger-text);
+    border-color: var(--color-danger-weak-text);
+    background-color: var(--color-danger-weak);
+    color: var(--color-danger-weak-text);
   }
 
   .danger-strong {
-    background-color: var(--color-danger);
-    color: var(--color-danger-subtle);
+    background-color: var(--color-danger-strong);
+    color: var(--color-danger-strong-text);
   }
 }

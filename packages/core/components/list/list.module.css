@@ -1,6 +1,6 @@
 @layer components {
   .list {
-    --list-selected-item-background-color: var(--color-brand-subtle2);
+    --list-selected-item-background-color: var(--color-brand-weak);
   }
 
   .list-item {
@@ -14,7 +14,7 @@
     }
 
     &:hover:not([disabled]) {
-      background-color: var(--color-neutral-subtle2);
+      background-color: var(--color-neutral-weak);
     }
   }
 

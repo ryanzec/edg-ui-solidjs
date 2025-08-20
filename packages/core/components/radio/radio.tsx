@@ -25,6 +25,7 @@ const Radio = <TFormData = DefaultFormData>(passedProps: RadioProps<TFormData>) 
 
   // we need to manually track the checked state of the input as the check state effects styling
   const [isChecked, setIsChecked] = createSignal(restOfProps.checked);
+  const [inputElementRef, setInputElementRef] = createSignal<HTMLInputElement>();
 
   const handleSelect: JSX.EventHandlerUnion<HTMLInputElement, Event> = (event) => {
     const target = event.target as HTMLInputElement;
@@ -39,6 +40,10 @@ const Radio = <TFormData = DefaultFormData>(passedProps: RadioProps<TFormData>) 
     }
   };
 
+  const handleClickIcon = () => {
+    inputElementRef()?.click();
+  };
+
   return (
     <span
       class={tailwindUtils.merge(styles.radio, props.class, {
@@ -46,12 +51,20 @@ const Radio = <TFormData = DefaultFormData>(passedProps: RadioProps<TFormData>) 
       })}
     >
       <label>
-        <input data-id="radio" {...restOfProps} type="radio" name={props.name as string} onChange={handleSelect} />
+        <input
+          data-id="radio"
+          {...restOfProps}
+          type="radio"
+          name={props.name as string}
+          onChange={handleSelect}
+          ref={setInputElementRef}
+        />
         <Icon
           class={tailwindUtils.merge(styles.icon, {
             [styles.iconIsChecked]: isChecked(),
           })}
           icon={isChecked() ? 'check-circle' : 'circle'}
+          onClick={handleClickIcon}
         />
         <span class={styles.label}>{props.labelElement}</span>
       </label>

@@ -13,7 +13,7 @@
     padding: var(--spacing-sm);
     height: 100%;
     width: 100%;
-    background-color: var(--color-neutral-subtle2);
+    background-color: var(--color-neutral-weak);
 
     &:has([data-is-dropping="true"]):not(:has([data-is-dragging="true"])) {
       opacity: 0.3;
@@ -23,9 +23,9 @@
   .list-item {
     display: flex;
     align-items: center;
-    background-color: var(--color-brand);
+    background-color: var(--color-brand-strong);
     padding: var(--spacing-2xs);
-    color: var(--color-on-brand);
+    color: var(--color-brand-strong-text);
     width: 100%;
 
     &[data-is-dragging="true"],

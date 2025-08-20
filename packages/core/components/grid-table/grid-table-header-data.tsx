@@ -105,7 +105,7 @@ const GridTableHeaderData = (passedProps: GridTableHeaderDataProps) => {
         'px-grid-table-x py-grid-table-y font-medium uppercase min-w-[1px] flex items-center gap-3xs border-t border-outline border-b mb-[-1px]',
         {
           'cursor-pointer': isSortable(),
-          'hover:bg-neutral-subtle': isSortable(),
+          'hover:bg-neutral-weak': isSortable(),
           'border-l rounded-tl-sm': props.isFirstColumn,
           'border-r rounded-tr-sm': props.isLastColumn,
         },

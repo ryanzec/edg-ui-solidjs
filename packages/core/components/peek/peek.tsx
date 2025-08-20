@@ -135,7 +135,7 @@ const Peek = (passedProps: PeekProps) => {
               'transition-shadow duration-150 ease-in-out',
               styles.peek,
               {
-                'shadow-[inset_4px_0_0_0_var(--color-brand-subtle4)]': sizerStore.isInResizeArea(),
+                'shadow-[inset_4px_0_0_0_var(--color-brand-weak1)]': sizerStore.isInResizeArea(),
               },
               props.class,
             )}

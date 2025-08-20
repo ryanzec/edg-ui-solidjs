@@ -78,78 +78,72 @@ const ApplicationFrame = (passedProps: ApplicationFrameProps) => {
   };
 
   return (
-    <>
-      <div
-        data-id="application-frame"
-        data-theme={themeManagerStore.theme()}
-        class="flex h-full w-full bg-brand-subtle1"
-      >
-        <Show when={props.isInitializing === false} fallback={<Loading.Section>Loading...</Loading.Section>}>
-          <Show when={props.isAuthenticated}>
-            <div
-              ref={setSidebarElementRef}
-              data-id="sidebar"
-              class={tailwindUtils.merge(
-                'flex flex-col h-full bg-brand-subtle3 gap-2xs relative transition-shadow duration-150 ease-in-out delay-100',
-                {
-                  'w-[250px]': sidebarOpenedToggleStore.isToggled(),
-                  'w-[60px]': sidebarOpenedToggleStore.isToggled() === false,
-                  'shadow-[inset_-4px_0_0_0_var(--color-brand-subtle4)]': sizerStore.isInResizeArea(),
-                },
-              )}
+    <div data-id="application-frame" data-theme={themeManagerStore.theme()} class="flex h-full w-full bg-surface-pure">
+      <Show when={props.isInitializing === false} fallback={<Loading.Section>Loading...</Loading.Section>}>
+        <Show when={props.isAuthenticated}>
+          <div
+            ref={setSidebarElementRef}
+            data-id="sidebar"
+            class={tailwindUtils.merge(
+              'flex flex-col h-full bg-brand-weak gap-2xs relative transition-shadow duration-150 ease-in-out delay-100',
+              {
+                'w-[250px]': sidebarOpenedToggleStore.isToggled(),
+                'w-[60px]': sidebarOpenedToggleStore.isToggled() === false,
+                'shadow-[inset_-4px_0_0_0_var(--color-brand-weak1)]': sizerStore.isInResizeArea(),
+              },
+            )}
+          >
+            <Show
+              when={sidebarOpenedToggleStore.isToggled()}
+              fallback={<div class="self-center max-w-full p-3xs w-[40px] h-[40px]" innerHTML={CompanyLogoSmall} />}
             >
-              <Show
-                when={sidebarOpenedToggleStore.isToggled()}
-                fallback={<div class="self-center max-w-full p-3xs w-[40px] h-[40px]" innerHTML={CompanyLogoSmall} />}
-              >
-                <div class="self-center max-w-full p-3xs" innerHTML={CompanyLogo} />
-              </Show>
-              <nav data-id="navigation">
-                <div class="flex flex-col gap-2xs">
-                  <button
-                    class={tailwindUtils.merge(
-                      'flex gap-3xs items-center rounded-full mx-xs px-2xs py-4xs hover:bg-brand-subtle4 cursor-pointer',
-                      {
-                        'bg-[#a8bfb6]': routeUtils.isActive(UiRouteName.HOME, location.pathname),
-                      },
-                    )}
-                    type="button"
-                    onClick={handleHome}
-                  >
-                    <Icon
-                      icon="house"
-                      color={IconColor.INHERIT}
-                      size={sidebarOpenedToggleStore.isToggled() ? IconSize.LARGE : IconSize.EXTRA_LARGE}
-                    />
-                    <Show when={sidebarOpenedToggleStore.isToggled()}>Home</Show>
-                  </button>
-                </div>
-              </nav>
-              <div class="mt-auto">
-                <Show when={props.user}>
-                  {(user) => (
-                    <UserMenu
-                      userMenuTooltipComponentRef={userDropDownComponentRef}
-                      user={user()}
-                      features={props.features}
-                      isCollapsed={sidebarOpenedToggleStore.isToggled() === false}
-                      showName={sidebarOpenedToggleStore.isToggled()}
-                    />
+              <div class="self-center max-w-full p-3xs" innerHTML={CompanyLogo} />
+            </Show>
+            <nav data-id="navigation">
+              <div class="flex flex-col gap-2xs">
+                <button
+                  class={tailwindUtils.merge(
+                    'flex gap-3xs items-center rounded-full mx-xs px-2xs py-4xs hover:bg-brand-weak1 cursor-pointer',
+                    {
+                      'bg-[#a8bfb6]': routeUtils.isActive(UiRouteName.HOME, location.pathname),
+                    },
                   )}
-                </Show>
+                  type="button"
+                  onClick={handleHome}
+                >
+                  <Icon
+                    icon="house"
+                    color={IconColor.INHERIT}
+                    size={sidebarOpenedToggleStore.isToggled() ? IconSize.LARGE : IconSize.EXTRA_LARGE}
+                  />
+                  <Show when={sidebarOpenedToggleStore.isToggled()}>Home</Show>
+                </button>
               </div>
+            </nav>
+            <div class="mt-auto">
+              <Show when={props.user}>
+                {(user) => (
+                  <UserMenu
+                    userMenuTooltipComponentRef={userDropDownComponentRef}
+                    user={user()}
+                    features={props.features}
+                    isCollapsed={sidebarOpenedToggleStore.isToggled() === false}
+                    showName={sidebarOpenedToggleStore.isToggled()}
+                  />
+                )}
+              </Show>
             </div>
-          </Show>
-          <div class="h-full min-h-[1px] flex-1">
-            <ScrollArea>
-              <div class="m-base h-[calc(100%-(var(--spacing-base)*2))] w-[calc(100%-(var(--spacing-base)*2))] flex">
-                {props.children}
-              </div>
-            </ScrollArea>
           </div>
         </Show>
-      </div>
-    </>
+        <div class="h-full min-h-[1px] flex-1">
+          <ScrollArea>
+            <div class="m-base h-[calc(100%-(var(--spacing-base)*2))] w-[calc(100%-(var(--spacing-base)*2))] flex">
+              {props.children}
+            </div>
+          </ScrollArea>
+        </div>
+      </Show>
+    </div>
   );
 };
 

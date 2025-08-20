@@ -41,7 +41,7 @@ export const Button = (passedProps: ButtonProps) => {
         shape: ButtonShape.ROUNDED,
         loadingIconPosition: ButtonItemPosition.PRE,
         size: ButtonSize.BASE,
-        markerColor: BadgeColor.WARNING_HIGH,
+        markerColor: BadgeColor.WARNING,
       },
       passedProps,
     ),

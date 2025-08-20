@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     gap: var(--spacing-4xs);
-    color: var(--color-brand);
+    color: var(--color-brand-strong);
   }
 
   .thumbs-down {

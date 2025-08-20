@@ -16,7 +16,7 @@
   }
 
   .radio .icon-is-checked {
-    color: var(--color-success);
+    color: var(--color-success-strong);
   }
 
   .align-end {

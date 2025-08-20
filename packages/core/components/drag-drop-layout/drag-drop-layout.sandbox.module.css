@@ -3,7 +3,7 @@
     margin: var(--spacing-2xs);
 
     &[data-swapy-highlighted] {
-      background: var(--color-neutral-subtle3);
+      background: var(--color-neutral-weak1);
     }
   }
 
@@ -24,7 +24,7 @@
   }
 
   .data4 {
-    background: var(--color-danger-subtle3);
+    background: var(--color-danger-weak1);
     height: 100%;
     padding: var(--spacing-2xs);
   }

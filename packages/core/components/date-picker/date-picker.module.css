@@ -43,20 +43,20 @@
   }
 
   .day-current {
-    background-color: var(--color-neutral-subtle);
+    background-color: var(--color-neutral-weak);
   }
 
   .day-selected {
-    background-color: var(--color-brand-subtle2);
+    background-color: var(--color-brand-weak);
   }
 
   .day:not(.day-of-week-header-item):not(.day-disabled):hover {
     cursor: pointer;
-    background-color: var(--color-brand-subtle);
+    background-color: var(--color-brand-weak1);
   }
 
   .day-inactive {
-    color: var(--color-neutral);
+    color: var(--color-neutral-strong);
   }
 
   .day-disabled {

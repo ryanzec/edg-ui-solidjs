@@ -108,21 +108,21 @@ export const Default = () => {
             columnCount={4}
           >
             {(item, index) => {
-              const isFirstRow = index() === 0;
-              const isLastRow = index() === data().length - 1;
+              const isFirstRow = () => index() === 0;
+              const isLastRow = () => index() === data().length - 1;
 
               return (
                 <>
-                  <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isStartOfRow>
+                  <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
                     {item.id}
                   </GridTable.Data>
-                  <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                  <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                     {item.name}
                   </GridTable.Data>
-                  <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                  <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                     {item.status}
                   </GridTable.Data>
-                  <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} class="justify-center" isEndOfRow>
+                  <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} class="justify-center" isEndOfRow>
                     {item.date}
                   </GridTable.Data>
                 </>
@@ -187,21 +187,26 @@ export const ScrollInScroll = () => {
                   columnCount={4}
                 >
                   {(item, index) => {
-                    const isFirstRow = index() === 0;
-                    const isLastRow = index() === data().length - 1;
+                    const isFirstRow = () => index() === 0;
+                    const isLastRow = () => index() === data().length - 1;
 
                     return (
                       <>
-                        <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isStartOfRow>
+                        <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
                           {item.id}
                         </GridTable.Data>
-                        <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                        <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                           {item.name}
                         </GridTable.Data>
-                        <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                        <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                           {item.status}
                         </GridTable.Data>
-                        <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} class="justify-center" isEndOfRow>
+                        <GridTable.Data
+                          isFirstRow={isFirstRow()}
+                          isLastRow={isLastRow()}
+                          class="justify-center"
+                          isEndOfRow
+                        >
                           {item.date}
                         </GridTable.Data>
                       </>
@@ -262,21 +267,21 @@ export const ScrollingHeightByDefault = () => {
             columnCount={4}
           >
             {(item, index) => {
-              const isFirstRow = index() === 0;
-              const isLastRow = index() === data().length - 1;
+              const isFirstRow = () => index() === 0;
+              const isLastRow = () => index() === data().length - 1;
 
               return (
                 <>
-                  <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isStartOfRow>
+                  <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
                     {item.id}
                   </GridTable.Data>
-                  <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                  <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                     {item.name}
                   </GridTable.Data>
-                  <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                  <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                     {item.status}
                   </GridTable.Data>
-                  <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} class="justify-center" isEndOfRow>
+                  <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} class="justify-center" isEndOfRow>
                     {item.date}
                   </GridTable.Data>
                 </>

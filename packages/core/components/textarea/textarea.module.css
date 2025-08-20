@@ -17,11 +17,11 @@
   }
 
   .textarea:focus:not([disabled]):not([readonly]):not(.invalid) {
-    border-color: var(--color-info);
+    border-color: var(--color-info-strong);
   }
 
   .invalid {
-    border-color: var(--color-danger);
+    border-color: var(--color-danger-strong);
   }
 
   .textarea::placeholder {

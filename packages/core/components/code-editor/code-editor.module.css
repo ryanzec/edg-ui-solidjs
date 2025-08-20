@@ -35,8 +35,8 @@
   }
 
   .error-messages {
-    background-color: var(--color-danger2);
-    color: var(--color-on-danger);
+    background-color: var(--color-danger-strong1);
+    color: var(--color-danger-strong-text);
     padding: var(--spacing-4xs);
   }
 }
@@ -45,12 +45,12 @@
   :global {
     .cm-merge-a .cm-changedLine,
     .cm-merge-b .cm-mergeSpacer {
-      background-color: var(--color-danger-subtle3);
+      background-color: var(--color-danger-50);
     }
 
     .cm-merge-b .cm-changedLine,
     .cm-merge-a .cm-mergeSpacer {
-      background-color: var(--color-success-subtle3);
+      background-color: var(--color-success-50);
     }
   }
 }

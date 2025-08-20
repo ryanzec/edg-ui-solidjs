@@ -34,7 +34,7 @@ const Avatar = (passedProps: AvatarProps) => {
       color={TypographyColor.NONE}
       {...restOfProps}
       class={tailwindUtils.merge(
-        'flex items-center justify-center rounded-full bg-brand text-on-brand font-medium',
+        'flex items-center justify-center rounded-full bg-brand-strong text-brand-strong-text font-medium',
         {
           'cursor-pointer': props.isClickable || !!restOfProps.onClick,
           'h-base w-base': avatarSize() === AvatarSize.SMALL,

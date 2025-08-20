@@ -32,7 +32,7 @@ const UsersList = (props: UsersListProps) => {
         columnCount={4}
       >
         {(user, index) => {
-          const isLastRow = index() === props.users.length - 1;
+          const isLastRow = () => index() === props.users.length - 1;
           const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
 
           const handleEdit = () => {
@@ -49,17 +49,17 @@ const UsersList = (props: UsersListProps) => {
 
           return (
             <>
-              <GridTable.Data onClick={handleEdit} isLastRow={isLastRow} isStartOfRow>
+              <GridTable.Data onClick={handleEdit} isLastRow={isLastRow()} isStartOfRow>
                 {user.name}
               </GridTable.Data>
-              <GridTable.Data onClick={handleEdit} isLastRow={isLastRow}>
+              <GridTable.Data onClick={handleEdit} isLastRow={isLastRow()}>
                 {user.email}
               </GridTable.Data>
-              <GridTable.Data onClick={handleEdit} isLastRow={isLastRow}>
+              <GridTable.Data onClick={handleEdit} isLastRow={isLastRow()}>
                 {user.roles.join(', ')}
               </GridTable.Data>
               <GridTable.DataActions
-                isLastRow={isLastRow}
+                isLastRow={isLastRow()}
                 isEndOfRow
                 actionsDropDownComponentRef={dropDownComponentRef}
                 dropDownContentElement={

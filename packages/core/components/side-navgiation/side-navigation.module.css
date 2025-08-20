@@ -45,8 +45,8 @@
   }
 
   .sub-item-active {
-    color: var(--color-brand);
-    border-color: var(--color-brand);
+    color: var(--color-brand-strong);
+    border-color: var(--color-brand-strong);
   }
 
   /* collapsed */

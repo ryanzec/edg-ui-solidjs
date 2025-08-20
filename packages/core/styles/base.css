@@ -8,7 +8,7 @@
 html {
   font-family: var(--font-family-geist), sans-serif;
   color: var(--color-text);
-  background-color: var(--color-neutral-subtle);
+  background-color: var(--color-neutral-50);
 }
 
 body {

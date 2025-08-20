@@ -22,7 +22,7 @@ export type TabProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> &
   };
 
 const Tab = (passedProps: TabProps) => {
-  const [props, restOfProps] = splitProps(mergeProps({ count: 0, markerColor: BadgeColor.WARNING_HIGH }, passedProps), [
+  const [props, restOfProps] = splitProps(mergeProps({ count: 0, markerColor: BadgeColor.WARNING }, passedProps), [
     'class',
     'isActive',
     'icon',
@@ -61,7 +61,7 @@ const Tab = (passedProps: TabProps) => {
           'rounded-sm': context?.variant === TabVariant.DEFAULT,
           'text-text-inverse border-0': context?.onInverse,
           'text-sm leading-sm tracking-sm': context?.size === TabSize.SMALL,
-          'bg-brand text-on-brand border-brand': props.isActive,
+          'bg-brand-strong text-brand-strong-text border-brand-strong': props.isActive,
           'opacity-disabled': props.disabled,
         },
         props.class,

@@ -19,7 +19,7 @@
   }
 
   .container-focus:not(.container-disabled):not(.container-readonly):not(.container-invalid) .input-container {
-    border-color: var(--color-info);
+    border-color: var(--color-info-strong);
   }
 
   .container:hover:not(.container-disabled):not(.container-readonly):not(.container-invalid):not(.container-focus)
@@ -55,7 +55,7 @@
   }
 
   .container-invalid .input-container {
-    border-color: var(--color-danger);
+    border-color: var(--color-danger-strong);
   }
 
   .input-container input::placeholder {

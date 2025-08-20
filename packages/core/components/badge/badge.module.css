@@ -13,15 +13,15 @@
 
   /* neutral */
   .neutral {
-    background-color: var(--color-neutral-subtle1);
-    color: var(--color-neutral-text);
-    border: 1px solid var(--color-neutral-text);
+    background-color: var(--color-neutral-weak);
+    color: var(--color-neutral-weak-text);
+    border: 1px solid var(--color-neutral-bold);
   }
 
   .neutral-strong {
-    background-color: var(--color-neutral);
-    color: var(--color-neutral-subtle);
-    border-color: var(--color-neutral);
+    background-color: var(--color-neutral-strong);
+    color: var(--color-neutral-strong-text);
+    border-color: var(--color-neutral-strong);
   }
 
   .neutral.transparent {
@@ -32,15 +32,15 @@
 
   /* brand */
   .brand {
-    background-color: var(--color-brand-subtle1);
-    color: var(--color-brand-text);
-    border: 1px solid var(--color-brand-text);
+    background-color: var(--color-brand-weak);
+    color: var(--color-brand-weak-text);
+    border: 1px solid var(--color-brand-bold);
   }
 
   .brand-strong {
-    background-color: var(--color-brand);
-    color: var(--color-brand-subtle);
-    border-color: var(--color-brand);
+    background-color: var(--color-brand-strong);
+    color: var(--color-brand-strong-text);
+    border-color: var(--color-brand-strong);
   }
 
   .brand.transparent {
@@ -51,15 +51,15 @@
 
   /* brand secondary */
   .brand-secondary {
-    background-color: var(--color-brand-secondary-subtle1);
-    color: var(--color-brand-secondary-text);
-    border: 1px solid var(--color-brand-secondary-text);
+    background-color: var(--color-brand-secondary-weak);
+    color: var(--color-brand-secondary-weak-text);
+    border: 1px solid var(--color-brand-secondary-bold);
   }
 
   .brand-secondary-strong {
-    background-color: var(--color-brand-secondary);
-    color: var(--color-brand-secondary-subtle);
-    border-color: var(--color-brand-secondary);
+    background-color: var(--color-brand-secondary-strong);
+    color: var(--color-brand-secondary-strong-text);
+    border-color: var(--color-brand-secondary-strong);
   }
 
   .brand-secondary.transparent {
@@ -70,15 +70,15 @@
 
   /* success */
   .success {
-    background-color: var(--color-success-subtle1);
-    color: var(--color-success-text);
-    border: 1px solid var(--color-success-text);
+    background-color: var(--color-success-weak);
+    color: var(--color-success-weak-text);
+    border: 1px solid var(--color-success-bold);
   }
 
   .success-strong {
-    background-color: var(--color-success);
-    color: var(--color-success-subtle);
-    border-color: var(--color-success);
+    background-color: var(--color-success-strong);
+    color: var(--color-success-strong-text);
+    border-color: var(--color-success-strong);
   }
 
   .success.transparent {
@@ -89,15 +89,15 @@
 
   /* info */
   .info {
-    background-color: var(--color-info-subtle1);
-    color: var(--color-info-text);
-    border: 1px solid var(--color-info-text);
+    background-color: var(--color-info-weak);
+    color: var(--color-info-weak-text);
+    border: 1px solid var(--color-info-bold);
   }
 
   .info-strong {
-    background-color: var(--color-info);
-    color: var(--color-info-subtle);
-    border-color: var(--color-info);
+    background-color: var(--color-info-strong);
+    color: var(--color-info-strong-text);
+    border-color: var(--color-info-strong);
   }
 
   .info.transparent {
@@ -108,15 +108,15 @@
 
   /* warning */
   .warning {
-    background-color: var(--color-warning-subtle1);
-    color: var(--color-warning-text);
-    border: 1px solid var(--color-warning-text);
+    background-color: var(--color-warning-weak);
+    color: var(--color-warning-weak-text);
+    border: 1px solid var(--color-warning-bold);
   }
 
   .warning-strong {
-    background-color: var(--color-warning);
-    color: var(--color-warning-subtle);
-    border-color: var(--color-warning);
+    background-color: var(--color-warning-strong);
+    color: var(--color-warning-strong-text);
+    border-color: var(--color-warning-strong);
   }
 
   .warning.transparent {
@@ -127,15 +127,15 @@
 
   /* warning high */
   .warning-high {
-    background-color: var(--color-warning-high-subtle1);
-    color: var(--color-warning-high-text);
-    border: 1px solid var(--color-warning-high-text);
+    background-color: var(--color-warning-high-weak);
+    color: var(--color-warning-high-weak-text);
+    border: 1px solid var(--color-warning-high-bold);
   }
 
   .warning-high-strong {
-    background-color: var(--color-warning-high);
-    color: var(--color-warning-high-subtle);
-    border-color: var(--color-warning-high);
+    background-color: var(--color-warning-high-strong);
+    color: var(--color-warning-high-strong-text);
+    border-color: var(--color-warning-high-strong);
   }
 
   .warning-high.transparent {
@@ -146,15 +146,15 @@
 
   /* danger */
   .danger {
-    background-color: var(--color-danger-subtle1);
-    color: var(--color-danger-text);
-    border: 1px solid var(--color-danger-text);
+    background-color: var(--color-danger-weak);
+    color: var(--color-danger-weak-text);
+    border: 1px solid var(--color-danger-bold);
   }
 
   .danger-strong {
-    background-color: var(--color-danger);
-    color: var(--color-danger-subtle);
-    border-color: var(--color-danger);
+    background-color: var(--color-danger-strong);
+    color: var(--color-danger-strong-text);
+    border-color: var(--color-danger-strong);
   }
 
   .danger.transparent {

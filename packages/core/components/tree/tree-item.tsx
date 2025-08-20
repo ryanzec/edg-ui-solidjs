@@ -50,7 +50,7 @@ const TreeItem = <TItem extends TreeItemData>(passedProps: TreeItemProps<TItem>)
         class={tailwindUtils.merge(
           'cursor-pointer hover:bg-surface-tertiary',
           {
-            'bg-brand-subtle3': isActive(),
+            'bg-brand-weak': isActive(),
           },
           props.class,
         )}

@@ -66,42 +66,42 @@
   }
 
   .neutral.filled {
-    background-color: var(--color-neutral);
-    color: var(--color-on-neutral);
+    background-color: var(--color-neutral-strong);
+    color: var(--color-neutral-strong-text);
   }
 
   .neutral.filled:not([disabled]):hover {
-    background-color: var(--color-neutral2);
+    background-color: var(--color-neutral-strong1);
   }
 
   .neutral.filled:not([disabled]):active {
-    background-color: var(--color-neutral3);
+    background-color: var(--color-neutral-strong);
   }
 
   .neutral.weak {
-    background-color: var(--color-neutral-subtle2);
+    background-color: var(--color-neutral-weak);
   }
 
   .neutral.weak:not([disabled]):hover,
   .neutral.outlined:not([disabled]):hover,
   .neutral.ghost:not([disabled]):hover {
-    background-color: var(--color-neutral-subtle3);
+    background-color: var(--color-neutral-weak1);
   }
 
   .neutral.weak:not([disabled]):active,
   .neutral.outlined:not([disabled]):active,
   .neutral.outlined.is-selected,
   .neutral.ghost:not([disabled]):active {
-    background-color: var(--color-neutral-subtle4);
+    background-color: var(--color-neutral-weak);
   }
 
   .neutral.text {
-    color: var(--color-neutral);
+    color: var(--color-neutral-text);
   }
 
   /* brand */
   .brand {
-    color: var(--color-brand-bold);
+    color: var(--color-brand-text);
   }
 
   .brand.outlined {
@@ -109,37 +109,37 @@
   }
 
   .brand.filled {
-    background-color: var(--color-brand);
-    color: var(--color-on-brand);
+    background-color: var(--color-brand-strong);
+    color: var(--color-brand-strong-text);
   }
 
   .brand.filled:not([disabled]):hover {
-    background-color: var(--color-brand2);
+    background-color: var(--color-brand-strong1);
   }
 
   .brand.filled:not([disabled]):active {
-    background-color: var(--color-brand3);
+    background-color: var(--color-brand-strong);
   }
 
   .brand.weak {
-    background-color: var(--color-brand-subtle2);
+    background-color: var(--color-brand-weak);
   }
 
   .brand.weak:not([disabled]):hover,
   .brand.outlined:not([disabled]):hover,
   .brand.ghost:not([disabled]):hover {
-    background-color: var(--color-brand-subtle3);
+    background-color: var(--color-brand-weak1);
   }
 
   .brand.weak:not([disabled]):active,
   .brand.outlined:not([disabled]):active,
   .brand.outlined.is-selected,
   .brand.ghost:not([disabled]):active {
-    background-color: var(--color-brand-subtle4);
+    background-color: var(--color-brand-weak);
   }
 
   .brand.text {
-    color: var(--color-brand);
+    color: var(--color-brand-text);
   }
 
   /* brand secondary */
@@ -152,37 +152,37 @@
   }
 
   .brand-secondary.filled {
-    background-color: var(--color-brand-secondary);
-    color: var(--color-on-brand-secondary);
+    background-color: var(--color-brand-secondary-strong);
+    color: var(--color-brand-secondary-strong-text);
   }
 
   .brand-secondary.filled:not([disabled]):hover {
-    background-color: var(--color-brand-secondary2);
+    background-color: var(--color-brand-secondary-strong1);
   }
 
   .brand-secondary.filled:not([disabled]):active {
-    background-color: var(--color-brand-secondary3);
+    background-color: var(--color-brand-secondary-strong);
   }
 
   .brand-secondary.weak {
-    background-color: var(--color-brand-secondary-subtle2);
+    background-color: var(--color-brand-secondary-weak);
   }
 
   .brand-secondary.weak:not([disabled]):hover,
   .brand-secondary.outlined:not([disabled]):hover,
   .brand-secondary.ghost:not([disabled]):hover {
-    background-color: var(--color-brand-secondary-subtle3);
+    background-color: var(--color-brand-secondary-weak1);
   }
 
   .brand-secondary.weak:not([disabled]):active,
   .brand-secondary.outlined:not([disabled]):active,
   .brand-secondary.outlined.is-selected,
   .brand-secondary.ghost:not([disabled]):active {
-    background-color: var(--color-brand-secondary-subtle4);
+    background-color: var(--color-brand-secondary-weak);
   }
 
   .brand-secondary.text {
-    color: var(--color-brand-secondary);
+    color: var(--color-brand-secondary-text);
   }
 
   /* success */
@@ -195,37 +195,37 @@
   }
 
   .success.filled {
-    background-color: var(--color-success);
-    color: var(--color-on-success);
+    background-color: var(--color-success-strong);
+    color: var(--color-success-strong-text);
   }
 
   .success.filled:not([disabled]):hover {
-    background-color: var(--color-success2);
+    background-color: var(--color-success-strong1);
   }
 
   .success.filled:not([disabled]):active {
-    background-color: var(--color-success3);
+    background-color: var(--color-success-strong);
   }
 
   .success.weak {
-    background-color: var(--color-success-subtle2);
+    background-color: var(--color-success-weak);
   }
 
   .success.weak:not([disabled]):hover,
   .success.outlined:not([disabled]):hover,
   .success.ghost:not([disabled]):hover {
-    background-color: var(--color-success-subtle3);
+    background-color: var(--color-success-weak1);
   }
 
   .success.weak:not([disabled]):active,
   .success.outlined:not([disabled]):active,
   .success.outlined.is-selected,
   .success.ghost:not([disabled]):active {
-    background-color: var(--color-success-subtle4);
+    background-color: var(--color-success-weak);
   }
 
   .success.text {
-    color: var(--color-success);
+    color: var(--color-success-text);
   }
 
   /* info */
@@ -238,37 +238,37 @@
   }
 
   .info.filled {
-    background-color: var(--color-info);
-    color: var(--color-on-info);
+    background-color: var(--color-info-strong);
+    color: var(--color-info-strong-text);
   }
 
   .info.filled:not([disabled]):hover {
-    background-color: var(--color-info2);
+    background-color: var(--color-info-strong1);
   }
 
   .info.filled:not([disabled]):active {
-    background-color: var(--color-info3);
+    background-color: var(--color-info-strong);
   }
 
   .info.weak {
-    background-color: var(--color-info-subtle2);
+    background-color: var(--color-info-weak);
   }
 
   .info.weak:not([disabled]):hover,
   .info.outlined:not([disabled]):hover,
   .info.ghost:not([disabled]):hover {
-    background-color: var(--color-info-subtle3);
+    background-color: var(--color-info-weak1);
   }
 
   .info.weak:not([disabled]):active,
   .info.outlined:not([disabled]):active,
   .info.outlined.is-selected,
   .info.ghost:not([disabled]):active {
-    background-color: var(--color-info-subtle4);
+    background-color: var(--color-info-weak);
   }
 
   .info.text {
-    color: var(--color-info);
+    color: var(--color-info-text);
   }
 
   /* warning */
@@ -281,37 +281,37 @@
   }
 
   .warning.filled {
-    background-color: var(--color-warning);
-    color: var(--color-on-warning);
+    background-color: var(--color-warning-strong);
+    color: var(--color-warning-strong-text);
   }
 
   .warning.filled:not([disabled]):hover {
-    background-color: var(--color-warning2);
+    background-color: var(--color-warning-strong1);
   }
 
   .warning.filled:not([disabled]):active {
-    background-color: var(--color-warning3);
+    background-color: var(--color-warning-strong);
   }
 
   .warning.weak {
-    background-color: var(--color-warning-subtle2);
+    background-color: var(--color-warning-weak);
   }
 
   .warning.weak:not([disabled]):hover,
   .warning.outlined:not([disabled]):hover,
   .warning.ghost:not([disabled]):hover {
-    background-color: var(--color-warning-subtle3);
+    background-color: var(--color-warning-weak1);
   }
 
   .warning.weak:not([disabled]):active,
   .warning.outlined:not([disabled]):active,
   .warning.outlined.is-selected,
   .warning.ghost:not([disabled]):active {
-    background-color: var(--color-warning-subtle4);
+    background-color: var(--color-warning-weak);
   }
 
   .warning.text {
-    color: var(--color-warning);
+    color: var(--color-warning-text);
   }
 
   /* warning high */
@@ -324,37 +324,37 @@
   }
 
   .warning-high.filled {
-    background-color: var(--color-warning-high);
-    color: var(--color-on-warning);
+    background-color: var(--color-warning-high-strong);
+    color: var(--color-warning-high-strong-text);
   }
 
   .warning-high.filled:not([disabled]):hover {
-    background-color: var(--color-warning-high2);
+    background-color: var(--color-warning-high-strong1);
   }
 
   .warning-high.filled:not([disabled]):active {
-    background-color: var(--color-warning-high3);
+    background-color: var(--color-warning-high-strong);
   }
 
   .warning-high.weak {
-    background-color: var(--color-warning-high-subtle2);
+    background-color: var(--color-warning-high-weak);
   }
 
   .warning-high.weak:not([disabled]):hover,
   .warning-high.outlined:not([disabled]):hover,
   .warning-high.ghost:not([disabled]):hover {
-    background-color: var(--color-warning-high-subtle3);
+    background-color: var(--color-warning-high-weak1);
   }
 
   .warning-high.weak:not([disabled]):active,
   .warning-high.outlined:not([disabled]):active,
   .warning-high.outlined.is-selected,
   .warning-high.ghost:not([disabled]):active {
-    background-color: var(--color-warning-high-subtle4);
+    background-color: var(--color-warning-high-weak);
   }
 
   .warning-high.text {
-    color: var(--color-warning-high);
+    color: var(--color-warning-high-text);
   }
 
   /* danger */
@@ -367,37 +367,37 @@
   }
 
   .danger.filled {
-    background-color: var(--color-danger);
-    color: var(--color-on-danger);
+    background-color: var(--color-danger-strong);
+    color: var(--color-danger-strong-text);
   }
 
   .danger.filled:not([disabled]):hover {
-    background-color: var(--color-danger2);
+    background-color: var(--color-danger-strong1);
   }
 
   .danger.filled:not([disabled]):active {
-    background-color: var(--color-danger3);
+    background-color: var(--color-danger-strong);
   }
 
   .danger.weak {
-    background-color: var(--color-danger-subtle2);
+    background-color: var(--color-danger-weak);
   }
 
   .danger.weak:not([disabled]):hover,
   .danger.outlined:not([disabled]):hover,
   .danger.ghost:not([disabled]):hover {
-    background-color: var(--color-danger-subtle3);
+    background-color: var(--color-danger-weak1);
   }
 
   .danger.weak:not([disabled]):active,
   .danger.outlined:not([disabled]):active,
   .danger.outlined.is-selected,
   .danger.ghost:not([disabled]):active {
-    background-color: var(--color-danger-subtle4);
+    background-color: var(--color-danger-weak);
   }
 
   .danger.text {
-    color: var(--color-danger);
+    color: var(--color-danger-text);
   }
 
   /* pre post items */

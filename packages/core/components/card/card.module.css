@@ -1,13 +1,16 @@
 @layer components {
   .card {
     --card-content-section-space: var(--spacing-sm);
+    --card-color-active1: var(--color-surface-pure);
+    --card-color-active2: var(--color-neutral-50);
+    --card-color-active3: var(--color-neutral-100);
 
     position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--card-content-section-space);
     padding: var(--spacing-xs);
-    background-color: var(--color-surface-pure);
+    background-color: var(--card-color-active1);
     border-radius: var(--radius-sm);
     height: 100%;
     border: 1px solid var(--color-outline);
@@ -23,16 +26,24 @@
     cursor: pointer;
 
     &:hover {
-      background-color: var(--color-neutral-subtle);
+      background-color: var(--card-color-active2);
+    }
+
+    &:active {
+      background-color: var(--card-color-active1);
     }
   }
 
   .card .card {
-    background-color: var(--color-neutral-subtle);
+    background-color: var(--card-color-active2);
 
     &.clickable {
       &:hover {
-        background-color: var(--color-neutral-subtle2);
+        background-color: var(--card-color-active3);
+      }
+
+      &:active {
+        background-color: var(--card-color-active2);
       }
     }
   }

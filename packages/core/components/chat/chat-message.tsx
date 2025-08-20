@@ -32,8 +32,8 @@ const ChatMessage = (props: ChatMessageProps) => {
       class={tailwindUtils.merge(
         'flex items-center gap-sm p-2xs wrap-anywhere',
         {
-          'ml-6xl bg-neutral-subtle2': props.source === ChatMessageSource.USER,
-          'mr-6xl bg-brand-subtle2': props.source === ChatMessageSource.AI,
+          'ml-6xl bg-neutral-weak': props.source === ChatMessageSource.USER,
+          'mr-6xl bg-brand-weak': props.source === ChatMessageSource.AI,
           'border border-outline rounded-sm': props.source !== ChatMessageSource.SYSTEM,
           'p-2xs font-semibold': props.source === ChatMessageSource.SYSTEM,
           'whitespace-pre-wrap': props.messageData.preserveMessageFormatting ?? true,

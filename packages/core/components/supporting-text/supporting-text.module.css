@@ -6,9 +6,9 @@
 }
 
 .neutral {
-  color: var(--color-neutral);
+  color: var(--color-neutral-strong);
 }
 
 .danger {
-  color: var(--color-danger);
+  color: var(--color-danger-strong);
 }

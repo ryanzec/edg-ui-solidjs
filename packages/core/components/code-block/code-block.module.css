@@ -7,7 +7,7 @@
   }
 
   .code-block {
-    --code-block-background-color: var(--color-brand-subtle);
+    --code-block-background-color: var(--color-brand-50);
 
     position: relative;
     font-family: var(--font-family-geist-mono), sans-serif;

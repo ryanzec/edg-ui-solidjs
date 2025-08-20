@@ -190,21 +190,21 @@ export const Default = () => {
           columnCount={4}
         >
           {(item, index) => {
-            const isFirstRow = index() === 0;
-            const isLastRow = index() === gridData.length - 1;
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === gridData.length - 1;
 
             return (
               <>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isStartOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
                   {item.id}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {item.name}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {item.status}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} class="justify-center" isEndOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} class="justify-center" isEndOfRow>
                   {item.date}
                 </GridTable.Data>
               </>
@@ -241,21 +241,21 @@ export const CustomHeaderCssClasses = () => {
           columnCount={4}
         >
           {(item, index) => {
-            const isFirstRow = index() === 0;
-            const isLastRow = index() === gridData.length - 1;
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === gridData.length - 1;
 
             return (
               <>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isStartOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
                   {item.id}
                 </GridTable.Data>
-                <GridTable.Data class="justify-start" isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data class="justify-start" isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {item.name}
                 </GridTable.Data>
-                <GridTable.Data class="justify-center" isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data class="justify-center" isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {item.status}
                 </GridTable.Data>
-                <GridTable.Data class="justify-end" isFirstRow={isFirstRow} isLastRow={isLastRow} isEndOfRow>
+                <GridTable.Data class="justify-end" isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
                   {item.date}
                 </GridTable.Data>
               </>
@@ -328,29 +328,29 @@ export const SelectableAndPaginated = () => {
           }
         >
           {(item, index) => {
-            const isFirstRow = index() === 0;
-            const isLastRow = index() === currentItems().length - 1;
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === currentItems().length - 1;
 
             return (
               <>
                 <GridTable.RowSelector
-                  isFirstRow={isFirstRow}
-                  isLastRow={isLastRow}
+                  isFirstRow={isFirstRow()}
+                  isLastRow={isLastRow()}
                   isStartOfRow
                   item={item}
                   isSelected={selectedIds().includes(item.id)}
                   onChange={handleRowSelectorChange}
                 />
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {item.name}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {item.severity}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {item.lastModified}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isEndOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
                   {item.author.name}
                 </GridTable.Data>
               </>
@@ -373,21 +373,21 @@ export const Empty = () => {
           columnCount={4}
         >
           {(item, index) => {
-            const isFirstRow = index() === 0;
-            const isLastRow = index() === gridData.length - 1;
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === gridData.length - 1;
 
             return (
               <>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isStartOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
                   {item.id}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {item.name}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {item.status}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} class="justify-center" isEndOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} class="justify-center" isEndOfRow>
                   {item.date}
                 </GridTable.Data>
               </>
@@ -411,8 +411,8 @@ export const Linked = () => {
           columnCount={5}
         >
           {(item, index) => {
-            const isFirstRow = index() === 0;
-            const isLastRow = index() === gridData.length - 1;
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === gridData.length - 1;
             const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
 
             // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
@@ -424,21 +424,26 @@ export const Linked = () => {
 
             return (
               <>
-                <GridTable.Data linkUrl="https://google.com" isFirstRow={isFirstRow} isLastRow={isLastRow} isStartOfRow>
+                <GridTable.Data
+                  linkUrl="https://google.com"
+                  isFirstRow={isFirstRow()}
+                  isLastRow={isLastRow()}
+                  isStartOfRow
+                >
                   {item.id}
                 </GridTable.Data>
-                <GridTable.Data linkUrl="https://google.com" isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data linkUrl="https://google.com" isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {item.name}
                 </GridTable.Data>
-                <GridTable.Data linkUrl="https://google.com" isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data linkUrl="https://google.com" isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {item.status}
                 </GridTable.Data>
-                <GridTable.Data linkUrl="https://google.com" isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data linkUrl="https://google.com" isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {item.date}
                 </GridTable.Data>
                 <GridTable.DataActions
-                  isFirstRow={isFirstRow}
-                  isLastRow={isLastRow}
+                  isFirstRow={isFirstRow()}
+                  isLastRow={isLastRow()}
                   actionsDropDownComponentRef={dropDownComponentRef}
                   dropDownContentElement={<List.Item onClick={() => handleEdit(item)}>Edit</List.Item>}
                   isEndOfRow
@@ -464,8 +469,8 @@ export const ExtraContent = () => {
           columnCount={5}
         >
           {(item, index) => {
-            const isFirstRow = index() === 0;
-            const isLastRow = index() === gridData.length - 1;
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === gridData.length - 1;
             const [isExpanded, setIsExpanded] = createSignal(false);
             const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
 
@@ -487,8 +492,8 @@ export const ExtraContent = () => {
                 <GridTable.Data
                   onClick={handleExpand}
                   isExpanded={isExpanded()}
-                  isFirstRow={isFirstRow}
-                  isLastRow={isLastRow}
+                  isFirstRow={isFirstRow()}
+                  isLastRow={isLastRow()}
                   isStartOfRow
                 >
                   {item.id}
@@ -496,30 +501,30 @@ export const ExtraContent = () => {
                 <GridTable.Data
                   onClick={handleExpand}
                   isExpanded={isExpanded()}
-                  isFirstRow={isFirstRow}
-                  isLastRow={isLastRow}
+                  isFirstRow={isFirstRow()}
+                  isLastRow={isLastRow()}
                 >
                   {item.name}
                 </GridTable.Data>
                 <GridTable.Data
                   onClick={handleExpand}
                   isExpanded={isExpanded()}
-                  isFirstRow={isFirstRow}
-                  isLastRow={isLastRow}
+                  isFirstRow={isFirstRow()}
+                  isLastRow={isLastRow()}
                 >
                   {item.status}
                 </GridTable.Data>
                 <GridTable.Data
                   onClick={handleExpand}
                   isExpanded={isExpanded()}
-                  isFirstRow={isFirstRow}
-                  isLastRow={isLastRow}
+                  isFirstRow={isFirstRow()}
+                  isLastRow={isLastRow()}
                 >
                   {item.date}
                 </GridTable.Data>
                 <GridTable.DataActions
-                  isFirstRow={isFirstRow}
-                  isLastRow={isLastRow}
+                  isFirstRow={isFirstRow()}
+                  isLastRow={isLastRow()}
                   isExpanded={isExpanded()}
                   actionsDropDownComponentRef={dropDownComponentRef}
                   dropDownContentElement={
@@ -530,7 +535,7 @@ export const ExtraContent = () => {
                   }
                   isEndOfRow
                 />
-                <GridTable.ExpandableContent isExpanded={isExpanded()} isLastRow={isLastRow} columnCount={5}>
+                <GridTable.ExpandableContent isExpanded={isExpanded()} isLastRow={isLastRow()} columnCount={5}>
                   <h4>Additional Details</h4>
                   <div class="grid grid-cols-2 gap-4 text-sm">
                     <div>
@@ -592,21 +597,21 @@ export const Pagination = () => {
           columnCount={4}
         >
           {(row, index) => {
-            const isFirstRow = index() === 0;
-            const isLastRow = index() === currentItems().length - 1;
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === currentItems().length - 1;
 
             return (
               <>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isStartOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
                   {row.name}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {row.severity}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {row.lastModified}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isEndOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
                   {row.author.name}
                 </GridTable.Data>
               </>
@@ -650,21 +655,21 @@ export const PaginationCursor = () => {
           columnCount={4}
         >
           {(row, index) => {
-            const isFirstRow = index() === 0;
-            const isLastRow = index() === currentItems().length - 1;
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === currentItems().length - 1;
 
             return (
               <>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isStartOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
                   {row.name}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {row.severity}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {row.lastModified}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isEndOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
                   {row.author.name}
                 </GridTable.Data>
               </>
@@ -716,21 +721,21 @@ export const PaginationWithDelay = () => {
           columnCount={4}
         >
           {(row, index) => {
-            const isFirstRow = index() === 0;
-            const isLastRow = index() === currentItems().length - 1;
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === currentItems().length - 1;
 
             return (
               <>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isStartOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
                   {row.name}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {row.severity}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {row.lastModified}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isEndOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
                   {row.author.name}
                 </GridTable.Data>
               </>
@@ -772,21 +777,21 @@ export const PaginationWithCustomDefaultCurrentPage = () => {
           columnCount={4}
         >
           {(row, index) => {
-            const isFirstRow = index() === 0;
-            const isLastRow = index() === currentItems().length - 1;
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === currentItems().length - 1;
 
             return (
               <>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isStartOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
                   {row.name}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {row.severity}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {row.lastModified}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isEndOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
                   {row.author.name}
                 </GridTable.Data>
               </>
@@ -829,21 +834,21 @@ export const PaginationWithOptionsExample = () => {
           columnCount={4}
         >
           {(row, index) => {
-            const isFirstRow = index() === 0;
-            const isLastRow = index() === currentItems().length - 1;
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === currentItems().length - 1;
 
             return (
               <>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isStartOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
                   {row.name}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {row.severity}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {row.lastModified}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isEndOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
                   {row.author.name}
                 </GridTable.Data>
               </>
@@ -881,21 +886,21 @@ export const SinglePagePagination = () => {
           columnCount={4}
         >
           {(row, index) => {
-            const isFirstRow = index() === 0;
-            const isLastRow = index() === singlePageItems.length - 1;
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === singlePageItems.length - 1;
 
             return (
               <>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isStartOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
                   {row.name}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {row.severity}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {row.lastModified}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isEndOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
                   {row.author.name}
                 </GridTable.Data>
               </>
@@ -941,21 +946,21 @@ export const PaginationWithNumbers = () => {
           columnCount={4}
         >
           {(row, index) => {
-            const isFirstRow = index() === 0;
-            const isLastRow = index() === currentItems().length - 1;
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === currentItems().length - 1;
 
             return (
               <>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isStartOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
                   {row.name}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {row.severity}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {row.lastModified}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isEndOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
                   {row.author.name}
                 </GridTable.Data>
               </>
@@ -985,8 +990,8 @@ export const Virtualized = () => {
         >
           {(index, virtualizer) => {
             const item = newLargeData[index];
-            const isFirstRow = index === 0;
-            const isLastRow = index === newLargeData.length - 1;
+            const isFirstRow = () => index === 0;
+            const isLastRow = () => index === newLargeData.length - 1;
             const [isExpanded, setIsExpanded] = createSignal(false);
             const [elementRef, setElementRef] = createSignal<Element>();
             const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
@@ -1001,16 +1006,16 @@ export const Virtualized = () => {
             return (
               // biome-ignore lint/a11y/useSemanticElements: we do this to have a more flexible table component
               <GridTable class={tableCss} ref={setElementRef} data-index={index} role="row">
-                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow} isStartOfRow>
+                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow()} isStartOfRow>
                   {item.name}
                 </GridTable.Data>
-                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow}>
+                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow()}>
                   {item.severity}
                 </GridTable.Data>
-                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow}>
+                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow()}>
                   {item.lastModified}
                 </GridTable.Data>
-                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow} isEndOfRow>
+                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow()} isEndOfRow>
                   {item.author.name}
                 </GridTable.Data>
               </GridTable>
@@ -1054,8 +1059,8 @@ export const VirtualizedCustomHeaderCssClasses = () => {
         >
           {(index, virtualizer) => {
             const item = newLargeData[index];
-            const isFirstRow = index === 0;
-            const isLastRow = index === newLargeData.length - 1;
+            const isFirstRow = () => index === 0;
+            const isLastRow = () => index === newLargeData.length - 1;
             const [isExpanded, setIsExpanded] = createSignal(false);
             const [elementRef, setElementRef] = createSignal<Element>();
             const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
@@ -1070,16 +1075,16 @@ export const VirtualizedCustomHeaderCssClasses = () => {
             return (
               // biome-ignore lint/a11y/useSemanticElements: we do this to have a more flexible table component
               <GridTable class={tableCss} ref={setElementRef} data-index={index} role="row">
-                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow} isStartOfRow>
+                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow()} isStartOfRow>
                   {item.name}
                 </GridTable.Data>
-                <GridTable.Data class="justify-start" isExpanded={isExpanded()} isFirstRow={isFirstRow}>
+                <GridTable.Data class="justify-start" isExpanded={isExpanded()} isFirstRow={isFirstRow()}>
                   {item.severity}
                 </GridTable.Data>
-                <GridTable.Data class="justify-center" isExpanded={isExpanded()} isFirstRow={isFirstRow}>
+                <GridTable.Data class="justify-center" isExpanded={isExpanded()} isFirstRow={isFirstRow()}>
                   {item.lastModified}
                 </GridTable.Data>
-                <GridTable.Data class="justify-end" isExpanded={isExpanded()} isFirstRow={isFirstRow} isEndOfRow>
+                <GridTable.Data class="justify-end" isExpanded={isExpanded()} isFirstRow={isFirstRow()} isEndOfRow>
                   {item.author.name}
                 </GridTable.Data>
               </GridTable>
@@ -1109,8 +1114,8 @@ export const VirtualizedEmpty = () => {
         >
           {(index, virtualizer) => {
             const item = newLargeData[index];
-            const isFirstRow = index === 0;
-            const isLastRow = index === newLargeData.length - 1;
+            const isFirstRow = () => index === 0;
+            const isLastRow = () => index === newLargeData.length - 1;
             const [isExpanded, setIsExpanded] = createSignal(false);
             const [elementRef, setElementRef] = createSignal<Element>();
             const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
@@ -1125,16 +1130,16 @@ export const VirtualizedEmpty = () => {
             return (
               // biome-ignore lint/a11y/useSemanticElements: we do this to have a more flexible table component
               <GridTable class={tableCss} ref={setElementRef} data-index={index} role="row">
-                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow} isStartOfRow>
+                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow()} isStartOfRow>
                   {item.name}
                 </GridTable.Data>
-                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow}>
+                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow()}>
                   {item.severity}
                 </GridTable.Data>
-                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow}>
+                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow()}>
                   {item.lastModified}
                 </GridTable.Data>
-                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow} isEndOfRow>
+                <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow()} isEndOfRow>
                   {item.author.name}
                 </GridTable.Data>
               </GridTable>
@@ -1189,21 +1194,21 @@ export const SortableSimple = () => {
           columnCount={4}
         >
           {(item, index) => {
-            const isFirstRow = index() === 0;
-            const isLastRow = index() === gridData.length - 1;
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === gridData.length - 1;
 
             return (
               <>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} isStartOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
                   {item.id}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {item.name}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow}>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {item.status}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow} isLastRow={isLastRow} class="justify-center" isEndOfRow>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} class="justify-center" isEndOfRow>
                   {item.date}
                 </GridTable.Data>
               </>
@@ -1260,8 +1265,8 @@ export const SortableVirtualized = () => {
         >
           {(index, virtualizer) => {
             const item = newLargeData[index];
-            const isFirstRow = index === 0;
-            const isLastRow = index === newLargeData.length - 1;
+            const isFirstRow = () => index === 0;
+            const isLastRow = () => index === newLargeData.length - 1;
             const [isExpanded, setIsExpanded] = createSignal(false);
             const [elementRef, setElementRef] = createSignal<Element>();
             const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
@@ -1290,16 +1295,16 @@ export const SortableVirtualized = () => {
             return (
               // biome-ignore lint/a11y/useSemanticElements: we do this to have a more flexible table component
               <GridTable class={tableCss} ref={setElementRef} data-index={index} role="row">
-                <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isFirstRow={isFirstRow} isStartOfRow>
+                <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isFirstRow={isFirstRow()} isStartOfRow>
                   {item.name}
                 </GridTable.Data>
-                <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isFirstRow={isFirstRow}>
+                <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isFirstRow={isFirstRow()}>
                   {item.severity}
                 </GridTable.Data>
-                <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isFirstRow={isFirstRow}>
+                <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isFirstRow={isFirstRow()}>
                   {item.lastModified}
                 </GridTable.Data>
-                <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isFirstRow={isFirstRow} isEndOfRow>
+                <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isFirstRow={isFirstRow()} isEndOfRow>
                   {item.author.name}
                 </GridTable.Data>
                 <GridTable.ExpandableContent isExpanded={isExpanded()} columnCount={6}>

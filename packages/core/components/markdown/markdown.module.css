@@ -5,7 +5,7 @@
   }
 
   .markdown_content a {
-    color: var(--color-brand);
+    color: var(--color-brand-strong);
     text-decoration: underline;
   }
 
@@ -68,15 +68,15 @@
   }
 
   .markdown_content blockquote {
-    border-left: 3px solid var(--color-brand);
+    border-left: 3px solid var(--color-brand-strong);
     padding-left: var(--spacing-base);
     margin: var(--spacing-base) 0;
-    color: var(--color-text-subtle);
+    color: var(--color-text-secondary);
     font-style: italic;
   }
 
   .markdown_content pre {
-    background-color: var(--color-surface-subtle);
+    background-color: var(--color-neutral-weak);
     padding: var(--spacing-sm);
     border-radius: var(--radius-sm);
     overflow-x: auto;
@@ -84,8 +84,8 @@
   }
 
   .markdown_content code {
-    background-color: var(--color-surface-subtle);
-    padding: 2px var(--spacing-xs);
+    background-color: var(--color-neutral-weak);
+    padding: var(--spacing-5xs) var(--spacing-3xs);
     border-radius: var(--radius-sm);
     font-family: monospace;
   }
