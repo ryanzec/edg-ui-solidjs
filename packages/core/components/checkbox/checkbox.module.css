@@ -51,7 +51,7 @@
   }
 
   .toggle:before {
-    --checkbox-toggle-knob-inner-spacing: 4px;
+    --checkbox-toggle-knob-inner-spacing: 3px;
     --checkbox-toggle-know-size: calc(var(--spacing-lg) - calc(var(--checkbox-toggle-knob-inner-spacing) * 2));
 
     content: "";

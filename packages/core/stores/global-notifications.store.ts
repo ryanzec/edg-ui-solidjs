@@ -2,7 +2,7 @@ import { produce } from 'immer';
 import { pullAt } from 'lodash';
 import { type Accessor, createRoot, createSignal, type JSX, untrack } from 'solid-js';
 import * as uuid from 'uuid';
-import type { CalloutColor } from '$/core/components/callout';
+import { CalloutColor } from '$/core/components/callout';
 
 export type GlobalNotification = {
   id: string;
@@ -31,6 +31,8 @@ export type GlobalNotificationsStore = {
 
 export const DEFAULT_AUTO_CLOSE = 3000;
 
+export const DEFAULT_DANGER_AUTO_CLOSE = 7000;
+
 export const REMOVE_ANIMATION_DURATION = 350;
 
 const createGlobalNotificationsStore = (): GlobalNotificationsStore => {
@@ -39,10 +41,11 @@ const createGlobalNotificationsStore = (): GlobalNotificationsStore => {
   const addNotification = (notification: AddNotification) => {
     // calls of this method should not trigger reactive changes to signals change here
     return untrack(() => {
+      const autoClose = notification.color === CalloutColor.DANGER ? DEFAULT_DANGER_AUTO_CLOSE : DEFAULT_AUTO_CLOSE;
       const newNotification = {
         id: uuid.v4(),
         ...notification,
-        autoClose: notification.autoClose ?? DEFAULT_AUTO_CLOSE,
+        autoClose: notification.autoClose ?? autoClose,
         removeAnimationDuration: notification.removeAnimationDuration ?? REMOVE_ANIMATION_DURATION,
         canClose: notification.canClose ?? true,
       };

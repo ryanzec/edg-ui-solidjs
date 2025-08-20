@@ -52,7 +52,7 @@ const UnsavedChangesDialog = (props: UnsavedChangesDialogProps) => {
       headerElement="Unsaved Changes"
       footerElement={
         <Button.Group>
-          <Button variant={ButtonVariant.GHOST} onClick={handleUnsavedDialogLeave}>
+          <Button color={ButtonColor.NEUTRAL} variant={ButtonVariant.GHOST} onClick={handleUnsavedDialogLeave}>
             Leave
           </Button>
           <Button color={ButtonColor.BRAND} onClick={handleUnsavedDialogStay}>

@@ -206,7 +206,7 @@ export const PrePostItems = () => {
   );
 };
 
-export const NoSideBorder = () => {
+export const SideBorder = () => {
   return (
     <div>
       <h2>Pre</h2>
@@ -215,7 +215,7 @@ export const NoSideBorder = () => {
           variant={CalloutVariant.WEAK}
           color={CalloutColor.BRAND}
           preElement={<Button>Button</Button>}
-          hasSideBorder={false}
+          hasSideBorder
         >
           Brand
         </Callout>
@@ -223,7 +223,7 @@ export const NoSideBorder = () => {
           variant={CalloutVariant.WEAK}
           color={CalloutColor.BRAND_SECONDARY}
           preElement={<Button>Button</Button>}
-          hasSideBorder={false}
+          hasSideBorder
         >
           Brand Secondary
         </Callout>
@@ -231,7 +231,7 @@ export const NoSideBorder = () => {
           variant={CalloutVariant.WEAK}
           color={CalloutColor.NEUTRAL}
           preElement={<Icon icon="check" />}
-          hasSideBorder={false}
+          hasSideBorder
         >
           Neutral
         </Callout>
@@ -239,7 +239,7 @@ export const NoSideBorder = () => {
           variant={CalloutVariant.WEAK}
           color={CalloutColor.SUCCESS}
           preElement={<Icon icon="check" />}
-          hasSideBorder={false}
+          hasSideBorder
         >
           Success
         </Callout>
@@ -247,7 +247,7 @@ export const NoSideBorder = () => {
           variant={CalloutVariant.WEAK}
           color={CalloutColor.INFO}
           preElement={<Icon icon="check" />}
-          hasSideBorder={false}
+          hasSideBorder
         >
           Info
         </Callout>
@@ -255,7 +255,7 @@ export const NoSideBorder = () => {
           variant={CalloutVariant.WEAK}
           color={CalloutColor.WARNING}
           preElement={<Icon icon="check" />}
-          hasSideBorder={false}
+          hasSideBorder
         >
           Warning
         </Callout>
@@ -263,7 +263,7 @@ export const NoSideBorder = () => {
           variant={CalloutVariant.WEAK}
           color={CalloutColor.WARNING_HIGH}
           preElement={<Icon icon="check" />}
-          hasSideBorder={false}
+          hasSideBorder
         >
           Warning High
         </Callout>
@@ -271,141 +271,7 @@ export const NoSideBorder = () => {
           variant={CalloutVariant.WEAK}
           color={CalloutColor.DANGER}
           preElement={<Icon icon="check" />}
-          hasSideBorder={false}
-        >
-          Danger
-        </Callout>
-      </SandboxExamplesContainer>
-      <h2>Post</h2>
-      <SandboxExamplesContainer>
-        <Callout
-          variant={CalloutVariant.STRONG}
-          color={CalloutColor.BRAND}
-          postElement={<Button>Button</Button>}
-          hasSideBorder={false}
-        >
-          Brand
-        </Callout>
-        <Callout
-          variant={CalloutVariant.STRONG}
-          color={CalloutColor.BRAND_SECONDARY}
-          postElement={<Button>Button</Button>}
-          hasSideBorder={false}
-        >
-          Brand Secondary
-        </Callout>
-        <Callout
-          variant={CalloutVariant.STRONG}
-          color={CalloutColor.NEUTRAL}
-          postElement={<Icon icon="check" />}
-          hasSideBorder={false}
-        >
-          Neutral
-        </Callout>
-        <Callout
-          variant={CalloutVariant.STRONG}
-          color={CalloutColor.SUCCESS}
-          postElement={<Icon icon="check" />}
-          hasSideBorder={false}
-        >
-          Success
-        </Callout>
-        <Callout
-          variant={CalloutVariant.STRONG}
-          color={CalloutColor.INFO}
-          postElement={<Icon icon="check" />}
-          hasSideBorder={false}
-        >
-          Info
-        </Callout>
-        <Callout
-          variant={CalloutVariant.STRONG}
-          color={CalloutColor.WARNING}
-          postElement={<Icon icon="check" />}
-          hasSideBorder={false}
-        >
-          Warning
-        </Callout>
-        <Callout
-          variant={CalloutVariant.STRONG}
-          color={CalloutColor.WARNING_HIGH}
-          postElement={<Icon icon="check" />}
-          hasSideBorder={false}
-        >
-          Warning High
-        </Callout>
-        <Callout
-          variant={CalloutVariant.STRONG}
-          color={CalloutColor.DANGER}
-          postElement={<Icon icon="check" />}
-          hasSideBorder={false}
-        >
-          Danger
-        </Callout>
-      </SandboxExamplesContainer>
-      <h2>Both</h2>
-      <SandboxExamplesContainer>
-        <Callout
-          variant={CalloutVariant.STRONG}
-          color={CalloutColor.BRAND}
-          preElement={<Button>Button</Button>}
-          postElement={<Button>Button</Button>}
-        >
-          Brand
-        </Callout>
-        <Callout
-          variant={CalloutVariant.STRONG}
-          color={CalloutColor.BRAND_SECONDARY}
-          preElement={<Button>Button</Button>}
-          postElement={<Button>Button</Button>}
-        >
-          Brand Secondary
-        </Callout>
-        <Callout
-          variant={CalloutVariant.STRONG}
-          color={CalloutColor.NEUTRAL}
-          preElement={<Icon icon="check" />}
-          postElement={<Icon icon="check" />}
-        >
-          Neutral
-        </Callout>
-        <Callout
-          variant={CalloutVariant.STRONG}
-          color={CalloutColor.SUCCESS}
-          preElement={<Icon icon="check" />}
-          postElement={<Icon icon="check" />}
-        >
-          Success
-        </Callout>
-        <Callout
-          variant={CalloutVariant.STRONG}
-          color={CalloutColor.INFO}
-          preElement={<Icon icon="check" />}
-          postElement={<Icon icon="check" />}
-        >
-          Info
-        </Callout>
-        <Callout
-          variant={CalloutVariant.STRONG}
-          color={CalloutColor.WARNING}
-          preElement={<Icon icon="check" />}
-          postElement={<Icon icon="check" />}
-        >
-          Warning
-        </Callout>
-        <Callout
-          variant={CalloutVariant.STRONG}
-          color={CalloutColor.WARNING_HIGH}
-          preElement={<Icon icon="check" />}
-          postElement={<Icon icon="check" />}
-        >
-          Warning High
-        </Callout>
-        <Callout
-          variant={CalloutVariant.STRONG}
-          color={CalloutColor.DANGER}
-          preElement={<Icon icon="check" />}
-          postElement={<Icon icon="check" />}
+          hasSideBorder
         >
           Danger
         </Callout>

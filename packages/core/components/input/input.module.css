@@ -11,7 +11,7 @@
     background: var(--color-surface-pure);
     border-radius: var(--radius-sm);
     border: 1px solid var(--color-outline);
-    padding: var(--spacing-2xs);
+    padding: var(--spacing-5xs) var(--spacing-3xs);
 
     &:has([type="hidden"]) {
       display: none;

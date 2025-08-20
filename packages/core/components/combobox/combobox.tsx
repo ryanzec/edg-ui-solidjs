@@ -223,7 +223,7 @@ const Combobox = <TData extends ComboboxExtraData, TFormData = DefaultFormData>(
           inputContainerClass={tailwindUtils.merge(styles.inputContainer, props.inputContainerClass, {
             [styles.opened]: comboboxStore.store.isOpened,
           })}
-          class={tailwindUtils.merge(styles.input, props.inputClass)}
+          class={tailwindUtils.merge('min-w-[0]', styles.input, props.inputClass)}
           type="text"
           data-uncontrolled-value="true"
           disabled={props.disabled}

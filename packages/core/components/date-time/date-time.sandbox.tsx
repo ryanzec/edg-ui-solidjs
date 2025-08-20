@@ -35,12 +35,18 @@ export const FromDifferentTimeZone = () => {
 };
 
 export const FromNow = () => {
-  const date = LuxonDateTime.now().minus({ days: 1 });
+  const inOneDay = LuxonDateTime.now().plus({ days: 1 });
+  const inOneSecond = LuxonDateTime.now().plus({ seconds: 1 });
+  const now = LuxonDateTime.now();
+  const backOneDay = LuxonDateTime.now().minus({ days: 1 }).minus({ seconds: 1 });
   const invalidDate = LuxonDateTime.fromJSDate(new Date('invalid'));
 
   return (
     <SandboxExamplesContainer>
-      <DateTime.FromNow date={date} />
+      <DateTime.FromNow date={inOneDay} />
+      <DateTime.FromNow date={inOneSecond} />
+      <DateTime.FromNow date={now} />
+      <DateTime.FromNow date={backOneDay} />
       <DateTime.FromNow date={invalidDate} />
     </SandboxExamplesContainer>
   );
