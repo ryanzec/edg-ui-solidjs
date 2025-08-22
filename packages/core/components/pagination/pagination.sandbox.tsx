@@ -1,5 +1,5 @@
 import { createSignal } from 'solid-js';
-import Pagination, { paginationComponentUtils } from '$/core/components/pagination';
+import Pagination from '$/core/components/pagination';
 import { paginationStoreUtils } from '$/core/stores/pagination.store';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 
@@ -15,35 +15,21 @@ export const Default = () => {
 
   const paginationStore = paginationStoreUtils.createStore({
     totalItems: 100,
-  });
-
-  const handlePageSizeChange = (itemsPerPage: number) => {
-    setQueryString({
-      ...queryString(),
-      itemsPerPage,
-    });
-  };
-
-  const handlePageChange = paginationComponentUtils.buildHandlePageChange({
-    paginationStore,
-    refetch: async () => {
-      return {
-        itemsPerPage: 10,
-        totalItems: 100,
-      };
-    },
-    queryString,
-    setQueryString,
+    managedData: queryString,
+    setManagedData: setQueryString,
+    getAsyncUpdate: () => ({
+      isFetching: false,
+      isError: false,
+      totalItems: 100,
+      itemsPerPage: 10,
+      currentPage: 1,
+    }),
   });
 
   return (
     <>
       <SandboxExamplesContainer isFull={false}>
-        <Pagination
-          paginationStore={paginationStore}
-          onPageChange={handlePageChange}
-          onPageSizeChange={handlePageSizeChange}
-        />
+        <Pagination paginationStore={paginationStore} />
       </SandboxExamplesContainer>
       <pre>query string: {JSON.stringify(queryString(), null, 2)}</pre>
     </>
@@ -58,40 +44,21 @@ export const PageSizeOptions = () => {
 
   const paginationStore = paginationStoreUtils.createStore({
     totalItems: 100,
-  });
-
-  const handlePageSizeChange = (itemsPerPage: number) => {
-    setQueryString({
-      ...queryString(),
-      offset: 0,
-      itemsPerPage,
-    });
-    paginationStore.setItemsPerPage(itemsPerPage);
-    paginationStore.setCurrentPage(1);
-  };
-
-  const handlePageChange = paginationComponentUtils.buildHandlePageChange({
-    paginationStore,
-    refetch: async () => {
-      return {
-        itemsPerPage: queryString().itemsPerPage,
-        totalItems: 100,
-      };
-    },
-    queryString,
-    setQueryString,
+    managedData: queryString,
+    setManagedData: setQueryString,
+    getAsyncUpdate: () => ({
+      isFetching: false,
+      isError: false,
+      totalItems: 100,
+      itemsPerPage: 10,
+      currentPage: 1,
+    }),
   });
 
   return (
     <>
       <SandboxExamplesContainer isFull={false}>
-        <Pagination
-          paginationStore={paginationStore}
-          onPageChange={handlePageChange}
-          onPageSizeChange={handlePageSizeChange}
-          pageSizeOptions={[10, 20, 50, 100]}
-          showNumbers
-        />
+        <Pagination paginationStore={paginationStore} pageSizeOptions={[10, 20, 50, 100]} showNumbers />
       </SandboxExamplesContainer>
       <pre>query string: {JSON.stringify(queryString(), null, 2)}</pre>
     </>

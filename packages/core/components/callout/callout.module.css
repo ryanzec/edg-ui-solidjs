@@ -21,7 +21,6 @@
   }
 
   .pre-item {
-    margin-right: var(--spacing-2xs);
     display: inline-flex;
   }
 

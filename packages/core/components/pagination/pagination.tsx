@@ -1,4 +1,4 @@
-import { createEffect, createMemo, For, Show, splitProps } from 'solid-js';
+import { createEffect, createMemo, createSignal, For, Show, splitProps } from 'solid-js';
 import Button, { ButtonVariant } from '$/core/components/button';
 import Combobox, {
   type ComboboxExtraData,
@@ -15,24 +15,13 @@ import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type PaginationProps = CommonDataAttributes & {
   paginationStore: PaginationStore;
-  onPageChange?: (previousPage: number, newPage: number, itemsPerPage: number) => Promise<boolean>;
   pageSizeOptions?: number[];
-  defaultPageSize?: number;
-  onPageSizeChange?: (itemsPerPage: number) => void;
   class?: string;
   showNumbers?: boolean;
 };
 
 const Pagination = (passedProps: PaginationProps) => {
-  const [props, restOfProps] = splitProps(passedProps, [
-    'onPageChange',
-    'class',
-    'paginationStore',
-    'showNumbers',
-    'pageSizeOptions',
-    'defaultPageSize',
-    'onPageSizeChange',
-  ]);
+  const [props, restOfProps] = splitProps(passedProps, ['class', 'paginationStore', 'showNumbers', 'pageSizeOptions']);
 
   const pageSizeComboboxOptions = createMemo(() => {
     return props.pageSizeOptions
@@ -43,11 +32,21 @@ const Pagination = (passedProps: PaginationProps) => {
       : [];
   });
 
-  const defaultPageSizeIndex = props.pageSizeOptions?.findIndex((pageSize) => pageSize === props.defaultPageSize);
+  const [changePageData, setChangePageData] = createSignal<{
+    previousPage: number;
+    newPage: number;
+  }>();
+  const defaultPageSizeIndex = props.pageSizeOptions?.findIndex(
+    (pageSize) => pageSize === props.paginationStore.itemsPerPage(),
+  );
   const comboboxValueStore = comboboxComponentUtils.createValueStore<ComboboxExtraData>({
     defaultValue:
       pageSizeComboboxOptions().length > 0
-        ? [pageSizeComboboxOptions()[defaultPageSizeIndex && defaultPageSizeIndex >= 0 ? defaultPageSizeIndex : 0]]
+        ? [
+            pageSizeComboboxOptions()[
+              defaultPageSizeIndex !== undefined && defaultPageSizeIndex >= 0 ? defaultPageSizeIndex : 0
+            ],
+          ]
         : [],
   });
 
@@ -61,13 +60,20 @@ const Pagination = (passedProps: PaginationProps) => {
     }
 
     const previousPage = props.paginationStore.currentPage();
-    const success = (await props.onPageChange?.(previousPage, newPage, props.paginationStore.itemsPerPage())) ?? false;
+    const success =
+      (await props.paginationStore.handlePageChange?.(previousPage, newPage, props.paginationStore.itemsPerPage())) ??
+      false;
 
     if (success === false) {
       return;
     }
 
-    props.paginationStore.setCurrentPage(newPage);
+    setChangePageData({
+      previousPage,
+      newPage,
+    });
+    // @todo(!!!) should this be here or inside the effect?
+    props.paginationStore.handlePageChange(previousPage, newPage, props.paginationStore.itemsPerPage());
   };
 
   const handlePageSizeChange = (options: ComboboxOption[]) => {
@@ -84,8 +90,29 @@ const Pagination = (passedProps: PaginationProps) => {
     }
 
     comboboxValueStore.setSelected(options);
-    props.onPageSizeChange?.(Number(selectedOption.value));
+    props.paginationStore.handlePageSizeChange(Number(selectedOption.value));
   };
+
+  createEffect(function loadingDataStateUpdated() {
+    const currentIsLoading = props.paginationStore.isLoading();
+
+    if (currentIsLoading) {
+      return;
+    }
+
+    const currentChangePageData = changePageData();
+
+    if (!currentChangePageData) {
+      return;
+    }
+
+    if (props.paginationStore.lastLoadFailed()) {
+      return;
+    }
+
+    props.paginationStore.setCurrentPage(currentChangePageData.newPage);
+    setChangePageData(undefined);
+  });
 
   return (
     <div class={tailwindUtils.merge(styles.pagination, props.class)} data-id="pagination" {...restOfProps}>

@@ -1,5 +1,6 @@
 import CodeBlock, { CodeBlockVariant } from '$/core/components/code-block';
 import styles from '$/core/components/code-block/code-block.sandbox.module.css';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 
 export default {
@@ -59,6 +60,22 @@ export const Ellipsis = () => {
       </div>
       <div>No Ellipsis</div>
       <div class={styles.smallWidth}>
+        <CodeBlock code={code} showCopyButton />
+      </div>
+    </SandboxExamplesContainer>
+  );
+};
+
+export const Scrolling = () => {
+  let code = 'PowerShell -ExecutionPolicy Bypass -File C\Users\Public\akira_disguise.ps1';
+
+  for (let i = 0; i < 4; i++) {
+    code += code;
+  }
+
+  return (
+    <SandboxExamplesContainer>
+      <div class={tailwindUtils.merge(styles.smallWidth, 'max-h-[200px] flex flex-col')}>
         <CodeBlock code={code} showCopyButton />
       </div>
     </SandboxExamplesContainer>

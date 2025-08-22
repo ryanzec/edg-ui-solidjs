@@ -1,8 +1,9 @@
 @layer components {
   .copy-button {
     position: absolute;
-    right: var(--spacing-4xs);
-    top: var(--spacing-4xs);
+    display: inline-flex;
+    right: var(--spacing-5xs);
+    top: var(--spacing-5xs);
     opacity: var(--opacity-non-hovered-overlay-item);
   }
 
@@ -17,6 +18,8 @@
     word-break: break-word;
     border: 1px solid var(--color-brand-bold);
     color: var(--color-brand-bold);
+    flex-direction: column;
+    min-height: 0;
 
     &:hover {
       .copy-button {

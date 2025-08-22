@@ -1,10 +1,26 @@
-import { type Accessor, createSignal } from 'solid-js';
+import { type Accessor, createEffect, createSignal } from 'solid-js';
 
-type CreatePaginationStoreOptions = {
+type ManagedData = {
+  offset?: number | string;
+  limit?: number | string;
+  [key: string]: unknown;
+};
+
+type CreatePaginationStoreOptions<TManagedData extends ManagedData> = {
   defaultCurrentPage?: number;
   itemsPerPage?: number;
   totalItems?: number;
   surroundingPages?: number;
+  managedData: Accessor<TManagedData>;
+  setManagedData: (managedData: TManagedData) => void;
+  getAsyncUpdate: () => {
+    isFetching: boolean;
+    isError: boolean;
+    totalItems: number;
+    itemsPerPage: number;
+    currentPage: number;
+  };
+  onPageChanged?: (previousPage: number, newPage: number) => void;
 };
 
 export type PaginationStore = {
@@ -12,6 +28,8 @@ export type PaginationStore = {
   setCurrentPage: (currentPage: number) => void;
   isLoading: Accessor<boolean>;
   setIsLoading: (isLoading: boolean) => void;
+  lastLoadFailed: Accessor<boolean>;
+  setLastLoadFailed: (lastLoadFailed: boolean) => void;
   itemsPerPage: Accessor<number>;
   setItemsPerPage: (itemsPerPage: number) => void;
   totalItems: Accessor<number>;
@@ -21,14 +39,31 @@ export type PaginationStore = {
   totalPages: () => number;
   currentItemOffsets: () => [number, number];
   visiblePageNumbers: () => (number | string)[];
+  handlePageChange: (previousPage: number, newPage: number, itemsPerPage: number) => void;
+  handlePageSizeChange: (newPageSize: number) => void;
 };
 
-const createPaginationStore = (options: CreatePaginationStoreOptions = {}): PaginationStore => {
-  const [currentPage, setCurrentPage] = createSignal(options.defaultCurrentPage || 1);
+const createPaginationStore = <TManagedData extends ManagedData = ManagedData>(
+  options: CreatePaginationStoreOptions<TManagedData>,
+): PaginationStore => {
+  const [currentPage, internalSetCurrentPage] = createSignal(options.defaultCurrentPage || 1);
   const [isLoading, setIsLoading] = createSignal(false);
+  const [lastLoadFailed, setLastLoadFailed] = createSignal(false);
   const [itemsPerPage, setItemsPerPage] = createSignal(options.itemsPerPage || 10);
   const [totalItems, setTotalItems] = createSignal<number>(options.totalItems || 0);
   const [surroundingPages, setSurroundingPages] = createSignal<number>(options.surroundingPages ?? 2);
+
+  const setCurrentPage = (newPage: number) => {
+    const previousPage = currentPage();
+
+    internalSetCurrentPage(newPage);
+
+    if (previousPage === newPage) {
+      return;
+    }
+
+    options.onPageChanged?.(previousPage, newPage);
+  };
 
   const totalPages = () => {
     return Math.ceil(totalItems() / itemsPerPage());
@@ -72,11 +107,51 @@ const createPaginationStore = (options: CreatePaginationStoreOptions = {}): Pagi
     return pageNumbers;
   };
 
+  const handlePageChange = (previousPage: number, newPage: number, itemsPerPage: number) => {
+    options.setManagedData({
+      ...options.managedData(),
+      offset: (newPage - 1) * itemsPerPage,
+      limit: itemsPerPage,
+    });
+
+    setItemsPerPage(itemsPerPage);
+  };
+
+  const handlePageSizeChange = (newPageSize: number) => {
+    options.setManagedData({
+      ...options.managedData(),
+      offset: 0,
+      limit: newPageSize,
+    });
+
+    setCurrentPage(1);
+    setItemsPerPage(newPageSize);
+  };
+
+  createEffect(function asyncDataUpdated() {
+    const currentAsyncData = options.getAsyncUpdate();
+
+    setIsLoading(currentAsyncData.isFetching);
+
+    if (currentAsyncData.isFetching) {
+      setLastLoadFailed(false);
+
+      return;
+    }
+
+    setLastLoadFailed(currentAsyncData.isError);
+    setTotalItems(currentAsyncData.totalItems);
+    setCurrentPage(currentAsyncData.currentPage);
+    setItemsPerPage(currentAsyncData.itemsPerPage);
+  });
+
   return {
     currentPage,
     setCurrentPage,
     isLoading,
     setIsLoading,
+    lastLoadFailed,
+    setLastLoadFailed,
     itemsPerPage,
     setItemsPerPage,
     totalItems,
@@ -86,58 +161,11 @@ const createPaginationStore = (options: CreatePaginationStoreOptions = {}): Pagi
     totalPages,
     currentItemOffsets,
     visiblePageNumbers,
-  };
-};
-
-type CreateCursorPaginationStoreOptions = {
-  defaultPreviousCursor?: string;
-  defaultNextCursor?: string;
-  itemsPerPage?: number;
-  totalItems?: number;
-  surroundingPages?: number;
-};
-
-export type CursorPaginationStore = {
-  previousCursor: Accessor<string | undefined>;
-  setPreviousCursor: (previousCursor: string | undefined) => void;
-  nextCursor: Accessor<string | undefined>;
-  setNextCursor: (nextCursor: string | undefined) => void;
-  isLoading: Accessor<boolean>;
-  setIsLoading: (isLoading: boolean) => void;
-  itemsPerPage: Accessor<number>;
-  setItemsPerPage: (itemsPerPage: number) => void;
-  totalItems: Accessor<number>;
-  setTotalItems: (totalItems: number) => void;
-  totalPages: () => number;
-};
-
-const createCursorPaginationStore = (options: CreateCursorPaginationStoreOptions = {}): CursorPaginationStore => {
-  const [previousCursor, setPreviousCursor] = createSignal(options.defaultPreviousCursor || '');
-  const [nextCursor, setNextCursor] = createSignal(options.defaultNextCursor || '');
-  const [isLoading, setIsLoading] = createSignal(false);
-  const [itemsPerPage, setItemsPerPage] = createSignal(options.itemsPerPage || 10);
-  const [totalItems, setTotalItems] = createSignal<number>(options.totalItems || 0);
-
-  const totalPages = () => {
-    return Math.ceil(totalItems() / itemsPerPage());
-  };
-
-  return {
-    previousCursor,
-    setPreviousCursor,
-    nextCursor,
-    setNextCursor,
-    isLoading,
-    setIsLoading,
-    itemsPerPage,
-    setItemsPerPage,
-    totalItems,
-    setTotalItems,
-    totalPages,
+    handlePageChange,
+    handlePageSizeChange,
   };
 };
 
 export const paginationStoreUtils = {
   createStore: createPaginationStore,
-  createCursorStore: createCursorPaginationStore,
 };

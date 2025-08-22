@@ -1,4 +1,5 @@
 import { createSignal } from 'solid-js';
+import companyLogoSmall from '$/application/assets/svgs/company-logo-small.svg?url';
 import Avatar, { AvatarSize } from '$/core/components/avatar';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
 
@@ -51,6 +52,21 @@ export const User = () => {
       <div>Base</div>
       <Avatar.User name="John Doe" email="ryan@example.com" avatarSize={AvatarSize.BASE} />
       <Avatar.User name="John Doe" email="ryan+1@example.com" extraText="Owner" avatarSize={AvatarSize.BASE} />
+    </SandboxExamplesContainer>
+  );
+};
+
+export const WithText = () => {
+  return (
+    <SandboxExamplesContainer>
+      <div>Label</div>
+      <Avatar.WithText label="John Doe" />
+      <div>sub label</div>
+      <Avatar.WithText label="John Doe" subLabel="Owner" />
+      <div>sub label with showFullLabel false</div>
+      <Avatar.WithText label="John Doe" subLabel="Owner" showLabel={false} />
+      <div>image</div>
+      <Avatar.WithText src={companyLogoSmall} label="John Doe" subLabel="Owner" />
     </SandboxExamplesContainer>
   );
 };

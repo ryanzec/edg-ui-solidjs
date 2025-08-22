@@ -4,7 +4,7 @@ import GridTable from '$/core/components/grid-table';
 import { GridTableSortDirection } from '$/core/components/grid-table/grid-table-header-data';
 import Icon from '$/core/components/icon';
 import List from '$/core/components/list';
-import PaginationComponent, { type PaginationCursorProps } from '$/core/components/pagination';
+import PaginationComponent from '$/core/components/pagination';
 import type { TooltipComponentRef } from '$/core/components/tooltip';
 import { componentRefUtils } from '$/core/stores/component-ref';
 import { paginationStoreUtils } from '$/core/stores/pagination.store';
@@ -268,9 +268,23 @@ export const CustomHeaderCssClasses = () => {
 };
 
 export const SelectableAndPaginated = () => {
+  const [queryString, setQueryString] = createSignal({
+    offset: 0,
+    linit: 0,
+  });
+
   const [selectedItems, setSelectedItems] = createSignal<ComplexData[]>([]);
   const paginationStore = paginationStoreUtils.createStore({
     totalItems: newLargeData.length,
+    managedData: queryString,
+    setManagedData: setQueryString,
+    getAsyncUpdate: () => ({
+      isFetching: false,
+      isError: false,
+      totalItems: newLargeData.length,
+      itemsPerPage: 10,
+      currentPage: 1,
+    }),
   });
 
   const selectedIds = createMemo(() => selectedItems().map((item) => item.id));
@@ -279,16 +293,6 @@ export const SelectableAndPaginated = () => {
     const offsets = paginationStore.currentItemOffsets();
 
     return newLargeData.slice(offsets[0], offsets[1]);
-  };
-
-  const handlePageChange = async (previousPage: number, newPage: number) => {
-    console.log(`Page changed from ${previousPage} to ${newPage} ${newPage === 5}`);
-
-    if (newPage === 5) {
-      return false;
-    }
-
-    return true;
   };
 
   const handleRowSelectorChange = (checked: boolean, item: ComplexData) => {
@@ -314,7 +318,7 @@ export const SelectableAndPaginated = () => {
           class="grid-cols-[auto_auto_1fr_auto_auto]"
           items={currentItems()}
           headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-          footerElement={<PaginationComponent paginationStore={paginationStore} onPageChange={handlePageChange} />}
+          footerElement={<PaginationComponent paginationStore={paginationStore} />}
           columnCount={5}
           selectedItems={selectedItems()}
           setSelectedItems={setSelectedItems}
@@ -566,8 +570,22 @@ export const ExtraContent = () => {
 };
 
 export const Pagination = () => {
+  const [queryString, setQueryString] = createSignal({
+    offset: 0,
+    limit: 10,
+  });
+
   const paginationStore = paginationStoreUtils.createStore({
     totalItems: newLargeData.length,
+    managedData: queryString,
+    setManagedData: setQueryString,
+    getAsyncUpdate: () => ({
+      isFetching: false,
+      isError: false,
+      totalItems: newLargeData.length,
+      itemsPerPage: 10,
+      currentPage: 1,
+    }),
   });
 
   const currentItems = () => {
@@ -576,16 +594,6 @@ export const Pagination = () => {
     return newLargeData.slice(offsets[0], offsets[1]);
   };
 
-  const handlePageChange = async (previousPage: number, newPage: number) => {
-    console.log(`Page changed from ${previousPage} to ${newPage} ${newPage === 5}`);
-
-    if (newPage === 5) {
-      return false;
-    }
-
-    return true;
-  };
-
   return (
     <SandboxExamplesContainer>
       <Page.ContentSection>
@@ -593,65 +601,7 @@ export const Pagination = () => {
           class="grid-cols-[1fr_auto_auto_auto]"
           items={currentItems()}
           headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-          footerElement={<PaginationComponent paginationStore={paginationStore} onPageChange={handlePageChange} />}
-          columnCount={4}
-        >
-          {(row, index) => {
-            const isFirstRow = () => index() === 0;
-            const isLastRow = () => index() === currentItems().length - 1;
-
-            return (
-              <>
-                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
-                  {row.name}
-                </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
-                  {row.severity}
-                </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
-                  {row.lastModified}
-                </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
-                  {row.author.name}
-                </GridTable.Data>
-              </>
-            );
-          }}
-        </GridTable.Simple>
-      </Page.ContentSection>
-    </SandboxExamplesContainer>
-  );
-};
-
-export const PaginationCursor = () => {
-  const paginationStore = paginationStoreUtils.createCursorStore({
-    defaultPreviousCursor: '',
-    defaultNextCursor: '1',
-  });
-
-  const currentItems = () => {
-    return newLargeData.slice(0, 10);
-  };
-
-  const handlePageChange: PaginationCursorProps['onPageChange'] = async (cursorToLoad, direction) => {
-    console.log(cursorToLoad, direction);
-
-    return {
-      newPreviousCursor: Math.random() > 0.5 ? '1' : undefined,
-      newNextCursor: '2',
-    };
-  };
-
-  return (
-    <SandboxExamplesContainer>
-      <Page.ContentSection>
-        <GridTable.Simple
-          class="grid-cols-[1fr_auto_auto_auto]"
-          items={currentItems()}
-          headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-          footerElement={
-            <PaginationComponent.Cursor cursorPaginationStore={paginationStore} onPageChange={handlePageChange} />
-          }
+          footerElement={<PaginationComponent paginationStore={paginationStore} />}
           columnCount={4}
         >
           {(row, index) => {
@@ -682,32 +632,28 @@ export const PaginationCursor = () => {
 };
 
 export const PaginationWithDelay = () => {
+  const [queryString, setQueryString] = createSignal({
+    offset: 0,
+    limit: 10,
+  });
+
   const paginationStore = paginationStoreUtils.createStore({
     totalItems: newLargeData.length,
+    managedData: queryString,
+    setManagedData: setQueryString,
+    getAsyncUpdate: () => ({
+      isFetching: false,
+      isError: false,
+      totalItems: newLargeData.length,
+      itemsPerPage: 10,
+      currentPage: 1,
+    }),
   });
 
   const currentItems = () => {
     const offsets = paginationStore.currentItemOffsets();
 
     return newLargeData.slice(offsets[0], offsets[1]);
-  };
-
-  const handlePageChange = async (previousPage: number, newPage: number) => {
-    console.log(`Page changed from ${previousPage} to ${newPage} ${newPage === 5}`);
-
-    paginationStore.setIsLoading(true);
-
-    await asyncUtils.sleep(1000);
-
-    if (newPage === 5) {
-      paginationStore.setIsLoading(false);
-
-      return false;
-    }
-
-    paginationStore.setIsLoading(false);
-
-    return true;
   };
 
   return (
@@ -717,7 +663,7 @@ export const PaginationWithDelay = () => {
           class="grid-cols-[1fr_auto_auto_auto]"
           items={currentItems()}
           headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-          footerElement={<PaginationComponent paginationStore={paginationStore} onPageChange={handlePageChange} />}
+          footerElement={<PaginationComponent paginationStore={paginationStore} />}
           columnCount={4}
         >
           {(row, index) => {
@@ -748,22 +694,30 @@ export const PaginationWithDelay = () => {
 };
 
 export const PaginationWithCustomDefaultCurrentPage = () => {
+  const [queryString, setQueryString] = createSignal({
+    offset: 0,
+    limit: 10,
+  });
+
   const paginationStore = paginationStoreUtils.createStore({
     totalItems: newLargeData.length,
     defaultCurrentPage: 95,
     itemsPerPage: 5,
+    managedData: queryString,
+    setManagedData: setQueryString,
+    getAsyncUpdate: () => ({
+      isFetching: false,
+      isError: false,
+      totalItems: newLargeData.length,
+      itemsPerPage: 5,
+      currentPage: 1,
+    }),
   });
 
   const currentItems = () => {
     const offsets = paginationStore.currentItemOffsets();
 
     return newLargeData.slice(offsets[0], offsets[1]);
-  };
-
-  const handlePageChange = async (previousPage: number, newPage: number) => {
-    console.log(`Page changed from ${previousPage} to ${newPage}`);
-
-    return true;
   };
 
   return (
@@ -773,7 +727,7 @@ export const PaginationWithCustomDefaultCurrentPage = () => {
           class="grid-cols-[1fr_auto_auto_auto]"
           items={currentItems()}
           headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-          footerElement={<PaginationComponent paginationStore={paginationStore} onPageChange={handlePageChange} />}
+          footerElement={<PaginationComponent paginationStore={paginationStore} />}
           columnCount={4}
         >
           {(row, index) => {
@@ -804,23 +758,31 @@ export const PaginationWithCustomDefaultCurrentPage = () => {
 };
 
 export const PaginationWithOptionsExample = () => {
+  const [queryString, setQueryString] = createSignal({
+    offset: 0,
+    limit: 10,
+  });
+
   const paginationStore = paginationStoreUtils.createStore({
     totalItems: newLargeData.length,
     defaultCurrentPage: 3,
     itemsPerPage: 5,
     surroundingPages: 1,
+    managedData: queryString,
+    setManagedData: setQueryString,
+    getAsyncUpdate: () => ({
+      isFetching: false,
+      isError: false,
+      totalItems: newLargeData.length,
+      itemsPerPage: 5,
+      currentPage: 1,
+    }),
   });
 
   const currentItems = () => {
     const offsets = paginationStore.currentItemOffsets();
 
     return newLargeData.slice(offsets[0], offsets[1]);
-  };
-
-  const handlePageChange = async (previousPage: number, newPage: number) => {
-    console.log(`Page changed from ${previousPage} to ${newPage}`);
-
-    return true;
   };
 
   return (
@@ -830,7 +792,7 @@ export const PaginationWithOptionsExample = () => {
           class="grid-cols-[1fr_auto_auto_auto]"
           items={currentItems()}
           headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-          footerElement={<PaginationComponent paginationStore={paginationStore} onPageChange={handlePageChange} />}
+          footerElement={<PaginationComponent paginationStore={paginationStore} />}
           columnCount={4}
         >
           {(row, index) => {
@@ -863,17 +825,25 @@ export const PaginationWithOptionsExample = () => {
 export const SinglePagePagination = () => {
   // Only 4 items but 5 items per page = 1 page total
   const singlePageItems = newData.slice(0, 4);
+  const [queryString, setQueryString] = createSignal({
+    offset: 0,
+    limit: 10,
+  });
+
   const paginationStore = paginationStoreUtils.createStore({
     totalItems: newLargeData.length,
     defaultCurrentPage: 1,
     itemsPerPage: 5,
+    managedData: queryString,
+    setManagedData: setQueryString,
+    getAsyncUpdate: () => ({
+      isFetching: false,
+      isError: false,
+      totalItems: newLargeData.length,
+      itemsPerPage: 5,
+      currentPage: 1,
+    }),
   });
-
-  const handlePageChange = async (previousPage: number, newPage: number) => {
-    console.log(`Page changed from ${previousPage} to ${newPage}`);
-
-    return true;
-  };
 
   return (
     <SandboxExamplesContainer>
@@ -882,7 +852,7 @@ export const SinglePagePagination = () => {
           class="grid-cols-[1fr_auto_auto_auto]"
           items={singlePageItems}
           headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-          footerElement={<PaginationComponent paginationStore={paginationStore} onPageChange={handlePageChange} />}
+          footerElement={<PaginationComponent paginationStore={paginationStore} />}
           columnCount={4}
         >
           {(row, index) => {
@@ -913,24 +883,28 @@ export const SinglePagePagination = () => {
 };
 
 export const PaginationWithNumbers = () => {
+  const [queryString, setQueryString] = createSignal({
+    offset: 0,
+    limit: 10,
+  });
+
   const paginationStore = paginationStoreUtils.createStore({
     totalItems: newLargeData.length,
+    managedData: queryString,
+    setManagedData: setQueryString,
+    getAsyncUpdate: () => ({
+      isFetching: false,
+      isError: false,
+      totalItems: newLargeData.length,
+      itemsPerPage: 10,
+      currentPage: 1,
+    }),
   });
 
   const currentItems = () => {
     const offsets = paginationStore.currentItemOffsets();
 
     return newLargeData.slice(offsets[0], offsets[1]);
-  };
-
-  const handlePageChange = async (previousPage: number, newPage: number) => {
-    console.log(`Page changed from ${previousPage} to ${newPage} ${newPage === 5}`);
-
-    if (newPage === 5) {
-      return false;
-    }
-
-    return true;
   };
 
   return (
@@ -940,9 +914,7 @@ export const PaginationWithNumbers = () => {
           class="grid-cols-[1fr_auto_auto_auto]"
           items={currentItems()}
           headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-          footerElement={
-            <PaginationComponent paginationStore={paginationStore} onPageChange={handlePageChange} showNumbers />
-          }
+          footerElement={<PaginationComponent paginationStore={paginationStore} showNumbers />}
           columnCount={4}
         >
           {(row, index) => {

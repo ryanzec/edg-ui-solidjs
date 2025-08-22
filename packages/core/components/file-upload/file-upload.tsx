@@ -1,5 +1,5 @@
 import Dropzone, { type DropzoneFile } from 'dropzone';
-import { createEffect, createSignal, mergeProps, Show } from 'solid-js';
+import { createEffect, createSignal, mergeProps, onCleanup, Show } from 'solid-js';
 import Icon from '$/core/components/icon';
 import { fileUtils } from '$/core/utils/file';
 import { loggerUtils } from '$/core/utils/logger';
@@ -43,7 +43,6 @@ const FileUpload = (passedProps: FileUploadProps) => {
 
       init: function () {
         this.on('addedfile', (file) => {
-          console.log(file);
           setFile(file);
         });
 
@@ -65,6 +64,10 @@ const FileUpload = (passedProps: FileUploadProps) => {
     });
 
     setDropzone(dropzoneInstance);
+  });
+
+  onCleanup(() => {
+    dropzone()?.destroy();
   });
 
   return (

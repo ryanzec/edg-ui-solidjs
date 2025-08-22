@@ -41,12 +41,16 @@ const error = (...args: any) => {
   console.error(...args);
 };
 
-const getErrorInstanceMessage = (err: Error): string => {
+type ErrorMessageOptions = {
+  defaultMessage?: string;
+};
+
+const getErrorMessage = (err: Error, options: ErrorMessageOptions = {}): string => {
   if (err instanceof HttpError && err.context.jsonResponse?.error?.message) {
     return err.context.jsonResponse?.error?.message;
   }
 
-  return err.message;
+  return options.defaultMessage !== undefined ? options.defaultMessage : err.message;
 };
 
 const setLoggingMode = (mode: LogMode) => {
@@ -57,6 +61,6 @@ export const loggerUtils = {
   log,
   warn,
   error,
-  getErrorInstanceMessage,
+  getErrorInstanceMessage: getErrorMessage,
   setLoggingMode,
 };

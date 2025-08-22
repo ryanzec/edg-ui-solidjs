@@ -42,14 +42,14 @@ export const TypographyVariant = {
   PRESERVE_WHITESPACE: 'preserve-whitespace',
 } as const;
 
-export type TypographyVariants = (typeof TypographyVariant)[keyof typeof TypographyVariant];
+export type TypographyVariant = (typeof TypographyVariant)[keyof typeof TypographyVariant];
 
 export type TypographyProps = JSX.HTMLAttributes<HTMLDivElement> & {
   size?: TypographySize;
   color?: TypographyColor;
   class?: string;
   layout?: TypographyLayout;
-  variant?: TypographyVariants;
+  variant?: TypographyVariant;
 };
 
 const Typography = (passedProps: TypographyProps) => {

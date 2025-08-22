@@ -1,4 +1,5 @@
 import { default as BaseGridTable, type GridTableProps } from '$/core/components/grid-table/grid-table';
+import Container from '$/core/components/grid-table/grid-table-container';
 import Data, { type GridTableDataProps } from '$/core/components/grid-table/grid-table-data';
 import DataActions, { type GridTableDataActionsProps } from '$/core/components/grid-table/grid-table-data-actions';
 import ExpandableContent, {
@@ -38,6 +39,7 @@ export const GridTable = Object.assign(BaseGridTable, {
   Virtual,
   RowSelector,
   SelectedActions,
+  Container,
 });
 
 export default GridTable;
