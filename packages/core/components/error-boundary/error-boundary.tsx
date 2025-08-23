@@ -1,5 +1,5 @@
 import type { JSX } from 'solid-js';
-import { ErrorBoundary as SolidErrorBoundary } from 'solid-js/web';
+import { ErrorBoundary as SolidErrorBoundary } from 'solid-js';
 import Button, { ButtonColor, ButtonVariant } from '$/core/components/button';
 import { loggerUtils } from '$/core/utils/logger';
 

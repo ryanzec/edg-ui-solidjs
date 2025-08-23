@@ -24,6 +24,7 @@ export type AutoScrollAreaComponentRef = {
 };
 
 export type AutoScrollAreaProps = {
+  class?: string;
   children: JSX.Element;
   defaultState?: AutoScrollState;
   autoScrollAreaComponentRef?: ComponentRef<AutoScrollAreaComponentRef>;
@@ -172,12 +173,10 @@ const AutoScrollArea = (passedProps: AutoScrollAreaProps) => {
   });
 
   return (
-    <>
-      <div ref={setScrollElement}>
-        {props.children}
-        <div ref={setCheckElement} class="h-[1px] opacity-0 pointer-events-none" />
-      </div>
-    </>
+    <div data-id="auto-scroll-area" ref={setScrollElement} class={props.class}>
+      {props.children}
+      <div ref={setCheckElement} class="h-[1px] opacity-0 pointer-events-none" />
+    </div>
   );
 };
 

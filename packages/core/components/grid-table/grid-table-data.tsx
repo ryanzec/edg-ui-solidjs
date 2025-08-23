@@ -48,12 +48,9 @@ const GridTableData = (passedProps: GridTableDataProps) => {
         {
           'border-l': props.isStartOfRow,
           'border-r': props.isEndOfRow,
-          // 'rounded-tl-sm': props.isFirstRow && props.isStartOfRow,
-          // 'rounded-tr-sm': props.isFirstRow && props.isEndOfRow,
           'rounded-bl-sm': props.isLastRow && props.isStartOfRow,
           'rounded-br-sm': props.isLastRow && props.isEndOfRow,
           'cursor-pointer': props.onClick,
-          'border-b': props.isLastRow && !props.isExpanded,
         },
         props.class,
       )}

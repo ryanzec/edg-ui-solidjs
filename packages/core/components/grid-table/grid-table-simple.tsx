@@ -1,12 +1,16 @@
 import { type Accessor, createMemo, For, type JSX, mergeProps, Show, splitProps } from 'solid-js';
+import AutoScrollArea from '$/core/components/auto-scroll-area';
 import Checkbox from '$/core/components/checkbox';
+import FormField from '$/core/components/form-field';
 import GridEmptyData from '$/core/components/grid-table/grid-empty-data';
 import GridTable, { type GridTableProps } from '$/core/components/grid-table/grid-table';
+import GridTableFooter from '$/core/components/grid-table/grid-table-footer';
 import GridTableHeaderData from '$/core/components/grid-table/grid-table-header-data';
 import GridTableSelectedActions from '$/core/components/grid-table/grid-table-selected-actions';
 import type { GridTableHeaderDataOptions } from '$/core/components/grid-table/utils';
+import ScrollArea from '$/core/components/scroll-area';
 import { loggerUtils } from '$/core/utils/logger';
-import FormField from '../form-field';
+import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type SimpleGridTableProps<TRowData> = Omit<GridTableProps, 'children'> & {
   items?: TRowData[];
@@ -17,10 +21,12 @@ export type SimpleGridTableProps<TRowData> = Omit<GridTableProps, 'children'> & 
   selectedItems?: TRowData[];
   setSelectedItems?: (items: TRowData[]) => void;
   selectedActionElement?: JSX.Element;
+  contentClass?: string;
+  enableAutoScroll?: boolean;
 };
 
 const SimpleGridTable = <TRowData,>(passedProps: SimpleGridTableProps<TRowData>) => {
-  const [props, restOfProps] = splitProps(mergeProps({ hasActions: false }, passedProps), [
+  const [props, restOfProps] = splitProps(mergeProps({ hasActions: false, enableAutoScroll: false }, passedProps), [
     'items',
     'headerData',
     'children',
@@ -29,6 +35,9 @@ const SimpleGridTable = <TRowData,>(passedProps: SimpleGridTableProps<TRowData>)
     'selectedItems',
     'setSelectedItems',
     'selectedActionElement',
+    'footerElement',
+    'contentClass',
+    'enableAutoScroll',
   ]);
 
   const currentDisplayedItemsSelectedCount = createMemo<number>(() => {
@@ -85,7 +94,7 @@ const SimpleGridTable = <TRowData,>(passedProps: SimpleGridTableProps<TRowData>)
   };
 
   return (
-    <div class="flex flex-col gap-2xs">
+    <div class="flex flex-col min-h-[0]">
       <Show when={props.selectedItems}>
         {(selectedItems) => (
           <GridTableSelectedActions selectedItems={selectedItems()}>
@@ -132,11 +141,29 @@ const SimpleGridTable = <TRowData,>(passedProps: SimpleGridTableProps<TRowData>)
             }}
           </For>
         </Show>
-        {props.hasActions && <GridTableHeaderData isLastColumn />}
-        <Show when={props.items && props.items.length > 0} fallback={<GridEmptyData columnCount={props.columnCount} />}>
-          <For each={props.items}>{props.children}</For>
+        <Show when={props.hasActions}>
+          <GridTableHeaderData isLastColumn />
         </Show>
       </GridTable>
+      <Show when={props.items && props.items.length > 0} fallback={<GridEmptyData columnCount={props.columnCount} />}>
+        <ScrollArea class={tailwindUtils.merge('border-b border-outline rounded-b-sm mb-[-1px]', props.contentClass)}>
+          <Show when={props.enableAutoScroll}>
+            <AutoScrollArea>
+              <GridTable {...restOfProps}>
+                <For each={props.items}>{props.children}</For>
+              </GridTable>
+            </AutoScrollArea>
+          </Show>
+          <Show when={!props.enableAutoScroll}>
+            <GridTable {...restOfProps}>
+              <For each={props.items}>{props.children}</For>
+            </GridTable>
+          </Show>
+        </ScrollArea>
+      </Show>
+      <Show when={props.footerElement}>
+        <GridTableFooter>{props.footerElement}</GridTableFooter>
+      </Show>
     </div>
   );
 };

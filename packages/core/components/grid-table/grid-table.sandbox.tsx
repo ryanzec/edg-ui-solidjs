@@ -179,33 +179,58 @@ for (let i = 0; i < 1000; i++) {
   );
 }
 
-export const Default = () => {
+export const AutoScrolling = () => {
+  const [items, setItems] = createSignal<GridData[]>([...gridData]);
+  const [queryString, setQueryString] = createSignal({
+    offset: 0,
+    limit: 10,
+  });
+  const paginationStore = paginationStoreUtils.createStore({
+    totalItems: newLargeData.length,
+    managedData: queryString,
+    setManagedData: setQueryString,
+    getAsyncUpdate: () => ({
+      isFetching: false,
+      isError: false,
+      totalItems: newLargeData.length,
+      itemsPerPage: 10,
+      currentPage: 1,
+    }),
+  });
+
+  setInterval(() => {
+    setItems((prevItems) => [...prevItems, ...gridData]);
+  }, 2000);
+
   return (
     <SandboxExamplesContainer>
       <Page.ContentSection>
         <GridTable.Simple
-          class="grid-cols-[auto_1fr_auto_auto]"
-          items={gridData}
-          headerData={['Id', 'Name', 'Status', 'Last Modified']}
+          class="grid-cols-[1fr_100px_180px_150px]"
+          contentClass="max-h-[250px]"
+          items={items()}
+          headerData={['Title', 'Severity', 'Last Modified', 'Author']}
+          footerElement={<PaginationComponent paginationStore={paginationStore} />}
           columnCount={4}
+          enableAutoScroll
         >
-          {(item, index) => {
+          {(row, index) => {
             const isFirstRow = () => index() === 0;
-            const isLastRow = () => index() === gridData.length - 1;
+            const isLastRow = () => index() === items().length - 1;
 
             return (
               <>
                 <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
-                  {item.id}
+                  {row.name}
                 </GridTable.Data>
                 <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
-                  {item.name}
+                  {row.id}
                 </GridTable.Data>
                 <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
-                  {item.status}
+                  {row.date}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} class="justify-center" isEndOfRow>
-                  {item.date}
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
+                  {row.status}
                 </GridTable.Data>
               </>
             );
@@ -221,7 +246,7 @@ export const CustomHeaderCssClasses = () => {
     <SandboxExamplesContainer>
       <Page.ContentSection>
         <GridTable.Simple
-          class="grid-cols-[auto_1fr_auto_auto]"
+          class="grid-cols-[150px_1fr_150px_150px]"
           items={gridData}
           headerData={[
             'Default',
@@ -267,95 +292,33 @@ export const CustomHeaderCssClasses = () => {
   );
 };
 
-export const SelectableAndPaginated = () => {
-  const [queryString, setQueryString] = createSignal({
-    offset: 0,
-    linit: 0,
-  });
-
-  const [selectedItems, setSelectedItems] = createSignal<ComplexData[]>([]);
-  const paginationStore = paginationStoreUtils.createStore({
-    totalItems: newLargeData.length,
-    managedData: queryString,
-    setManagedData: setQueryString,
-    getAsyncUpdate: () => ({
-      isFetching: false,
-      isError: false,
-      totalItems: newLargeData.length,
-      itemsPerPage: 10,
-      currentPage: 1,
-    }),
-  });
-
-  const selectedIds = createMemo(() => selectedItems().map((item) => item.id));
-
-  const currentItems = () => {
-    const offsets = paginationStore.currentItemOffsets();
-
-    return newLargeData.slice(offsets[0], offsets[1]);
-  };
-
-  const handleRowSelectorChange = (checked: boolean, item: ComplexData) => {
-    console.log('checked', checked, item);
-
-    if (checked) {
-      setSelectedItems([...selectedItems(), item]);
-
-      return;
-    }
-
-    setSelectedItems(selectedItems().filter((i) => i.id !== item.id));
-  };
-
-  const handleDelete = () => {
-    console.log('delete', selectedItems());
-  };
-
+export const Default = () => {
   return (
     <SandboxExamplesContainer>
       <Page.ContentSection>
         <GridTable.Simple
-          class="grid-cols-[auto_auto_1fr_auto_auto]"
-          items={currentItems()}
-          headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-          footerElement={<PaginationComponent paginationStore={paginationStore} />}
-          columnCount={5}
-          selectedItems={selectedItems()}
-          setSelectedItems={setSelectedItems}
-          selectedActionElement={
-            <>
-              <Icon icon="trash" onClick={handleDelete} />
-              <Icon icon="copy" />
-              <Icon icon="pencil" />
-              <Icon icon="database" />
-            </>
-          }
+          class="grid-cols-[150px_1fr_150px_150px]"
+          items={gridData}
+          headerData={['Id', 'Name', 'Status', 'Last Modified']}
+          columnCount={4}
         >
           {(item, index) => {
             const isFirstRow = () => index() === 0;
-            const isLastRow = () => index() === currentItems().length - 1;
+            const isLastRow = () => index() === gridData.length - 1;
 
             return (
               <>
-                <GridTable.RowSelector
-                  isFirstRow={isFirstRow()}
-                  isLastRow={isLastRow()}
-                  isStartOfRow
-                  item={item}
-                  isSelected={selectedIds().includes(item.id)}
-                  onChange={handleRowSelectorChange}
-                />
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
+                  {item.id}
+                </GridTable.Data>
                 <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
                   {item.name}
                 </GridTable.Data>
                 <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
-                  {item.severity}
+                  {item.status}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
-                  {item.lastModified}
-                </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
-                  {item.author.name}
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} class="justify-center" isEndOfRow>
+                  {item.date}
                 </GridTable.Data>
               </>
             );
@@ -371,7 +334,7 @@ export const Empty = () => {
     <SandboxExamplesContainer>
       <Page.ContentSection>
         <GridTable.Simple
-          class="grid-cols-[auto_1fr_auto_auto]"
+          class="grid-cols-[150px_1fr_150px_150px]"
           items={[] as GridData[]}
           headerData={['Id', 'Name', 'Status', 'Last Modified']}
           columnCount={4}
@@ -403,70 +366,12 @@ export const Empty = () => {
   );
 };
 
-export const Linked = () => {
-  return (
-    <SandboxExamplesContainer>
-      <Page.ContentSection>
-        <GridTable.Simple
-          class="grid-cols-[auto_1fr_auto_auto_auto]"
-          items={gridData}
-          headerData={['Id', 'Name', 'Status', 'Last Modified']}
-          hasActions
-          columnCount={5}
-        >
-          {(item, index) => {
-            const isFirstRow = () => index() === 0;
-            const isLastRow = () => index() === gridData.length - 1;
-            const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
-
-            // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
-            const handleEdit = (data: any) => {
-              console.log('edit', data);
-
-              dropDownComponentRef.api()?.hide();
-            };
-
-            return (
-              <>
-                <GridTable.Data
-                  linkUrl="https://google.com"
-                  isFirstRow={isFirstRow()}
-                  isLastRow={isLastRow()}
-                  isStartOfRow
-                >
-                  {item.id}
-                </GridTable.Data>
-                <GridTable.Data linkUrl="https://google.com" isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
-                  {item.name}
-                </GridTable.Data>
-                <GridTable.Data linkUrl="https://google.com" isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
-                  {item.status}
-                </GridTable.Data>
-                <GridTable.Data linkUrl="https://google.com" isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
-                  {item.date}
-                </GridTable.Data>
-                <GridTable.DataActions
-                  isFirstRow={isFirstRow()}
-                  isLastRow={isLastRow()}
-                  actionsDropDownComponentRef={dropDownComponentRef}
-                  dropDownContentElement={<List.Item onClick={() => handleEdit(item)}>Edit</List.Item>}
-                  isEndOfRow
-                />
-              </>
-            );
-          }}
-        </GridTable.Simple>
-      </Page.ContentSection>
-    </SandboxExamplesContainer>
-  );
-};
-
 export const ExtraContent = () => {
   return (
     <SandboxExamplesContainer>
       <Page.ContentSection>
         <GridTable.Simple
-          class="grid-cols-[auto_1fr_auto_auto_auto]"
+          class="grid-cols-[150px_1fr_150px_150px_150px]"
           items={gridData}
           headerData={['Id', 'Name', 'Status', 'Last Modified']}
           hasActions
@@ -569,6 +474,64 @@ export const ExtraContent = () => {
   );
 };
 
+export const Linked = () => {
+  return (
+    <SandboxExamplesContainer>
+      <Page.ContentSection>
+        <GridTable.Simple
+          class="grid-cols-[150px_1fr_150px_150px_150px]"
+          items={gridData}
+          headerData={['Id', 'Name', 'Status', 'Last Modified']}
+          hasActions
+          columnCount={5}
+        >
+          {(item, index) => {
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === gridData.length - 1;
+            const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
+
+            // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
+            const handleEdit = (data: any) => {
+              console.log('edit', data);
+
+              dropDownComponentRef.api()?.hide();
+            };
+
+            return (
+              <>
+                <GridTable.Data
+                  linkUrl="https://google.com"
+                  isFirstRow={isFirstRow()}
+                  isLastRow={isLastRow()}
+                  isStartOfRow
+                >
+                  {item.id}
+                </GridTable.Data>
+                <GridTable.Data linkUrl="https://google.com" isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
+                  {item.name}
+                </GridTable.Data>
+                <GridTable.Data linkUrl="https://google.com" isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
+                  {item.status}
+                </GridTable.Data>
+                <GridTable.Data linkUrl="https://google.com" isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
+                  {item.date}
+                </GridTable.Data>
+                <GridTable.DataActions
+                  isFirstRow={isFirstRow()}
+                  isLastRow={isLastRow()}
+                  actionsDropDownComponentRef={dropDownComponentRef}
+                  dropDownContentElement={<List.Item onClick={() => handleEdit(item)}>Edit</List.Item>}
+                  isEndOfRow
+                />
+              </>
+            );
+          }}
+        </GridTable.Simple>
+      </Page.ContentSection>
+    </SandboxExamplesContainer>
+  );
+};
+
 export const Pagination = () => {
   const [queryString, setQueryString] = createSignal({
     offset: 0,
@@ -598,69 +561,7 @@ export const Pagination = () => {
     <SandboxExamplesContainer>
       <Page.ContentSection>
         <GridTable.Simple
-          class="grid-cols-[1fr_auto_auto_auto]"
-          items={currentItems()}
-          headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-          footerElement={<PaginationComponent paginationStore={paginationStore} />}
-          columnCount={4}
-        >
-          {(row, index) => {
-            const isFirstRow = () => index() === 0;
-            const isLastRow = () => index() === currentItems().length - 1;
-
-            return (
-              <>
-                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
-                  {row.name}
-                </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
-                  {row.severity}
-                </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
-                  {row.lastModified}
-                </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
-                  {row.author.name}
-                </GridTable.Data>
-              </>
-            );
-          }}
-        </GridTable.Simple>
-      </Page.ContentSection>
-    </SandboxExamplesContainer>
-  );
-};
-
-export const PaginationWithDelay = () => {
-  const [queryString, setQueryString] = createSignal({
-    offset: 0,
-    limit: 10,
-  });
-
-  const paginationStore = paginationStoreUtils.createStore({
-    totalItems: newLargeData.length,
-    managedData: queryString,
-    setManagedData: setQueryString,
-    getAsyncUpdate: () => ({
-      isFetching: false,
-      isError: false,
-      totalItems: newLargeData.length,
-      itemsPerPage: 10,
-      currentPage: 1,
-    }),
-  });
-
-  const currentItems = () => {
-    const offsets = paginationStore.currentItemOffsets();
-
-    return newLargeData.slice(offsets[0], offsets[1]);
-  };
-
-  return (
-    <SandboxExamplesContainer>
-      <Page.ContentSection>
-        <GridTable.Simple
-          class="grid-cols-[1fr_auto_auto_auto]"
+          class="grid-cols-[1fr_150px_150px_150px]"
           items={currentItems()}
           headerData={['Title', 'Severity', 'Last Modified', 'Author']}
           footerElement={<PaginationComponent paginationStore={paginationStore} />}
@@ -724,10 +625,134 @@ export const PaginationWithCustomDefaultCurrentPage = () => {
     <SandboxExamplesContainer>
       <Page.ContentSection>
         <GridTable.Simple
-          class="grid-cols-[1fr_auto_auto_auto]"
+          class="grid-cols-[1fr_150px_150px_150px]"
           items={currentItems()}
           headerData={['Title', 'Severity', 'Last Modified', 'Author']}
           footerElement={<PaginationComponent paginationStore={paginationStore} />}
+          columnCount={4}
+        >
+          {(row, index) => {
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === currentItems().length - 1;
+
+            return (
+              <>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
+                  {row.name}
+                </GridTable.Data>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
+                  {row.severity}
+                </GridTable.Data>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
+                  {row.lastModified}
+                </GridTable.Data>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
+                  {row.author.name}
+                </GridTable.Data>
+              </>
+            );
+          }}
+        </GridTable.Simple>
+      </Page.ContentSection>
+    </SandboxExamplesContainer>
+  );
+};
+
+export const PaginationWithDelay = () => {
+  const [queryString, setQueryString] = createSignal({
+    offset: 0,
+    limit: 10,
+  });
+
+  const paginationStore = paginationStoreUtils.createStore({
+    totalItems: newLargeData.length,
+    managedData: queryString,
+    setManagedData: setQueryString,
+    getAsyncUpdate: () => ({
+      isFetching: false,
+      isError: false,
+      totalItems: newLargeData.length,
+      itemsPerPage: 10,
+      currentPage: 1,
+    }),
+  });
+
+  const currentItems = () => {
+    const offsets = paginationStore.currentItemOffsets();
+
+    return newLargeData.slice(offsets[0], offsets[1]);
+  };
+
+  return (
+    <SandboxExamplesContainer>
+      <Page.ContentSection>
+        <GridTable.Simple
+          class="grid-cols-[1fr_150px_150px_150px]"
+          items={currentItems()}
+          headerData={['Title', 'Severity', 'Last Modified', 'Author']}
+          footerElement={<PaginationComponent paginationStore={paginationStore} />}
+          columnCount={4}
+        >
+          {(row, index) => {
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === currentItems().length - 1;
+
+            return (
+              <>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
+                  {row.name}
+                </GridTable.Data>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
+                  {row.severity}
+                </GridTable.Data>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
+                  {row.lastModified}
+                </GridTable.Data>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
+                  {row.author.name}
+                </GridTable.Data>
+              </>
+            );
+          }}
+        </GridTable.Simple>
+      </Page.ContentSection>
+    </SandboxExamplesContainer>
+  );
+};
+
+export const PaginationWithNumbers = () => {
+  const [queryString, setQueryString] = createSignal({
+    offset: 0,
+    limit: 10,
+  });
+
+  const paginationStore = paginationStoreUtils.createStore({
+    totalItems: newLargeData.length,
+    managedData: queryString,
+    setManagedData: setQueryString,
+    getAsyncUpdate: () => ({
+      isFetching: false,
+      isError: false,
+      totalItems: newLargeData.length,
+      itemsPerPage: 10,
+      currentPage: 1,
+    }),
+  });
+
+  const currentItems = () => {
+    const offsets = paginationStore.currentItemOffsets();
+
+    return newLargeData.slice(offsets[0], offsets[1]);
+  };
+
+  return (
+    <SandboxExamplesContainer>
+      <Page.ContentSection>
+        <GridTable.Simple
+          class="grid-cols-[1fr_150px_150px_150px]"
+          items={currentItems()}
+          headerData={['Title', 'Severity', 'Last Modified', 'Author']}
+          footerElement={<PaginationComponent paginationStore={paginationStore} showNumbers />}
           columnCount={4}
         >
           {(row, index) => {
@@ -789,7 +814,7 @@ export const PaginationWithOptionsExample = () => {
     <SandboxExamplesContainer>
       <Page.ContentSection>
         <GridTable.Simple
-          class="grid-cols-[1fr_auto_auto_auto]"
+          class="grid-cols-[1fr_150px_150px_150px]"
           items={currentItems()}
           headerData={['Title', 'Severity', 'Last Modified', 'Author']}
           footerElement={<PaginationComponent paginationStore={paginationStore} />}
@@ -812,6 +837,162 @@ export const PaginationWithOptionsExample = () => {
                 </GridTable.Data>
                 <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
                   {row.author.name}
+                </GridTable.Data>
+              </>
+            );
+          }}
+        </GridTable.Simple>
+      </Page.ContentSection>
+    </SandboxExamplesContainer>
+  );
+};
+
+export const Scrollable = () => {
+  const [items, setItems] = createSignal<GridData[]>([...gridData, ...gridData, ...gridData, ...gridData, ...gridData]);
+  const [queryString, setQueryString] = createSignal({
+    offset: 0,
+    limit: 10,
+  });
+  const paginationStore = paginationStoreUtils.createStore({
+    totalItems: newLargeData.length,
+    managedData: queryString,
+    setManagedData: setQueryString,
+    getAsyncUpdate: () => ({
+      isFetching: false,
+      isError: false,
+      totalItems: newLargeData.length,
+      itemsPerPage: 10,
+      currentPage: 1,
+    }),
+  });
+
+  return (
+    <SandboxExamplesContainer>
+      <Page.ContentSection>
+        <GridTable.Simple
+          class="grid-cols-[1fr_150px_150px_150px]"
+          contentClass="h-[170px]"
+          items={items()}
+          headerData={['Title', 'Severity', 'Last Modified', 'Author']}
+          footerElement={<PaginationComponent paginationStore={paginationStore} />}
+          columnCount={4}
+        >
+          {(row, index) => {
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === items().length - 1;
+
+            return (
+              <>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
+                  {row.name}
+                </GridTable.Data>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
+                  {row.id}
+                </GridTable.Data>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
+                  {row.date}
+                </GridTable.Data>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
+                  {row.status}
+                </GridTable.Data>
+              </>
+            );
+          }}
+        </GridTable.Simple>
+      </Page.ContentSection>
+    </SandboxExamplesContainer>
+  );
+};
+
+export const SelectableAndPaginated = () => {
+  const [queryString, setQueryString] = createSignal({
+    offset: 0,
+    linit: 0,
+  });
+
+  const [selectedItems, setSelectedItems] = createSignal<ComplexData[]>([]);
+  const paginationStore = paginationStoreUtils.createStore({
+    totalItems: newLargeData.length,
+    managedData: queryString,
+    setManagedData: setQueryString,
+    getAsyncUpdate: () => ({
+      isFetching: false,
+      isError: false,
+      totalItems: newLargeData.length,
+      itemsPerPage: 10,
+      currentPage: 1,
+    }),
+  });
+
+  const selectedIds = createMemo(() => selectedItems().map((item) => item.id));
+
+  const currentItems = () => {
+    const offsets = paginationStore.currentItemOffsets();
+
+    return newLargeData.slice(offsets[0], offsets[1]);
+  };
+
+  const handleRowSelectorChange = (checked: boolean, item: ComplexData) => {
+    console.log('checked', checked, item);
+
+    if (checked) {
+      setSelectedItems([...selectedItems(), item]);
+
+      return;
+    }
+
+    setSelectedItems(selectedItems().filter((i) => i.id !== item.id));
+  };
+
+  const handleDelete = () => {
+    console.log('delete', selectedItems());
+  };
+
+  return (
+    <SandboxExamplesContainer>
+      <Page.ContentSection>
+        <GridTable.Simple
+          class="grid-cols-[150px_150px_1fr_150px_150px]"
+          items={currentItems()}
+          headerData={['Title', 'Severity', 'Last Modified', 'Author']}
+          footerElement={<PaginationComponent paginationStore={paginationStore} />}
+          columnCount={5}
+          selectedItems={selectedItems()}
+          setSelectedItems={setSelectedItems}
+          selectedActionElement={
+            <>
+              <Icon icon="trash" onClick={handleDelete} />
+              <Icon icon="copy" />
+              <Icon icon="pencil" />
+              <Icon icon="database" />
+            </>
+          }
+        >
+          {(item, index) => {
+            const isFirstRow = () => index() === 0;
+            const isLastRow = () => index() === currentItems().length - 1;
+
+            return (
+              <>
+                <GridTable.RowSelector
+                  isFirstRow={isFirstRow()}
+                  isLastRow={isLastRow()}
+                  isStartOfRow
+                  item={item}
+                  isSelected={selectedIds().includes(item.id)}
+                  onChange={handleRowSelectorChange}
+                />
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
+                  {item.name}
+                </GridTable.Data>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
+                  {item.severity}
+                </GridTable.Data>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
+                  {item.lastModified}
+                </GridTable.Data>
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
+                  {item.author.name}
                 </GridTable.Data>
               </>
             );
@@ -849,7 +1030,7 @@ export const SinglePagePagination = () => {
     <SandboxExamplesContainer>
       <Page.ContentSection>
         <GridTable.Simple
-          class="grid-cols-[1fr_auto_auto_auto]"
+          class="grid-cols-[1fr_150px_150px_150px]"
           items={singlePageItems}
           headerData={['Title', 'Severity', 'Last Modified', 'Author']}
           footerElement={<PaginationComponent paginationStore={paginationStore} />}
@@ -882,63 +1063,187 @@ export const SinglePagePagination = () => {
   );
 };
 
-export const PaginationWithNumbers = () => {
-  const [queryString, setQueryString] = createSignal({
-    offset: 0,
-    limit: 10,
+export const SortableSimple = () => {
+  const [sortKey, setSortKey] = createSignal<string>();
+  const [sortDirection, setSortDirection] = createSignal<GridTableSortDirection>(GridTableSortDirection.NONE);
+
+  const headerData = createMemo(() => {
+    return [
+      'Id',
+      {
+        element: () => 'Name',
+        onSortChange: (sortKey: string, newSortDirection: GridTableSortDirection) => {
+          setSortKey(sortKey);
+          setSortDirection(newSortDirection);
+
+          console.log(`new sort: ${sortKey} ${newSortDirection}`);
+        },
+        sortDirection: sortKey() === 'name' ? sortDirection() : GridTableSortDirection.NONE,
+        sortKey: 'name',
+      },
+      'Status',
+      {
+        element: () => 'Last Modified',
+        onSortChange: (sortKey: string, newSortDirection: GridTableSortDirection) => {
+          setSortKey(sortKey);
+          setSortDirection(newSortDirection);
+
+          console.log(`new sort: ${sortKey} ${newSortDirection}`);
+        },
+        sortDirection: sortKey() === 'lastModified' ? sortDirection() : GridTableSortDirection.NONE,
+        sortKey: 'lastModified',
+      },
+    ];
   });
-
-  const paginationStore = paginationStoreUtils.createStore({
-    totalItems: newLargeData.length,
-    managedData: queryString,
-    setManagedData: setQueryString,
-    getAsyncUpdate: () => ({
-      isFetching: false,
-      isError: false,
-      totalItems: newLargeData.length,
-      itemsPerPage: 10,
-      currentPage: 1,
-    }),
-  });
-
-  const currentItems = () => {
-    const offsets = paginationStore.currentItemOffsets();
-
-    return newLargeData.slice(offsets[0], offsets[1]);
-  };
 
   return (
     <SandboxExamplesContainer>
       <Page.ContentSection>
         <GridTable.Simple
-          class="grid-cols-[1fr_auto_auto_auto]"
-          items={currentItems()}
-          headerData={['Title', 'Severity', 'Last Modified', 'Author']}
-          footerElement={<PaginationComponent paginationStore={paginationStore} showNumbers />}
+          class="grid-cols-[150px_1fr_150px_150px]"
+          items={gridData}
+          headerData={headerData()}
           columnCount={4}
         >
-          {(row, index) => {
+          {(item, index) => {
             const isFirstRow = () => index() === 0;
-            const isLastRow = () => index() === currentItems().length - 1;
+            const isLastRow = () => index() === gridData.length - 1;
 
             return (
               <>
                 <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
-                  {row.name}
+                  {item.id}
                 </GridTable.Data>
                 <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
-                  {row.severity}
+                  {item.name}
                 </GridTable.Data>
                 <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
-                  {row.lastModified}
+                  {item.status}
                 </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isEndOfRow>
-                  {row.author.name}
+                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} class="justify-center" isEndOfRow>
+                  {item.date}
                 </GridTable.Data>
               </>
             );
           }}
         </GridTable.Simple>
+      </Page.ContentSection>
+    </SandboxExamplesContainer>
+  );
+};
+
+export const SortableVirtualized = () => {
+  const [sortKey, setSortKey] = createSignal<string>();
+  const [sortDirection, setSortDirection] = createSignal<GridTableSortDirection>(GridTableSortDirection.NONE);
+  const tableCss = 'grid-cols-[1fr_110px_160px_180px]';
+
+  return (
+    <SandboxExamplesContainer>
+      <Page.ContentSection>
+        <GridTable.Virtual
+          class={tableCss}
+          scrollAreaClass="h-[500px]"
+          headerData={[
+            'Title',
+            {
+              element: () => 'Severity',
+              onSortChange: (sortKey: string, newSortDirection: GridTableSortDirection) => {
+                setSortKey(sortKey);
+                setSortDirection(newSortDirection);
+
+                console.log(`new sort: ${sortKey} ${newSortDirection}`);
+              },
+              sortDirection: sortKey() === 'severity' ? sortDirection() : GridTableSortDirection.NONE,
+              sortKey: 'severity',
+            },
+            'Last Modified',
+            {
+              element: () => 'Author',
+              onSortChange: (sortKey: string, newSortDirection: GridTableSortDirection) => {
+                setSortKey(sortKey);
+                setSortDirection(newSortDirection);
+
+                console.log(`new sort: ${sortKey} ${newSortDirection}`);
+              },
+              sortDirection: sortKey() === 'author' ? sortDirection() : GridTableSortDirection.NONE,
+              sortKey: 'author',
+            },
+          ]}
+          virtualProps={{
+            items: newLargeData,
+            estimateSize: () => 64,
+          }}
+          columnCount={4}
+        >
+          {(index, virtualizer) => {
+            const item = newLargeData[index];
+            const isFirstRow = () => index === 0;
+            const isLastRow = () => index === newLargeData.length - 1;
+            const [isExpanded, setIsExpanded] = createSignal(false);
+            const [elementRef, setElementRef] = createSignal<Element>();
+            const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
+
+            // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
+            const handleEdit = (data: any) => {
+              console.log('edit', data);
+
+              dropDownComponentRef.api()?.hide();
+            };
+
+            const handleExpand = () => {
+              setIsExpanded(!isExpanded());
+
+              dropDownComponentRef.api()?.hide();
+            };
+
+            createEffect(function recalculateItemSize() {
+              if (!elementRef()) {
+                return;
+              }
+
+              virtualizer.measureElement(elementRef());
+            });
+
+            return (
+              // biome-ignore lint/a11y/useSemanticElements: we do this to have a more flexible table component
+              <GridTable class={tableCss} ref={setElementRef} data-index={index} role="row">
+                <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isFirstRow={isFirstRow()} isStartOfRow>
+                  {item.name}
+                </GridTable.Data>
+                <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isFirstRow={isFirstRow()}>
+                  {item.severity}
+                </GridTable.Data>
+                <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isFirstRow={isFirstRow()}>
+                  {item.lastModified}
+                </GridTable.Data>
+                <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isFirstRow={isFirstRow()} isEndOfRow>
+                  {item.author.name}
+                </GridTable.Data>
+                <GridTable.ExpandableContent isExpanded={isExpanded()} columnCount={6}>
+                  <h4>Additional Details</h4>
+                  <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span class="text-gray-600">Email:</span>
+                      <span class="text-gray-900 ml-2">bob.johnson@example.com</span>
+                    </div>
+                    <div>
+                      <span class="text-gray-600">Phone:</span>
+                      <span class="text-gray-900 ml-2">(555) 123-4567</span>
+                    </div>
+                    <div>
+                      <span class="text-gray-600">Department:</span>
+                      <span class="text-gray-900 ml-2">Engineering</span>
+                    </div>
+                    <div>
+                      <span class="text-gray-600">Last Login:</span>
+                      <span class="text-gray-900 ml-2">2024-01-08</span>
+                    </div>
+                  </div>
+                </GridTable.ExpandableContent>
+              </GridTable>
+            );
+          }}
+        </GridTable.Virtual>
       </Page.ContentSection>
     </SandboxExamplesContainer>
   );
@@ -1114,192 +1419,6 @@ export const VirtualizedEmpty = () => {
                 <GridTable.Data isExpanded={isExpanded()} isFirstRow={isFirstRow()} isEndOfRow>
                   {item.author.name}
                 </GridTable.Data>
-              </GridTable>
-            );
-          }}
-        </GridTable.Virtual>
-      </Page.ContentSection>
-    </SandboxExamplesContainer>
-  );
-};
-
-export const SortableSimple = () => {
-  const [sortKey, setSortKey] = createSignal<string>();
-  const [sortDirection, setSortDirection] = createSignal<GridTableSortDirection>(GridTableSortDirection.NONE);
-
-  const headerData = createMemo(() => {
-    return [
-      'Id',
-      {
-        element: () => 'Name',
-        onSortChange: (sortKey: string, newSortDirection: GridTableSortDirection) => {
-          setSortKey(sortKey);
-          setSortDirection(newSortDirection);
-
-          console.log(`new sort: ${sortKey} ${newSortDirection}`);
-        },
-        sortDirection: sortKey() === 'name' ? sortDirection() : GridTableSortDirection.NONE,
-        sortKey: 'name',
-      },
-      'Status',
-      {
-        element: () => 'Last Modified',
-        onSortChange: (sortKey: string, newSortDirection: GridTableSortDirection) => {
-          setSortKey(sortKey);
-          setSortDirection(newSortDirection);
-
-          console.log(`new sort: ${sortKey} ${newSortDirection}`);
-        },
-        sortDirection: sortKey() === 'lastModified' ? sortDirection() : GridTableSortDirection.NONE,
-        sortKey: 'lastModified',
-      },
-    ];
-  });
-
-  return (
-    <SandboxExamplesContainer>
-      <Page.ContentSection>
-        <GridTable.Simple
-          class="grid-cols-[auto_1fr_auto_auto]"
-          items={gridData}
-          headerData={headerData()}
-          columnCount={4}
-        >
-          {(item, index) => {
-            const isFirstRow = () => index() === 0;
-            const isLastRow = () => index() === gridData.length - 1;
-
-            return (
-              <>
-                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
-                  {item.id}
-                </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
-                  {item.name}
-                </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
-                  {item.status}
-                </GridTable.Data>
-                <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} class="justify-center" isEndOfRow>
-                  {item.date}
-                </GridTable.Data>
-              </>
-            );
-          }}
-        </GridTable.Simple>
-      </Page.ContentSection>
-    </SandboxExamplesContainer>
-  );
-};
-
-export const SortableVirtualized = () => {
-  const [sortKey, setSortKey] = createSignal<string>();
-  const [sortDirection, setSortDirection] = createSignal<GridTableSortDirection>(GridTableSortDirection.NONE);
-  const tableCss = 'grid-cols-[1fr_110px_160px_180px]';
-
-  return (
-    <SandboxExamplesContainer>
-      <Page.ContentSection>
-        <GridTable.Virtual
-          class={tableCss}
-          scrollAreaClass="h-[500px]"
-          headerData={[
-            'Title',
-            {
-              element: () => 'Severity',
-              onSortChange: (sortKey: string, newSortDirection: GridTableSortDirection) => {
-                setSortKey(sortKey);
-                setSortDirection(newSortDirection);
-
-                console.log(`new sort: ${sortKey} ${newSortDirection}`);
-              },
-              sortDirection: sortKey() === 'severity' ? sortDirection() : GridTableSortDirection.NONE,
-              sortKey: 'severity',
-            },
-            'Last Modified',
-            {
-              element: () => 'Author',
-              onSortChange: (sortKey: string, newSortDirection: GridTableSortDirection) => {
-                setSortKey(sortKey);
-                setSortDirection(newSortDirection);
-
-                console.log(`new sort: ${sortKey} ${newSortDirection}`);
-              },
-              sortDirection: sortKey() === 'author' ? sortDirection() : GridTableSortDirection.NONE,
-              sortKey: 'author',
-            },
-          ]}
-          virtualProps={{
-            items: newLargeData,
-            estimateSize: () => 64,
-          }}
-          columnCount={4}
-        >
-          {(index, virtualizer) => {
-            const item = newLargeData[index];
-            const isFirstRow = () => index === 0;
-            const isLastRow = () => index === newLargeData.length - 1;
-            const [isExpanded, setIsExpanded] = createSignal(false);
-            const [elementRef, setElementRef] = createSignal<Element>();
-            const dropDownComponentRef = componentRefUtils.createRef<TooltipComponentRef>();
-
-            // biome-ignore lint/suspicious/noExplicitAny: just for sandbox
-            const handleEdit = (data: any) => {
-              console.log('edit', data);
-
-              dropDownComponentRef.api()?.hide();
-            };
-
-            const handleExpand = () => {
-              setIsExpanded(!isExpanded());
-
-              dropDownComponentRef.api()?.hide();
-            };
-
-            createEffect(function recalculateItemSize() {
-              if (!elementRef()) {
-                return;
-              }
-
-              virtualizer.measureElement(elementRef());
-            });
-
-            return (
-              // biome-ignore lint/a11y/useSemanticElements: we do this to have a more flexible table component
-              <GridTable class={tableCss} ref={setElementRef} data-index={index} role="row">
-                <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isFirstRow={isFirstRow()} isStartOfRow>
-                  {item.name}
-                </GridTable.Data>
-                <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isFirstRow={isFirstRow()}>
-                  {item.severity}
-                </GridTable.Data>
-                <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isFirstRow={isFirstRow()}>
-                  {item.lastModified}
-                </GridTable.Data>
-                <GridTable.Data onClick={handleExpand} isExpanded={isExpanded()} isFirstRow={isFirstRow()} isEndOfRow>
-                  {item.author.name}
-                </GridTable.Data>
-                <GridTable.ExpandableContent isExpanded={isExpanded()} columnCount={6}>
-                  <h4>Additional Details</h4>
-                  <div class="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <span class="text-gray-600">Email:</span>
-                      <span class="text-gray-900 ml-2">bob.johnson@example.com</span>
-                    </div>
-                    <div>
-                      <span class="text-gray-600">Phone:</span>
-                      <span class="text-gray-900 ml-2">(555) 123-4567</span>
-                    </div>
-                    <div>
-                      <span class="text-gray-600">Department:</span>
-                      <span class="text-gray-900 ml-2">Engineering</span>
-                    </div>
-                    <div>
-                      <span class="text-gray-600">Last Login:</span>
-                      <span class="text-gray-900 ml-2">2024-01-08</span>
-                    </div>
-                  </div>
-                </GridTable.ExpandableContent>
               </GridTable>
             );
           }}
