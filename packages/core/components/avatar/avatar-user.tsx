@@ -4,7 +4,7 @@ import { type AvatarProps, AvatarSize } from '$/core/components/avatar/utils';
 import { cryptoUtils } from '$/core/utils/crypto';
 import { imageUtils } from '$/core/utils/image';
 
-export type AvatarUserProps = Omit<AvatarProps, 'class'> & {
+export type AvatarUserProps = AvatarProps & {
   name: string;
   email?: string;
   extraText?: string;

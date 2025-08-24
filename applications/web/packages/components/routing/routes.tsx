@@ -21,7 +21,7 @@ const Routes = () => {
         )}
       />
       <Route
-        path={UiRouteName.HOME}
+        path={UiRouteName.DASHBOARD}
         component={() => (
           <AuthenticatedRoute>
             <HomeView />

@@ -1,5 +1,6 @@
 import { createSignal, For } from 'solid-js';
 import { createStore } from 'solid-js/store';
+import AutoScrollArea from '$/core/components/auto-scroll-area';
 import Button from '$/core/components/button';
 import Chat, { type ChatMessageData, ChatMessageSource } from '$/core/components/chat';
 import CodeBlock from '$/core/components/code-block';
@@ -112,7 +113,7 @@ export const LongMessages = () => {
   );
 };
 
-export const InteractiveChat = () => {
+export const ScrollAndAutoScroll = () => {
   const [messages, setMessages] = createStore<ChatMessageData[]>([
     {
       source: ChatMessageSource.SYSTEM,
@@ -158,10 +159,12 @@ export const InteractiveChat = () => {
   return (
     <SandboxExamplesContainer>
       <div class="flex flex-col gap-sm max-w-[500px]">
-        <ScrollArea class="h-96 border border-outline rounded-sm p-xs">
-          <Chat.Messages>
-            <For each={messages}>{(message) => <Chat.Message source={message.source} messageData={message} />}</For>
-          </Chat.Messages>
+        <ScrollArea class="h-[500px] border border-outline rounded-sm p-xs">
+          <AutoScrollArea>
+            <Chat.Messages>
+              <For each={messages}>{(message) => <Chat.Message source={message.source} messageData={message} />}</For>
+            </Chat.Messages>
+          </AutoScrollArea>
         </ScrollArea>
         <div class="flex gap-xs">
           <textarea

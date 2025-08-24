@@ -5,11 +5,13 @@ import Icon from '$/core/components/icon';
 import List from '$/core/components/list';
 import type { TooltipComponentRef } from '$/core/components/tooltip';
 import { componentRefUtils } from '$/core/stores/component-ref';
+import { tailwindUtils } from '$/core/utils/tailwind';
 import type { User } from '$api/types/user';
 
 type InternalUser = Pick<User, 'id' | 'email' | 'name' | 'roles'>;
 
 export type UsersListProps = {
+  class?: string;
   users: InternalUser[];
   onSelectEdit?: (user: InternalUser) => void;
   onSelectDelete?: (user: InternalUser) => void;
@@ -25,7 +27,7 @@ const UsersList = (props: UsersListProps) => {
       }
     >
       <GridTable.Simple
-        class="grid-cols-[300px_300px_1fr_auto]"
+        class={tailwindUtils.merge('grid-cols-[300px_300px_1fr_auto]', props.class)}
         headerData={['Name', 'Email', 'Roles']}
         hasActions
         items={props.users}

@@ -53,7 +53,7 @@ const CodeBlock = (passedProps: CodeBlockProps) => {
       )}
       variant={props.typographyVariant}
     >
-      <ScrollArea class="h-full" overlapContent={false}>
+      <ScrollArea class="h-full scrollbar-color-[var(--color-brand-200) var(--color-neutral-50)]">
         <Show when={props.ellipsis} fallback={props.code}>
           <EllipsisText class="line-clamp-[10]" text={props.code} />
         </Show>

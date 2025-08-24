@@ -14,6 +14,7 @@ export type PageLayout = (typeof PageLayout)[keyof typeof PageLayout];
 export type PageProps = JSX.HTMLAttributes<HTMLDivElement> &
   CommonDataAttributes & {
     layout?: PageLayout;
+    forceFullHeight?: boolean;
     onClickBackLink?: () => void;
     backLinkLabel?: string;
   };
@@ -21,14 +22,15 @@ export type PageProps = JSX.HTMLAttributes<HTMLDivElement> &
 const Page = (passedProps: PageProps) => {
   const [props, restOfProps] = splitProps(
     mergeProps({ layout: PageLayout.DEFAULT, backLinkLabel: 'Back' }, passedProps),
-    ['class', 'layout', 'onClickBackLink', 'backLinkLabel'],
+    ['class', 'layout', 'forceFullHeight', 'onClickBackLink', 'backLinkLabel'],
   );
 
   return (
     <div
       data-id="page"
-      class={tailwindUtils.merge('flex h-full flex-col gap-sm flex-1', {
+      class={tailwindUtils.merge('flex flex-col gap-sm min-w-[1024px] max-w-[1920px]', {
         'justify-center items-center': props.layout === PageLayout.CENTERED,
+        'min-h-[0]': props.forceFullHeight,
       })}
     >
       <Show when={props.onClickBackLink}>
@@ -42,7 +44,7 @@ const Page = (passedProps: PageProps) => {
         </Button>
       </Show>
       <div
-        class={tailwindUtils.merge('flex flex-col h-full gap-sm min-h-[1px]', props.class, {
+        class={tailwindUtils.merge('flex flex-col h-full gap-sm min-h-[1px] flex-1', props.class, {
           'justify-center items-center': props.layout === PageLayout.CENTERED,
         })}
         {...restOfProps}

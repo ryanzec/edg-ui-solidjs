@@ -26,7 +26,11 @@ export const ApplicationFeature = {
 export type ApplicationFeature = (typeof ApplicationFeature)[keyof typeof ApplicationFeature];
 
 export const UiRouteName = {
-  HOME: '/home',
+  DASHBOARD: '/dashboard',
+  PROJECTS: '/projects',
+  EPICS: '/epics',
+  TICKETS: '/tickets',
+  ROADMAP: '/roadmap',
   USERS: '/users',
   LOGIN: '/login',
 } as const;

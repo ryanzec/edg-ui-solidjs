@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@plugin 'tailwind-scrollbar';
+
 @source '../../**/*.{js,jsx,ts,tsx}';
 
 /* the tailwind theme reference standard css variables to make it easy to avoid (for multiple themes) */

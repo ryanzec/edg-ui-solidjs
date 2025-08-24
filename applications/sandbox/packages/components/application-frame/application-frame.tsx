@@ -1,10 +1,10 @@
 import { type JSX, Show, splitProps } from 'solid-js';
+import ScrollArea from '$/core/components/scroll-area';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import { tailwindUtils } from '$/core/utils/tailwind';
 import styles from '$sandbox/components/application-frame/application-frame.module.css';
 // @todo(refactor) replace with sandbox specific store
 import type { DynamicRouteNavigation } from '$sandbox/stores/dynamic-routes';
-
 import ApplicationFrameNavigation from './application-frame-navigation';
 
 type ApplicationFrameProps = JSX.HTMLAttributes<HTMLDivElement> &
@@ -22,7 +22,7 @@ const ApplicationFrame = (passedProps: ApplicationFrameProps) => {
         <ApplicationFrameNavigation routes={props.navigation} />
         <div class={tailwindUtils.merge(styles.subContainer)}>
           <div data-id="sandbox-main-content" class={tailwindUtils.merge(styles.mainContent)}>
-            {props.children}
+            <ScrollArea>{props.children}</ScrollArea>
           </div>
         </div>
       </Show>

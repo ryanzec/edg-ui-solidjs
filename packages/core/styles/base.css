@@ -16,3 +16,44 @@ body {
   line-height: var(--leading-base);
   letter-spacing: var(--tracking-base);
 }
+
+/* custom scrollbar */
+:root {
+  --spacing-scrollbar-width: 11px;
+  --spacing-scrollbar-height: 11px;
+}
+
+@supports (scrollbar-color: auto) {
+  .custom-scrollbars {
+    scrollbar-color: var(--color-neutral-300) var(--color-surface-pure);
+    scrollbar-width: thin;
+  }
+
+  .custom-scrollbars:hover {
+    scrollbar-color: var(--color-neutral-400) var(--color-surface-pure);
+  }
+}
+
+/* we need this for only safari so the not does that */
+@supports selector(::-webkit-scrollbar) and (not (scrollbar-color: auto)) {
+  :root {
+    /* safari has different spacing around the scrollbar so the sizing variables need to be different */
+    --spacing-scrollbar-width: 6px;
+    --spacing-scrollbar-height: 6px;
+  }
+
+  ::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-neutral-300);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-neutral-400) !important;
+    border-radius: 4px;
+  }
+}

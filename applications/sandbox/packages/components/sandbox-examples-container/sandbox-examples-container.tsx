@@ -25,6 +25,7 @@ const SandboxExamplesContainer = (passedProps: SandboxExamplesContainerProps) =>
 
   return (
     <div
+      data-id="sandbox-examples-container"
       class={tailwindUtils.merge('flex flex-col gap-base', props.class, {
         'flex-row': props.asRow,
         'w-full min-h-full': props.isFull,

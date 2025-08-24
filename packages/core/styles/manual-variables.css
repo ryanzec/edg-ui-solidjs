@@ -1,7 +1,10 @@
 @theme {
   --default-peek-width: 600px;
+
   --spacing-grid-table-x: var(--spacing-2xs);
   --spacing-grid-table-y: var(--spacing-3xs);
+
+  --spacing-application-sidebar: var(--spacing-4xs);
 
   --color-input-active-border: var(--color-info-strong);
 }

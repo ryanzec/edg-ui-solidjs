@@ -1,6 +1,6 @@
 import { type JSX, splitProps } from 'solid-js';
 import Button, { ButtonShape } from '$/core/components/button';
-
+import ScrollArea, { type ScrollAreaProps } from '$/core/components/scroll-area';
 import type { CommonDataAttributes } from '$/core/types/generic';
 import { ThemeName } from '$/core/utils/styles';
 import { tailwindUtils } from '$/core/utils/tailwind';
@@ -9,10 +9,9 @@ import { applicationStore } from '$sandbox/stores/application-store';
 import type { DynamicRouteNavigation } from '$sandbox/stores/dynamic-routes';
 import ApplicationFrameSubNavigation from './application-frame-sub-navigation';
 
-type ApplicationFrameNavigationProps = JSX.HTMLAttributes<HTMLDivElement> &
-  CommonDataAttributes & {
-    routes: DynamicRouteNavigation;
-  };
+type ApplicationFrameNavigationProps = ScrollAreaProps & {
+  routes: DynamicRouteNavigation;
+};
 
 const ApplicationFrameNavigation = (passedProps: ApplicationFrameNavigationProps) => {
   const [props, restOfProps] = splitProps(passedProps, ['routes', 'class']);
@@ -22,8 +21,7 @@ const ApplicationFrameNavigation = (passedProps: ApplicationFrameNavigationProps
   };
 
   return (
-    <div class={tailwindUtils.merge(styles.navigation, props.class)} {...restOfProps}>
-      {/*<ScrollArea>*/}
+    <ScrollArea class={tailwindUtils.merge(styles.navigation, props.class)} {...restOfProps}>
       <Button
         shape={ButtonShape.CIRCLE}
         onClick={handleToggleTheme}
@@ -31,8 +29,7 @@ const ApplicationFrameNavigation = (passedProps: ApplicationFrameNavigationProps
         icon={applicationStore.theme() === ThemeName.LIGHT ? 'moon' : 'sun'}
       />
       <ApplicationFrameSubNavigation routes={props.routes} />
-      {/*</ScrollArea>*/}
-    </div>
+    </ScrollArea>
   );
 };
 

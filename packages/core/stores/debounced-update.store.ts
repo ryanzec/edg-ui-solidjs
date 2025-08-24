@@ -15,7 +15,7 @@ export type CreateDebounceUpdateStoreOptions = {
   onDebouncedValueChange?: (value: string) => void;
 };
 
-export const createDebounceUpdateStore = (options: CreateDebounceUpdateStoreOptions): DebounceUpdateStore => {
+export const createDebounceUpdateStore = (options: CreateDebounceUpdateStoreOptions = {}): DebounceUpdateStore => {
   const [displayValue, setDisplayValue] = createSignal<string>(options.defaultDisplayValue ?? '');
   const [debouncedValue, internalSetDebouncedValue] = createSignal<string>(options.defaultDisplayValue ?? '');
 

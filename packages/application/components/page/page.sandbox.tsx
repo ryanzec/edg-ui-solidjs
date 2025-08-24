@@ -7,6 +7,54 @@ export default {
   title: 'Application/Page',
 };
 
+export const CenteredLayout = () => {
+  return (
+    <SandboxExamplesContainer>
+      <Page layout={PageLayout.CENTERED}>
+        <Page.Header label="Centered Page" />
+        <Page.Content>
+          <Page.ContentSection>
+            <p>This page uses the centered layout option.</p>
+          </Page.ContentSection>
+        </Page.Content>
+      </Page>
+    </SandboxExamplesContainer>
+  );
+};
+
+export const ContentOnly = () => {
+  return (
+    <SandboxExamplesContainer>
+      <Page>
+        <Page.Content>
+          <Page.ContentSection>
+            <p>This page has content without a header section.</p>
+          </Page.ContentSection>
+        </Page.Content>
+      </Page>
+    </SandboxExamplesContainer>
+  );
+};
+
+export const ContextSectionSidePanel = () => {
+  return (
+    <SandboxExamplesContainer>
+      <Page>
+        <Page.Content>
+          <Page.ContentSection hasPadding={false} hasSidePanel>
+            <Page.ContentSectionSidePanel>
+              <p>This page has content without a header section.</p>
+            </Page.ContentSectionSidePanel>
+            <Page.ContentSectionInnerContent>
+              <p>This page has content without a header section.</p>
+            </Page.ContentSectionInnerContent>
+          </Page.ContentSection>
+        </Page.Content>
+      </Page>
+    </SandboxExamplesContainer>
+  );
+};
+
 export const Default = () => {
   return (
     <SandboxExamplesContainer>
@@ -15,28 +63,75 @@ export const Default = () => {
         <Page.Content>
           <Page.ContentSection>
             <p>This is the default page layout with content inside a section.</p>
-          </Page.ContentSection>
-        </Page.Content>
-      </Page>
-    </SandboxExamplesContainer>
-  );
-};
-
-export const BackLink = () => {
-  return (
-    <SandboxExamplesContainer>
-      <Page onClickBackLink={() => console.log('Back link clicked')} backLinkLabel="Previous Page">
-        <Page.Content>
-          <Page.ContentSection>
-            <p>This page has a back link.</p>
-          </Page.ContentSection>
-        </Page.Content>
-      </Page>
-      <Page onClickBackLink={() => console.log('Back link clicked')} backLinkLabel="Previous Page">
-        <Page.Header label="Default Page" />
-        <Page.Content>
-          <Page.ContentSection>
-            <p>This page has a back link.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
           </Page.ContentSection>
         </Page.Content>
       </Page>
@@ -65,14 +160,83 @@ export const HeaderActions = () => {
   );
 };
 
-export const CenteredLayout = () => {
+export const MaximumHeight = () => {
   return (
-    <SandboxExamplesContainer>
-      <Page layout={PageLayout.CENTERED}>
-        <Page.Header label="Centered Page" />
+    <SandboxExamplesContainer class="h-full w-full">
+      <Page>
+        <Page.Header label="Default Page" />
         <Page.Content>
           <Page.ContentSection>
-            <p>This page uses the centered layout option.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
+            <p>This is the default page layout with content inside a section.</p>
           </Page.ContentSection>
         </Page.Content>
       </Page>
@@ -94,39 +258,6 @@ export const MultipleContentSections = () => {
           </Page.ContentSection>
           <Page.ContentSection>
             <p>This is the third content section.</p>
-          </Page.ContentSection>
-        </Page.Content>
-      </Page>
-    </SandboxExamplesContainer>
-  );
-};
-
-export const ContentOnly = () => {
-  return (
-    <SandboxExamplesContainer>
-      <Page layout={PageLayout.CENTERED}>
-        <Page.Content>
-          <Page.ContentSection>
-            <p>This page has content without a header section.</p>
-          </Page.ContentSection>
-        </Page.Content>
-      </Page>
-    </SandboxExamplesContainer>
-  );
-};
-
-export const ContextSectionSidePanel = () => {
-  return (
-    <SandboxExamplesContainer>
-      <Page>
-        <Page.Content>
-          <Page.ContentSection hasPadding={false} hasSidePanel>
-            <Page.ContentSectionSidePanel>
-              <p>This page has content without a header section.</p>
-            </Page.ContentSectionSidePanel>
-            <Page.ContentSectionInnerContent>
-              <p>This page has content without a header section.</p>
-            </Page.ContentSectionInnerContent>
           </Page.ContentSection>
         </Page.Content>
       </Page>

@@ -81,7 +81,7 @@ export const DontOverlapContent = () => {
   return (
     <SandboxExamplesContainer>
       <div class="w-[200px] h-[200px]">
-        <ScrollArea overlapContent={false}>
+        <ScrollArea>
           <div>
             TestingTestingTestingTestingTestingTesting
             <br />
@@ -132,7 +132,7 @@ export const DontOverlapContent = () => {
         </ScrollArea>
       </div>
       <div class="w-[200px]">
-        <ScrollArea overlapContent={false}>
+        <ScrollArea>
           <div>
             TestingTestingTestingTestingTestingTesting
             <br />
@@ -162,7 +162,7 @@ export const DontOverlapContent = () => {
         </ScrollArea>
       </div>
       <div class="h-[200px]">
-        <ScrollArea overlapContent={false}>
+        <ScrollArea>
           <div>
             t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
             t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t

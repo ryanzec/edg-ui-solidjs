@@ -1,10 +1,4 @@
-import 'overlayscrollbars/overlayscrollbars.css';
-
-import type { DeepPartial } from 'chart.js/dist/types/utils';
-import type { Options, OverlayScrollbars, PartialOptions } from 'overlayscrollbars';
-import { OverlayScrollbarsComponent, type OverlayScrollbarsComponentProps } from 'overlayscrollbars-solid';
-import { type Accessor, children, createContext, createSignal, mergeProps, type Setter, splitProps } from 'solid-js';
-import styles from '$/core/components/scroll-area/scroll-area.module.css';
+import { type Accessor, createContext, type JSX, mergeProps, splitProps } from 'solid-js';
 import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type ScrollAreaContextData = {
@@ -13,81 +7,53 @@ export type ScrollAreaContextData = {
 
 export const ScrollAreaContext = createContext<ScrollAreaContextData>();
 
-const defaultScrollbarOptions: PartialOptions = {
-  scrollbars: {
-    autoHideDelay: 100,
-  },
+export const ScrollAreaDirection = {
+  NONE: 'none',
+  HORIZONTAL: 'horizontal',
+  VERTICAL: 'vertical',
+  BOTH: 'both',
+} as const;
+
+export type ScrollAreaDirection = (typeof ScrollAreaDirection)[keyof typeof ScrollAreaDirection];
+
+export const ScrollAreaDisplay = {
+  VISIBLE: 'visible',
+  HIDDEN: 'hidden',
+} as const;
+
+export type ScrollAreaDisplay = (typeof ScrollAreaDisplay)[keyof typeof ScrollAreaDisplay];
+
+export type ScrollAreaProps = JSX.HTMLAttributes<HTMLDivElement> & {
+  direction?: ScrollAreaDirection;
+  display?: ScrollAreaDisplay;
+  ref?: (element: HTMLElement | undefined) => void;
 };
 
-const ScrollArea = (
-  passedProps: Omit<OverlayScrollbarsComponentProps, 'ref'> & {
-    ref?: Setter<OverlayScrollbars | undefined>;
-    overlapContent?: boolean;
-  },
-) => {
-  const [props] = splitProps(mergeProps({ overlapContent: true }, passedProps), [
-    'options',
-    'class',
-    'children',
-    'ref',
-    'overlapContent',
-  ]);
-  // don't doing this in the mergeProps as this way it needed to avoid typescript errors (to the best of my knowledg)
-  const options = props.options || {};
-
-  const [isReady, setIsReady] = createSignal(false);
-
-  // @todo(refactor) this is to work around a bug in OverlayScrollbars that cause a double render of content
-  // @todo(refactor) depending if the top element wrapped uses a signal
-  // @todo(refactor) reference: https://github.com/KingSora/OverlayScrollbars/issues/700
-  const contentAsVariable = children(() => (
-    <ScrollAreaContext.Provider value={{ isReady }}>{props.children}</ScrollAreaContext.Provider>
-  ));
-  const paddingAbsolute = (props.options as DeepPartial<Options>)?.paddingAbsolute;
+const ScrollArea = (passedProps: ScrollAreaProps) => {
+  const [props, restOfProps] = splitProps(
+    mergeProps(
+      { overlapContent: true, direction: ScrollAreaDirection.BOTH, display: ScrollAreaDisplay.VISIBLE },
+      passedProps,
+    ),
+    ['direction', 'display', 'class', 'children'],
+  );
 
   return (
-    <OverlayScrollbarsComponent
-      defer
+    <div
+      {...restOfProps}
       class={tailwindUtils.merge(
-        styles.scrollArea,
+        'h-full w-full custom-scrollbars',
         {
-          'has-[[data-overlayscrollbars-viewport*="overflowXScroll"]]:pb-[10px] has-[[data-overlayscrollbars-viewport*="overflowYScroll"]]:pr-[10px]':
-            props.overlapContent === false,
+          'scrollbar-none': props.display === ScrollAreaDisplay.HIDDEN,
+          'overflow-x-auto': props.direction === ScrollAreaDirection.HORIZONTAL,
+          'overflow-y-auto': props.direction === ScrollAreaDirection.VERTICAL,
+          'overflow-x-auto overflow-y-auto': props.direction === ScrollAreaDirection.BOTH,
         },
         props.class,
       )}
-      options={{
-        ...props.options,
-        scrollbars: {
-          ...options.scrollbars,
-          ...defaultScrollbarOptions.scrollbars,
-        },
-        paddingAbsolute: props.overlapContent === false || paddingAbsolute,
-      }}
-      events={{
-        // this seems to be the most reliable way to get the instance vs using the ref property
-        initialized: (instance: OverlayScrollbars) => {
-          if (!props.ref) {
-            return;
-          }
-
-          props.ref(instance);
-        },
-        updated: (instance: OverlayScrollbars) => {
-          // we do this is the updated as only after this event do we know the styles are correct
-          setIsReady(true);
-        },
-        destroyed: () => {
-          if (!props.ref) {
-            return;
-          }
-
-          props.ref(undefined);
-        },
-      }}
     >
-      <div class="h-full w-full">{contentAsVariable()}</div>
-    </OverlayScrollbarsComponent>
+      {props.children}
+    </div>
   );
 };
 

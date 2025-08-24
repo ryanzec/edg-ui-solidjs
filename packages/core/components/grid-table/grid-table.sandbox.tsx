@@ -10,6 +10,7 @@ import { componentRefUtils } from '$/core/stores/component-ref';
 import { paginationStoreUtils } from '$/core/stores/pagination.store';
 import { asyncUtils } from '$/core/utils/async';
 import SandboxExamplesContainer from '$sandbox/components/sandbox-examples-container/sandbox-examples-container';
+import Button from '../button';
 
 export default {
   title: 'Components/GridTable',
@@ -326,6 +327,58 @@ export const Default = () => {
         </GridTable.Simple>
       </Page.ContentSection>
     </SandboxExamplesContainer>
+  );
+};
+
+export const DynamicAddRemoveData = () => {
+  const [items, setItems] = createSignal<GridData[]>([...gridData]);
+
+  const handleAdd = () => {
+    setItems((prevItems) => [...prevItems, gridData[0]]);
+  };
+
+  const handleRemove = () => {
+    setItems((prevItems) => prevItems.slice(0, -1));
+  };
+
+  return (
+    <>
+      <Button onClick={handleAdd}>Add</Button>
+      <Button onClick={handleRemove}>Remove</Button>
+      <SandboxExamplesContainer>
+        <Page.ContentSection>
+          <GridTable.Simple
+            class="grid-cols-[150px_1fr_150px_150px]"
+            items={items()}
+            headerData={['Id', 'Name', 'Status', 'Last Modified']}
+            columnCount={4}
+            contentClass="max-h-[400px]"
+          >
+            {(item, index) => {
+              const isFirstRow = () => index() === 0;
+              const isLastRow = () => index() === items().length - 1;
+
+              return (
+                <>
+                  <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} isStartOfRow>
+                    {item.id}
+                  </GridTable.Data>
+                  <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
+                    {item.name}
+                  </GridTable.Data>
+                  <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()}>
+                    {item.status}
+                  </GridTable.Data>
+                  <GridTable.Data isFirstRow={isFirstRow()} isLastRow={isLastRow()} class="justify-center" isEndOfRow>
+                    {item.date}
+                  </GridTable.Data>
+                </>
+              );
+            }}
+          </GridTable.Simple>
+        </Page.ContentSection>
+      </SandboxExamplesContainer>
+    </>
   );
 };
 

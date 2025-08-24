@@ -7,7 +7,13 @@ export type PageContentProps = JSX.HTMLAttributes<HTMLDivElement> & CommonDataAt
 const PageContent = (passedProps: PageContentProps) => {
   const [props, restOfProps] = splitProps(mergeProps({}, passedProps), ['class']);
 
-  return <div data-id="content" class={tailwindUtils.merge('flex flex-col flex-1', props.class)} {...restOfProps} />;
+  return (
+    <div
+      data-id="content"
+      class={tailwindUtils.merge('flex flex-col gap-sm flex-1 min-h-[0]', props.class)}
+      {...restOfProps}
+    />
+  );
 };
 
 export default PageContent;

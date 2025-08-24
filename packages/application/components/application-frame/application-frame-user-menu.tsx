@@ -15,15 +15,16 @@ import { ThemeName } from '$/core/utils/styles';
 import { tailwindUtils } from '$/core/utils/tailwind';
 import type { User } from '$api/types/user';
 
-export type UserMenuProps = {
-  userMenuTooltipComponentRef: DropDownMenuProps['tooltipComponentRef'];
+export type ApplicationFrameUserMenuProps = {
+  tooltipComponentRef: DropDownMenuProps['tooltipComponentRef'];
   user: Pick<User, 'name' | 'email'>;
   features: ApplicationFeature[];
   showName?: boolean;
   isCollapsed?: boolean;
+  class?: string;
 };
 
-const UserMenu = (passedProps: UserMenuProps) => {
+const ApplicationFrameUserMenu = (passedProps: ApplicationFrameUserMenuProps) => {
   const props = mergeProps(
     {
       isCollapsed: false,
@@ -36,19 +37,19 @@ const UserMenu = (passedProps: UserMenuProps) => {
   const handleSettings = () => {
     navigate(UiRouteName.USERS);
 
-    props.userMenuTooltipComponentRef.api()?.hide();
+    props.tooltipComponentRef.api()?.hide();
   };
 
   const handleInternalTools = () => {
-    navigate(UiRouteName.HOME);
+    navigate(UiRouteName.DASHBOARD);
 
-    props.userMenuTooltipComponentRef.api()?.hide();
+    props.tooltipComponentRef.api()?.hide();
   };
 
   const handleLogout = () => {
     authenticationStore.logout();
 
-    props.userMenuTooltipComponentRef.api()?.hide();
+    props.tooltipComponentRef.api()?.hide();
   };
 
   const handleThemeChange = (event: Event) => {
@@ -60,24 +61,26 @@ const UserMenu = (passedProps: UserMenuProps) => {
   };
 
   return (
-    <button type="button" class="w-full">
+    <button type="button" class={tailwindUtils.merge('w-full', props.class)}>
       <DropDown.Menu
         class="w-full"
-        tooltipComponentRef={props.userMenuTooltipComponentRef}
+        tooltipComponentRef={props.tooltipComponentRef}
         placement="right-end"
-        handleClass="w-full"
+        handleClass="w-full h-full"
         offset={{ mainAxis: -5, crossAxis: -5 }}
         handleElement={
           <div
             class={tailwindUtils.merge(
-              'flex w-full items-center justify-between cursor-pointer mx-xs mb-2xs rounded-full hover:bg-[#a8bfb6]',
+              'flex w-full items-center justify-center cursor-pointer m-application-sidebar mt-none rounded-sm',
               {
-                'px-2xs py-4xs': props.isCollapsed === false,
+                'px-2xs py-4xs justify-between hover:bg-brand-weak1': props.isCollapsed === false,
               },
             )}
           >
             <Avatar.User
-              avatarSize={props.isCollapsed ? AvatarSize.FILL : AvatarSize.SMALL}
+              // @todo this should be part of the avatar component properties
+              class={props.isCollapsed ? 'h-[24px] w-[24px]' : 'h-[18px] w-[18px] text-xs'}
+              avatarSize={props.isCollapsed ? AvatarSize.FILL : AvatarSize.BASE}
               name={props.user.name}
               email={props.user.email}
               showName={props.showName}
@@ -114,4 +117,4 @@ const UserMenu = (passedProps: UserMenuProps) => {
   );
 };
 
-export default UserMenu;
+export default ApplicationFrameUserMenu;

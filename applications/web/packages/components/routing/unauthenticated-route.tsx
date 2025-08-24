@@ -7,7 +7,7 @@ import { UiRouteName } from '$/application/utils/application';
 const UnauthenticatedRoute = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
   if (authenticationStore.isAuthenticated()) {
     // @todo(!!!) look for redirect in query string
-    return <Navigate href={UiRouteName.HOME} />;
+    return <Navigate href={UiRouteName.DASHBOARD} />;
   }
 
   return props.children;

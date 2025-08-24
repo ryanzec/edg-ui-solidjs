@@ -188,6 +188,18 @@ const isElementChildOf = (child: HTMLElement, parent: HTMLElement) => {
   return parent.contains(child);
 };
 
+type IsElementScrollableReturns = {
+  x: boolean;
+  y: boolean;
+};
+
+const isElementScrollable = (element: HTMLElement): IsElementScrollableReturns => {
+  return {
+    x: element.scrollWidth > element.clientWidth,
+    y: element.scrollHeight > element.clientHeight,
+  };
+};
+
 export const domUtils = {
   isFormInputElement,
   isElement,
@@ -198,4 +210,5 @@ export const domUtils = {
   isElementChildOf,
   getAllOffsets,
   getScrollParent,
+  isElementScrollable,
 };

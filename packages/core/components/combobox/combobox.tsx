@@ -268,7 +268,7 @@ const Combobox = <TData extends ComboboxExtraData, TFormData = DefaultFormData>(
               [styles.openedList]: comboboxStore.store.isOpened,
             })}
           >
-            <ScrollArea>
+            <ScrollArea class="max-h-[250px]">
               <Show when={comboboxStore.asyncOptionsAreLoading()}>
                 <List.Item data-id="async-options-loading" class={styles.listOption}>
                   <Icon class={tailwindUtils.merge(styles.loadingIndicator, iconStyles.spacingRight)} icon="spinner" />{' '}

@@ -1,4 +1,4 @@
-import { useNavigate } from '@solidjs/router';
+import { useLocation, useNavigate } from '@solidjs/router';
 import { type JSX, onCleanup, onMount, Show } from 'solid-js';
 
 import ApplicationFrame from '$/application/components/application-frame';
@@ -14,6 +14,7 @@ import { FeatureFlag, featureFlagStore } from '$web/stores/feature-flag.store';
 
 const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const getFrameFeatures = (): ApplicationFeature[] => {
     const features: ApplicationFeature[] = [];
@@ -43,7 +44,7 @@ const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
       navigate,
     });
     authenticationStore.initialize({
-      homeRedirectRoute: UiRouteName.HOME,
+      homeRedirectRoute: UiRouteName.DASHBOARD,
       loginRedirectRoute: UiRouteName.LOGIN,
     });
 
@@ -56,6 +57,7 @@ const ApplicationContainer = (props: JSX.HTMLAttributes<HTMLDivElement>) => {
     <div data-theme={themeManagerStore.theme()} class="h-[100vh] w-[100vw] flex">
       <Show when={authenticationStore.isInitializing() === false} fallback={<Loading />}>
         <ApplicationFrame
+          pathname={location.pathname}
           isInitializing={false}
           isAuthenticated={authenticationStore.isAuthenticated()}
           user={authenticationStore.sessionUser()?.user}

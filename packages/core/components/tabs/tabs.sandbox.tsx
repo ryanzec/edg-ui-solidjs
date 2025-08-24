@@ -236,7 +236,7 @@ export const FilesScrolling = () => {
   return (
     <SandboxExamplesContainer>
       <div class="w-[400px]">
-        <ScrollArea overlapContent={false}>
+        <ScrollArea>
           <Tabs variant={TabVariant.FILES}>
             <Tabs.Tab data-value="1" onClose={handleOnClose} hasUnsavedChanges>
               Tab 1
@@ -281,7 +281,7 @@ export const FilesScrolling = () => {
         </ScrollArea>
       </div>
       <div class="w-[400px]">
-        <ScrollArea overlapContent={false}>
+        <ScrollArea>
           <Tabs variant={TabVariant.FILES}>
             <Tabs.Tab data-value="1" onClose={handleOnClose} hasUnsavedChanges>
               Tab 1

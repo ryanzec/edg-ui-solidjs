@@ -1,4 +1,15 @@
-import { type Accessor, createMemo, For, type JSX, mergeProps, Show, splitProps } from 'solid-js';
+import {
+  type Accessor,
+  createEffect,
+  createMemo,
+  createSignal,
+  For,
+  type JSX,
+  mergeProps,
+  onCleanup,
+  Show,
+  splitProps,
+} from 'solid-js';
 import AutoScrollArea from '$/core/components/auto-scroll-area';
 import Checkbox from '$/core/components/checkbox';
 import FormField from '$/core/components/form-field';
@@ -9,6 +20,8 @@ import GridTableHeaderData from '$/core/components/grid-table/grid-table-header-
 import GridTableSelectedActions from '$/core/components/grid-table/grid-table-selected-actions';
 import type { GridTableHeaderDataOptions } from '$/core/components/grid-table/utils';
 import ScrollArea from '$/core/components/scroll-area';
+import { scrollableTrackerStoreUtils } from '$/core/stores/scrollable-tracker.store';
+import { domUtils } from '$/core/utils/dom';
 import { loggerUtils } from '$/core/utils/logger';
 import { tailwindUtils } from '$/core/utils/tailwind';
 
@@ -39,6 +52,11 @@ const SimpleGridTable = <TRowData,>(passedProps: SimpleGridTableProps<TRowData>)
     'contentClass',
     'enableAutoScroll',
   ]);
+
+  const [tableDataContainerElement, setTableDataContainerElement] = createSignal<HTMLDivElement | undefined>();
+  const scrollableTrackerStore = scrollableTrackerStoreUtils.createStore({
+    trackingElement: tableDataContainerElement,
+  });
 
   const currentDisplayedItemsSelectedCount = createMemo<number>(() => {
     if (!props.selectedItems || !props.items || props.items.length === 0) {
@@ -146,20 +164,33 @@ const SimpleGridTable = <TRowData,>(passedProps: SimpleGridTableProps<TRowData>)
         </Show>
       </GridTable>
       <Show when={props.items && props.items.length > 0} fallback={<GridEmptyData columnCount={props.columnCount} />}>
-        <ScrollArea class={tailwindUtils.merge('border-b border-outline rounded-b-sm mb-[-1px]', props.contentClass)}>
-          <Show when={props.enableAutoScroll}>
-            <AutoScrollArea>
+        <div class="border-b border-outline rounded-b-sm flex flex-col min-h-[0]">
+          <ScrollArea
+            ref={setTableDataContainerElement}
+            class={tailwindUtils.merge(
+              'scrollbar-track-surface-pure',
+              {
+                // since when the data is scrollable, the scrollbar is going to take up space, we need to add that space
+                // to the width so the header / data / footer are all properly aligned
+                'w-[calc(100%+var(--spacing-scrollbar-width))]': scrollableTrackerStore.dataIsScrollable(),
+              },
+              props.contentClass,
+            )}
+          >
+            <Show when={props.enableAutoScroll}>
+              <AutoScrollArea>
+                <GridTable {...restOfProps}>
+                  <For each={props.items}>{props.children}</For>
+                </GridTable>
+              </AutoScrollArea>
+            </Show>
+            <Show when={!props.enableAutoScroll}>
               <GridTable {...restOfProps}>
                 <For each={props.items}>{props.children}</For>
               </GridTable>
-            </AutoScrollArea>
-          </Show>
-          <Show when={!props.enableAutoScroll}>
-            <GridTable {...restOfProps}>
-              <For each={props.items}>{props.children}</For>
-            </GridTable>
-          </Show>
-        </ScrollArea>
+            </Show>
+          </ScrollArea>
+        </div>
       </Show>
       <Show when={props.footerElement}>
         <GridTableFooter>{props.footerElement}</GridTableFooter>

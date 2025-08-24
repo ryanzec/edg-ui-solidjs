@@ -90,6 +90,11 @@ export const supportedIconNames = [
   'trend-down',
   'trend-up',
   'x',
+  'gauge',
+  'rocket',
+  'kanban',
+  'road-horizon',
+  'puzzle-piece',
 ] as const;
 
 export type IconName = (typeof supportedIconNames)[number];

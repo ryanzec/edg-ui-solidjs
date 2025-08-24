@@ -14,8 +14,8 @@ const PageHeader = (passedProps: PageHeaderProps) => {
 
   return (
     <div data-id="header" class={tailwindUtils.merge('flex items-center gap-sm', props.class)} {...restOfProps}>
-      <Typography size={TypographySize.EXTRA_LARGE2}>{props.label}</Typography>
-      <div class="flex items-center ml-auto gap-2xs">
+      <Typography size={TypographySize.EXTRA_LARGE}>{props.label}</Typography>
+      <div class="flex items-center ml-auto gap-2xs font-semibold">
         <For each={props.actionElements}>
           {(actionElement) => {
             return actionElement;
