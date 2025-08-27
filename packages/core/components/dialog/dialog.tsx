@@ -1,4 +1,4 @@
-import { createSignal, type JSX, mergeProps, onCleanup, Show, splitProps } from 'solid-js';
+import { createEffect, createSignal, type JSX, mergeProps, onCleanup, Show, splitProps } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import styles from '$/core/components/dialog/dialog.module.css';
 import { type DialogComponentRef, DialogFooterAlignment } from '$/core/components/dialog/utils';
@@ -17,6 +17,8 @@ export type DialogProps = JSX.HTMLAttributes<HTMLDivElement> & {
   closeOnClickOverlay?: boolean;
   closeOnEscape?: boolean;
   closeEnabled?: boolean;
+  onOpened?: () => void;
+  onClosed?: () => void;
 };
 
 export const defaultDialogProps: Partial<DialogProps> = {
@@ -37,6 +39,8 @@ const Dialog = (passedProps: DialogProps) => {
     'closeOnEscape',
     'closeEnabled',
     'dialogComponentRef',
+    'onOpened',
+    'onClosed',
   ]);
 
   const [isOpened, setIsOpened] = createSignal<boolean>(false);
@@ -90,6 +94,18 @@ const Dialog = (passedProps: DialogProps) => {
     open,
     close,
     toggle,
+  });
+
+  createEffect(function openedStateUpdated() {
+    const currentIsOpened = isOpened();
+
+    if (currentIsOpened) {
+      props.onOpened?.();
+
+      return;
+    }
+
+    props.onClosed?.();
   });
 
   onCleanup(() => {

@@ -134,3 +134,39 @@ export const Confirmation = () => {
     </div>
   );
 };
+
+export const Events = () => {
+  const dialogComponentRef = componentRefUtils.createRef<DialogComponentRef>();
+
+  const handleOpened = () => {
+    console.log('opened');
+  };
+
+  const handleClosed = () => {
+    console.log('closed');
+  };
+
+  return (
+    <div>
+      <Button onclick={dialogComponentRef.api()?.open}>Open</Button>
+      <Dialog
+        dialogComponentRef={dialogComponentRef}
+        onOpened={handleOpened}
+        onClosed={handleClosed}
+        headerElement="Header"
+        footerElement={
+          <Button.Group>
+            <Button variant={ButtonVariant.GHOST} onClick={() => dialogComponentRef.api()?.close()}>
+              Close
+            </Button>
+            <Button color={ButtonColor.BRAND} onClick={() => alert('test')}>
+              Primary
+            </Button>
+          </Button.Group>
+        }
+      >
+        This is a dialog
+      </Dialog>
+    </div>
+  );
+};

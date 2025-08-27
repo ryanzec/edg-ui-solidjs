@@ -1,4 +1,4 @@
-import { createSignal, type JSX, mergeProps, onCleanup, Show, splitProps } from 'solid-js';
+import { createEffect, createSignal, type JSX, mergeProps, onCleanup, Show, splitProps } from 'solid-js';
 import { Portal } from 'solid-js/web';
 
 import Overlay from '$/core/components/overlay';
@@ -18,6 +18,8 @@ export type PeekProps = JSX.HTMLAttributes<HTMLDivElement> &
     closeEnabled?: boolean;
     isResizable?: boolean;
     initialIsOpened?: boolean;
+    onOpened?: () => void;
+    onClosed?: () => void;
   };
 
 const Peek = (passedProps: PeekProps) => {
@@ -36,6 +38,8 @@ const Peek = (passedProps: PeekProps) => {
       'closeOnEscape',
       'closeEnabled',
       'initialIsOpened',
+      'onOpened',
+      'onClosed',
     ],
   );
 
@@ -119,6 +123,18 @@ const Peek = (passedProps: PeekProps) => {
   };
 
   props.peekComponentRef?.onReady(peekComponentRef);
+
+  createEffect(function openedStateUpdated() {
+    const currentIsOpened = isOpened();
+
+    if (currentIsOpened) {
+      props.onOpened?.();
+
+      return;
+    }
+
+    props.onClosed?.();
+  });
 
   onCleanup(() => {
     props.peekComponentRef?.onCleanup();

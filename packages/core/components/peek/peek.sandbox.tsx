@@ -27,6 +27,34 @@ export const Default = () => {
   );
 };
 
+export const Events = () => {
+  const peekComponentRef = componentRefUtils.createRef<PeekComponentRef>();
+
+  const handleOpened = () => {
+    console.log('opened');
+  };
+
+  const handleClosed = () => {
+    console.log('closed');
+  };
+
+  return (
+    <>
+      <Button onClick={() => peekComponentRef.api()?.open()}>open peek</Button>
+      <Peek peekComponentRef={peekComponentRef} onOpened={handleOpened} onClosed={handleClosed}>
+        <Peek.Header title="Peek Header" />
+        <Peek.Content>Content</Peek.Content>
+        <Peek.Footer>
+          <Button.Group>
+            <Peek.CloseButton />
+            <Button>Process</Button>
+          </Button.Group>
+        </Peek.Footer>
+      </Peek>
+    </>
+  );
+};
+
 export const Resizeable = () => {
   const peekComponentRef = componentRefUtils.createRef<PeekComponentRef>();
 
