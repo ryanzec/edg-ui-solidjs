@@ -31,7 +31,19 @@ const api = fastify({
 loggerUtils.setLogger(api.log);
 
 await api.register(cors, {
-  origin: applicationConfiguration.apiCorsOrigin,
+  origin: (origin, callback) => {
+    const allowedOrigins = applicationConfiguration.apiCorsOrigin.split(',');
+
+    if (!origin) {
+      return callback(null, true);
+    }
+
+    const isAllowed = allowedOrigins.some((allowed) => {
+      return allowed === origin;
+    });
+
+    callback(null, isAllowed);
+  },
   methods: applicationConfiguration.apiCorsMethods,
   allowedHeaders: applicationConfiguration.apiCoreAllowedHeaders,
   optionsSuccessStatus: 200,

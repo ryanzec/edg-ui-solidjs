@@ -44,6 +44,14 @@ export class HttpError extends Error {
   }
 }
 
+export class HttpAbortError extends Error {
+  constructor(reason: string) {
+    super(reason);
+
+    this.name = 'HttpAbortError';
+  }
+}
+
 export const HttpParseType = {
   JSON: 'json',
   NONE: 'none',
