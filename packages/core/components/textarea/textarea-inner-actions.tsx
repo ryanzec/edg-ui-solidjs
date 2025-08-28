@@ -1,6 +1,6 @@
 import { For, type JSX, splitProps } from 'solid-js';
 
-import Button, { ButtonState } from '$/core/components/button';
+import Button from '$/core/components/button';
 import { FormField, type FormFieldProps } from '$/core/components/form-field';
 import Textarea, { type TextareaProps } from '$/core/components/textarea/textarea';
 import type { DefaultFormData } from '$/core/stores/form.store';
@@ -26,28 +26,21 @@ export const TextareaInnerActions = <TFormData = DefaultFormData>(
   ]);
 
   return (
-    <>
-      <FormField errors={props.errors}>
-        <div class="relative">
-          <Textarea {...resetOfProps} disabled={props.isProcessing} />
-          <Button.Group class="absolute bottom-2xs w-[calc(100%-2*var(--spacing-2xs))] mx-2xs">
-            <For each={props.extraButtonElements}>
-              {(buttonElement) => {
-                return buttonElement;
-              }}
-            </For>
-            <Button
-              type="submit"
-              state={props.isProcessing ? ButtonState.IS_LOADING : undefined}
-              class="shrink-0 !ml-auto"
-              disabled={props.isProcessing}
-            >
-              {props.mainButtonLabelElement}
-            </Button>
-          </Button.Group>
-        </div>
-      </FormField>
-    </>
+    <FormField errors={props.errors}>
+      <div class="relative">
+        <Textarea {...resetOfProps} disabled={props.isProcessing} />
+        <Button.Group class="absolute bottom-2xs w-[calc(100%-2*var(--spacing-2xs))] mx-2xs">
+          <For each={props.extraButtonElements}>
+            {(buttonElement) => {
+              return buttonElement;
+            }}
+          </For>
+          <Button type="submit" isLoading={props.isProcessing} class="shrink-0 !ml-auto" disabled={props.isProcessing}>
+            {props.mainButtonLabelElement}
+          </Button>
+        </Button.Group>
+      </div>
+    </FormField>
   );
 };
 

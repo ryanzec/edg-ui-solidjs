@@ -14,13 +14,6 @@ export const ButtonItemPosition = {
 
 export type ButtonItemPosition = (typeof ButtonItemPosition)[keyof typeof ButtonItemPosition];
 
-export const ButtonState = {
-  DEFAULT: 'default',
-  IS_LOADING: 'is-loading',
-} as const;
-
-export type ButtonState = (typeof ButtonState)[keyof typeof ButtonState];
-
 export const ButtonColor = {
   NEUTRAL: 'neutral',
   BRAND: 'brand',

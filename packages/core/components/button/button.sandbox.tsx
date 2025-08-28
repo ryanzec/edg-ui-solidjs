@@ -1,5 +1,4 @@
 import Button, { ButtonColor, ButtonShape, ButtonSize, ButtonVariant } from '$/core/components/button';
-import { ButtonState } from '$/core/components/button/utils';
 import Icon from '$/core/components/icon';
 import List from '$/core/components/list';
 import type { TooltipComponentRef } from '$/core/components/tooltip';
@@ -776,23 +775,14 @@ export const Loading = () => {
   return (
     <>
       <Button.Group>
-        <Button
-          postElement={<Icon icon="question-mark" />}
-          variant={ButtonVariant.FILLED}
-          state={ButtonState.IS_LOADING}
-        />
-        <Button
-          color={ButtonColor.WARNING}
-          variant={ButtonVariant.FILLED}
-          state={ButtonState.IS_LOADING}
-          preElement={<Icon icon="plus" />}
-        >
+        <Button postElement={<Icon icon="question-mark" />} variant={ButtonVariant.FILLED} isLoading />
+        <Button color={ButtonColor.WARNING} variant={ButtonVariant.FILLED} isLoading preElement={<Icon icon="plus" />}>
           Filled
         </Button>
         <Button
           color={ButtonColor.WARNING}
           variant={ButtonVariant.OUTLINED}
-          state={ButtonState.IS_LOADING}
+          isLoading
           postElement={<Icon icon="plus" />}
         >
           Outline
@@ -800,7 +790,7 @@ export const Loading = () => {
         <Button
           color={ButtonColor.WARNING}
           variant={ButtonVariant.GHOST}
-          state={ButtonState.IS_LOADING}
+          isLoading
           preElement={<Icon icon="plus" />}
           postElement={<Icon icon="plus" />}
         >

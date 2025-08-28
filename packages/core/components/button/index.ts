@@ -3,12 +3,12 @@ import DropDown, { type ButtonDropDownProps } from '$/core/components/button/but
 import Group, { type ButtonGroupProps } from '$/core/components/button/button-group';
 import Toggle, { type ButtonToggleProps } from '$/core/components/button/toggle-button';
 
-import { ButtonColor, ButtonShape, ButtonSize, ButtonState, ButtonVariant } from '$/core/components/button/utils';
+import { ButtonColor, ButtonShape, ButtonSize, ButtonVariant } from '$/core/components/button/utils';
 
 const Button = Object.assign(BaseButton, { DropDown, Group, Toggle });
 
 export type { ButtonGroupProps, ButtonDropDownProps, ButtonProps, ButtonToggleProps };
 
-export { Button, ButtonVariant, ButtonColor, ButtonShape, ButtonSize, ButtonState };
+export { Button, ButtonVariant, ButtonColor, ButtonShape, ButtonSize };
 
 export default Button;

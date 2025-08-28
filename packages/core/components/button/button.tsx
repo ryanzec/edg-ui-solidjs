@@ -7,7 +7,6 @@ import {
   ButtonItemPosition,
   ButtonShape,
   ButtonSize,
-  ButtonState,
   ButtonVariant,
 } from '$/core/components/button/utils';
 import Icon from '$/core/components/icon';
@@ -20,7 +19,7 @@ export type ButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> &
   CommonDataAttributes & {
     variant?: ButtonVariant;
     color?: ButtonColor;
-    state?: ButtonState;
+    isLoading?: boolean;
     shape?: ButtonShape;
     preElement?: JSX.Element;
     postElement?: JSX.Element;
@@ -37,7 +36,7 @@ export const Button = (passedProps: ButtonProps) => {
       {
         variant: ButtonVariant.FILLED,
         color: ButtonColor.BRAND,
-        state: ButtonState.DEFAULT,
+        isLoading: false,
         shape: ButtonShape.ROUNDED,
         loadingIconPosition: ButtonItemPosition.PRE,
         size: ButtonSize.BASE,
@@ -53,7 +52,7 @@ export const Button = (passedProps: ButtonProps) => {
       'preElement',
       'postElement',
       'loadingIconPosition',
-      'state',
+      'isLoading',
       'color',
       'shape',
       'size',
@@ -63,7 +62,7 @@ export const Button = (passedProps: ButtonProps) => {
     ],
   );
 
-  const isLoading = () => props.state === ButtonState.IS_LOADING;
+  const isLoading = () => props.isLoading;
   const hasPreItem = () => props.preElement || (isLoading() && props.loadingIconPosition === ButtonItemPosition.PRE);
   const hasPostItem = () => props.postElement || (isLoading() && props.loadingIconPosition === ButtonItemPosition.POST);
 
