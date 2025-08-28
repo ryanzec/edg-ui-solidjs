@@ -960,7 +960,7 @@ export const Scrollable = () => {
 export const SelectableAndPaginated = () => {
   const [queryString, setQueryString] = createSignal({
     offset: 0,
-    linit: 0,
+    limit: 10,
   });
 
   const [selectedItems, setSelectedItems] = createSignal<ComplexData[]>([]);
@@ -972,8 +972,8 @@ export const SelectableAndPaginated = () => {
       isFetching: false,
       isError: false,
       totalItems: newLargeData.length,
-      itemsPerPage: 10,
-      currentPage: 1,
+      itemsPerPage: queryString().limit,
+      currentPage: Math.ceil(queryString().offset / queryString().limit) + 1,
     }),
   });
 
@@ -1005,7 +1005,7 @@ export const SelectableAndPaginated = () => {
     <SandboxExamplesContainer>
       <Page.ContentSection>
         <GridTable.Simple
-          class="grid-cols-[150px_150px_1fr_150px_150px]"
+          class="grid-cols-[32px_1fr_150px_150px_150px]"
           items={currentItems()}
           headerData={['Title', 'Severity', 'Last Modified', 'Author']}
           footerElement={<PaginationComponent paginationStore={paginationStore} />}
@@ -1067,14 +1067,14 @@ export const SinglePagePagination = () => {
   const paginationStore = paginationStoreUtils.createStore({
     totalItems: newLargeData.length,
     defaultCurrentPage: 1,
-    itemsPerPage: 5,
+    itemsPerPage: 10,
     managedData: queryString,
     setManagedData: setQueryString,
     getAsyncUpdate: () => ({
       isFetching: false,
       isError: false,
       totalItems: newLargeData.length,
-      itemsPerPage: 5,
+      itemsPerPage: 10,
       currentPage: 1,
     }),
   });

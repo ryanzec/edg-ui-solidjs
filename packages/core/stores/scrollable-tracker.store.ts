@@ -25,8 +25,6 @@ const createScrollableTrackerStore = (options: CreateScrollableTrackerStoreOptio
 
     const isScrollable = domUtils.isElementScrollable(currentTableDataContainerElement);
 
-    console.log('isScrollable', isScrollable);
-
     options.trackingElement()?.setAttribute(scrollableTrackerDataAttribute.IS_SCROLLABLE, isScrollable.y.toString());
 
     setDataIsScrollable(isScrollable.y);
