@@ -27,6 +27,9 @@ export const Color = () => {
       <Typography size={TypographySize.BASE} color={TypographyColor.NEUTRAL}>
         Neutral typography
       </Typography>
+      <Typography size={TypographySize.BASE} color={TypographyColor.SUBTLE}>
+        Subtle typography
+      </Typography>
       <Typography size={TypographySize.BASE} color={TypographyColor.BRAND}>
         Brand typography
       </Typography>

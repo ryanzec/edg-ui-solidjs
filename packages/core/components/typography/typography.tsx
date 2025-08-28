@@ -26,6 +26,7 @@ export const TypographyColor = {
   WARNING: 'warning',
   WARNING_HIGH: 'warning-high',
   DANGER: 'danger',
+  SUBTLE: 'subtle',
 } as const;
 
 export type TypographyColor = (typeof TypographyColor)[keyof typeof TypographyColor];
@@ -86,6 +87,7 @@ const Typography = (passedProps: TypographyProps) => {
           [styles.warning]: props.color === TypographyColor.WARNING,
           [styles.warningHigh]: props.color === TypographyColor.WARNING_HIGH,
           [styles.danger]: props.color === TypographyColor.DANGER,
+          [styles.subtle]: props.color === TypographyColor.SUBTLE,
           [styles.inheritColor]: props.color === TypographyColor.INHERIT,
           flex: props.layout === TypographyLayout.BLOCK,
           'whitespace-pre-wrap wrap-anywhere': props.variant === TypographyVariant.PRESERVE_WHITESPACE,
