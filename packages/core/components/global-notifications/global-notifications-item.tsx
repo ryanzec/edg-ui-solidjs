@@ -3,9 +3,9 @@ import Callout, { CalloutColor, CalloutVariant } from '$/core/components/callout
 import styles from '$/core/components/global-notifications/global-notifications.module.css';
 import Icon from '$/core/components/icon';
 import {
+  GLOBAL_NOTIFICATION_REMOVE_ANIMATION_DURATION,
   type GlobalNotification,
   globalNotificationsStore,
-  REMOVE_ANIMATION_DURATION,
 } from '$/core/stores/global-notifications.store';
 import { tailwindUtils } from '$/core/utils/tailwind';
 
@@ -26,7 +26,7 @@ const GlobalNotificationsItem = (passedProps: GlobalNotificationsListItemProps) 
       })}
       color={calloutColor()}
       variant={CalloutVariant.WEAK}
-      style={{ 'animation-duration': `${REMOVE_ANIMATION_DURATION * 1.05}ms` }}
+      style={{ 'animation-duration': `${GLOBAL_NOTIFICATION_REMOVE_ANIMATION_DURATION * 1.05}ms` }}
       preElement={props.notification.preElement?.()}
       postElement={
         <Show when={props.notification.canClose}>

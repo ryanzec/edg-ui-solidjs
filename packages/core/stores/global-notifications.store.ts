@@ -18,45 +18,62 @@ export type GlobalNotification = {
   extraContentElement?: () => JSX.Element;
 };
 
-export type AddNotification = Omit<GlobalNotification, 'id' | 'canClose'> & {
+export type AddUpdateGlobalNotification = Omit<GlobalNotification, 'id' | 'canClose'> & {
   canClose?: boolean;
 };
 
 export type GlobalNotificationsStore = {
   notifications: Accessor<GlobalNotification[]>;
-  addNotification: (notification: AddNotification) => GlobalNotification;
+  addNotification: (notification: AddUpdateGlobalNotification) => GlobalNotification;
+  updateNotification: (
+    id: GlobalNotification['id'],
+    notification: AddUpdateGlobalNotification,
+  ) => GlobalNotification | undefined;
   removeNotification: (id: GlobalNotification['id']) => void;
   clearNotifications: () => void;
 };
 
-export const DEFAULT_AUTO_CLOSE = 3000;
+export const GLOBAL_NOTIFICATION_DEFAULT_AUTO_CLOSE = 3000;
 
-export const DEFAULT_DANGER_AUTO_CLOSE = 7000;
+export const GLOBAL_NOTIFICATION_DEFAULT_DANGER_AUTO_CLOSE = 7000;
 
-export const REMOVE_ANIMATION_DURATION = 350;
+export const GLOBAL_NOTIFICATION_REMOVE_ANIMATION_DURATION = 350;
+
+export const closeTimeoutIds: Record<string, ReturnType<typeof setTimeout>> = {};
+
+const generateNotification = (notification: AddUpdateGlobalNotification): GlobalNotification => {
+  const autoClose =
+    notification.color === CalloutColor.DANGER
+      ? GLOBAL_NOTIFICATION_DEFAULT_DANGER_AUTO_CLOSE
+      : GLOBAL_NOTIFICATION_DEFAULT_AUTO_CLOSE;
+  return {
+    id: uuid.v4(),
+    ...notification,
+    autoClose: notification.autoClose ?? autoClose,
+    removeAnimationDuration: notification.removeAnimationDuration ?? GLOBAL_NOTIFICATION_REMOVE_ANIMATION_DURATION,
+    canClose: notification.canClose ?? true,
+  };
+};
 
 const createGlobalNotificationsStore = (): GlobalNotificationsStore => {
   const [notifications, setNotifications] = createSignal<GlobalNotification[]>([]);
 
-  const addNotification = (notification: AddNotification) => {
+  const addRemoveTimeout = (notification: GlobalNotification) => {
+    if (notification.autoClose !== 0) {
+      closeTimeoutIds[notification.id] = setTimeout(() => {
+        untrack(() => {
+          removeNotification(notification.id);
+        });
+      }, notification.autoClose);
+    }
+  };
+
+  const addNotification = (notification: AddUpdateGlobalNotification): GlobalNotification => {
     // calls of this method should not trigger reactive changes to signals change here
     return untrack(() => {
-      const autoClose = notification.color === CalloutColor.DANGER ? DEFAULT_DANGER_AUTO_CLOSE : DEFAULT_AUTO_CLOSE;
-      const newNotification = {
-        id: uuid.v4(),
-        ...notification,
-        autoClose: notification.autoClose ?? autoClose,
-        removeAnimationDuration: notification.removeAnimationDuration ?? REMOVE_ANIMATION_DURATION,
-        canClose: notification.canClose ?? true,
-      };
+      const newNotification = generateNotification(notification);
 
-      if (newNotification.autoClose !== 0) {
-        setTimeout(() => {
-          untrack(() => {
-            removeNotification(newNotification.id);
-          });
-        }, newNotification.autoClose);
-      }
+      addRemoveTimeout(newNotification);
 
       setNotifications(
         produce(notifications(), (draft) => {
@@ -65,6 +82,43 @@ const createGlobalNotificationsStore = (): GlobalNotificationsStore => {
       );
 
       return newNotification;
+    });
+  };
+
+  const updateNotification = (
+    id: GlobalNotification['id'],
+    updateData: AddUpdateGlobalNotification,
+  ): GlobalNotification | undefined => {
+    // calls of this method should not trigger reactive changes to signals change here
+    return untrack(() => {
+      const currentNotificationIndex = notifications().findIndex((notification) => notification.id === id);
+
+      if (currentNotificationIndex === -1) {
+        return;
+      }
+
+      const currentCloseTimeout = closeTimeoutIds[id];
+
+      if (currentCloseTimeout) {
+        clearTimeout(currentCloseTimeout);
+
+        delete closeTimeoutIds[id];
+      }
+
+      const updatedNotification = generateNotification({
+        ...notifications()[currentNotificationIndex],
+        ...updateData,
+      });
+
+      addRemoveTimeout(updatedNotification);
+
+      setNotifications(
+        produce(notifications(), (draft) => {
+          draft[currentNotificationIndex] = updatedNotification;
+        }),
+      );
+
+      return updatedNotification;
     });
   };
 
@@ -78,6 +132,8 @@ const createGlobalNotificationsStore = (): GlobalNotificationsStore => {
       }
 
       const removeAnimationDuration = notifications()[matchingIndex].removeAnimationDuration;
+
+      delete closeTimeoutIds[id];
 
       setNotifications(
         produce(notifications(), (draft) => {
@@ -116,6 +172,7 @@ const createGlobalNotificationsStore = (): GlobalNotificationsStore => {
   return {
     notifications,
     addNotification,
+    updateNotification,
     removeNotification,
     clearNotifications,
   };
