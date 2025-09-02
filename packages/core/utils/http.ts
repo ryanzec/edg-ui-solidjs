@@ -44,11 +44,21 @@ export class HttpError extends Error {
   }
 }
 
+export const AbortReason = {
+  UNKNOWN: 'unknown',
+  NEWER_REQUEST: 'newer_request',
+} as const;
+
+export type AbortReason = (typeof AbortReason)[keyof typeof AbortReason];
+
 export class HttpAbortError extends Error {
-  constructor(reason: string) {
-    super(reason);
+  reason: AbortReason;
+
+  constructor(message = 'Aborted request', reason: AbortReason = AbortReason.UNKNOWN) {
+    super(message);
 
     this.name = 'HttpAbortError';
+    this.reason = reason;
   }
 }
 

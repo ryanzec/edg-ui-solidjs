@@ -30,5 +30,10 @@
 
   .content-local {
     position: absolute;
+
+    /* this ensures the content does not wrap pre-maturely */
+    display: flex;
+    justify-content: center;
+    width: 85%;
   }
 }

@@ -39,10 +39,10 @@ const toWords = (value: string, options: ToWordsOptions = {}): string => {
 
   newValue = newValue.charAt(0).toUpperCase() + newValue.slice(1);
 
-  // handle snake case
+  // handle common word separators
   newValue = newValue
     .replace(/_/g, ' ')
-    .replace(/_/g, ' ')
+    .replace(/:/g, ' ')
     .split(' ')
     .map((word) => capitalize(word))
     .join('');
@@ -50,7 +50,7 @@ const toWords = (value: string, options: ToWordsOptions = {}): string => {
   // regex should match either:
   // - a sequence of uppercase letters (initialisms)
   // - an uppercase letter followed by lowercase letters
-  const matches: RegExpMatchArray | null = newValue.match(/[A-Z]+(?=[A-Z][a-z]|$)|[A-Z][a-z]*/g);
+  const matches: RegExpMatchArray | null = newValue.match(/[A-Z0-9]+(?=[A-Z][a-z]|$)|[A-Z][a-z0-9]*/g);
 
   if (!matches) {
     return '';

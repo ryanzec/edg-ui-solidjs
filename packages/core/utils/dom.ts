@@ -14,9 +14,10 @@ export const InputType = {
 export type InputType = (typeof InputType)[keyof typeof InputType];
 
 const getScrollParent = (element: HTMLElement, inOverlayScrollbars = false): HTMLElement | null => {
-  if (inOverlayScrollbars === false) {
-    return scrollParent(element);
-  }
+  // @todo (remove once scrollbar situation is resolved)
+  // if (inOverlayScrollbars === false) {
+  //   return scrollParent(element);
+  // }
 
   return element.closest('[data-overlayscrollbars-contents]');
 };

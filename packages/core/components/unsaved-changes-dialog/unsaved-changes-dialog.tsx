@@ -27,6 +27,7 @@ const UnsavedChangesDialog = (props: UnsavedChangesDialogProps) => {
 
     setAllowLeave(true);
     props.navigate(currentLeaveUrl);
+    props.dialogComponentRef.api()?.close();
   };
 
   const handleUnsavedDialogStay = () => {

@@ -7,4 +7,6 @@ const Textarea = Object.assign(BaseTextarea, {
   InnerActions,
 });
 
+export { Textarea };
+
 export default Textarea;

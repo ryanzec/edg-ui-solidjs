@@ -1,5 +1,6 @@
 import posthog from 'posthog-js';
 import { HttpError } from '$/core/utils/http';
+import { ErrorMessage } from './error';
 
 export const LogMode = {
   PRODUCTION: 'production',
@@ -50,7 +51,11 @@ const getErrorMessage = (err: Error, options: ErrorMessageOptions = {}): string 
     return err.context.jsonResponse?.error?.message;
   }
 
-  return options.defaultMessage !== undefined ? options.defaultMessage : err.message;
+  if (err instanceof Error) {
+    return err.message;
+  }
+
+  return options.defaultMessage !== undefined ? options.defaultMessage : ErrorMessage.UNKNOWN;
 };
 
 const setLoggingMode = (mode: LogMode) => {

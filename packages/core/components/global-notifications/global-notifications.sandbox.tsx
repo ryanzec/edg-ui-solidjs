@@ -163,3 +163,24 @@ export const UpdateNotification = () => {
     </>
   );
 };
+
+export const DataAttributeClose = () => {
+  return (
+    <>
+      <Button
+        onClick={() => {
+          globalNotificationsStore.addNotification({
+            message: () => (
+              <div>
+                'This is a test message <Button data-global-noptification-close="true">close</Button>
+              </div>
+            ),
+            canClose: false,
+          });
+        }}
+      >
+        Add Perm Notification
+      </Button>
+    </>
+  );
+};

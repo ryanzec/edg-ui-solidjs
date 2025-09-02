@@ -567,7 +567,7 @@ export const NestedArrayFields = () => {
 
   return (
     <div data-id="container">
-      <Button data-id="add-array-field-button" type="button" onclick={() => form.addArrayField('array', {})}>
+      <Button data-id="add-array-field-button" type="button" onClick={() => form.addArrayField('array', {})}>
         + Add Array Field
       </Button>
       <form use:formDirective>
@@ -594,7 +594,7 @@ export const NestedArrayFields = () => {
                         <Button
                           data-id="add-array-field-button"
                           type="button"
-                          onclick={() => {
+                          onClick={() => {
                             // for stress testing lots on input fields
                             // for (let i = 0; i < 50; i++) {
                             form.addArrayField(`array.${index}.nested` as keyof NestedArrayFormData, {});
@@ -652,7 +652,7 @@ export const NestedArrayFields = () => {
                                 <Button
                                   // @todo(!!!) make danger when implemented
                                   data-id="remove-array-field-button"
-                                  onclick={() =>
+                                  onClick={() =>
                                     form.removeArrayField(`array.${index}.nested` as keyof NestedArrayFormData, index2)
                                   }
                                 >
@@ -666,7 +666,7 @@ export const NestedArrayFields = () => {
                       <Button
                         // @todo(!!!) make danger when implemented
                         data-id="remove-array-field-button"
-                        onclick={() => form.removeArrayField('array', index)}
+                        onClick={() => form.removeArrayField('array', index)}
                       >
                         REMOVE
                       </Button>
@@ -962,7 +962,7 @@ export const DynamicFormElements = () => {
                                 <Button
                                   data-id="remove-array-field-button"
                                   // @todo(!!!) make danger when implemented
-                                  onclick={() => form.removeArrayField(input.name, index())}
+                                  onClick={() => form.removeArrayField(input.name, index())}
                                 >
                                   REMOVE
                                 </Button>
@@ -973,7 +973,7 @@ export const DynamicFormElements = () => {
                         <Button
                           data-id="add-array-field-button"
                           type="button"
-                          onclick={() => form.addArrayField(input.name, {})}
+                          onClick={() => form.addArrayField(input.name, {})}
                         >
                           + Add Array Field
                         </Button>
@@ -1162,7 +1162,7 @@ export const ValidationArrayFields = () => {
                       <Button
                         // @todo(!!!) make danger when implemented
                         data-id="remove-array-field-button"
-                        onclick={() => form.removeArrayField('array', index)}
+                        onClick={() => form.removeArrayField('array', index)}
                       >
                         REMOVE
                       </Button>
@@ -1172,7 +1172,7 @@ export const ValidationArrayFields = () => {
               }}
             </Index>
           </FormField>
-          <Button data-id="add-array-field-button" type="button" onclick={() => form.addArrayField('array', {})}>
+          <Button data-id="add-array-field-button" type="button" onClick={() => form.addArrayField('array', {})}>
             + Add Array Field
           </Button>
           <FormField errors={form.errors().arrayValidated?.errors}>
@@ -1195,7 +1195,7 @@ export const ValidationArrayFields = () => {
                       <Button
                         // @todo(!!!) make danger when implemented
                         data-id="remove-array-field-button"
-                        onclick={() => form.removeArrayField('arrayValidated', index)}
+                        onClick={() => form.removeArrayField('arrayValidated', index)}
                       >
                         REMOVE
                       </Button>
@@ -1208,7 +1208,7 @@ export const ValidationArrayFields = () => {
           <Button
             data-id="add-array-field-validated-button"
             type="button"
-            onclick={() => form.addArrayField('arrayValidated', {})}
+            onClick={() => form.addArrayField('arrayValidated', {})}
           >
             + Add Array Field Validated
           </Button>

@@ -19,6 +19,7 @@ export type GlobalNotification = {
 };
 
 export type AddUpdateGlobalNotification = Omit<GlobalNotification, 'id' | 'canClose'> & {
+  id?: GlobalNotification['id'];
   canClose?: boolean;
 };
 
@@ -47,7 +48,7 @@ const generateNotification = (notification: AddUpdateGlobalNotification): Global
       ? GLOBAL_NOTIFICATION_DEFAULT_DANGER_AUTO_CLOSE
       : GLOBAL_NOTIFICATION_DEFAULT_AUTO_CLOSE;
   return {
-    id: uuid.v4(),
+    id: notification.id || uuid.v4(),
     ...notification,
     autoClose: notification.autoClose ?? autoClose,
     removeAnimationDuration: notification.removeAnimationDuration ?? GLOBAL_NOTIFICATION_REMOVE_ANIMATION_DURATION,
@@ -65,6 +66,16 @@ const createGlobalNotificationsStore = (): GlobalNotificationsStore => {
           removeNotification(notification.id);
         });
       }, notification.autoClose);
+    }
+  };
+
+  const clearRemoveTimeout = (id: GlobalNotification['id']) => {
+    const currentCloseTimeout = closeTimeoutIds[id];
+
+    if (currentCloseTimeout) {
+      clearTimeout(currentCloseTimeout);
+
+      delete closeTimeoutIds[id];
     }
   };
 
@@ -97,13 +108,7 @@ const createGlobalNotificationsStore = (): GlobalNotificationsStore => {
         return;
       }
 
-      const currentCloseTimeout = closeTimeoutIds[id];
-
-      if (currentCloseTimeout) {
-        clearTimeout(currentCloseTimeout);
-
-        delete closeTimeoutIds[id];
-      }
+      clearRemoveTimeout(id);
 
       const updatedNotification = generateNotification({
         ...notifications()[currentNotificationIndex],
@@ -133,7 +138,7 @@ const createGlobalNotificationsStore = (): GlobalNotificationsStore => {
 
       const removeAnimationDuration = notifications()[matchingIndex].removeAnimationDuration;
 
-      delete closeTimeoutIds[id];
+      clearRemoveTimeout(id);
 
       setNotifications(
         produce(notifications(), (draft) => {

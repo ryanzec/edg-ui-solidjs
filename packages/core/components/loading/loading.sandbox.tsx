@@ -22,7 +22,7 @@ export const InlineSection = () => {
     <>
       <div class={styles.section}>
         Overlayed content
-        <Loading.Section>Section overlay loading</Loading.Section>
+        <Loading.Section>Section overlay loading asd asd asd asd asd asd asd asd</Loading.Section>
       </div>
       <div>Non-Overlayed content</div>
     </>

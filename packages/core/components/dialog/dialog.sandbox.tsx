@@ -15,7 +15,7 @@ export const Default = () => {
 
   return (
     <div>
-      <Button onclick={dialogComponentRef.api()?.open}>Toggle Dialog</Button>
+      <Button onClick={dialogComponentRef.api()?.open}>Toggle Dialog</Button>
       <Dialog
         dialogComponentRef={dialogComponentRef}
         headerElement="Header"
@@ -41,7 +41,7 @@ export const CloseOnClickOverlay = () => {
 
   return (
     <div>
-      <Button onclick={dialogComponentRef.api()?.open}>Toggle Dialog</Button>
+      <Button onClick={dialogComponentRef.api()?.open}>Toggle Dialog</Button>
       <Dialog
         dialogComponentRef={dialogComponentRef}
         headerElement="Header"
@@ -93,7 +93,7 @@ export const DeleteConfirmation = () => {
 
   return (
     <div>
-      <Button onclick={dialogComponentRef.api()?.open}>Delete</Button>
+      <Button onClick={dialogComponentRef.api()?.open}>Delete</Button>
       <Dialog.DeleteConfirmation
         dialogComponentRef={dialogComponentRef}
         processDelete={processDelete}
@@ -122,7 +122,7 @@ export const Confirmation = () => {
 
   return (
     <div>
-      <Button onclick={dialogComponentRef.api()?.open}>Confirm</Button>
+      <Button onClick={dialogComponentRef.api()?.open}>Confirm</Button>
       <Dialog.Confirmation
         dialogComponentRef={dialogComponentRef}
         processConfirmation={processConfirmation}
@@ -148,7 +148,7 @@ export const Events = () => {
 
   return (
     <div>
-      <Button onclick={dialogComponentRef.api()?.open}>Open</Button>
+      <Button onClick={dialogComponentRef.api()?.open}>Open</Button>
       <Dialog
         dialogComponentRef={dialogComponentRef}
         onOpened={handleOpened}

@@ -22,7 +22,7 @@ export const Default = () => {
 
   return (
     <>
-      <Button onclick={() => dialogComponentRef.api()?.open()}>Open Dialog</Button>
+      <Button onClick={() => dialogComponentRef.api()?.open()}>Open Dialog</Button>
       <SandboxExamplesContainer>
         <UnsavedChangesDialog
           dialogComponentRef={dialogComponentRef}

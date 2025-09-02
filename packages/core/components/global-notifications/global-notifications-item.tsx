@@ -1,4 +1,4 @@
-import { type JSX, Show, splitProps } from 'solid-js';
+import { createSignal, type JSX, onMount, Show, splitProps } from 'solid-js';
 import Callout, { CalloutColor, CalloutVariant } from '$/core/components/callout';
 import styles from '$/core/components/global-notifications/global-notifications.module.css';
 import Icon from '$/core/components/icon';
@@ -11,14 +11,37 @@ import { tailwindUtils } from '$/core/utils/tailwind';
 
 export type GlobalNotificationsListItemProps = JSX.HTMLAttributes<HTMLDivElement> & {
   notification: GlobalNotification;
+  ref?: (element: HTMLDivElement) => void;
 };
 
 const GlobalNotificationsItem = (passedProps: GlobalNotificationsListItemProps) => {
-  const [props, restOfProps] = splitProps(passedProps, ['notification', 'class']);
+  const [props, restOfProps] = splitProps(passedProps, ['notification', 'class', 'ref']);
+
+  const [calloutElement, setCalloutElement] = createSignal<HTMLDivElement>();
+
   const calloutColor = () => props.notification.color ?? CalloutColor.NEUTRAL;
+
+  onMount(() => {
+    const currentCalloutElement = calloutElement();
+
+    if (!currentCalloutElement) {
+      return;
+    }
+
+    const closeElements = currentCalloutElement.querySelectorAll('[data-global-noptification-close="true"]');
+
+    for (const closeElement of closeElements) {
+      closeElement.addEventListener('click', () => {
+        globalNotificationsStore.removeNotification(props.notification.id);
+      });
+    }
+
+    props.ref?.(currentCalloutElement);
+  });
 
   return (
     <Callout
+      ref={setCalloutElement}
       data-id="item"
       {...restOfProps}
       class={tailwindUtils.merge(styles.notification, props.class, {

@@ -15,7 +15,7 @@ export const Default = () => {
     <>
       <div>
         <Button
-          onclick={() => {
+          onClick={() => {
             setOverlayToggled(!overlayToggled());
           }}
         >
@@ -25,7 +25,7 @@ export const Default = () => {
           <Overlay.Content>
             <Button
               color={ButtonColor.BRAND}
-              onclick={() => {
+              onClick={() => {
                 setOverlayToggled(!overlayToggled());
               }}
             >
@@ -37,7 +37,7 @@ export const Default = () => {
       </div>
       <div>
         <Button
-          onclick={() => {
+          onClick={() => {
             setOverlayToggledWeak(!overlayToggledWeak());
           }}
         >
@@ -47,7 +47,7 @@ export const Default = () => {
           <Overlay.Content>
             <Button
               color={ButtonColor.BRAND}
-              onclick={() => {
+              onClick={() => {
                 setOverlayToggledWeak(!overlayToggledWeak());
               }}
             >
@@ -67,7 +67,7 @@ export const Local = () => {
   return (
     <div style={{ position: 'relative' }}>
       <Button
-        onclick={() => {
+        onClick={() => {
           setOverlayToggled(!overlayToggled());
         }}
       >
@@ -77,7 +77,7 @@ export const Local = () => {
         <Overlay.ContentLocal>
           <Button
             color={ButtonColor.BRAND}
-            onclick={() => {
+            onClick={() => {
               setOverlayToggled(!overlayToggled());
             }}
           >
@@ -86,6 +86,43 @@ export const Local = () => {
         </Overlay.ContentLocal>
         <Overlay.Local />
       </Show>
+    </div>
+  );
+};
+
+export const LocalLimitedWidth = () => {
+  const [overlayToggled, setOverlayToggled] = createSignal(false);
+  const [overlayToggled2, setOverlayToggled2] = createSignal(false);
+
+  return (
+    <div>
+      <Button
+        onClick={() => {
+          setOverlayToggled(!overlayToggled());
+        }}
+      >
+        Toggle Overlay
+      </Button>
+      <Button
+        onClick={() => {
+          setOverlayToggled2(!overlayToggled2());
+        }}
+      >
+        Toggle Overlay that wraps
+      </Button>
+      <div class="relative w-[500px] h-[100px]">
+        <Show when={overlayToggled()}>
+          <Overlay.ContentLocal>This is extra long content to see if wrapping is avoided properly</Overlay.ContentLocal>
+          <Overlay.Local />
+        </Show>
+        <Show when={overlayToggled2()}>
+          <Overlay.ContentLocal>
+            This is extra long content to make sure the the wrapping functionality still works when it is truely
+            required.
+          </Overlay.ContentLocal>
+          <Overlay.Local />
+        </Show>
+      </div>
     </div>
   );
 };

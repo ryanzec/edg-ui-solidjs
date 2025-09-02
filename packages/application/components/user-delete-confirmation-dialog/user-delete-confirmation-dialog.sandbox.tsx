@@ -33,7 +33,7 @@ export const Default = () => {
 
   return (
     <>
-      <Button onclick={dialogComponentRef.api()?.open}>Delete User</Button>
+      <Button onClick={dialogComponentRef.api()?.open}>Delete User</Button>
       <SandboxExamplesContainer>
         <UserDeleteConfirmationDialog
           dialogComponentRef={dialogComponentRef}

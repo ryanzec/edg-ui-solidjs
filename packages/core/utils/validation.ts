@@ -41,9 +41,20 @@ const isPopulatedFormValue = (value: any) => {
   return !!value;
 };
 
+const isUrl = (value: string) => {
+  try {
+    new URL(value);
+
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
 export const validationUtils = {
   getMessage,
   isValidDate,
   isValidDateRange,
   isPopulatedFormValue,
+  isUrl,
 };

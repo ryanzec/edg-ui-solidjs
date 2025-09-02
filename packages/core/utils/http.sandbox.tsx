@@ -1,15 +1,18 @@
-import Button from '../components/button';
-import { HttpAbortError, httpUtils } from './http';
+import Button from '$/core/components/button';
+import { AbortReason, HttpAbortError, httpUtils } from '$/core/utils/http';
 
 export default {
   title: 'Utils/Http',
 };
 
 export const CancelRequest = () => {
-  const controller = new AbortController();
+  let controller: AbortController | undefined;
 
   const handleMakeRequest = async () => {
     try {
+      controller?.abort(new HttpAbortError('Aborted this request', AbortReason.NEWER_REQUEST));
+      controller = new AbortController();
+
       console.log('starting request');
       const response = await httpUtils.http('https://localhost:3000/health/delayed', {
         signal: controller.signal,
@@ -30,14 +33,9 @@ export const CancelRequest = () => {
     }
   };
 
-  const handleCancelRequest = () => {
-    controller.abort(new HttpAbortError('test'));
-  };
-
   return (
     <>
       <Button onClick={handleMakeRequest}>Start Request</Button>
-      <Button onClick={handleCancelRequest}>Cancel Request</Button>
     </>
   );
 };

@@ -230,7 +230,7 @@ const CustomSelectedOption = (props: ComboboxSelectedOptionProps<CustomExtraData
       <Button
         data-id="delete-indicator"
         class={styles.removeSelectedOption}
-        onclick={() => props.removeValue(props.optionIndex)}
+        onClick={() => props.removeValue(props.optionIndex)}
       >
         Z
       </Button>

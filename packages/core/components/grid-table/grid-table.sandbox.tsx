@@ -972,8 +972,8 @@ export const SelectableAndPaginated = () => {
       isFetching: false,
       isError: false,
       totalItems: newLargeData.length,
-      itemsPerPage: queryString().limit,
-      currentPage: Math.ceil(queryString().offset / queryString().limit) + 1,
+      itemsPerPage: Math.max(1, Number(queryString().limit)),
+      currentPage: Math.ceil(queryString().offset / Math.max(1, Number(queryString().limit))) + 1,
     }),
   });
 

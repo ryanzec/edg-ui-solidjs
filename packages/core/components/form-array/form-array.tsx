@@ -25,7 +25,7 @@ const FormArray = (props: FormArrayProps) => {
           class={styles.addTrigger}
           variant={ButtonVariant.GHOST}
           color={ButtonColor.INFO}
-          onclick={props.onAdd}
+          onClick={props.onAdd}
           preElement={<Icon icon="plus-circle" />}
           disabled={props.disabled}
         >
