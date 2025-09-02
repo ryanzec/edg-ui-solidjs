@@ -172,7 +172,7 @@ export const DataAttributeClose = () => {
           globalNotificationsStore.addNotification({
             message: () => (
               <div>
-                'This is a test message <Button data-global-noptification-close="true">close</Button>
+                'This is a test message <Button data-global-notification-close="true">close</Button>
               </div>
             ),
             canClose: false,

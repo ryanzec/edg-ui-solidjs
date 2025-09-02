@@ -28,7 +28,7 @@ const GlobalNotificationsItem = (passedProps: GlobalNotificationsListItemProps) 
       return;
     }
 
-    const closeElements = currentCalloutElement.querySelectorAll('[data-global-noptification-close="true"]');
+    const closeElements = currentCalloutElement.querySelectorAll('[data-global-notification-close="true"]');
 
     for (const closeElement of closeElements) {
       closeElement.addEventListener('click', () => {
