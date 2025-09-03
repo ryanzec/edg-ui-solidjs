@@ -5,7 +5,7 @@ import { tailwindUtils } from '$/core/utils/tailwind';
 import Loading from '../loading';
 
 export type ThumbsRatingProps = {
-  onRate: (rating: number) => void;
+  onSelectRating: (rating: number) => void;
   currentRating?: number;
   canChange?: boolean;
   isProcessing?: boolean;
@@ -23,11 +23,11 @@ const ThumbsRating = (passedProps: ThumbsRatingProps) => {
   };
 
   const handleRateUp = () => {
-    props.onRate(1);
+    props.onSelectRating(1);
   };
 
   const handleRateDown = () => {
-    props.onRate(-1);
+    props.onSelectRating(-1);
   };
 
   return (

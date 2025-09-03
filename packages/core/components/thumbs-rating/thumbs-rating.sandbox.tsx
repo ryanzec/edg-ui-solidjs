@@ -8,7 +8,7 @@ export default {
 export const Default = () => {
   return (
     <SandboxExamplesContainer>
-      <ThumbsRating onRate={console.log} />
+      <ThumbsRating onSelectRating={console.log} />
     </SandboxExamplesContainer>
   );
 };
@@ -16,8 +16,8 @@ export const Default = () => {
 export const WithCurrentRating = () => {
   return (
     <SandboxExamplesContainer>
-      <ThumbsRating onRate={console.log} currentRating={1} />
-      <ThumbsRating onRate={console.log} currentRating={-1} />
+      <ThumbsRating onSelectRating={console.log} currentRating={1} />
+      <ThumbsRating onSelectRating={console.log} currentRating={-1} />
     </SandboxExamplesContainer>
   );
 };
@@ -25,8 +25,8 @@ export const WithCurrentRating = () => {
 export const CanChange = () => {
   return (
     <SandboxExamplesContainer>
-      <ThumbsRating onRate={console.log} currentRating={1} canChange />
-      <ThumbsRating onRate={console.log} currentRating={-1} canChange />
+      <ThumbsRating onSelectRating={console.log} currentRating={1} canChange />
+      <ThumbsRating onSelectRating={console.log} currentRating={-1} canChange />
     </SandboxExamplesContainer>
   );
 };
@@ -34,8 +34,8 @@ export const CanChange = () => {
 export const Processing = () => {
   return (
     <SandboxExamplesContainer>
-      <ThumbsRating onRate={console.log} currentRating={1} canChange isProcessing />
-      <ThumbsRating onRate={console.log} currentRating={-1} canChange isProcessing />
+      <ThumbsRating onSelectRating={console.log} currentRating={1} canChange isProcessing />
+      <ThumbsRating onSelectRating={console.log} currentRating={-1} canChange isProcessing />
     </SandboxExamplesContainer>
   );
 };
