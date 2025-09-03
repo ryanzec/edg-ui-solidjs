@@ -21,3 +21,21 @@ export const WithCurrentRating = () => {
     </SandboxExamplesContainer>
   );
 };
+
+export const CanChange = () => {
+  return (
+    <SandboxExamplesContainer>
+      <ThumbsRating onRate={console.log} currentRating={1} canChange />
+      <ThumbsRating onRate={console.log} currentRating={-1} canChange />
+    </SandboxExamplesContainer>
+  );
+};
+
+export const Processing = () => {
+  return (
+    <SandboxExamplesContainer>
+      <ThumbsRating onRate={console.log} currentRating={1} canChange isProcessing />
+      <ThumbsRating onRate={console.log} currentRating={-1} canChange isProcessing />
+    </SandboxExamplesContainer>
+  );
+};
