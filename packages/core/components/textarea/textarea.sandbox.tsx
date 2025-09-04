@@ -108,6 +108,39 @@ export const InnerActions = () => {
   );
 };
 
+export const SubmitOnEnter = () => {
+  const formStore = formStoreUtils.createStore<{ textarea: string[] }>({
+    onSubmit: async (values) => {
+      console.log(values);
+    },
+  });
+  const [isProcessing, setIsProcessing] = createSignal(false);
+
+  const handleToggleProcessing = () => {
+    setIsProcessing(!isProcessing());
+  };
+
+  const formDirective = formStore.formDirective;
+
+  return (
+    <form use:formDirective>
+      <Button onClick={handleToggleProcessing}>Toggle Processing</Button>
+      <TextareaInnerActions
+        name="textarea"
+        placeholder="Add instructions"
+        formData={formStore.data}
+        errors={formStore.errors()?.textarea?.errors}
+        isProcessing={isProcessing()}
+        mainButtonLabelElement={isProcessing() ? 'Generating...' : 'Generate'}
+        submitOnEnter
+        onKeyDown={(event) => {
+          console.log(event);
+        }}
+      />
+    </form>
+  );
+};
+
 // not exported as this is only for testing and would be caught in a `pnpm build:check`
 const NameTypingTest = () => {
   const form = formStoreUtils.createStore<{ textarea: string[] }>({

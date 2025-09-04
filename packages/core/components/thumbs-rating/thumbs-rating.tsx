@@ -1,4 +1,4 @@
-import { mergeProps } from 'solid-js';
+import { mergeProps, Show } from 'solid-js';
 import Icon, { IconSize, IconVariant } from '$/core/components/icon';
 import styles from '$/core/components/thumbs-rating/thumbs-rating.module.css';
 import { tailwindUtils } from '$/core/utils/tailwind';
@@ -16,9 +16,8 @@ const ThumbsRating = (passedProps: ThumbsRatingProps) => {
 
   const canChangeTo = (changeToRating: number) => {
     return (
-      props.isProcessing === false ||
-      props.currentRating === 0 ||
-      (props.currentRating !== changeToRating && props.canChange)
+      props.isProcessing === false &&
+      (props.currentRating === 0 || (props.currentRating !== changeToRating && props.canChange))
     );
   };
 
@@ -51,7 +50,9 @@ const ThumbsRating = (passedProps: ThumbsRatingProps) => {
           variant={props.currentRating === -1 ? IconVariant.FILL : IconVariant.REGULAR}
           onClick={canChangeTo(-1) ? handleRateDown : undefined}
         />
-        <Loading class={styles.processingIndicator} iconSize={IconSize.LARGE} />
+        <Show when={props.isProcessing}>
+          <Loading class={styles.processingIndicator} iconSize={IconSize.LARGE} />
+        </Show>
       </div>
     </div>
   );

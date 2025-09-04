@@ -37,6 +37,7 @@ HIGH TODOS
 - add marker (using badge) for tabs
 - add tooltip for icons when sidebar is collapsed
 - standardize api -> frontend error passed pattern
+- disabled state for thumbs component
 
 LOW TODO
 - remove `hasPassword`
