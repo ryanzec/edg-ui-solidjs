@@ -36,8 +36,7 @@ HIGH TODOS
 - add selectability to grid table
 - add marker (using badge) for tabs
 - add tooltip for icons when sidebar is collapsed
-- standardize api -> frontend error passed pattern
-- disabled state for thumbs component
+- standardize api -> frontend error passed pattern 
 
 LOW TODO
 - remove `hasPassword`

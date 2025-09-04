@@ -39,3 +39,12 @@ export const Processing = () => {
     </SandboxExamplesContainer>
   );
 };
+
+export const Disabled = () => {
+  return (
+    <SandboxExamplesContainer>
+      <ThumbsRating onSelectRating={console.log} currentRating={1} canChange disabled />
+      <ThumbsRating onSelectRating={console.log} currentRating={-1} canChange disabled />
+    </SandboxExamplesContainer>
+  );
+};

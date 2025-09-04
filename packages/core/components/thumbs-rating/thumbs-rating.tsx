@@ -9,15 +9,25 @@ export type ThumbsRatingProps = {
   currentRating?: number;
   canChange?: boolean;
   isProcessing?: boolean;
+  disabled?: boolean;
 };
 
 const ThumbsRating = (passedProps: ThumbsRatingProps) => {
-  const props = mergeProps({ currentRating: 0, canChange: false, isProcessing: false }, passedProps);
+  const props = mergeProps({ currentRating: 0, canChange: false, isProcessing: false, disabled: false }, passedProps);
 
   const canChangeTo = (changeToRating: number) => {
     return (
       props.isProcessing === false &&
+      props.disabled === false &&
       (props.currentRating === 0 || (props.currentRating !== changeToRating && props.canChange))
+    );
+  };
+
+  const ratingIsEnabled = (rating: number) => {
+    return (
+      props.isProcessing === false &&
+      props.disabled === false &&
+      (props.currentRating === rating || props.currentRating === 0 || props.canChange)
     );
   };
 
@@ -36,7 +46,7 @@ const ThumbsRating = (passedProps: ThumbsRatingProps) => {
       <div class={styles.thumbsRating}>
         <Icon
           class={tailwindUtils.merge({
-            [styles.disabled]: props.isProcessing || (props.currentRating === -1 && props.canChange === false),
+            [styles.disabled]: ratingIsEnabled(1) === false,
           })}
           icon="thumbs-up"
           variant={props.currentRating === 1 ? IconVariant.FILL : IconVariant.REGULAR}
@@ -44,7 +54,7 @@ const ThumbsRating = (passedProps: ThumbsRatingProps) => {
         />
         <Icon
           class={tailwindUtils.merge(styles.thumbsDown, {
-            [styles.disabled]: props.isProcessing || (props.currentRating === 1 && props.canChange === false),
+            [styles.disabled]: ratingIsEnabled(-1) === false,
           })}
           icon="thumbs-down"
           variant={props.currentRating === -1 ? IconVariant.FILL : IconVariant.REGULAR}
